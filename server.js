@@ -27,12 +27,24 @@ var SOLO_SHOWDOWN = 'soloShowdown';
 var DUO_SHOWDOWN = 'duoShowdown';
 var TAKEDOWN = 'takedown';
 var HEIST = 'heist';
+var SIEGE = 'siege';
 var BIG_GAME = 'bigGame';
 var BOUNTY = 'bounty';
 var LONE_STAR = 'loneStar';
 
+//trophyChangeArray for checking it is power play or not
+var soloPointArr = [38, 34, 30, 26, 22, 18, 14, 10, 6, 2];
+var duoPointArr = [34, 26, 18, 10, 2];
+var trioPointArr = {
+    victory: 30,
+    draw: 10,
+    defeat: 5
+};
+
+
 function isTrio(mode){
-  if(mode === GEM_GRAB || mode === BRAWL_BALL || mode === HEIST || mode === BOUNTY){
+  if(mode === GEM_GRAB || mode === BRAWL_BALL || mode === HEIST 
+    || mode === BOUNTY || mode === SIEGE ){
     return true;
   }
   return false;
@@ -121,14 +133,58 @@ function makeDateTimeFormat(time) {
 function handleSolo(item, tag){
   console.log('handleSolo');
 }
-function handleDuo(item, tag){
-  console.log('handle Duo');
+function handleDuo(item, tag) {
+  console.log("handle Duo");
+  let battle = item.battle;
+  let mode = battle.mode;
+  let rank = battle.rank;
+  let trophyChange = battle.trophyChange || 0;
+
+  let teams = battle.teams;
+
+  let brawler_name = null;
+  let power = null;
+  let trophies = null;
+
+  let battleTime = item.battleTime;
+  let battleTimeFormat = makeDateTimeFormat(battleTime);
+
+  let userCollection = firestore.collection(tag);
+  let isPowerPlay = false;
+
+  if (trophyChange === duoPointArr[rank - 1]) {
+    isPowerPlay = true;
+  }
+
+  for (let i_t = 0; i_t < teams.length; i_t++) {
+    let team = teams[i_t];
+    for (let i_m = 0; i_m < team.length; i_m++) {
+      let member = team[i_m];
+      if (member.tag === tag) {
+        brawler_name = member.brawler.name;
+        power = member.brawler.power;
+        trophies = member.brawler.trophies;
+      }
+    }
+  }
+
+  userCollection.doc(battleTime).set({
+    battleTime: battleTimeFormat,
+    map: item.event.map,
+    mode: mode,
+    rank: rank,
+    trophyChange: trophyChange,
+    isPowerPlay: isPowerPlay,
+    brawler_name: brawler_name,
+    power: power,
+    trophies: trophies,
+  });
 }
 function handleTrio(item, tag){
   let battle = item.battle;
   let result = battle.result;
   let duration = battle.duration;
-  let trophyChange = battle.trophyChange;
+  let trophyChange = battle.trophyChange || 0;
 
   let teams = battle.teams;
   let isPowerPlay = false;
@@ -136,6 +192,55 @@ function handleTrio(item, tag){
   let brawler_name = null;
   let power = null;
   let trophies = null;
+
+  let mode = item.event.mode;
+  let map = item.event.map;
+  
+  let battleTime = item.battleTime;
+
+  let userCollection = firestore.collection(tag);
+
+  let battleTimeFormating = makeDateTimeFormat(battleTime);
+
+  for (let i_t = 0; i_t < teams.length; i_t++) {
+    let team = teams[i_t];
+    for (let i_m = 0; i_m < team.length; i_m++) {
+      let member = team[i_m];
+      if (member.tag === tag) {
+        brawler_name = member.brawler.name;
+        power = member.brawler.power;
+        trophies = member.brawler.trophies;
+      }
+    }
+  }
+
+  //power play인지 확인한다. 월등한 승리일 경우 +3점이 된다.
+  if (
+    trophyChange === trioPointArr[result] ||
+    trophyChange === trioPointArr[result] + 3
+  ) {
+    isPowerPlay = true;
+  }
+  //check starPlayer 
+  let isStarPlayer = false;
+  
+  let starPlayer = battle.starPlayer;
+  if(starPlayer.tag === tag){
+    isStarPlayer = true;
+  }
+  userCollection.doc(battleTime).set({
+    battleTime: battleTimeFormating,
+    map: map,
+    mode: mode,
+    result: result,
+    duration: duration,
+    trophyChange: trophyChange,
+    isPowerPlay: isPowerPlay,
+    isStarPlayer : isStarPlayer,
+    brawler_name: brawler_name,
+    power: power,
+    trophies: trophies,
+  });
 }
 
 let port = 443;
