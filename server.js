@@ -116,6 +116,10 @@ app.get("/", (req, res) => {
   //  res.send("express server");
 });
 
+app.get("/test", (req, res) =>{
+  res.send("test success");
+});
+
 function makeDateTimeFormat(time) {
     var year = time.substring(0, 4);
     var month = time.substring(4, 6);
@@ -201,6 +205,8 @@ function handleTrio(item, tag){
   let userCollection = firestore.collection(tag);
 
   let battleTimeFormating = makeDateTimeFormat(battleTime);
+  
+  let idList = firestore.collection('ID_LIST');
 
   for (let i_t = 0; i_t < teams.length; i_t++) {
     let team = teams[i_t];
@@ -211,6 +217,21 @@ function handleTrio(item, tag){
         power = member.brawler.power;
         trophies = member.brawler.trophies;
       }
+
+      /* idList */
+        // .doc(member.tag)
+        // .get()
+        // .then((doc) => {
+        //   if (!doc.exists) {
+        //     idList.doc(member.tag).set({
+        //       name: member.name,
+        //     });
+        //   }
+        // })
+        // .catch((err) => {
+        //   console.log("Error getting document", err);
+        /* }); */
+
     }
   }
 
@@ -248,3 +269,46 @@ let port = 443;
 app.listen(port, () => {
   console.log(`http server port on ${port}`);
 });
+
+
+//Periodically request battle logs and update them to database
+
+let options = {
+  uri : `http://localhost:${port}/test`,
+  qs :{
+    tag : 'test'
+  }
+};
+
+setInterval(
+  function(){
+    console.log(new Date());
+    let idList = firestore.collection('ID_LIST');
+    let idArr = [];
+    idList.get().then(snapshot =>{
+      if(snapshot.empty){
+        console.log('No matching documents.');
+        return;
+      }
+      snapshot.forEach(doc =>{
+        //console.log(doc.id);
+        idArr.push(doc.id);
+      });
+      //console.log(snapshot);
+      console.log(idArr);
+    })
+    .catch(err =>{
+      console.log('Error getting documents', err);
+    });
+    let testRequest = (idx)=>{
+      console.log(`idx ${idx}`);
+      console.log(idArr.length);
+      if(idx >= idArr.length) return;
+
+      reqModule(options, function (err, response, body) {
+        console.log(body);
+        testRequest(idx +1);
+    });
+    };
+    testRequest(0);
+  },3000);
