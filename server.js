@@ -32,6 +32,10 @@ var BIG_GAME = 'bigGame';
 var BOUNTY = 'bounty';
 var LONE_STAR = 'loneStar';
 
+//type
+var RANKED = 'ranked';
+var FRIENDLY = 'friendly';
+
 //trophyChangeArray for checking it is power play or not
 var soloPointArr = [38, 34, 30, 26, 22, 18, 14, 10, 6, 2];
 var duoPointArr = [34, 26, 18, 10, 2];
@@ -144,6 +148,7 @@ function handleDuo(item, tag) {
   let rank = battle.rank;
   let trophyChange = battle.trophyChange || 0;
 
+  let type = battle.type;
   let teams = battle.teams;
 
   let brawler_name = null;
@@ -172,7 +177,7 @@ function handleDuo(item, tag) {
     }
   }
 
-  userCollection.doc(battleTime).set({
+  let gameInfo = {
     battleTime: battleTimeFormat,
     map: item.event.map,
     mode: mode,
@@ -180,9 +185,14 @@ function handleDuo(item, tag) {
     trophyChange: trophyChange,
     isPowerPlay: isPowerPlay,
     brawler_name: brawler_name,
-    power: power,
-    trophies: trophies,
-  });
+    //power: power,
+//    trophies: trophies,
+  };
+  if(type === RANKED){
+    gameInfo.power = power;
+    gameInfo.trophies = trophies;
+  }
+  userCollection.doc(battleTime).set(gameInfo);
 }
 function handleTrio(item, tag){
   let battle = item.battle;
@@ -190,6 +200,7 @@ function handleTrio(item, tag){
   let duration = battle.duration;
   let trophyChange = battle.trophyChange || 0;
 
+  let type = battle.type;
   let teams = battle.teams;
   let isPowerPlay = false;
 
@@ -206,7 +217,9 @@ function handleTrio(item, tag){
 
   let battleTimeFormating = makeDateTimeFormat(battleTime);
   
-  let idList = firestore.collection('ID_LIST');
+  //let idList = firestore.collection('ID_LIST');
+
+
 
   for (let i_t = 0; i_t < teams.length; i_t++) {
     let team = teams[i_t];
@@ -249,7 +262,24 @@ function handleTrio(item, tag){
   if(starPlayer.tag === tag){
     isStarPlayer = true;
   }
-  userCollection.doc(battleTime).set({
+
+  let isDebug = false;
+  if(isDebug){
+    console.log(`battleTimeFormat : ${battleTimeFormating}`);
+    console.log(`map : ${map}`);
+    console.log(`mode : ${mode}`);
+    console.log(`result : ${result}`);
+    console.log(`duration : ${duration}`);
+    console.log(`trophyChange : ${trophyChange}`);
+    console.log(`isPowerPlay : ${isPowerPlay}`);
+    console.log(`isStarPlayer : ${isStarPlayer}`);
+    console.log(`brawler_name : ${brawler_name}`);
+    console.log(`power : ${power}`);
+    console.log(`trophies : ${trophies}`);
+  }
+
+  let gameInfo = {
+    type : type,
     battleTime: battleTimeFormating,
     map: map,
     mode: mode,
@@ -259,9 +289,12 @@ function handleTrio(item, tag){
     isPowerPlay: isPowerPlay,
     isStarPlayer : isStarPlayer,
     brawler_name: brawler_name,
-    power: power,
-    trophies: trophies,
-  });
+  }
+  if(type === RANKED){
+    gameInfo.power = power;
+    gameInfo.trophies = trophies;
+  }
+  userCollection.doc(battleTime).set(gameInfo);
 }
 
 let port = 443;
@@ -274,41 +307,49 @@ app.listen(port, () => {
 //Periodically request battle logs and update them to database
 
 let options = {
-  uri : `http://localhost:${port}/test`,
+  uri : `http://localhost:${port}/`,
   qs :{
-    tag : 'test'
+    tag : ''
   }
 };
 
-setInterval(
-  function(){
+let callUpdateAPI = function(){
     console.log(new Date());
-    let idList = firestore.collection('ID_LIST');
+
     let idArr = [];
-    idList.get().then(snapshot =>{
-      if(snapshot.empty){
-        console.log('No matching documents.');
-        return;
-      }
-      snapshot.forEach(doc =>{
-        //console.log(doc.id);
-        idArr.push(doc.id);
-      });
-      //console.log(snapshot);
-      console.log(idArr);
-    })
-    .catch(err =>{
-      console.log('Error getting documents', err);
-    });
     let testRequest = (idx)=>{
       console.log(`idx ${idx}`);
-      console.log(idArr.length);
       if(idx >= idArr.length) return;
 
+      options.qs.tag = idArr[idx];
+      console.log(options);
       reqModule(options, function (err, response, body) {
         console.log(body);
         testRequest(idx +1);
     });
     };
-    testRequest(0);
-  },3000);
+
+    let idList = firestore.collection('ID_LIST');
+    idList
+      .get()
+      .then((snapshot) => {
+        if (snapshot.empty) {
+          console.log("No matching documents.");
+          return;
+        }
+        snapshot.forEach((doc) => {
+          //console.log(doc.id);
+          idArr.push(doc.id);
+        });
+        testRequest(0);
+        //console.log(snapshot);
+        console.log(idArr);
+      })
+      .catch((err) => {
+        console.log("Error getting documents", err);
+      });
+
+  }
+
+callUpdateAPI();
+setInterval( callUpdateAPI , 3600 * 1000);
