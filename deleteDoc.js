@@ -1,5 +1,5 @@
 const firebase = require('firebase');
-
+const fs = require('fs');
 //firebase initialization
 
 let firebaseInitRaw = fs.readFileSync("firebaseInit.json");
