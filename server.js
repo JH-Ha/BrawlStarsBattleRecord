@@ -70,11 +70,18 @@ function isDuo(mode) {
   return false;
 }
 
+function isBigGame(mode){
+  if (mode === BIG_GAME){
+    return true;
+  }
+  return false;
+}
+
 app.get("/", (req, res) => {
   let tag = req.query.tag;
   let tagEscape = escape(tag);
   if (tag === undefined) {
-    res.send("please put your tag");
+    res.send("error 404 ");
     return;
   }
 
@@ -102,21 +109,51 @@ app.get("/", (req, res) => {
       return;
     }
     let items = battleLogJson.items;
-    for (let i = 0; i < items.length; i++) {
-      console.log(items[i]);
-      let item = items[i];
-      let mode = item.event.mode;
 
-      if (isTrio(mode)) {
-        handleTrio(item, tag);
-      } else if (isDuo(mode)) {
-        handleDuo(item, tag);
-      } else if (isSolo(mode)) {
-        handleSolo(item, tag);
-      } else {
-        console.log(`${mode} is not handled.`);
-      }
+    let updateRecord = (items, tag, idx) =>{
+      if(idx >= items.length) return;
+     
+      let item = items[idx];
+      let mode = item.event.mode;
+      let battleTime = item.battleTime;
+
+      let battleLogRef = firestore
+        .collection("battleLog")
+        .doc(tag + "_" + battleTime);
+      let getDoc = battleLogRef
+        .get()
+        .then((doc) => {
+
+          //set document only the document doesn't exist 
+          if (!doc.exists) {
+            console.log("No such document!");
+
+            if (isTrio(mode)) {
+              handleTrio(item, tag);
+            } else if (isDuo(mode)) {
+              handleDuo(item, tag);
+            } else if (isSolo(mode)) {
+              handleSolo(item, tag);
+            } else if (isBigGame(mode)){
+              handleBigGame(item, tag);
+            } else {
+              console.log(`${mode} is not handled.`);
+            }
+
+            updateRecord(items, tag, idx + 1);
+          } 
+         /*  else { */
+            // console.log("Document data:", doc.data());
+          /* } */
+        })
+        .catch((err) => {
+          console.log("Error getting document", err);
+        });
+
+
     }
+    updateRecord(items, tag, 0);
+
     res.send("battle logs are successfully updated");
   });
   //  res.send("express server");
@@ -139,6 +176,58 @@ function makeDateTimeFormat(time) {
   return dateTimeFormatStr;
 }
 
+function handleBigGame(item, tag){
+  console.log("handleBigGame");
+  let battleTime = item.battleTime;
+  let battle = item.battle;
+  let mode = battle.mode;
+  let map = item.event.map;
+  let duration = battle.duration;
+  let players = battle.players;
+  let bigBrawler = battle.bigBrawler;
+
+  let isBigBrawler = false;
+
+  let power = null;
+  let brawler_name = null;
+  let trophies = null;
+  for(let i = 0; i < players.length; i ++){
+    let player = players[i];
+    if(tag === player.tag){
+      power = player.brawler.power;
+      brawler_name = player.brawler.name;
+      trophies = player.brawler.trophies;
+      break;
+    }
+  }
+  if(power === null){
+    if(tag === bigBrawler.tag){
+      power = bigBrawler.brawler.power;
+      brawler_name = player.brawler.name;
+      trophies = player.brawler.trophies;
+      isBigBrawler = true;
+    }
+  }
+
+
+  let userCollection = firestore.collection("battleLog");
+
+  let gameInfo = {
+    tag : tag,
+    power : power,
+    brawler_name : brawler_name,
+    trophies : trophies,
+    isBigBrawler : isBigBrawler,
+    mode : mode,
+    battleTime : makeDateTimeFormat(battleTime),
+    map : map,
+    duration : duration,
+  }
+
+  userCollection.doc(tag+"_"+battleTime).set(gameInfo);
+
+}
+
 function handleSolo(item, tag) {
   console.log("handleSolo");
   let battleTime = item.battleTime;
@@ -157,6 +246,7 @@ function handleSolo(item, tag) {
     if (player.tag === tag) {
       power = player.brawler.power;
       trophies = player.brawler.trophies;
+      brawler_name = player.brawler.name;
     }
   }
 
@@ -169,18 +259,22 @@ function handleSolo(item, tag) {
   let userCollection = firestore.collection("battleLog");
 
   let gameInfo = {
-    battleTime: battleTimeFormat(battleTime),
+    battleTime: makeDateTimeFormat(battleTime),
     mode: mode,
     map: item.event.map,
     type: type,
     rank: rank,
     trophyChange: trophyChange,
     brawler_name: brawler_name,
+    isPowerPlay : isPowerPlay,
+    tag: tag,
   };
   if (type === RANKED) {
     gameInfo.power = power;
     gameInfo.trophies = trophies;
   }
+  
+  userCollection.doc(tag + "_" + battleTime).set(gameInfo);
 }
 function handleDuo(item, tag) {
   console.log("handle Duo");
@@ -337,7 +431,7 @@ function handleTrio(item, tag) {
   userCollection.doc(tag + "_" + battleTime).set(gameInfo);
 }
 
-let port = 443;
+let port = 8080;
 
 app.listen(port, () => {
   console.log(`http server port on ${port}`);
@@ -401,53 +495,9 @@ let callUpdateAPI = function () {
 /* }); */
 
 //callUpdateAPI();
-//setInterval( callUpdateAPI , 3600 * 1000);
+setInterval( callUpdateAPI , 3600 * 1000);
 //
 //
 //
-
-//remove collection from firestore
-
-function deleteCollection(db, collectionPath, batchSize) {
-  let collectionRef = db.collection(collectionPath);
-  let query = collectionRef.orderBy("__name__").limit(batchSize);
-
-  return new Promise((resolve, reject) => {
-    deleteQueryBatch(db, query, batchSize, resolve, reject);
-  });
-}
-function deleteQueryBatch(db, query, batchSize, resolve, reject) {
-  query
-    .get()
-    .then((snapshot) => {
-      // When there are no documents left, we are done
-      if (snapshot.size == 0) {
-        return 0;
-      }
-
-      // Delete documents in a batch
-      let batch = db.batch();
-      snapshot.docs.forEach((doc) => {
-        batch.delete(doc.ref);
-      });
-
-      return batch.commit().then(() => {
-        return snapshot.size;
-      });
-    })
-    .then((numDeleted) => {
-      if (numDeleted === 0) {
-        resolve();
-        return;
-      }
-
-      // Recurse on the next process tick, to avoid
-      // exploding the stack.
-      process.nextTick(() => {
-        deleteQueryBatch(db, query, batchSize, resolve, reject);
-      });
-    })
-    .catch(reject);
-}
 
 
