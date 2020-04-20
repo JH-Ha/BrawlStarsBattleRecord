@@ -429,6 +429,25 @@ function handleTrio(item, tag) {
     gameInfo.trophies = trophies;
   }
   userCollection.doc(tag + "_" + battleTime).set(gameInfo);
+  const increment = firebase.firestore.FieldValue.increment(1);
+  const updateTrophyChange = firebase.firestore.FieldValue.increment(trophyChange);
+
+  idList =  firestore.collection("ID_LIST");
+  let updateValue = {numRanked : increment,
+changedTropies : updateTrophyChange,
+  };
+  if (result === "victory") {
+    updateValue["numVictory"] = increment;
+  } else if(result === "draw"){
+    updateValue["numDraw"] = increment;
+  } else{
+    updateValue["numDefeat"] = increment;
+  }
+    idList
+      .doc(tag)
+      .collection(mode)
+      .doc("2020-04 " + brawler_name)
+      .update(updateValue);
 }
 
 let port = 8080;
@@ -494,10 +513,5 @@ let callUpdateAPI = function () {
 //   console.log("error getting documents:", error);
 /* }); */
 
-//callUpdateAPI();
+callUpdateAPI();
 setInterval( callUpdateAPI , 3600 * 1000);
-//
-//
-//
-
-
