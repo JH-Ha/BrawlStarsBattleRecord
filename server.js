@@ -275,6 +275,21 @@ function handleSolo(item, tag) {
   }
   
   userCollection.doc(tag + "_" + battleTime).set(gameInfo);
+
+  const increment = firebase.firestore.FieldValue.increment(1);
+  const updateTrophyChange = firebase.firestore.FieldValue.increment(trophyChange);
+
+  idList =  firestore.collection("ID_LIST");
+  let updateValue = {numRanked : increment,
+changedTropies : updateTrophyChange,
+  };
+  updateValue["rank"+rank] = increment;
+    idList
+      .doc(tag)
+      .collection(mode)
+      .doc("2020-04 " + brawler_name)
+      .update(updateValue);
+
 }
 function handleDuo(item, tag) {
   console.log("handle Duo");
@@ -330,6 +345,21 @@ function handleDuo(item, tag) {
     gameInfo.trophies = trophies;
   }
   userCollection.doc(tag + "_" + battleTime).set(gameInfo);
+
+  const increment = firebase.firestore.FieldValue.increment(1);
+  const updateTrophyChange = firebase.firestore.FieldValue.increment(trophyChange);
+
+  idList =  firestore.collection("ID_LIST");
+  let updateValue = {numRanked : increment,
+changedTropies : updateTrophyChange,
+  };
+  updateValue["rank"+rank] = increment;
+    idList
+      .doc(tag)
+      .collection(mode)
+      .doc("2020-04 " + brawler_name)
+      .update(updateValue);
+
 }
 function handleTrio(item, tag) {
   let battle = item.battle;
