@@ -321,6 +321,7 @@ function handleDuo(item, tag) {
     trophyChange: trophyChange,
     isPowerPlay: isPowerPlay,
     brawler_name: brawler_name,
+    type: type,
     //power: power,
     //    trophies: trophies,
   };
