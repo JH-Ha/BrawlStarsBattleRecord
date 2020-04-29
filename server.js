@@ -481,7 +481,7 @@ changedTropies : updateTrophyChange,
       .update(updateValue);
 }
 
-let port = 8080;
+let port = 8090;
 
 app.listen(port, () => {
   console.log(`http server port on ${port}`);
