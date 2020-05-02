@@ -553,5 +553,5 @@ let callUpdateAPI = function () {
 //   console.log("error getting documents:", error);
 /* }); */
 
-//callUpdateAPI();
+callUpdateAPI();
 setInterval( callUpdateAPI , 3600 * 1000);
