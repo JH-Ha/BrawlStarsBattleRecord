@@ -97,7 +97,16 @@ app.get("/", (req, res) => {
 
   reqModule(options, function (err, response, body) {
     //console.log(body);
-    var battleLogJson = JSON.parse(body);
+    console.log(err, response, body);
+    var battleLogJson = null;
+    
+    try{
+      battleLogJson = JSON.parse(body);
+    } catch(e){
+      console.log(e);
+      res.send("parse error");
+      return;
+    }
     //res.send(body);
     //console.log(battleLogJson);
     //send(body);
@@ -544,5 +553,5 @@ let callUpdateAPI = function () {
 //   console.log("error getting documents:", error);
 /* }); */
 
-callUpdateAPI();
+//callUpdateAPI();
 setInterval( callUpdateAPI , 3600 * 1000);
