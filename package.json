@@ -1,0 +1,26 @@
+{
+  "name": "brawlstarsbattlerecord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deleteDoc.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase": "^7.15.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JH-Ha/BrawlStarsBattleRecord.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JH-Ha/BrawlStarsBattleRecord/issues"
+  },
+  "homepage": "https://github.com/JH-Ha/BrawlStarsBattleRecord#readme"
+}
