@@ -292,12 +292,12 @@ function handleSolo(item, tag) {
   let updateValue = {numRanked : increment,
 changedTropies : updateTrophyChange,
   };
-  updateValue["rank"+rank] = increment;
-    idList
-      .doc(tag)
-      .collection(mode)
-      .doc("2020-04 " + brawler_name)
-      .update(updateValue);
+  // updateValue["rank"+rank] = increment;
+  //   idList
+  //     .doc(tag)
+  //     .collection(mode)
+  //     .doc("2020-04 " + brawler_name)
+  //     .update(updateValue);
 
 }
 function handleDuo(item, tag) {
@@ -362,12 +362,12 @@ function handleDuo(item, tag) {
   let updateValue = {numRanked : increment,
 changedTropies : updateTrophyChange,
   };
-  updateValue["rank"+rank] = increment;
-    idList
-      .doc(tag)
-      .collection(mode)
-      .doc("2020-04 " + brawler_name)
-      .update(updateValue);
+  // updateValue["rank"+rank] = increment;
+  //   idList
+  //     .doc(tag)
+  //     .collection(mode)
+  //     .doc("2020-04 " + brawler_name)
+  //     .update(updateValue);
 
 }
 function handleTrio(item, tag) {
@@ -483,11 +483,11 @@ changedTropies : updateTrophyChange,
   } else{
     updateValue["numDefeat"] = increment;
   }
-    idList
-      .doc(tag)
-      .collection(mode)
-      .doc("2020-04 " + brawler_name)
-      .update(updateValue);
+    // idList
+    //   .doc(tag)
+    //   .collection(mode)
+    //   .doc("2020-04 " + brawler_name)
+    //   .update(updateValue);
 }
 
 let port = 8085;

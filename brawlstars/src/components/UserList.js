@@ -38,7 +38,7 @@ class UserList extends Component {
         });
         return query;
     }
-    setUserList(snapshot){
+    setUserList(snapshot, page){
         var rows = [];
         snapshot.forEach((doc) => {
             var data = doc.data();
@@ -48,11 +48,12 @@ class UserList extends Component {
 
         });
         console.log(rows);
-        this.setState({ userList: rows });
+        this.setState({ userList: rows,
+                    curPage : page });
     }
     getUserList(page){
         console.log("getUserList");
-        this.setState({curPage : page});
+        
         
         var limitNum = (page - 1) * 15;
         if(limitNum <= 0 ) limitNum = 15;
@@ -60,7 +61,8 @@ class UserList extends Component {
         .limit(limitNum);
         let paginate = first.get()
         .then((snapshot) =>{
-            if(page == 1) this.setUserList(snapshot);
+            // this.setState({curPage : page});
+            if(page == 1) this.setUserList(snapshot, page);
             else{
                 console.log("else");
                 let last = snapshot.docs[snapshot.docs.length - 1];
@@ -68,7 +70,7 @@ class UserList extends Component {
                 .startAfter(last.data().tag)
                 .limit(15);
                 next.get().then((snapshot)=>{
-                    this.setUserList(snapshot);
+                    this.setUserList(snapshot, page);
                 });
             }
         });
@@ -76,7 +78,9 @@ class UserList extends Component {
     componentDidMount() {
         console.log("mount");
         let query = this.getQuery();
-        let curPage = parseInt(query.curPage);
+        let curPage = query.curPage;
+        if(curPage===undefined) curPage = 1;
+        curPage = parseInt(curPage);
         console.log(`curPage ${curPage}`);
         if(curPage === undefined) curPage = 1;
         this.getUserList(curPage);
@@ -99,7 +103,7 @@ class UserList extends Component {
     }
     changePageHandler(page){
         console.log("changePageHandler");
-            this.setState({curPage : page});
+            // this.setState({curPage : page});
             this.getUserList(page);
         
     }
