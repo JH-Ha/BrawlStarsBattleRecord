@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import firestore from './Firestore';
 import Pagination from './Pagination';
 import qs from 'qs';
+import styles from './UserList.scss';
+import { Router } from 'react-router-dom';
 
 class User {
     constructor(tag, name) {
@@ -95,7 +97,7 @@ class UserList extends Component {
         //             console.log(data);
         //             rows.push(data);
 
-        //         });
+        //         });let {tag} = this.props;
         //         console.log(rows);
         //         this.setState({ userList: this.state.userList.concat(rows) });
         //         //this.setState({ userList: rows });
@@ -106,6 +108,12 @@ class UserList extends Component {
             // this.setState({curPage : page});
             this.getUserList(page);
         
+    }
+    showPlayList(tag){
+        let {history} = this.props;
+        tag = tag.replace("#", "%23");
+        history.push(`/playList?tag=${tag}`);
+        console.log(tag);
     }
 
     render() {
@@ -122,7 +130,8 @@ class UserList extends Component {
                     <tbody>
                         {this.state.userList.map((user, index) => {
                             return (
-                                <tr key={user.tag} page={this.state.curPage}>
+                                <tr className="cursor" key={user.tag} page={this.state.curPage}
+                                onClick={()=>this.showPlayList(user.tag)}>
                                     <td>{(this.state.curPage - 1) * 15 + index + 1}</td>
                                     <td>
                                         {user.name}({user.tag})</td>

@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 
-const trioStyle = {
-    display : "flex",
-}
 
 class TrioMode extends Component{
     render(){
         const {
             battleTime,
-            bralwer_name,
+            brawler_name,
             duration,
             isStarPalyer,
             map,
@@ -16,17 +13,15 @@ class TrioMode extends Component{
             trophies,
             trophyChange
         } = this.props;
-        return (<div style={trioStyle
-        }>
-            <div>{battleTime}</div>
-            <div>{bralwer_name}</div>
-            <div>{duration}</div>
-            <div>{isStarPalyer}</div>
-            <div>{map}</div>
-            <div>{power}</div>
-            <div>{trophies}</div>
-            <div>{trophyChange}</div>
-        </div>)
+        return (<tr >
+            <td>{battleTime}</td>
+            <td>{brawler_name}</td>
+            <td>{duration}</td>
+            <td>{map}</td>
+            <td>{power}</td>
+            <td>{trophies}</td>
+            <td>{trophyChange}</td>
+        </tr>)
     }
 }
 

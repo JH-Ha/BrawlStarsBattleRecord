@@ -10,9 +10,14 @@ import TrioMode from './TrioMode';
 //     const tag = query.tag || "tag를 입력해주세요";
 const tag = null || "tag를 입력해주세요";
 class PlayList extends Component {
+    constructor(props){
+        super(props);
+        this.changeMode = this.changeMode.bind(this);
+    }
     state={
         playRecord : [],
-        winRate : 0
+        winRate : 0,
+        tag
     }
     getTag(){
         const query = qs.parse(this.props.location.search, {
@@ -20,11 +25,17 @@ class PlayList extends Component {
         });
         return query.tag;
     }
-    getBattleLog(){
+    addZero(number){
+        let str = number.toString();
+        if(str.length == 1) str = "0" + str;
+        return str;
+    }
+    getBattleLog(tag, mode){
         let rows = [];
         firestore.collection("battleLog")
-        .where("tag", "==", this.getTag())
+        .where("tag", "==", tag)
         .where("brawler_name","==", "EMZ")
+        .where("mode", "==", mode)
         .orderBy("battleTime", "desc").limit(25)
             .get().then((snapshot) => {
                 let numVictory = 0;
@@ -33,7 +44,14 @@ class PlayList extends Component {
                     let data = doc.data();
                     let date = new Date(data["battleTime"]);
                     date.setHours(date.getHours() + 9);
+                    console.log(date.getFullYear(), date.getMonth());
                     data["battleTime"] = (date).toString();
+                    data["year"] = date.getFullYear();
+                    
+                    data["month"] = this.addZero(date.getMonth() + 1);
+                    data["date"] = this.addZero(date.getDate() + 1);
+                    data["hour"] = this.addZero(date.getHours());
+                    data["minute"] = this.addZero(date.getMinutes());
                     console.log(doc.id);
                     console.log(data);
                     rows.push(data);
@@ -41,12 +59,17 @@ class PlayList extends Component {
                     if(data.result === "victory") numVictory ++;
                     //playRecord
                 });
-                this.setState({playRecord : this.state.playRecord.concat(rows)});
+                this.setState({playRecord :rows});
                 this.setState({winRate : numVictory / numGame});
             });
     }
     componentDidMount(){
-        this.getBattleLog();
+        let tag = this.getTag();
+        this.setState({tag : tag});
+        this.getBattleLog(tag, "gemGrab");
+    }
+    changeMode(mode){
+        this.getBattleLog(this.state.tag, mode);
     }
     render(){
         return (
@@ -55,16 +78,33 @@ class PlayList extends Component {
                 My Tag %239QU209UYC
                 */}
                 <h1>PlayList</h1>
-                <ModeList/>
+                <ModeList changeMode={this.changeMode}/>
                 <h2>{this.getTag()}</h2>
                 <h3>Win Rate</h3>
                 <div>{this.state.winRate}</div>
-                <div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Playtime</th>
+                        <th>BrawlerName</th>
+                        <th>Duration</th>
+                        <th>Map</th>
+                        <th>Power</th>
+                        <th>TrophyChange</th>
+                        <th>Trophies</th>
+                
+                    </tr>
+                    </thead>
+                    <tbody>
                     {this.state.playRecord.map(data =>{
                         return (
 
-                        <div>
-                            <TrioMode battleTime={data.battleTime}
+                        
+                            <TrioMode battleTime={data.year + "-"
+                            +data.month + "-"
+                            +data.date +" " 
+                            +data.hour + ":"
+                            +data.minute }
                             result={data.result}
                             brawler_name = {data.brawler_name}
             duration={data.duration}
@@ -74,11 +114,12 @@ class PlayList extends Component {
             trophies={data.trophies}
             trophyChange={data.trophyChange}
                             />
-                        </div>
+                        
                         
                         );
                     })}
-                </div>
+                    </tbody>
+                </table>
             </div>
         )
     }

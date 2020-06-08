@@ -15,9 +15,9 @@ function App() {
           <li>
             <Link to="/">홈</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="playList">play record</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/userList">user list</Link>
           </li>
