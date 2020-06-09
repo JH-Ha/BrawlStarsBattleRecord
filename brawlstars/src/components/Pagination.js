@@ -11,9 +11,6 @@ class Page{
 }
 class Pagination extends Component{
     
-    testOnClick = () =>{
-        console.log("click");
-    }
     render(){
         let {curPage, numTotal, numShowItems, pageUrl, onClick} = this.props;
         console.log(`pagination props ${curPage}`);
@@ -46,7 +43,7 @@ class Pagination extends Component{
                     {pageList.map((page, index) =>{
                         return (
                                 <button key={page.content} 
-                                className={"btn " 
+                                className={"btn-page " 
                                 + (curPage == page.pageNum ? 'activate': '')
                                 }
                                 onClick = {() =>onClick(page.pageNum)}>{page.content}</button>

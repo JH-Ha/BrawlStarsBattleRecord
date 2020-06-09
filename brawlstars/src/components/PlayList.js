@@ -4,7 +4,7 @@ import firestore from './Firestore';
 import ModeList from './ModeList';
 import TrioMode from './TrioMode';
 import BrawlerList from './BrawlerList';
-import styles from './PlayList.scss';
+import styles from './Base.scss';
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
 //         ignoreQueryPrefix : true
