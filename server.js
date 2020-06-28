@@ -14,9 +14,24 @@ let brawlToken = token.brawlToken;
 let firebaseInitRaw = fs.readFileSync("firebaseInit.json");
 let firebaseInit = JSON.parse(firebaseInitRaw);
 
+
+
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseInit);
 }
+
+let loginTokenRaw = fs.readFileSync("loginToken.json");
+let loginToken = JSON.parse(loginTokenRaw);
+
+firebase
+.auth()
+.signInWithEmailAndPassword(loginToken.email, loginToken.password)
+.catch(function(error){
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  console.log("error", errorCode);
+  console.log("errorMessage", errorMessage);
+});
 
 const firestore = firebase.firestore();
 
