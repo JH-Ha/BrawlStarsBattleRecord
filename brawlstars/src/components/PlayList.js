@@ -4,6 +4,7 @@ import firestore from "./Firestore";
 import ModeList from "./ModeList";
 import TrioMode from "./TrioMode";
 import BrawlerList from "./BrawlerList";
+import playStyles from "./PlayList.scss";
 import styles from "./Base.scss";
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
@@ -101,49 +102,35 @@ class PlayList extends Component {
         <BrawlerList changeBrawler={this.changeBrawler} />
         <h2>{this.getTag()}</h2>
         <h3>Win Rate : {this.state.winRate}%</h3>
-        <div className="center">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Playtime</th>
-                <th>BrawlerName</th>
-                {/* <th>Duration</th> */}
-                <th>Map</th>
-                <th>Power</th>
-                <th>Trophies</th>
-                {/* <th>TrophyChange</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.playRecord.map((data) => {
-                return (
-                  <TrioMode key={data.battleTime}
-                    battleTime={
-                      data.year +
-                      "-" +
-                      data.month +
-                      "-" +
-                      data.date +
-                      " " +
-                      data.hour +
-                      ":" +
-                      data.minute
-                    }
-                    result={data.result}
-                    brawler_name={data.brawler_name}
-                    duration={data.duration}
-                    isStarPalyer={data.isStarPalyer}
-                    map={data.map}
-                    power={data.power}
-                    trophies={data.trophies}
-                    trophyChange={data.trophyChange}
-                  />
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        {/* <div className="center column"> */}
+        {this.state.playRecord.map((data) => {
+          return (
+            <TrioMode
+              key={data.battleTime}
+              battleTime={
+                data.year +
+                "-" +
+                data.month +
+                "-" +
+                data.date +
+                " " +
+                data.hour +
+                ":" +
+                data.minute
+              }
+              result={data.result}
+              brawler_name={data.brawler_name}
+              duration={data.duration}
+              isStarPalyer={data.isStarPlayer}
+              map={data.map}
+              power={data.power}
+              trophies={data.trophies}
+              trophyChange={data.trophyChange}
+            />
+          );
+        })}
       </div>
+      // </div>
     );
   }
 }
