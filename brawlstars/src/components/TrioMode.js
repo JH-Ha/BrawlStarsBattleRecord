@@ -34,6 +34,9 @@ class TrioMode extends Component {
             <div className="starPlayer">
               {isStarPalyer ? <FontAwesomeIcon icon={faStar} /> : ""}
             </div>
+            <div className="trophyChange">
+              {trophyChange}
+            </div>
             <div style={{ clear: "both" }}></div>
           </div>
           <div className={`info ${result}`}>
@@ -44,7 +47,7 @@ class TrioMode extends Component {
               <div>{brawler_name}</div>
             </div>
             <div className="gameInfoContainer">
-              <table>
+              <table className="gameTable">
                 <thead>
                   <tr>
                     <th className="map">map</th>

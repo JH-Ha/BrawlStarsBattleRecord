@@ -8,6 +8,9 @@
   &.defeat {
     border-left: 5px solid #df7974;
   }
+  &.draw {
+    border-left: 5px solid #bbbbbb;
+  }
   .top {
     text-align: left;
     &.victory {
@@ -15,6 +18,13 @@
     }
     &.defeat {
       background: #f7c5c2;
+    }
+    &.draw {
+      background: #ebebeb;
+    }
+    .trophyChange {
+      float: right;
+      margin-right: 10px;
     }
   }
   .info {
@@ -24,6 +34,9 @@
     &.defeat {
       background: #f1d7d5;
     }
+    &.draw {
+      background: #f1f1f1;
+    }
 
     .brawlerContainer {
       display: inline-block;
@@ -32,6 +45,9 @@
     .gameInfoContainer {
       display: inline-block;
       width: 80%;
+      .gameTable {
+        width: 100%;
+      }
       .map {
         width: 25%;
       }

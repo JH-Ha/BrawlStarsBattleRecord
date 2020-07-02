@@ -1,0 +1,23 @@
+.topBar {
+  a,
+  a:visited,
+  a:link {
+    text-decoration: none;
+  }
+  .menuContainer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background: #24252a;
+    .item {
+      padding: 10px;
+      a {
+        color: white;
+      }
+
+      &.selected {
+        background: #0289a7;
+      }
+    }
+  }
+}
