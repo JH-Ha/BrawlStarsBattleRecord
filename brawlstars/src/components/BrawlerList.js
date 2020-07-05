@@ -37,6 +37,7 @@ let brawlerNameList = [
   "JACKY",
   "MAX",
   "MR. P",
+  "GALE",
 ];
 class BrawlerList extends Component {
   constructor(props) {

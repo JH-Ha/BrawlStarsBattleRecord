@@ -14,8 +14,6 @@ let brawlToken = token.brawlToken;
 let firebaseInitRaw = fs.readFileSync("firebaseInit.json");
 let firebaseInit = JSON.parse(firebaseInitRaw);
 
-
-
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseInit);
 }
@@ -24,14 +22,14 @@ let loginTokenRaw = fs.readFileSync("loginToken.json");
 let loginToken = JSON.parse(loginTokenRaw);
 
 firebase
-.auth()
-.signInWithEmailAndPassword(loginToken.email, loginToken.password)
-.catch(function(error){
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  console.log("error", errorCode);
-  console.log("errorMessage", errorMessage);
-});
+  .auth()
+  .signInWithEmailAndPassword(loginToken.email, loginToken.password)
+  .catch(function (error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.log("error", errorCode);
+    console.log("errorMessage", errorMessage);
+  });
 
 const firestore = firebase.firestore();
 
@@ -46,6 +44,7 @@ var SIEGE = "siege";
 var BIG_GAME = "bigGame";
 var BOUNTY = "bounty";
 var LONE_STAR = "loneStar";
+var HOT_ZONE = "hotZone";
 
 //type
 var RANKED = "ranked";
@@ -66,7 +65,8 @@ function isTrio(mode) {
     mode === BRAWL_BALL ||
     mode === HEIST ||
     mode === BOUNTY ||
-    mode === SIEGE
+    mode === SIEGE ||
+    mode === HOT_ZONE
   ) {
     return true;
   }
@@ -85,8 +85,8 @@ function isDuo(mode) {
   return false;
 }
 
-function isBigGame(mode){
-  if (mode === BIG_GAME){
+function isBigGame(mode) {
+  if (mode === BIG_GAME) {
     return true;
   }
   return false;
@@ -112,12 +112,12 @@ app.get("/", (req, res) => {
 
   reqModule(options, function (err, response, body) {
     //console.log(body);
-    console.log(err, response, body);
+    //console.log(err, response, body);
     var battleLogJson = null;
-    
-    try{
+
+    try {
       battleLogJson = JSON.parse(body);
-    } catch(e){
+    } catch (e) {
       console.log(e);
       res.send("parse error");
       return;
@@ -134,11 +134,11 @@ app.get("/", (req, res) => {
     }
     let items = battleLogJson.items;
 
-    let updateRecord = (items, tag, idx) =>{
-      if(idx >= items.length) return;
-     
+    let updateRecord = (items, tag, idx) => {
+      if (idx >= items.length) return;
+
       let item = items[idx];
-      let mode = item.event.mode;
+      let mode = item.battle.mode;
       let battleTime = item.battleTime;
 
       let battleLogRef = firestore
@@ -147,8 +147,7 @@ app.get("/", (req, res) => {
       let getDoc = battleLogRef
         .get()
         .then((doc) => {
-
-          //set document only the document doesn't exist 
+          //set document only the document doesn't exist
           if (!doc.exists) {
             console.log("No such document!");
 
@@ -158,24 +157,23 @@ app.get("/", (req, res) => {
               handleDuo(item, tag);
             } else if (isSolo(mode)) {
               handleSolo(item, tag);
-            } else if (isBigGame(mode)){
+            } else if (isBigGame(mode)) {
               handleBigGame(item, tag);
             } else {
+              console.log(item);
               console.log(`${mode} is not handled.`);
             }
 
             updateRecord(items, tag, idx + 1);
-          } 
-         /*  else { */
-            // console.log("Document data:", doc.data());
+          }
+          /*  else { */
+          // console.log("Document data:", doc.data());
           /* } */
         })
         .catch((err) => {
           console.log("Error getting document", err);
         });
-
-
-    }
+    };
     updateRecord(items, tag, 0);
 
     res.send("battle logs are successfully updated");
@@ -200,7 +198,7 @@ function makeDateTimeFormat(time) {
   return dateTimeFormatStr;
 }
 
-function handleBigGame(item, tag){
+function handleBigGame(item, tag) {
   console.log("handleBigGame");
   let battleTime = item.battleTime;
   let battle = item.battle;
@@ -215,17 +213,17 @@ function handleBigGame(item, tag){
   let power = null;
   let brawler_name = null;
   let trophies = null;
-  for(let i = 0; i < players.length; i ++){
+  for (let i = 0; i < players.length; i++) {
     let player = players[i];
-    if(tag === player.tag){
+    if (tag === player.tag) {
       power = player.brawler.power;
       brawler_name = player.brawler.name;
       trophies = player.brawler.trophies;
       break;
     }
   }
-  if(power === null){
-    if(tag === bigBrawler.tag){
+  if (power === null) {
+    if (tag === bigBrawler.tag) {
       power = bigBrawler.brawler.power;
       brawler_name = player.brawler.name;
       trophies = player.brawler.trophies;
@@ -233,23 +231,21 @@ function handleBigGame(item, tag){
     }
   }
 
-
   let userCollection = firestore.collection("battleLog");
 
   let gameInfo = {
-    tag : tag,
-    power : power,
-    brawler_name : brawler_name,
-    trophies : trophies,
-    isBigBrawler : isBigBrawler,
-    mode : mode,
-    battleTime : makeDateTimeFormat(battleTime),
-    map : map,
-    duration : duration,
-  }
+    tag: tag,
+    power: power,
+    brawler_name: brawler_name,
+    trophies: trophies,
+    isBigBrawler: isBigBrawler,
+    mode: mode,
+    battleTime: makeDateTimeFormat(battleTime),
+    map: map,
+    duration: duration,
+  };
 
-  userCollection.doc(tag+"_"+battleTime).set(gameInfo);
-
+  userCollection.doc(tag + "_" + battleTime).set(gameInfo);
 }
 
 function handleSolo(item, tag) {
@@ -290,22 +286,25 @@ function handleSolo(item, tag) {
     rank: rank,
     trophyChange: trophyChange,
     brawler_name: brawler_name,
-    isPowerPlay : isPowerPlay,
+    isPowerPlay: isPowerPlay,
     tag: tag,
   };
   if (type === RANKED) {
     gameInfo.power = power;
     gameInfo.trophies = trophies;
   }
-  
+
   userCollection.doc(tag + "_" + battleTime).set(gameInfo);
 
   const increment = firebase.firestore.FieldValue.increment(1);
-  const updateTrophyChange = firebase.firestore.FieldValue.increment(trophyChange);
+  const updateTrophyChange = firebase.firestore.FieldValue.increment(
+    trophyChange
+  );
 
-  idList =  firestore.collection("ID_LIST");
-  let updateValue = {numRanked : increment,
-changedTropies : updateTrophyChange,
+  idList = firestore.collection("ID_LIST");
+  let updateValue = {
+    numRanked: increment,
+    changedTropies: updateTrophyChange,
   };
   // updateValue["rank"+rank] = increment;
   //   idList
@@ -313,7 +312,6 @@ changedTropies : updateTrophyChange,
   //     .collection(mode)
   //     .doc("2020-04 " + brawler_name)
   //     .update(updateValue);
-
 }
 function handleDuo(item, tag) {
   console.log("handle Duo");
@@ -371,11 +369,14 @@ function handleDuo(item, tag) {
   userCollection.doc(tag + "_" + battleTime).set(gameInfo);
 
   const increment = firebase.firestore.FieldValue.increment(1);
-  const updateTrophyChange = firebase.firestore.FieldValue.increment(trophyChange);
+  const updateTrophyChange = firebase.firestore.FieldValue.increment(
+    trophyChange
+  );
 
-  idList =  firestore.collection("ID_LIST");
-  let updateValue = {numRanked : increment,
-changedTropies : updateTrophyChange,
+  idList = firestore.collection("ID_LIST");
+  let updateValue = {
+    numRanked: increment,
+    changedTropies: updateTrophyChange,
   };
   // updateValue["rank"+rank] = increment;
   //   idList
@@ -383,7 +384,6 @@ changedTropies : updateTrophyChange,
   //     .collection(mode)
   //     .doc("2020-04 " + brawler_name)
   //     .update(updateValue);
-
 }
 function handleTrio(item, tag) {
   let battle = item.battle;
@@ -399,7 +399,7 @@ function handleTrio(item, tag) {
   let power = null;
   let trophies = null;
 
-  let mode = item.event.mode;
+  let mode = item.battle.mode;
   let map = item.event.map;
 
   let battleTime = item.battleTime;
@@ -485,24 +485,27 @@ function handleTrio(item, tag) {
   }
   userCollection.doc(tag + "_" + battleTime).set(gameInfo);
   const increment = firebase.firestore.FieldValue.increment(1);
-  const updateTrophyChange = firebase.firestore.FieldValue.increment(trophyChange);
+  const updateTrophyChange = firebase.firestore.FieldValue.increment(
+    trophyChange
+  );
 
-  idList =  firestore.collection("ID_LIST");
-  let updateValue = {numRanked : increment,
-changedTropies : updateTrophyChange,
+  idList = firestore.collection("ID_LIST");
+  let updateValue = {
+    numRanked: increment,
+    changedTropies: updateTrophyChange,
   };
   if (result === "victory") {
     updateValue["numVictory"] = increment;
-  } else if(result === "draw"){
+  } else if (result === "draw") {
     updateValue["numDraw"] = increment;
-  } else{
+  } else {
     updateValue["numDefeat"] = increment;
   }
-    // idList
-    //   .doc(tag)
-    //   .collection(mode)
-    //   .doc("2020-04 " + brawler_name)
-    //   .update(updateValue);
+  // idList
+  //   .doc(tag)
+  //   .collection(mode)
+  //   .doc("2020-04 " + brawler_name)
+  //   .update(updateValue);
 }
 
 let port = 8085;
@@ -569,4 +572,4 @@ let callUpdateAPI = function () {
 /* }); */
 
 callUpdateAPI();
-setInterval( callUpdateAPI , 3600 * 1000);
+setInterval(callUpdateAPI, 3600 * 1000);

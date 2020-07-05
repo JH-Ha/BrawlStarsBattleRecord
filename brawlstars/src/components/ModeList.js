@@ -7,7 +7,6 @@ class ModeList extends Component {
   }
   state = {
     value: "gemGrab",
-    changeMode: "",
   };
   change(event) {
     const { changeMode } = this.props;
@@ -18,11 +17,12 @@ class ModeList extends Component {
   render() {
     return (
       <select onChange={this.change} value={this.state.value}>
-        <option value="gemGrab" label="gemGrab" />
-        <option value="heist" label="heist" />
-        <option value="brawlBall" label="brawlBall" />
-        <option value="bounty" label="bounty" />
-        <option value="siege" label="siege" />
+        <option value="gemGrab">gemGrab</option>
+        <option value="heist">heist</option>
+        <option value="brawlBall">brawlBall</option>
+        <option value="bounty">bounty</option>
+        <option value="siege">siege</option>
+        <option value="hotZone">hotZone</option>
       </select>
     );
   }
