@@ -15,7 +15,7 @@ class Pagination extends Component {
   };
   componentDidUpdate(prevProps) {
     if (this.props.curPage !== prevProps.curPage) {
-      console.log("update!!!!");
+      //console.log("update!!!!");
       this.setState({
         curPage: this.props.curPage,
       });
@@ -39,11 +39,11 @@ class Pagination extends Component {
     //   );
     // }
     let { numTotal, numShowItems, pageUrl, onClick } = this.props;
-    console.log(`pagination props ${this.state.curPage}`);
+    //console.log(`pagination props ${this.state.curPage}`);
     let curPage = this.state.curPage;
     const numShowPages = 10;
     let maxPage = Math.floor((numTotal - 1) / numShowItems) + 1;
-    console.log(`maxPage ${maxPage}`);
+    //console.log(`maxPage ${maxPage}`);
 
     if (curPage === undefined) curPage = 1;
     if (numShowItems === undefined) numShowItems = 15;
@@ -62,7 +62,7 @@ class Pagination extends Component {
     }
     pageList.push(new Page("", parseInt(curPage) + 1, ">"));
 
-    console.log("chagnePageHandler", this.props.onClick);
+    //console.log("chagnePageHandler", this.props.onClick);
     return (
       <div className="center">
         <div className="btn-container">

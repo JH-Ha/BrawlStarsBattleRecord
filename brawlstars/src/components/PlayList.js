@@ -24,6 +24,8 @@ class PlayList extends Component {
     tag,
     mode: "gemGrab",
     bralwerName: "ALL",
+    isEmpty: false,
+    modeType: "3vs3",
   };
   getTag() {
     const query = qs.parse(this.props.location.search, {
@@ -54,6 +56,11 @@ class PlayList extends Component {
       .then((snapshot) => {
         let numVictory = 0;
         let numGame = 0;
+        if (snapshot.empty) {
+          console.log("no document");
+          this.setState({ playRecord: [], winRate: 0, isEmpty: true });
+          return;
+        }
         snapshot.forEach((doc) => {
           let data = doc.data();
           let date = new Date(data["battleTime"]);
@@ -63,7 +70,7 @@ class PlayList extends Component {
           data["year"] = date.getFullYear();
 
           data["month"] = this.addZero(date.getMonth() + 1);
-          data["date"] = this.addZero(date.getDate() + 1);
+          data["date"] = this.addZero(date.getDate());
           data["hour"] = this.addZero(date.getHours());
           data["minute"] = this.addZero(date.getMinutes());
           console.log(doc.id);
@@ -75,10 +82,12 @@ class PlayList extends Component {
         });
         this.setState({ playRecord: rows });
         this.setState({ winRate: Math.floor((numVictory / numGame) * 100) });
+        this.setState({ isEmpty: false });
       });
   }
   componentDidMount() {
     let tag = this.getTag();
+    this.setState({ tag: tag });
     this.setState({ tag: tag });
     this.getBattleLog(tag, "gemGrab");
   }
@@ -100,8 +109,11 @@ class PlayList extends Component {
         <h1>PlayList</h1>
         <ModeList changeMode={this.changeMode} />
         <BrawlerList changeBrawler={this.changeBrawler} />
-        <h2>{this.getTag()}</h2>
+        <h2>{this.state.tag}</h2>
         <h3>Win Rate : {this.state.winRate}%</h3>
+        <div className={this.state.isEmpty ? "noRecord" : "displayNone"}>
+          No record
+        </div>
         {/* <div className="center column"> */}
         {this.state.playRecord.map((data) => {
           return (

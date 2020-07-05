@@ -72,12 +72,12 @@ class UserList extends Component {
       });
   }
   componentDidUpdate(prevProps) {
-    console.log("update");
+    //console.log("update");
     let prevQuery = this.getQuery(prevProps);
     let query = this.getQuery(this.props);
-    console.log(
-      `prevQuery.curpage ${prevQuery.curPage}, query.curPage ${query.curPage}`
-    );
+    // console.log(
+    //   `prevQuery.curpage ${prevQuery.curPage}, query.curPage ${query.curPage}`
+    // );
     if (prevQuery.curPage !== query.curPage) {
       console.log(`componentWill Update !!!! ${query.curPage}`);
       this.getUserList(query.curPage);
