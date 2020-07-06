@@ -6,6 +6,7 @@ import TrioMode from "./TrioMode";
 import BrawlerList from "./BrawlerList";
 import playStyles from "./PlayList.scss";
 import styles from "./Base.scss";
+import SoloDuoMode from "./SoloDuoMode";
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
 //         ignoreQueryPrefix : true
@@ -17,6 +18,7 @@ class PlayList extends Component {
     super(props);
     this.changeMode = this.changeMode.bind(this);
     this.changeBrawler = this.changeBrawler.bind(this);
+    this.changeModeType = this.changeModeType.bind(this);
   }
   state = {
     playRecord: [],
@@ -25,7 +27,6 @@ class PlayList extends Component {
     mode: "gemGrab",
     bralwerName: "ALL",
     isEmpty: false,
-    modeType: "3vs3",
   };
   getTag() {
     const query = qs.parse(this.props.location.search, {
@@ -89,7 +90,18 @@ class PlayList extends Component {
     let tag = this.getTag();
     this.setState({ tag: tag });
     this.setState({ tag: tag });
-    this.getBattleLog(tag, "gemGrab");
+    this.getBattleLog(tag, this.state.mode);
+  }
+  changeModeType(e) {
+    let type = e.target.value;
+    console.log("setModeType", type);
+    console.log(type);
+    this.setState({ modeType: type });
+    if (type === "trio") {
+      this.getBattleLog(this.state.tag, "gemGrab");
+    } else {
+      this.getBattleLog(this.state.tag, type);
+    }
   }
   changeMode(mode) {
     this.setState({ mode: mode });
@@ -99,6 +111,20 @@ class PlayList extends Component {
     console.log("change bralwer", brawlerName);
     this.setState({ brawlerName: brawlerName });
     this.getBattleLog(this.state.tag, this.state.mode, brawlerName);
+  }
+  isTrio(mode) {
+    if (
+      mode === "gemGrab" ||
+      mode === "heist" ||
+      mode === "siege" ||
+      mode === "bounty" ||
+      mode === "brawlBall" ||
+      mode === "hotZone"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
   render() {
     return (
@@ -110,37 +136,71 @@ class PlayList extends Component {
         <ModeList changeMode={this.changeMode} />
         <BrawlerList changeBrawler={this.changeBrawler} />
         <h2>{this.state.tag}</h2>
+        {/* <select onChange={this.changeModeType} value={this.state.modeType}>
+          <option value="soloShowdown">solo</option>
+          <option value="duoShowdown">duo</option>
+          <option value="trio">trio</option>
+        </select> */}
         <h3>Win Rate : {this.state.winRate}%</h3>
         <div className={this.state.isEmpty ? "noRecord" : "displayNone"}>
           No record
         </div>
-        {/* <div className="center column"> */}
-        {this.state.playRecord.map((data) => {
-          return (
-            <TrioMode
-              key={data.battleTime}
-              battleTime={
-                data.year +
-                "-" +
-                data.month +
-                "-" +
-                data.date +
-                " " +
-                data.hour +
-                ":" +
-                data.minute
-              }
-              result={data.result}
-              brawler_name={data.brawler_name}
-              duration={data.duration}
-              isStarPalyer={data.isStarPlayer}
-              map={data.map}
-              power={data.power}
-              trophies={data.trophies}
-              trophyChange={data.trophyChange}
-            />
-          );
-        })}
+        {!this.isTrio(this.state.mode) &&
+          this.state.playRecord.map((data) => {
+            return (
+              <SoloDuoMode
+                key={data.battleTime}
+                battleTime={
+                  data.year +
+                  "-" +
+                  data.month +
+                  "-" +
+                  data.date +
+                  " " +
+                  data.hour +
+                  ":" +
+                  data.minute
+                }
+                rank={data.rank}
+                result={data.result}
+                brawler_name={data.brawler_name}
+                duration={data.duration}
+                isStarPalyer={data.isStarPlayer}
+                map={data.map}
+                power={data.power}
+                trophies={data.trophies}
+                trophyChange={data.trophyChange}
+              />
+            );
+          })}
+        {this.isTrio(this.state.mode) &&
+          this.state.playRecord.map((data) => {
+            return (
+              <TrioMode
+                key={data.battleTime}
+                battleTime={
+                  data.year +
+                  "-" +
+                  data.month +
+                  "-" +
+                  data.date +
+                  " " +
+                  data.hour +
+                  ":" +
+                  data.minute
+                }
+                rank={data.rank}
+                result={data.result}
+                brawler_name={data.brawler_name}
+                duration={data.duration}
+                isStarPalyer={data.isStarPlayer}
+                map={data.map}
+                power={data.power}
+                trophies={data.trophies}
+                trophyChange={data.trophyChange}
+              />
+            );
+          })}
       </div>
       // </div>
     );

@@ -43,7 +43,7 @@ class BrawlerList extends Component {
   constructor(props) {
     super(props);
     this.change = this.change.bind(this);
-    this.setState({ changeBrawler: this.props.changeBrawler });
+    //this.setState({ changeBrawler: this.props.changeBrawler });
     console.log(this.props.changeBrawler);
   }
   state = {

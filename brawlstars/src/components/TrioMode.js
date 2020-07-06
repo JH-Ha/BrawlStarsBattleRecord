@@ -34,9 +34,7 @@ class TrioMode extends Component {
             <div className="starPlayer">
               {isStarPalyer ? <FontAwesomeIcon icon={faStar} /> : ""}
             </div>
-            <div className="trophyChange">
-              {trophyChange}
-            </div>
+            <div className="trophyChange">{trophyChange}</div>
             <div style={{ clear: "both" }}></div>
           </div>
           <div className={`info ${result}`}>

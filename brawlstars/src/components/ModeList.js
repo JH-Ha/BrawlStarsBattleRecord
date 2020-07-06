@@ -23,6 +23,7 @@ class ModeList extends Component {
         <option value="bounty">bounty</option>
         <option value="siege">siege</option>
         <option value="hotZone">hotZone</option>
+        <option value="soloShowdown">soloShowdown</option>
       </select>
     );
   }
