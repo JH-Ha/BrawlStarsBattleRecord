@@ -14,6 +14,12 @@ class ModeList extends Component {
     this.setState({ value: mode });
     changeMode(mode);
   }
+  componentDidMount() {
+    const { mode } = this.props;
+    this.setState({
+      value: mode,
+    });
+  }
   render() {
     return (
       <select onChange={this.change} value={this.state.value}>
@@ -24,6 +30,7 @@ class ModeList extends Component {
         <option value="siege">siege</option>
         <option value="hotZone">hotZone</option>
         <option value="soloShowdown">soloShowdown</option>
+        <option value="duoShowdown">duoShowdown</option>
       </select>
     );
   }

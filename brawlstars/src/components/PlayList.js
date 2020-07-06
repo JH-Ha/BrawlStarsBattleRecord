@@ -18,14 +18,14 @@ class PlayList extends Component {
     super(props);
     this.changeMode = this.changeMode.bind(this);
     this.changeBrawler = this.changeBrawler.bind(this);
-    this.changeModeType = this.changeModeType.bind(this);
   }
   state = {
     playRecord: [],
     winRate: 0,
+    averageRank: 0,
     tag,
     mode: "gemGrab",
-    bralwerName: "ALL",
+    brawlerName: "ALL",
     isEmpty: false,
   };
   getTag() {
@@ -39,17 +39,17 @@ class PlayList extends Component {
     if (str.length == 1) str = "0" + str;
     return str;
   }
-  addBrawlerName(statement, bralwerName) {
-    if (bralwerName == "ALL" || bralwerName == undefined) {
+  addBrawlerName(statement, brawlerName) {
+    if (brawlerName == "ALL" || brawlerName == undefined) {
       return statement;
     } else {
-      return statement.where("brawler_name", "==", bralwerName);
+      return statement.where("brawler_name", "==", brawlerName);
     }
   }
-  getBattleLog(tag, mode, bralwerName) {
+  getBattleLog(tag, mode, brawlerName) {
     let rows = [];
     let statement = firestore.collection("battleLog").where("tag", "==", tag);
-    this.addBrawlerName(statement, bralwerName)
+    this.addBrawlerName(statement, brawlerName)
       .where("mode", "==", mode)
       .orderBy("battleTime", "desc")
       .limit(25)
@@ -57,16 +57,22 @@ class PlayList extends Component {
       .then((snapshot) => {
         let numVictory = 0;
         let numGame = 0;
+        let sumRank = 0;
         if (snapshot.empty) {
           console.log("no document");
-          this.setState({ playRecord: [], winRate: 0, isEmpty: true });
+          this.setState({
+            playRecord: [],
+            winRate: 0,
+            averageRank: 0,
+            isEmpty: true,
+          });
           return;
         }
         snapshot.forEach((doc) => {
           let data = doc.data();
           let date = new Date(data["battleTime"]);
           date.setHours(date.getHours() + 9);
-          console.log(date.getFullYear(), date.getMonth());
+          //console.log(date.getFullYear(), date.getMonth());
           data["battleTime"] = date.toString();
           data["year"] = date.getFullYear();
 
@@ -74,38 +80,32 @@ class PlayList extends Component {
           data["date"] = this.addZero(date.getDate());
           data["hour"] = this.addZero(date.getHours());
           data["minute"] = this.addZero(date.getMinutes());
-          console.log(doc.id);
-          console.log(data);
+          //console.log(doc.id);
+          //console.log(data);
           rows.push(data);
           numGame++;
+          sumRank += data.rank;
           if (data.result === "victory") numVictory++;
           //playRecord
         });
         this.setState({ playRecord: rows });
         this.setState({ winRate: Math.floor((numVictory / numGame) * 100) });
+        this.setState({
+          averageRank: Math.floor((sumRank / numGame) * 100) / 100,
+        });
         this.setState({ isEmpty: false });
       });
   }
   componentDidMount() {
     let tag = this.getTag();
     this.setState({ tag: tag });
-    this.setState({ tag: tag });
     this.getBattleLog(tag, this.state.mode);
   }
-  changeModeType(e) {
-    let type = e.target.value;
-    console.log("setModeType", type);
-    console.log(type);
-    this.setState({ modeType: type });
-    if (type === "trio") {
-      this.getBattleLog(this.state.tag, "gemGrab");
-    } else {
-      this.getBattleLog(this.state.tag, type);
-    }
-  }
+
   changeMode(mode) {
+    console.log(this.state.tag, mode, this.state.brawlerName);
     this.setState({ mode: mode });
-    this.getBattleLog(this.state.tag, mode);
+    this.getBattleLog(this.state.tag, mode, this.state.brawlerName);
   }
   changeBrawler(brawlerName) {
     console.log("change bralwer", brawlerName);
@@ -133,7 +133,7 @@ class PlayList extends Component {
                 My Tag %239QU209UYC
                 */}
         <h1>PlayList</h1>
-        <ModeList changeMode={this.changeMode} />
+        <ModeList changeMode={this.changeMode} mode={this.state.mode} />
         <BrawlerList changeBrawler={this.changeBrawler} />
         <h2>{this.state.tag}</h2>
         {/* <select onChange={this.changeModeType} value={this.state.modeType}>
@@ -141,7 +141,12 @@ class PlayList extends Component {
           <option value="duoShowdown">duo</option>
           <option value="trio">trio</option>
         </select> */}
-        <h3>Win Rate : {this.state.winRate}%</h3>
+        {this.isTrio(this.state.mode) && (
+          <h3>Win Rate : {this.state.winRate}%</h3>
+        )}
+        {!this.isTrio(this.state.mode) && (
+          <h3>Average Rank : {this.state.averageRank}</h3>
+        )}
         <div className={this.state.isEmpty ? "noRecord" : "displayNone"}>
           No record
         </div>
@@ -170,6 +175,7 @@ class PlayList extends Component {
                 power={data.power}
                 trophies={data.trophies}
                 trophyChange={data.trophyChange}
+                mode={data.mode}
               />
             );
           })}
