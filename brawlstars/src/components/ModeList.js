@@ -22,16 +22,19 @@ class ModeList extends Component {
   }
   render() {
     return (
-      <select onChange={this.change} value={this.state.value}>
-        <option value="gemGrab">gemGrab</option>
-        <option value="heist">heist</option>
-        <option value="brawlBall">brawlBall</option>
-        <option value="bounty">bounty</option>
-        <option value="siege">siege</option>
-        <option value="hotZone">hotZone</option>
-        <option value="soloShowdown">soloShowdown</option>
-        <option value="duoShowdown">duoShowdown</option>
-      </select>
+      <div className="selectBox">
+        <label htmlFor="modeList">mode </label>
+        <select id="modeList" onChange={this.change} value={this.state.value}>
+          <option value="gemGrab">gemGrab</option>
+          <option value="heist">heist</option>
+          <option value="brawlBall">brawlBall</option>
+          <option value="bounty">bounty</option>
+          <option value="siege">siege</option>
+          <option value="hotZone">hotZone</option>
+          <option value="soloShowdown">soloShowdown</option>
+          <option value="duoShowdown">duoShowdown</option>
+        </select>
+      </div>
     );
   }
 }

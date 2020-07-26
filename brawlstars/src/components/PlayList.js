@@ -135,7 +135,7 @@ class PlayList extends Component {
         <h1>PlayList</h1>
         <ModeList changeMode={this.changeMode} mode={this.state.mode} />
         <BrawlerList changeBrawler={this.changeBrawler} />
-        <h2>{this.state.tag}</h2>
+        <h2>Tag : {this.state.tag}</h2>
         {/* <select onChange={this.changeModeType} value={this.state.modeType}>
           <option value="soloShowdown">solo</option>
           <option value="duoShowdown">duo</option>

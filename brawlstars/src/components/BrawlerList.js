@@ -57,15 +57,22 @@ class BrawlerList extends Component {
   }
   render() {
     return (
-      <select onChange={this.change} value={this.state.value}>
-        {brawlerNameList.map((brawlerName, index) => {
-          return (
-            <option key={brawlerName} label={brawlerName} value={brawlerName}>
-              {brawlerName}
-            </option>
-          );
-        })}
-      </select>
+      <div className="selectBox">
+        <label htmlFor="brawlerName">brawler</label>
+        <select
+          id="brawlerName"
+          onChange={this.change}
+          value={this.state.value}
+        >
+          {brawlerNameList.map((brawlerName, index) => {
+            return (
+              <option key={brawlerName} label={brawlerName} value={brawlerName}>
+                {brawlerName}
+              </option>
+            );
+          })}
+        </select>
+      </div>
     );
   }
 }
