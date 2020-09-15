@@ -11,7 +11,7 @@ let brawlToken = token.brawlToken;
 
 //firebase initialization
 
-let firebaseInitRaw = fs.readFileSync("firebaseInit.json");
+let firebaseInitRaw = fs.readFileSync("firestore/firebaseInit.json");
 let firebaseInit = JSON.parse(firebaseInitRaw);
 
 if (!firebase.apps.length) {
