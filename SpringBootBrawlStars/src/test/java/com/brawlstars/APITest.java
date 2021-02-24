@@ -1,4 +1,4 @@
-package com.brawlstars.api;
+package com.brawlstars;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,26 +7,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.junit.jupiter.api.Test;
 
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.Item;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@RestController
-public class RecordController {
-
-	@GetMapping("/record/{tag}")
-	public List<RecordDto> getRecords() {
-		// List<RecordDto> recordDtos = null;
-		return null;
-	}
-
-	@GetMapping("/record/save/{tag}")
-	public String saveRecords(@PathVariable(name = "tag") String tag) {
+public class APITest {
+	@Test
+	public void getBattleLog() {
 		String baseUrl = "https://api.brawlstars.com/v1/players/";
+		String tag = "#9QU209UYC";
 		tag = tag.replace("#", "%23");
 		try {
 			URL url = new URL(baseUrl + tag + "/battlelog");
@@ -48,10 +39,6 @@ public class RecordController {
 
 			System.out.println("Response: " + response.toString());
 
-			// ObjectMapper mapper = new
-			// ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
-			// false);
-
 			ObjectMapper mapper = new ObjectMapper();
 
 			BattleLog battleLog = mapper.readValue(response.toString(), BattleLog.class);
@@ -66,10 +53,5 @@ public class RecordController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "";
-	}
-
-	class RecordDto {
-
 	}
 }
