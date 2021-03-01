@@ -24,13 +24,15 @@ public class Record {
 	@GeneratedValue
 	@Column(name = "record_id")
 	private Long id;
-
+	private String tag;
 	private Date battleTime;
 	private String brawlerName;
+	private Integer power;
 	private Integer thophies;
 	private Integer trophyChange;
 	private String map;
-	private String key;
-
+	private String groupKey;
 	private String mode;
+	private String type;
+	private String result;
 }
