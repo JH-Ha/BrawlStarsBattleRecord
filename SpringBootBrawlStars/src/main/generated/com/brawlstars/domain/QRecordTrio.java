@@ -30,12 +30,12 @@ public class QRecordTrio extends EntityPathBase<RecordTrio> {
     public final NumberPath<Integer> duration = createNumber("duration", Integer.class);
 
     //inherited
+    public final StringPath groupKey = _super.groupKey;
+
+    //inherited
     public final NumberPath<Long> id = _super.id;
 
     public final BooleanPath isStarPlayer = createBoolean("isStarPlayer");
-
-    //inherited
-    public final StringPath key = _super.key;
 
     //inherited
     public final StringPath map = _super.map;
@@ -44,10 +44,22 @@ public class QRecordTrio extends EntityPathBase<RecordTrio> {
     public final StringPath mode = _super.mode;
 
     //inherited
+    public final NumberPath<Integer> power = _super.power;
+
+    //inherited
+    public final StringPath result = _super.result;
+
+    //inherited
+    public final StringPath tag = _super.tag;
+
+    //inherited
     public final NumberPath<Integer> thophies = _super.thophies;
 
     //inherited
     public final NumberPath<Integer> trophyChange = _super.trophyChange;
+
+    //inherited
+    public final StringPath type = _super.type;
 
     public QRecordTrio(String variable) {
         super(RecordTrio.class, forVariable(variable));
