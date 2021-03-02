@@ -7,17 +7,22 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.Item;
+import com.brawlstars.service.RecordService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 public class RecordController {
 
+	@Autowired
+	RecordService recordService;
+	
 	@GetMapping("/record/{tag}")
 	public List<RecordDto> getRecords() {
 		// List<RecordDto> recordDtos = null;
@@ -27,9 +32,9 @@ public class RecordController {
 	@GetMapping("/record/save/{tag}")
 	public String saveRecords(@PathVariable(name = "tag") String tag) {
 		String baseUrl = "https://api.brawlstars.com/v1/players/";
-		tag = tag.replace("#", "%23");
+		String tagReplaced = tag.replace("#", "%23");
 		try {
-			URL url = new URL(baseUrl + tag + "/battlelog");
+			URL url = new URL(baseUrl + tagReplaced + "/battlelog");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 			String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjAzM2YwNDRmLTIzZTUtNGJhZC04ZDdhLWVlODgzOTk0NDIyMSIsImlhdCI6MTYxNDA5Mzc2NSwic3ViIjoiZGV2ZWxvcGVyLzRmODljMjEyLWE0OWYtZWRiZS0zZjgzLTRhODJiZGE2N2NiNSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiNTguMTQzLjIwNi40MSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.YknOO4aOE7OxNQ1SWZ-ojAp73SqDMXxiA-hyUzHnPcF36HiOQeFPUgHMv6LmHEA8YwWiSL-tWBRRfZZAZvrA6g";
@@ -60,7 +65,13 @@ public class RecordController {
 
 			items.stream().forEach(item -> {
 				System.out.println(item.getBattleTime());
-
+				if (recordService.isTrioMode(item.getEvent().getMode())) {
+					recordService.saveTrio(tag, item);
+				} else if(recordService.isDuo(item.getEvent().getMode())) {
+					recordService.saveDuo(tag, item);
+				} else if(recordService.isSolo(item.getEvent().getMode())) {
+					recordService.saveSolo(tag, item);
+				}
 			});
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

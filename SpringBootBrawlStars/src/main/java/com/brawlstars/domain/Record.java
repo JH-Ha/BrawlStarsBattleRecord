@@ -28,7 +28,7 @@ public class Record {
 	private Date battleTime;
 	private String brawlerName;
 	private Integer power;
-	private Integer thophies;
+	private Integer trophies;
 	private Integer trophyChange;
 	private String map;
 	private String groupKey;
