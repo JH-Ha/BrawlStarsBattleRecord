@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.brawlstars.domain.Record;
+import com.brawlstars.domain.RecordDuo;
 import com.brawlstars.domain.RecordTrio;
 import com.brawlstars.json.Item;
 import com.brawlstars.json.Player;
@@ -74,7 +75,15 @@ public class RecordService {
 		
 		return battleTimeDate;
 	}
-
+	public String makeGroupKey(List<Player> players, String battleTime) {
+		players.sort((Player a, Player b) -> {
+			return a.getTag().compareTo(b.getTag());
+		});
+		// make team key to get team record
+		String groupKey = players.stream().map(s -> s.getTag()).reduce("", (a, b) -> a + b);
+		groupKey += battleTime;
+		return groupKey;
+	}
 	public void saveTrio(String tag, Item item) {
 		// TODO Auto-generated method stub
 		Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
@@ -88,12 +97,7 @@ public class RecordService {
 
 		List<List<Player>> teams = item.getBattle().getTeams();
 		List<Player> players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
-		players.sort((Player a, Player b) -> {
-			return a.getTag().compareTo(b.getTag());
-		});
-		// make team key to get team record
-		String groupKey = players.stream().map(s -> s.getTag()).reduce("", (a, b) -> a + b);
-		groupKey += item.getBattleTime();
+		String groupKey = makeGroupKey(players, item.getBattleTime());
 
 		int playerGroupIdx = 0;
 		for (int i = 0; i < teams.size(); i++) {
@@ -142,7 +146,42 @@ public class RecordService {
 		}
 	}
 	public void saveDuo(String tag, Item item) {
+		List<List<Player>> teams = item.getBattle().getTeams();
+		List<Player> players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
+		String groupKey = makeGroupKey(players, item.getBattleTime());
 		
+		Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
+		
+		for(int i = 0; i < teams.size(); i ++) {
+			List<Player> team = teams.get(i);
+			for(int j = 0; j < team.size(); j ++){
+				Player player = team.get(j);
+				RecordDuo recordDuo = new RecordDuo();
+				recordDuo.setTag(player.getTag());
+				recordDuo.setBattleTime(battleTimeDate);
+				recordDuo.setBrawlerName(player.getBrawler().getName());
+				recordDuo.setPower(player.getBrawler().getPower());
+				recordDuo.setMap(item.getEvent().getMap());
+				recordDuo.setGroupKey(groupKey);
+				recordDuo.setMode(item.getEvent().getMode());
+				recordDuo.setType(item.getBattle().getType());			
+				recordDuo.setRank(i + 1);
+				
+				if(tag.equals(player.getTag()))
+					recordDuo.setTrophyChange(item.getBattle().getTrophyChange());
+				
+				recordRepository.save(recordDuo);
+			}
+		}
+	}
+
+	public void saveSole(String tag, Item item) {
+		// TODO Auto-generated method stub
+		List<Player> players = item.getBattle().getPlayers();
+		
+		for(int i = 0; i < players.size(); i ++) {
+			
+		}
 	}
 
 }

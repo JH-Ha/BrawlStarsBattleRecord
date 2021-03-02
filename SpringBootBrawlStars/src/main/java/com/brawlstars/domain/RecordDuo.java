@@ -7,11 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@DiscriminatorValue("TRIO")
+@DiscriminatorValue("DUO")
 @Getter
 @Setter
-public class RecordTrio extends Record {
-	private Integer duration;
-	private Boolean isStarPlayer;
-	private String result;
+public class RecordDuo extends Record {
+	private Integer rank;
 }
