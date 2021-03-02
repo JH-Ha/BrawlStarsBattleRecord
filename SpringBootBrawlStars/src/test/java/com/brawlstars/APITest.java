@@ -61,8 +61,8 @@ public class APITest {
 					recordService.saveTrio(tag, item);
 				} else if(recordService.isDuo(item.getEvent().getMode())) {
 					recordService.saveDuo(tag, item);
-				} else if(recordService.isSole(item.getEvent().getMode())) {
-					recordService.saveSole(tag, item);
+				} else if(recordService.isSolo(item.getEvent().getMode())) {
+					recordService.saveSolo(tag, item);
 				}
 			});
 		} catch (IOException e) {

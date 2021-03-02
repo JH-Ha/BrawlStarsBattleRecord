@@ -14,4 +14,5 @@ public class RecordTrio extends Record {
 	private Integer duration;
 	private Boolean isStarPlayer;
 	private String result;
+	
 }

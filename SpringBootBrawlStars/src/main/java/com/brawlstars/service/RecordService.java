@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.brawlstars.domain.Record;
 import com.brawlstars.domain.RecordDuo;
+import com.brawlstars.domain.RecordSolo;
 import com.brawlstars.domain.RecordTrio;
 import com.brawlstars.json.Item;
 import com.brawlstars.json.Player;
@@ -53,8 +54,8 @@ public class RecordService {
 		return false;
 	}
 	
-	public boolean isSole(String mode) {
-		if("soloShowdown".endsWith(mode)) {
+	public boolean isSolo(String mode) {
+		if("soloShowdown".equals(mode)) {
 			return true;
 		}
 		return false;
@@ -125,7 +126,7 @@ public class RecordService {
 				recordTrio.setMode(item.getEvent().getMode());
 				recordTrio.setType(item.getBattle().getType());
 				recordTrio.setTag(player.getTag());
-				recordTrio.setThophies(player.getBrawler().getTrophies());
+				recordTrio.setTrophies(player.getBrawler().getTrophies());
 				// we don't know other players' trophy change
 				if (player.getTag().equals(tag)) {
 					recordTrio.setTrophyChange(item.getBattle().getTrophyChange());
@@ -175,12 +176,16 @@ public class RecordService {
 		}
 	}
 
-	public void saveSole(String tag, Item item) {
+	public void saveSolo(String tag, Item item) {
 		// TODO Auto-generated method stub
 		List<Player> players = item.getBattle().getPlayers();
+		String groupKey = makeGroupKey(players, item.getBattleTime());
+		Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
 		
 		for(int i = 0; i < players.size(); i ++) {
-			
+			Player player = players.get(i);
+			RecordSolo recordSolo = RecordSolo.createSoloRecord(tag, item, player, battleTimeDate, groupKey);
+			recordRepository.save(recordSolo);
 		}
 	}
 
