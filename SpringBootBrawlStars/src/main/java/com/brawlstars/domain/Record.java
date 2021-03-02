@@ -34,5 +34,4 @@ public class Record {
 	private String groupKey;
 	private String mode;
 	private String type;
-	private String result;
 }
