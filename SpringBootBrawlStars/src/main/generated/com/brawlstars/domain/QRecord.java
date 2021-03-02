@@ -23,17 +23,25 @@ public class QRecord extends EntityPathBase<Record> {
 
     public final StringPath brawlerName = createString("brawlerName");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public final StringPath groupKey = createString("groupKey");
 
-    public final StringPath key = createString("key");
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath map = createString("map");
 
     public final StringPath mode = createString("mode");
 
+    public final NumberPath<Integer> power = createNumber("power", Integer.class);
+
+    public final StringPath result = createString("result");
+
+    public final StringPath tag = createString("tag");
+
     public final NumberPath<Integer> thophies = createNumber("thophies", Integer.class);
 
     public final NumberPath<Integer> trophyChange = createNumber("trophyChange", Integer.class);
+
+    public final StringPath type = createString("type");
 
     public QRecord(String variable) {
         super(Record.class, forVariable(variable));
