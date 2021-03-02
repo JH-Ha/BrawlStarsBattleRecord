@@ -11,5 +11,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RecordDuo extends Record {
-	private Integer rank;
+	private Integer resultRank;
 }
