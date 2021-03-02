@@ -17,7 +17,8 @@ import lombok.Setter;
 @Setter
 public class RecordSolo extends Record{
 
-	public static RecordSolo createSoloRecord(String tag, Item item, Player player, Date battleTimeDate, String groupKey){
+	private Integer resultRank;
+	public static RecordSolo createSoloRecord(String tag, Item item, Player player, Date battleTimeDate, String groupKey, Integer resultRank){
 		RecordSolo recordSolo = new RecordSolo();
 		recordSolo.setTag(player.getTag());
 		recordSolo.setBattleTime(battleTimeDate);
@@ -31,6 +32,7 @@ public class RecordSolo extends Record{
 		
 		if(tag.equals(player.getTag()))
 			recordSolo.setTrophyChange(item.getBattle().getTrophyChange());
+		recordSolo.setResultRank(resultRank);
 		return recordSolo;
 	}
 }

@@ -166,7 +166,7 @@ public class RecordService {
 				recordDuo.setGroupKey(groupKey);
 				recordDuo.setMode(item.getEvent().getMode());
 				recordDuo.setType(item.getBattle().getType());			
-				recordDuo.setRank(i + 1);
+				recordDuo.setResultRank(i + 1);
 				
 				if(tag.equals(player.getTag()))
 					recordDuo.setTrophyChange(item.getBattle().getTrophyChange());
@@ -184,7 +184,7 @@ public class RecordService {
 		
 		for(int i = 0; i < players.size(); i ++) {
 			Player player = players.get(i);
-			RecordSolo recordSolo = RecordSolo.createSoloRecord(tag, item, player, battleTimeDate, groupKey);
+			RecordSolo recordSolo = RecordSolo.createSoloRecord(tag, item, player, battleTimeDate, groupKey, i + 1);
 			recordRepository.save(recordSolo);
 		}
 	}
