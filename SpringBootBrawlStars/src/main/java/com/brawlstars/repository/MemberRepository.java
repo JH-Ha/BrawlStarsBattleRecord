@@ -1,5 +1,7 @@
 package com.brawlstars.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
@@ -32,6 +34,13 @@ public class MemberRepository {
 				.where(qMember.tag.eq(tag))
 				.fetchOne();
 		return member;
-
+	}
+	public List<Member> findAll(){
+		JPAQuery<Member> query = new JPAQuery<Member>(em);
+		QMember qMember = QMember.member;
+		List<Member> members = query
+				.from(qMember)
+				.fetch();
+		return members;
 	}
 }

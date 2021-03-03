@@ -152,6 +152,13 @@ public class RecordService {
 		String groupKey = makeGroupKey(players, item.getBattleTime());
 		
 		Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
+
+		Record foundRecord = recordRepository.findOne(tag, battleTimeDate);
+		if(foundRecord != null) {
+			foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+			recordRepository.save(foundRecord);
+			return;
+		}
 		
 		for(int i = 0; i < teams.size(); i ++) {
 			List<Player> team = teams.get(i);
@@ -181,6 +188,13 @@ public class RecordService {
 		List<Player> players = item.getBattle().getPlayers();
 		String groupKey = makeGroupKey(players, item.getBattleTime());
 		Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
+		
+		Record foundRecord = recordRepository.findOne(tag, battleTimeDate);
+		if(foundRecord != null) {
+			foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+			recordRepository.save(foundRecord);
+			return;
+		}
 		
 		for(int i = 0; i < players.size(); i ++) {
 			Player player = players.get(i);

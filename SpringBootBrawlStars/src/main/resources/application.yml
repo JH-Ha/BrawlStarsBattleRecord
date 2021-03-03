@@ -1,10 +1,14 @@
 spring:
   datasource:
     #url : jdbc:h2:mem:test
-    url: jdbc:mysql://database-study-spring.chsxiosrbq1b.ap-northeast-2.rds.amazonaws.com:3306/sys
-    username: admin
-    password: 6s8GJggs8q9Ol3biXshz
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://database-study-spring.chsxiosrbq1b.ap-northeast-2.rds.amazonaws.com:3306/sys
+    #username: admin
+    #password: 6s8GJggs8q9Ol3biXshz
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:tcp://localhost/~/jpashop
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
       ddl-auto: update 

@@ -12,9 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.brawlstars.domain.Member;
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.Item;
+import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.service.RecordService;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
@@ -22,12 +25,19 @@ public class RecordSchedule {
 	@Autowired
 	RecordService recordService;
 
-	//one hour
+	@Autowired
+	MemberRepository memberRepository;
+
+	// one hour
 	@Scheduled(fixedDelay = 3600000)
 	public void saveRecords() {
 
-		String tag = "#9QU209UYC";
-		saveRecord(tag);
+		List<Member> members = memberRepository.findAll();
+		members.stream().forEach(member -> {
+			String tag = member.getTag();
+			saveRecord(tag);
+		});
+
 	}
 
 	public void saveRecord(String tag) {
@@ -55,11 +65,10 @@ public class RecordSchedule {
 
 			System.out.println("Response: " + response.toString());
 
-			// ObjectMapper mapper = new
-			// ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
-			// false);
+			ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
+					false);
 
-			ObjectMapper mapper = new ObjectMapper();
+			// ObjectMapper mapper = new ObjectMapper();
 
 			BattleLog battleLog = mapper.readValue(response.toString(), BattleLog.class);
 
