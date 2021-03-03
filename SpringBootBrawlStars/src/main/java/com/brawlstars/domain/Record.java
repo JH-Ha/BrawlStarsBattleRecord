@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +20,12 @@ import lombok.Setter;
 @DiscriminatorColumn(name = "game_type")
 @Getter
 @Setter
+@Table(uniqueConstraints = 
+{ @UniqueConstraint(
+		name = "uniqueGame", 
+		columnNames = { "tag", "battleTime" }) 
+})
+
 public class Record {
 
 	@Id

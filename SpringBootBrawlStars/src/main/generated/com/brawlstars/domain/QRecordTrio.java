@@ -46,14 +46,13 @@ public class QRecordTrio extends EntityPathBase<RecordTrio> {
     //inherited
     public final NumberPath<Integer> power = _super.power;
 
-    //inherited
-    public final StringPath result = _super.result;
+    public final StringPath result = createString("result");
 
     //inherited
     public final StringPath tag = _super.tag;
 
     //inherited
-    public final NumberPath<Integer> thophies = _super.thophies;
+    public final NumberPath<Integer> trophies = _super.trophies;
 
     //inherited
     public final NumberPath<Integer> trophyChange = _super.trophyChange;
