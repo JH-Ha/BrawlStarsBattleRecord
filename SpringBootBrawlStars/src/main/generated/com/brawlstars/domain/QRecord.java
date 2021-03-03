@@ -33,11 +33,9 @@ public class QRecord extends EntityPathBase<Record> {
 
     public final NumberPath<Integer> power = createNumber("power", Integer.class);
 
-    public final StringPath result = createString("result");
-
     public final StringPath tag = createString("tag");
 
-    public final NumberPath<Integer> thophies = createNumber("thophies", Integer.class);
+    public final NumberPath<Integer> trophies = createNumber("trophies", Integer.class);
 
     public final NumberPath<Integer> trophyChange = createNumber("trophyChange", Integer.class);
 

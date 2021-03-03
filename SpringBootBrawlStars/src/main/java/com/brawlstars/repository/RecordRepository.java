@@ -5,19 +5,19 @@ import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.brawlstars.domain.QRecord;
 import com.brawlstars.domain.Record;
 import com.querydsl.jpa.impl.JPAQuery;
 
-import lombok.RequiredArgsConstructor;
-
 @Repository
-@RequiredArgsConstructor
 @Transactional
 public class RecordRepository {
-	private final EntityManager em;
+	
+	@Autowired
+	private EntityManager em;
 
 	public void save(Record record) {
 		if (record.getId() == null) {

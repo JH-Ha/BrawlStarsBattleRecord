@@ -5,14 +5,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.brawlstars.domain.Member;
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.Item;
+import com.brawlstars.json.Player;
+import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.repository.RecordRepository;
 import com.brawlstars.service.RecordService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +28,9 @@ public class APITest {
 	RecordRepository recordRepository;
 	@Autowired
 	RecordService recordService;
-
+	@Autowired
+	MemberRepository memberRepository;
+	
 	@Test
 	public void getBattleLog() {
 		String baseUrl = "https://api.brawlstars.com/v1/players/";
@@ -55,6 +62,7 @@ public class APITest {
 
 			List<Item> items = battleLog.getItems();
 
+			//Map<String, Member> userMap = new HashMap<String, Member>();
 			items.stream().forEach(item -> {
 				System.out.println(item.getBattleTime());
 				if (recordService.isTrioMode(item.getEvent().getMode())) {
@@ -63,6 +71,23 @@ public class APITest {
 					recordService.saveDuo(tag, item);
 				} else if(recordService.isSolo(item.getEvent().getMode())) {
 					recordService.saveSolo(tag, item);
+				}
+				
+				List<List<Player>> teams = item.getBattle().getTeams();
+				List<Player> players;
+				if(teams != null)
+					players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
+				else
+					players = item.getBattle().getPlayers();
+				
+				for(int i = 0; i < players.size(); i ++) {
+					Player player = players.get(i);
+					Member member = Member.createMember(player.getTag(), player.getName());
+					try{
+						memberRepository.save(member);
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
 				}
 			});
 		} catch (IOException e) {
