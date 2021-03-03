@@ -22,7 +22,7 @@ public class RecordSolo extends Record{
 		RecordSolo recordSolo = new RecordSolo();
 		recordSolo.setTag(player.getTag());
 		recordSolo.setBattleTime(battleTimeDate);
-		recordSolo.setBrawlerName(player.getName());
+		recordSolo.setBrawlerName(player.getBrawler().getName());
 		recordSolo.setPower(player.getBrawler().getPower());
 		recordSolo.setTrophies(player.getBrawler().getTrophies());
 		recordSolo.setMap(item.getEvent().getMap());

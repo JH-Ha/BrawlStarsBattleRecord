@@ -1,5 +1,7 @@
 package com.brawlstars;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +26,13 @@ public class MemberTest {
 		
 		Member foundMember = memberRepository.findOne(tag);
 		Assertions.assertEquals(foundMember.getName(), name);
+	}
+	
+	@Test
+	public void findAll() {
+		List<Member> members = memberRepository.findAll();
+		members.stream().forEach(m ->{
+			System.out.println(m.getTag());
+		});
 	}
 }
