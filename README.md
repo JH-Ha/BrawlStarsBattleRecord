@@ -1,4 +1,4 @@
-## 프로젝트 개요
+### 프로젝트 개요
 
 브롤 스타즈의 전적 정보를 기록하는 사이트를 만드는 프로젝트입니다.
 
@@ -9,6 +9,18 @@ Front-End는 React로 제작되었고, Back-End는 firebase를 이용하여 제�
 server.js를 실행시키면, firebase에 있는 user data를 가져와서 1시간마다 전적을 업데이트 시킵니다. 현재는 약 600명의 유저의 데이터가 업데이트 되고 있습니다.
 
 UserList 페이지에서 유저이름을 클릭하면, 해당 유저의 전적정보를 볼 수 있습니다. 
+
+## version 1.0
+
+React + firebase 를 이용해서 구현한 버전입니다.
+
+nodejs 로 서버를 실행시켜 주기적으로 firestore에 전투 기록을 insert합니다.
+
+## version 2.0 (진행중)
+
+React + Spring Boot + JPA 를 이용해서 구현하고 있습니다.
+
+firestore에 paging 기능 부재, NoSQL이다 보니 join 이 불가능하여 통계적으로 유의미한 자료를 뽑아내는게 어려웠습니다. 그래서 Database를 RDBMS로 바꾸고 Spring Boot로 API서버를 구축하여 React에서 데이터를 가져오는 방식으로 구현하고 있습니다.
 
 ## Demo Page
 
