@@ -1,7 +1,5 @@
 package com.brawlstars.domain;
 
-import java.util.Date;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -18,10 +16,10 @@ import lombok.Setter;
 public class RecordSolo extends Record{
 
 	private Integer resultRank;
-	public static RecordSolo createSoloRecord(String tag, Item item, Player player, Date battleTimeDate, String groupKey, Integer resultRank){
+	public static RecordSolo createSoloRecord(String tag, Item item, Player player, String groupKey, Integer resultRank){
 		RecordSolo recordSolo = new RecordSolo();
 		recordSolo.setTag(player.getTag());
-		recordSolo.setBattleTime(battleTimeDate);
+		recordSolo.setBattleTime(item.getBattleTime());
 		recordSolo.setBrawlerName(player.getBrawler().getName());
 		recordSolo.setPower(player.getBrawler().getPower());
 		recordSolo.setTrophies(player.getBrawler().getTrophies());

@@ -1,7 +1,5 @@
 package com.brawlstars.domain;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -33,7 +31,7 @@ public class Record {
 	@Column(name = "record_id")
 	private Long id;
 	private String tag;
-	private Date battleTime;
+	private String battleTime;
 	private String brawlerName;
 	private Integer power;
 	private Integer trophies;

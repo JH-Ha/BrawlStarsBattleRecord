@@ -3,7 +3,6 @@ package com.brawlstars.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,7 +12,6 @@ import com.brawlstars.domain.QMember;
 import com.querydsl.jpa.impl.JPAQuery;
 
 @Repository
-@Transactional
 public class MemberRepository {
 	@Autowired
 	private EntityManager em;

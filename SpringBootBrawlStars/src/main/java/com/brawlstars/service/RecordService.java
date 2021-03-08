@@ -10,23 +10,32 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.brawlstars.api.BrawlStarsAPI;
+import com.brawlstars.domain.Member;
 import com.brawlstars.domain.Record;
 import com.brawlstars.domain.RecordDuo;
 import com.brawlstars.domain.RecordSolo;
 import com.brawlstars.domain.RecordTrio;
 import com.brawlstars.json.Item;
 import com.brawlstars.json.Player;
+import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.repository.RecordRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RecordService {
 	
 	@Autowired
 	private RecordRepository recordRepository;
+	@Autowired
+	private MemberRepository memberRepository;
+	@Autowired
+	private BrawlStarsAPI brawlStarsAPI;
 	
 	public String getOppositeResult(String result) {
 		if ("defeat".equals(result)) {
@@ -87,9 +96,9 @@ public class RecordService {
 	}
 	public void saveTrio(String tag, Item item) {
 		// TODO Auto-generated method stub
-		Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
+		//Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
 		
-		Record foundRecord = recordRepository.findOne(tag, battleTimeDate);
+		Record foundRecord = recordRepository.findOne(tag, item.getBattleTime());
 		if(foundRecord != null) {
 			foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
 			recordRepository.save(foundRecord);
@@ -117,7 +126,7 @@ public class RecordService {
 			for (int j = 0; j < team.size(); j++) {
 				Player player = team.get(j);
 				RecordTrio recordTrio = new RecordTrio();
-				recordTrio.setBattleTime(battleTimeDate);
+				recordTrio.setBattleTime(item.getBattleTime());
 				recordTrio.setBrawlerName(player.getBrawler().getName());
 				recordTrio.setPower(player.getBrawler().getPower());
 				recordTrio.setGroupKey(groupKey);
@@ -151,22 +160,31 @@ public class RecordService {
 		List<Player> players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
 		String groupKey = makeGroupKey(players, item.getBattleTime());
 		
-		Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
+		//Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
 
-		Record foundRecord = recordRepository.findOne(tag, battleTimeDate);
-		if(foundRecord != null) {
-			foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
-			recordRepository.save(foundRecord);
-			return;
-		}
+		
+		/*
+		 * if(foundRecord != null) {
+		 * foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+		 * recordRepository.save(foundRecord); return; }
+		 */
 		
 		for(int i = 0; i < teams.size(); i ++) {
 			List<Player> team = teams.get(i);
 			for(int j = 0; j < team.size(); j ++){
 				Player player = team.get(j);
+				
+				
+				/*
+				 * Record foundRecord = recordRepository.findOne(tag, item.getBattleTime());
+				 * if(foundRecord != null) { if(tag.equals(player.getTag()))
+				 * foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+				 * recordRepository.save(foundRecord); continue; }
+				 */
+				
 				RecordDuo recordDuo = new RecordDuo();
 				recordDuo.setTag(player.getTag());
-				recordDuo.setBattleTime(battleTimeDate);
+				recordDuo.setBattleTime(item.getBattleTime());
 				recordDuo.setBrawlerName(player.getBrawler().getName());
 				recordDuo.setPower(player.getBrawler().getPower());
 				recordDuo.setMap(item.getEvent().getMap());
@@ -187,20 +205,66 @@ public class RecordService {
 		// TODO Auto-generated method stub
 		List<Player> players = item.getBattle().getPlayers();
 		String groupKey = makeGroupKey(players, item.getBattleTime());
-		Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
+		//Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
 		
-		Record foundRecord = recordRepository.findOne(tag, battleTimeDate);
-		if(foundRecord != null) {
-			foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
-			recordRepository.save(foundRecord);
-			return;
-		}
 		
 		for(int i = 0; i < players.size(); i ++) {
 			Player player = players.get(i);
-			RecordSolo recordSolo = RecordSolo.createSoloRecord(tag, item, player, battleTimeDate, groupKey, i + 1);
+			Record foundRecord = recordRepository.findOne(player.getTag(), item.getBattleTime());
+			if(foundRecord != null) {
+				if(tag.equals(player.getTag()))
+					foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+				recordRepository.save(foundRecord);
+				continue;
+			}
+			RecordSolo recordSolo = RecordSolo.createSoloRecord(tag, item, player, groupKey, i + 1);
 			recordRepository.save(recordSolo);
 		}
+	}
+
+	public void savePlayers(String tag) {
+		// TODO Auto-generated method stub
+		try {
+			List<Item> items = brawlStarsAPI.getItems(tag);
+			items.stream().forEach(item ->{ 
+				List<List<Player>> teams = item.getBattle().getTeams();
+				List<Player> players;
+				if(teams != null)
+					players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
+				else
+					players = item.getBattle().getPlayers();
+				
+				for(int i = 0; i < players.size(); i ++) {
+					Player player = players.get(i);
+					Member foundMember = memberRepository.findOne(player.getTag());
+					if(foundMember != null)
+						continue;
+					Member member = Member.createMember(player.getTag(), player.getName());
+					try{
+						memberRepository.save(member);
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	}
+	
+	public void saveBattleLog(List<Item> items, String tag) {
+		items.stream().forEach(item -> {
+			System.out.println(item.getBattleTime());
+			if (isTrioMode(item.getEvent().getMode())) {
+				saveTrio(tag, item);
+			} else if(isDuo(item.getEvent().getMode())) {
+				saveDuo(tag, item);
+			} else if(isSolo(item.getEvent().getMode())) {
+				saveSolo(tag, item);
+			}
+		});
 	}
 
 }
