@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.brawlstars.domain.Member;
@@ -29,12 +28,18 @@ public class RecordSchedule {
 	MemberRepository memberRepository;
 
 	// one hour
-	@Scheduled(fixedDelay = 3600000)
+	//@Scheduled(fixedDelay = 3600000)
 	public void saveRecords() {
 
 		List<Member> members = memberRepository.findAll();
 		members.stream().forEach(member -> {
 			String tag = member.getTag();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			saveRecord(tag);
 		});
 

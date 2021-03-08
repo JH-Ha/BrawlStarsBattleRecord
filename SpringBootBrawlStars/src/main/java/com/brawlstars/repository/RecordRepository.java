@@ -1,24 +1,23 @@
 package com.brawlstars.repository;
 
-import java.util.Date;
-
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.brawlstars.domain.QRecord;
 import com.brawlstars.domain.Record;
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository
-@Transactional
 public class RecordRepository {
 	
 	@Autowired
 	private EntityManager em;
 
+	@Autowired 
+	JPAQueryFactory queryFactory;
+	
 	public void save(Record record) {
 		if (record.getId() == null) {
 			em.persist(record);
@@ -27,11 +26,11 @@ public class RecordRepository {
 		}
 	}
 
-	public Record findOne(String tag, Date battleTime) {
-		JPAQuery<Record> query = new JPAQuery<Record>(em);
+	public Record findOne(String tag, String battleTime) {
+		//JPAQuery<Record> query = new JPAQuery<Record>(em);
 		QRecord qRecord = QRecord.record;
-		Record record = query
-				.from(qRecord)
+		Record record = queryFactory
+				.selectFrom(qRecord)
 				.where(qRecord.tag.eq(tag)
 				  .and(qRecord.battleTime.eq(battleTime)))
 				.fetchOne();
