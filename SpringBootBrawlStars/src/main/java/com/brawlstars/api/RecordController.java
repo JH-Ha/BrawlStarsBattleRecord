@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.brawlstars.domain.Record;
+import com.brawlstars.repository.RecordDto;
 import com.brawlstars.service.RecordService;
 
 @RestController
@@ -16,8 +18,8 @@ public class RecordController {
 	RecordService recordService;
 	
 	@GetMapping("/record/{tag}")
-	public List<RecordDto> getRecords() {
-		// List<RecordDto> recordDtos = null;
+	public List<RecordDto> getRecords(@PathVariable(name="tag") String tag) {
+		List<Record> records = recordService.getFindByTag(tag);
 		return null;
 	}
 
@@ -32,7 +34,5 @@ public class RecordController {
 		recordService.savePlayers(tag);
 	}
 
-	class RecordDto {
 
-	}
 }

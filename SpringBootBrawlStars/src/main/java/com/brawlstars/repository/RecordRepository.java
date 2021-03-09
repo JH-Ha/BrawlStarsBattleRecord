@@ -1,5 +1,7 @@
 package com.brawlstars.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +38,14 @@ public class RecordRepository {
 				.fetchOne();
 		return record;
 
+	}
+	
+	public List<Record> findByTag(String tag){
+		QRecord qRecord = QRecord.record;
+		List<Record> records = queryFactory
+				.selectFrom(qRecord)
+				.where(qRecord.tag.eq(tag))
+				.fetch();
+		return records;
 	}
 }
