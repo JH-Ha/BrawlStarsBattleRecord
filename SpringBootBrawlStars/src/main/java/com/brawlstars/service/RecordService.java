@@ -267,4 +267,9 @@ public class RecordService {
 		});
 	}
 
+	public List<Record> getFindByTag(String tag) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
