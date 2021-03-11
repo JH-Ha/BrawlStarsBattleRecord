@@ -272,4 +272,9 @@ public class RecordService {
 		return records;
 	}
 
+	public void save(Record record) {
+		// TODO Auto-generated method stub
+		recordRepository.save(record);
+	}
+
 }

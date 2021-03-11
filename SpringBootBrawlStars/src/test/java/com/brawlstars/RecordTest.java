@@ -22,4 +22,28 @@ public class RecordTest {
 			System.out.println(record.getBattleTime());
 		});
 	}
+	@Test
+	public void saveTest() {
+		Record record = new Record();
+		record.setBattleTime("1234");
+		record.setTag("#test");
+		Record test1 = new Record();
+		test1.setBattleTime("123456");
+		test1.setTag("#test1");
+		record.getGroupRecords().add(test1);
+		test1.setParent(record);
+		record.getGroupRecords().add(record);
+		record.setParent(record);
+		recordService.save(record);
+		
+		List<Record> records = recordService.getFindByTag("#test");
+		
+		records.stream().forEach(r ->{
+			List<Record> groupRecords = r.getGroupRecords();
+			groupRecords.stream().forEach(rr ->{
+				System.out.println(rr.getTag() + rr.getBattleTime());
+			});
+		});
+		
+	}
 }
