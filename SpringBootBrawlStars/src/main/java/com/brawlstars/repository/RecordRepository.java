@@ -44,8 +44,10 @@ public class RecordRepository {
 		QRecord qRecord = QRecord.record;
 		List<Record> records = queryFactory
 				.selectFrom(qRecord)
+				//.innerJoin(qRecord,qRecord)
+				//.fetchJoin()
 				.where(qRecord.tag.eq(tag))
-				.fetch();
+				.fetchResults().getResults();
 		return records;
 	}
 }

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.brawlstars.domain.Member;
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.Item;
 import com.brawlstars.repository.MemberRepository;
@@ -36,17 +35,17 @@ public class RecordSchedule {
 	
 	public void saveRecords() {
 
-		List<Member> members = memberRepository.findAll();
-		members.stream().forEach(member -> {
-			String tag = member.getTag();
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			saveRecord(tag);
-		});
+//		List<Member> members = memberRepository.findAll();
+//		members.stream().forEach(member -> {
+//			String tag = member.getTag();
+//			try {
+//				Thread.sleep(100);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			saveRecord(tag);
+//		});
 
 	}
 
