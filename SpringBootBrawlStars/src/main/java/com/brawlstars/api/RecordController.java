@@ -1,6 +1,7 @@
 package com.brawlstars.api;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,9 @@ public class RecordController {
 	@GetMapping("/record/{tag}")
 	public List<RecordDto> getRecords(@PathVariable(name="tag") String tag) {
 		List<Record> records = recordService.getFindByTag(tag);
-		return null;
+		List<RecordDto> recordDtos = records.stream().map(record -> new RecordDto(record))
+		.collect(Collectors.toUnmodifiableList());
+		return recordDtos;
 	}
 
 	/*
