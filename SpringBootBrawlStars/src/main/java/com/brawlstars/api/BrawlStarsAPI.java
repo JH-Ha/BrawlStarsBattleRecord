@@ -24,7 +24,7 @@ public class BrawlStarsAPI {
 			URL url = new URL(baseUrl + tagReplaced + "/battlelog");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-			String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjAzM2YwNDRmLTIzZTUtNGJhZC04ZDdhLWVlODgzOTk0NDIyMSIsImlhdCI6MTYxNDA5Mzc2NSwic3ViIjoiZGV2ZWxvcGVyLzRmODljMjEyLWE0OWYtZWRiZS0zZjgzLTRhODJiZGE2N2NiNSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiNTguMTQzLjIwNi40MSJdLCJ0eXBlIjoiY2xpZW50In1dfQ.YknOO4aOE7OxNQ1SWZ-ojAp73SqDMXxiA-hyUzHnPcF36HiOQeFPUgHMv6LmHEA8YwWiSL-tWBRRfZZAZvrA6g";
+			String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjZjMmNkNzRkLWE3OWMtNGRiYy1hNGQ3LTBhZWUxNWRkMmQxMSIsImlhdCI6MTYxNTU1NjU4MSwic3ViIjoiZGV2ZWxvcGVyLzRmODljMjEyLWE0OWYtZWRiZS0zZjgzLTRhODJiZGE2N2NiNSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiNTguMTQzLjIwNi40MSIsIjExMC4xMC4xNTQuNjgiXSwidHlwZSI6ImNsaWVudCJ9XX0.51W4UfOwnzue5T-plbMROUH9Sp_MJmUEVh6Z9XzJpHqG_tU82Kg3IHKCEBW9XXpkVQmGpukN-zbFRR2vAcsJMg";
 			conn.setRequestProperty("Authorization", "Bearer " + token);
 			conn.setRequestMethod("GET");
 
@@ -48,11 +48,11 @@ public class BrawlStarsAPI {
 			BattleLog battleLog = mapper.readValue(response.toString(), BattleLog.class);
 
 			items = battleLog.getItems();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if(items == null) {
+		if (items == null) {
 			throw new Exception("Invalid tag");
 		}
 		return items;
