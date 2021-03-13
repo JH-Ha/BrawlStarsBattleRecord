@@ -13,10 +13,12 @@ import lombok.Setter;
 @DiscriminatorValue("SOLO")
 @Getter
 @Setter
-public class RecordSolo extends Record{
+public class RecordSolo extends Record {
 
 	private Integer resultRank;
-	public static RecordSolo createSoloRecord(String tag, Item item, Player player, String groupKey, Integer resultRank){
+
+	public static RecordSolo createSoloRecord(String tag, Item item, Player player, String groupKey,
+			Integer resultRank) {
 		RecordSolo recordSolo = new RecordSolo();
 		recordSolo.setTag(player.getTag());
 		recordSolo.setBattleTime(item.getBattleTime());
@@ -24,11 +26,11 @@ public class RecordSolo extends Record{
 		recordSolo.setPower(player.getBrawler().getPower());
 		recordSolo.setTrophies(player.getBrawler().getTrophies());
 		recordSolo.setMap(item.getEvent().getMap());
-		recordSolo.setGroupKey(groupKey);
+		// recordSolo.setGroupKey(groupKey);
 		recordSolo.setMode(item.getEvent().getMode());
 		recordSolo.setType(item.getBattle().getType());
-		
-		if(tag.equals(player.getTag()))
+
+		if (tag.equals(player.getTag()))
 			recordSolo.setTrophyChange(item.getBattle().getTrophyChange());
 		recordSolo.setResultRank(resultRank);
 		return recordSolo;
