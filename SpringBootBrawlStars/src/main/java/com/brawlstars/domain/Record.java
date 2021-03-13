@@ -26,11 +26,7 @@ import lombok.Setter;
 @DiscriminatorColumn(name = "game_type")
 @Getter
 @Setter
-@Table(uniqueConstraints = 
-{ @UniqueConstraint(
-		name = "uniqueGame", 
-		columnNames = { "tag", "battleTime" }) 
-})
+@Table(uniqueConstraints = { @UniqueConstraint(name = "uniqueGame", columnNames = { "tag", "battleTime" }) })
 
 public class Record {
 
@@ -45,17 +41,23 @@ public class Record {
 	private Integer trophies;
 	private Integer trophyChange;
 	private String map;
-	
-	
-	//@Column(name = "group_key", insertable = false, updatable = false)
-	private String groupKey;
+
+	// @Column(name = "group_key", insertable = false, updatable = false)
+	// private String groupKey;
 	private String mode;
 	private String type;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent_id")
+	@JoinColumn(name = "group_key")
 	private Record parent;
-	
+
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	private List<Record> groupRecords = new ArrayList<>();
+
+	public static void setRelation(Record parent, List<Record> groupRecords) {
+		parent.setGroupRecords(groupRecords);
+		groupRecords.stream().forEach(gr -> {
+			gr.setParent(parent);
+		});
+	}
 }

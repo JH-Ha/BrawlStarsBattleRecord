@@ -2,6 +2,7 @@ package com.brawlstars.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -123,6 +124,8 @@ public class RecordService {
 				}
 			}
 		}
+		Record myRecord = null;
+		List<Record> groupRecords = new ArrayList<Record>();
 
 		for (int i = 0; i < teams.size(); i++) {
 			List<Player> team = teams.get(i);
@@ -132,7 +135,7 @@ public class RecordService {
 				recordTrio.setBattleTime(item.getBattleTime());
 				recordTrio.setBrawlerName(player.getBrawler().getName());
 				recordTrio.setPower(player.getBrawler().getPower());
-				recordTrio.setGroupKey(groupKey);
+				// recordTrio.setGroupKey(groupKey);
 				recordTrio.setDuration(item.getBattle().getDuration());
 				recordTrio.setMap(item.getEvent().getMap());
 				recordTrio.setMode(item.getEvent().getMode());
@@ -142,6 +145,7 @@ public class RecordService {
 				// we don't know other players' trophy change
 				if (player.getTag().equals(tag)) {
 					recordTrio.setTrophyChange(item.getBattle().getTrophyChange());
+					myRecord = recordTrio;
 				}
 				boolean isStarPlayer = false;
 				if (player.getTag().equals(item.getBattle().getStarPlayer().getTag())) {
@@ -154,9 +158,12 @@ public class RecordService {
 				else
 					recordTrio.setResult(getOppositeResult(result));
 
-				recordRepository.save(recordTrio);
+				groupRecords.add(recordTrio);
+				// recordRepository.save(recordTrio);
 			}
 		}
+		Record.setRelation(myRecord, groupRecords);
+		recordRepository.save(myRecord);
 	}
 
 	public void saveDuo(String tag, Item item) {
