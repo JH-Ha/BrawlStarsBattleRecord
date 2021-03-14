@@ -33,6 +33,7 @@ public class RecordDto {
 		playerName = record.getPlayerName();
 		groupRecords = record.getGroupRecords().stream().map(r -> RecordDto.createGroupRecord(r))
 				.collect(Collectors.toList());
+		teamId = record.getTeamId();
 	}
 
 	public static RecordDto createGroupRecord(Record record) {
@@ -46,6 +47,7 @@ public class RecordDto {
 		recordDto.setResult(record.getResult());
 		recordDto.setResultRank(record.getResultRank());
 		recordDto.setPlayerName(record.getPlayerName());
+		recordDto.setTeamId(record.getTeamId());
 		return recordDto;
 	}
 
@@ -58,6 +60,7 @@ public class RecordDto {
 	private String map;
 	private String mode;
 	private String type;
+	private Integer teamId;
 	
 
 	//Trio

@@ -54,6 +54,7 @@ public class Record {
 	private Boolean isStarPlayer;
 	private String result;
 	
+	private Integer teamId;
 	//duo, solo
 	private Integer resultRank;
 	
