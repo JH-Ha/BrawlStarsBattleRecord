@@ -62,7 +62,7 @@ class UserList extends Component {
   getUserList(page) {
     console.log("getUserList");
     const queryPage = page - 1;
-    axios.get(`http://localhost/member?page=${queryPage}&size=15`)
+    axios.get(`http://brawlstat.xyz/member?page=${queryPage}&size=15`)
       //axios.get(`http://localhost/record/${tag}`)
       .then(response => {      // .then : 응답(상태코드200~300미만)성공시
         console.log(response);
@@ -128,7 +128,7 @@ class UserList extends Component {
   }
   searchNickname() {
     //console.log(this.state.nickname);
-    axios.get(`http://localhost/member?name=${this.state.nickname}&page=0&size=15`)
+    axios.get(`http://brawlstat.xyz/member?name=${this.state.nickname}&page=0&size=15`)
       //axios.get(`http://localhost/record/${tag}`)
       .then(response => {      // .then : 응답(상태코드200~300미만)성공시
         console.log(response);
