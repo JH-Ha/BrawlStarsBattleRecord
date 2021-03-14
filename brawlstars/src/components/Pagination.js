@@ -43,18 +43,21 @@ class Pagination extends Component {
     let curPage = this.state.curPage;
     const numShowPages = 10;
     let maxPage = Math.floor((numTotal - 1) / numShowItems) + 1;
-    //console.log(`maxPage ${maxPage}`);
+    console.log(`maxPage ${maxPage}`);
 
     if (curPage === undefined) curPage = 1;
     if (numShowItems === undefined) numShowItems = 15;
 
+    console.log(`curPage ${curPage}`);
     if (curPage < 1) curPage = 1;
     else if (curPage > maxPage) curPage = maxPage;
 
     let startPage = Math.floor((curPage - 1) / numShowPages) * numShowPages + 1;
     let endPage = startPage + numShowPages - 1;
+    if (startPage < 1) startPage = 1;
     if (endPage > maxPage) endPage = maxPage;
 
+    console.log(`curPage ${curPage} startPage ${startPage} endPage ${endPage} `)
     let pageList = [];
     pageList.push(new Page("", parseInt(curPage) - 1, "<"));
     for (let i = startPage; i <= endPage; i++) {
