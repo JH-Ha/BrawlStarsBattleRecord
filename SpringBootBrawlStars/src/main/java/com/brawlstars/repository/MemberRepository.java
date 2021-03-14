@@ -1,14 +1,20 @@
 package com.brawlstars.repository;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.brawlstars.domain.Member;
 import com.brawlstars.domain.QMember;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQuery;
 
 @Repository
@@ -27,18 +33,27 @@ public class MemberRepository {
 	public Member findOne(String tag) {
 		JPAQuery<Member> query = new JPAQuery<Member>(em);
 		QMember qMember = QMember.member;
-		Member member = query
-				.from(qMember)
-				.where(qMember.tag.eq(tag))
-				.fetchOne();
+		Member member = query.from(qMember).where(qMember.tag.eq(tag)).fetchOne();
 		return member;
 	}
-	public List<Member> findAll(){
+
+	public Page<MemberDto> findAll(String name, Pageable pageable) {
 		JPAQuery<Member> query = new JPAQuery<Member>(em);
 		QMember qMember = QMember.member;
-		List<Member> members = query
-				.from(qMember)
-				.fetch();
-		return members;
+		
+		BooleanBuilder builder = new BooleanBuilder();
+		if(StringUtils.hasText(name)) {
+			builder.and(qMember.name.contains(name));
+		}
+		
+		QueryResults<Member> result = query.from(qMember)
+				.where(builder)
+				.offset(pageable.getOffset()).limit(pageable.getPageSize())
+				.fetchResults();
+		
+		return new PageImpl<>(
+				result.getResults().stream().map(member -> new MemberDto(member)).collect(Collectors.toList()),
+				pageable, result.getTotal());
+		
 	}
 }
