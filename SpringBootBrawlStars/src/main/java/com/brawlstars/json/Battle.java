@@ -17,4 +17,5 @@ public class Battle {
 	// solo, duoShodown
 	Integer rank;
 	List<Player> players;
+	Player bigBrawler;
 }
