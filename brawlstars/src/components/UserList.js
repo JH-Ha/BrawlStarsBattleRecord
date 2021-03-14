@@ -5,6 +5,7 @@ import qs from "qs";
 import styles from "./UserList.scss";
 import baseStyles from "./Base.scss";
 import { Router } from "react-router-dom";
+import axios from "axios";
 
 class User {
   constructor(tag, name) {
@@ -60,16 +61,24 @@ class UserList extends Component {
   }
   getUserList(page) {
     console.log("getUserList");
-    let startAt = (page - 1) * 15;
-    firestore
-      .collection("ID_LIST")
-      .orderBy("order")
-      .startAt(startAt)
-      .limit(15)
-      .get()
-      .then((snapshot) => {
-        this.setUserList(snapshot, page);
+    const queryPage = page - 1;
+    axios.get(`http://localhost/member?page=${queryPage}&size=15`)
+      //axios.get(`http://localhost/record/${tag}`)
+      .then(response => {      // .then : 응답(상태코드200~300미만)성공시
+        console.log(response);
+        const data = response.data;
+        this.setState({
+          userList: data.content,
+          curPage: data.number + 1,
+          numUser: data.totalElements
+        });
+
+        //this.setState({ playRecord: response.data.content });
+      })
+      .catch(error => {
+        console.log(error);
       });
+
   }
   componentDidUpdate(prevProps) {
     //console.log("update");
@@ -94,15 +103,15 @@ class UserList extends Component {
     if (curPage === undefined) curPage = 1;
     this.getUserList(curPage);
 
-    firestore
-      .collection("PageInfo")
-      .doc("ID_LIST")
-      .get()
-      .then((doc) => {
-        const { numUser } = doc.data();
+    // firestore
+    //   .collection("PageInfo")
+    //   .doc("ID_LIST")
+    //   .get()
+    //   .then((doc) => {
+    //     const { numUser } = doc.data();
 
-        this.setState({ numUser: numUser });
-      });
+    //     this.setState({ numUser: numUser });
+    //   });
   }
   changePageHandler(page) {
     let { history } = this.props;
@@ -118,17 +127,32 @@ class UserList extends Component {
     console.log(tag);
   }
   searchNickname() {
-    console.log(this.state.nickname);
-    firestore
-      .collection("ID_LIST")
-      .where("name", "==", this.state.nickname)
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          console.log("doc", doc.data());
+    //console.log(this.state.nickname);
+    axios.get(`http://localhost/member?name=${this.state.nickname}&page=0&size=15`)
+      //axios.get(`http://localhost/record/${tag}`)
+      .then(response => {      // .then : 응답(상태코드200~300미만)성공시
+        console.log(response);
+        const data = response.data;
+        this.setState({
+          userList: data.content,
+          curPage: data.number + 1,
+          numUser: data.totalElements
         });
-        this.setUserList(snapshot, 1);
+        //this.setState({ playRecord: response.data.content });
+      })
+      .catch(error => {
+        console.log(error);
       });
+    // firestore
+    //   .collection("ID_LIST")
+    //   .where("name", "==", this.state.nickname)
+    //   .get()
+    //   .then((snapshot) => {
+    //     snapshot.forEach((doc) => {
+    //       console.log("doc", doc.data());
+    //     });
+    //     this.setUserList(snapshot, 1);
+    //   });
   }
   searchInputChange(event) {
     let value = event.target.value;

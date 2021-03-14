@@ -8,6 +8,7 @@ import playStyles from "./PlayList.scss";
 import styles from "./Base.scss";
 import SoloDuoMode from "./SoloDuoMode";
 import axios from "axios";
+import Pagination from "./Pagination";
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
 //         ignoreQueryPrefix : true
@@ -28,12 +29,20 @@ class PlayList extends Component {
     mode: "ALL",
     brawlerName: "ALL",
     isEmpty: false,
+    curPage: 1,
+    totalElements: 10,
   };
   getTag() {
     const query = qs.parse(this.props.location.search, {
       ignoreQueryPrefix: true,
     });
     return query.tag;
+  }
+  getCurPage() {
+    const query = qs.parse(this.props.location.search, {
+      ignoreQueryPrefix: true,
+    });
+    return query.curPage;
   }
   addZero(number) {
     let str = number.toString();
@@ -47,18 +56,33 @@ class PlayList extends Component {
       return statement.where("brawler_name", "==", brawlerName);
     }
   }
-  getBattleLog(tag, mode, brawlerName) {
+  changePageHandler = (page) => {
+    const tag = this.getTag();
+    this.getBattleLog(tag, null, null, page);
+
+    let { history } = this.props;
+    const queryPage = page - 1;
+    const queryTag = tag.replace("#", "%23");
+    history.push(`/playList?tag=${queryTag}&page=${queryPage}&size=5`);
+    console.log(tag);
+  }
+  getBattleLog(tag, mode, brawlerName, page) {
     let rows = [];
     console.log(tag);
     tag = tag.replace("#", "%23");
     console.log(tag);
-    axios.get(`http://localhost/record/${tag}?page=0&size=5`)
+    const queryPage = page - 1;
+    axios.get(`http://localhost/record/${tag}?page=${queryPage}&size=5`)
       //axios.get(`http://localhost/record/${tag}`)
       .then(response => {      // .then : 응답(상태코드200~300미만)성공시
         console.log(response);
-        this.setState({ playRecord: response.data.content });
-      })
-      .catch(error => {
+        const data = response.data;
+        this.setState({
+          playRecord: response.data.content,
+          curPage: data.pageable.pageNumber + 1,
+          totalElements: data.totalElements
+        })
+      }).catch(error => {
         console.log(error);
       });
     // let statement = firestore.collection("battleLog").where("tag", "==", tag);
@@ -125,6 +149,26 @@ class PlayList extends Component {
     this.setState({ brawlerName: brawlerName });
     this.getBattleLog(this.state.tag, this.state.mode, brawlerName);
   }
+  getQuery(props) {
+    const query = qs.parse(props.location.search, {
+      ignoreQueryPrefix: true,
+    });
+    return query;
+  }
+  componentDidUpdate(prevProps) {
+    //console.log("update");
+    let prevQuery = this.getQuery(prevProps);
+    let query = this.getQuery(this.props);
+    console.log(
+      `prevQuery.curpage ${prevQuery.page}, query.curPage ${query.page}`
+    );
+
+    if (prevQuery.page !== query.page) {
+      console.log(`componentWill Update !!!! ${query.page}`);
+      this.getBattleLog(query.tag.replace("#", "%23"), null, null, parseInt(query.page) + 1);
+      //this.setState({curPage: query.curPage
+    }
+  }
   isTrio(mode) {
     if (
       mode === "gemGrab" ||
@@ -171,7 +215,7 @@ class PlayList extends Component {
                   key={data.battleTime}
                   battleTime={data.battleTime
                   }
-                  rank={data.rank}
+                  rank={data.resultRank}
                   result={data.result}
                   brawler_name={data.brawlerName}
                   duration={data.duration}
@@ -192,7 +236,7 @@ class PlayList extends Component {
                   battleTime={
                     data.battleTime
                   }
-                  rank={data.rank}
+                  rank={data.resultRank}
                   result={data.result}
                   brawler_name={data.brawlerName}
                   duration={data.duration}
@@ -206,6 +250,13 @@ class PlayList extends Component {
               );
             }
           })}
+        <Pagination
+          curPage={this.state.curPage}
+          numTotal={this.state.totalElements}
+          numShowItems="5"
+          pageUrl="/playerList"
+          onClick={this.changePageHandler.bind(this)}
+        ></Pagination>
       </div>
       // </div>
     );
