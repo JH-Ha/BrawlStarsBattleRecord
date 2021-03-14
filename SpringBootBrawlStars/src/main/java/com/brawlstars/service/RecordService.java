@@ -121,7 +121,7 @@ public class RecordService {
 			for (int j = 0; j < team.size(); j++) {
 				Player player = team.get(j);
 				if (player.getTag().equals(tag)) {
-					playerGroupIdx = j;
+					playerGroupIdx = i;
 					break;
 				}
 			}
@@ -144,6 +144,7 @@ public class RecordService {
 				recordTrio.setType(item.getBattle().getType());
 				recordTrio.setTag(player.getTag());
 				recordTrio.setTrophies(player.getBrawler().getTrophies());
+				recordTrio.setPlayerName(player.getName());
 				// we don't know other players' trophy change
 				if (player.getTag().equals(tag)) {
 					recordTrio.setTrophyChange(item.getBattle().getTrophyChange());
@@ -155,7 +156,7 @@ public class RecordService {
 				}
 				recordTrio.setIsStarPlayer(isStarPlayer);
 				String result = item.getBattle().getResult();
-				if (j == playerGroupIdx)
+				if (i == playerGroupIdx)
 					recordTrio.setResult(result);
 				else
 					recordTrio.setResult(getOppositeResult(result));
@@ -215,6 +216,7 @@ public class RecordService {
 				recordDuo.setMode(item.getEvent().getMode());
 				recordDuo.setType(item.getBattle().getType());
 				recordDuo.setResultRank(i + 1);
+				recordDuo.setPlayerName(player.getName());
 
 				if (tag.equals(player.getTag())) {
 					recordDuo.setTrophyChange(item.getBattle().getTrophyChange());
