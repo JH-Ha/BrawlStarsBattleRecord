@@ -110,8 +110,8 @@ public class RecordService {
 		}
 
 		List<List<Player>> teams = item.getBattle().getTeams();
-		List<Player> players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
-		String groupKey = makeGroupKey(players, item.getBattleTime());
+		//List<Player> players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
+		//String groupKey = makeGroupKey(players, item.getBattleTime());
 
 		int playerGroupIdx = 0;
 		for (int i = 0; i < teams.size(); i++) {
@@ -167,9 +167,18 @@ public class RecordService {
 	}
 
 	public void saveDuo(String tag, Item item) {
+		
+		//if there is a saved record already, then just update throphychange 
+		Record foundRecord = recordRepository.findOne(tag, item.getBattleTime());
+		if(foundRecord != null) {
+			foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+			recordRepository.save(foundRecord); 
+			return;
+		}
+		
 		List<List<Player>> teams = item.getBattle().getTeams();
-		List<Player> players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
-		String groupKey = makeGroupKey(players, item.getBattleTime());
+		//List<Player> players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
+		//String groupKey = makeGroupKey(players, item.getBattleTime());
 
 		// Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
 
@@ -179,6 +188,9 @@ public class RecordService {
 		 * recordRepository.save(foundRecord); return; }
 		 */
 
+		Record myRecord = null;
+		List<Record> groupRecords = new ArrayList<Record>();
+		
 		for (int i = 0; i < teams.size(); i++) {
 			List<Player> team = teams.get(i);
 			for (int j = 0; j < team.size(); j++) {
@@ -197,37 +209,48 @@ public class RecordService {
 				recordDuo.setBrawlerName(player.getBrawler().getName());
 				recordDuo.setPower(player.getBrawler().getPower());
 				recordDuo.setMap(item.getEvent().getMap());
-				recordDuo.setGroupKey(groupKey);
+				//recordDuo.setGroupKey(groupKey);
 				recordDuo.setMode(item.getEvent().getMode());
 				recordDuo.setType(item.getBattle().getType());
 				recordDuo.setResultRank(i + 1);
 
-				if (tag.equals(player.getTag()))
+				if (tag.equals(player.getTag())) {
 					recordDuo.setTrophyChange(item.getBattle().getTrophyChange());
-
-				recordRepository.save(recordDuo);
+					myRecord = recordDuo;
+				}
+				
+				groupRecords.add(recordDuo);
+				//recordRepository.save(recordDuo);
 			}
 		}
+		Record.setRelation(myRecord, groupRecords);
+		recordRepository.save(myRecord);
 	}
 
 	public void saveSolo(String tag, Item item) {
-		// TODO Auto-generated method stub
+		
+		Record foundRecord = recordRepository.findOne(tag, item.getBattleTime());
+		if (foundRecord != null) {
+			foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+			recordRepository.save(foundRecord);
+			return;
+		}
 		List<Player> players = item.getBattle().getPlayers();
-		String groupKey = makeGroupKey(players, item.getBattleTime());
+		//String groupKey = makeGroupKey(players, item.getBattleTime());
 		// Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
-
+		Record myRecord = null;
+		List<Record> groupRecords = new ArrayList<Record>();
 		for (int i = 0; i < players.size(); i++) {
 			Player player = players.get(i);
-			Record foundRecord = recordRepository.findOne(player.getTag(), item.getBattleTime());
-			if (foundRecord != null) {
-				if (tag.equals(player.getTag()))
-					foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
-				recordRepository.save(foundRecord);
-				continue;
+			RecordSolo recordSolo = RecordSolo.createSoloRecord(tag, item, player, i + 1);
+			if(tag.equals(player.getTag())) {
+				myRecord = recordSolo;
 			}
-			RecordSolo recordSolo = RecordSolo.createSoloRecord(tag, item, player, groupKey, i + 1);
-			recordRepository.save(recordSolo);
+			groupRecords.add(recordSolo);
+			//recordRepository.save(recordSolo);
 		}
+		Record.setRelation(myRecord, groupRecords);
+		recordRepository.save(myRecord);
 	}
 
 	public void savePlayers(String tag) {
