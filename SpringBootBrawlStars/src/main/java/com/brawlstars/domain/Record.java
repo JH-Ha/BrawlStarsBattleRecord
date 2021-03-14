@@ -41,6 +41,8 @@ public class Record {
 	private Integer trophies;
 	private Integer trophyChange;
 	private String map;
+	
+	private String playerName;
 
 	// @Column(name = "group_key", insertable = false, updatable = false)
 	// private String groupKey;
