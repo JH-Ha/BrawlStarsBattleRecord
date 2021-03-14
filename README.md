@@ -43,4 +43,4 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 hosting page
 - version 1.0 : http://brawlstars-260814.web.app
-- version 2.0 : http://brawlstat.xyz
+- version 2.0 : http://www.brawlstat.xyz:8080/
