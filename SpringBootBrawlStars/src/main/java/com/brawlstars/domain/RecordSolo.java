@@ -17,8 +17,7 @@ public class RecordSolo extends Record {
 
 	private Integer resultRank;
 
-	public static RecordSolo createSoloRecord(String tag, Item item, Player player, String groupKey,
-			Integer resultRank) {
+	public static RecordSolo createSoloRecord(String tag, Item item, Player player, Integer resultRank) {
 		RecordSolo recordSolo = new RecordSolo();
 		recordSolo.setTag(player.getTag());
 		recordSolo.setBattleTime(item.getBattleTime());
