@@ -145,6 +145,7 @@ public class RecordService {
 				recordTrio.setTag(player.getTag());
 				recordTrio.setTrophies(player.getBrawler().getTrophies());
 				recordTrio.setPlayerName(player.getName());
+				recordTrio.setTeamId(i);
 				// we don't know other players' trophy change
 				if (player.getTag().equals(tag)) {
 					recordTrio.setTrophyChange(item.getBattle().getTrophyChange());
