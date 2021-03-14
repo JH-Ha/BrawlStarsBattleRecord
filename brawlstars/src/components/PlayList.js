@@ -72,7 +72,7 @@ class PlayList extends Component {
     tag = tag.replace("#", "%23");
     console.log(tag);
     const queryPage = page - 1;
-    axios.get(`http://brawlstat.xyz/record/${tag}?page=${queryPage}&size=5`)
+    axios.get(`http://brawlstat.xyz:8080/record/${tag}?page=${queryPage}&size=5`)
       //axios.get(`http://localhost/record/${tag}`)
       .then(response => {      // .then : 응답(상태코드200~300미만)성공시
         console.log(response);
