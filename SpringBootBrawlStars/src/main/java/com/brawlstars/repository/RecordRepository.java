@@ -1,14 +1,18 @@
 package com.brawlstars.repository;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.brawlstars.domain.QRecord;
 import com.brawlstars.domain.Record;
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository
@@ -37,16 +41,21 @@ public class RecordRepository {
 
 	}
 
-	public List<Record> findByTag(String tag) {
+	public Page<RecordDto> findByTag(String tag, Pageable pageable) {
 		QRecord qRecord = QRecord.record;
 
 		// QRecord qRecordGroup = QRecord.record;
-		List<Record> records = queryFactory.selectFrom(qRecord).where(
-				// qRecord.parent.eq(qRecordGroup.parent).and(
-				qRecord.tag.eq(tag)
-		// )
-		).fetch();
-		return records;
+		QueryResults<Record> result = queryFactory.selectFrom(qRecord).where(qRecord.tag.eq(tag))
+				.orderBy(qRecord.battleTime.desc())
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize())
+				.fetchResults();
+		return new PageImpl<>(result.getResults().stream()
+				.map(record -> new RecordDto(record))
+				.collect(Collectors.toList()),
+				pageable,
+				result.getTotal());
+		
 	}
 
 	public long removeByTag(String tag) {

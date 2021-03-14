@@ -22,6 +22,13 @@ public class RecordDto {
 		brawlerName = record.getBrawlerName();
 		power = record.getPower();
 		trophies = record.getTrophies();
+		map = record.getMap();
+		mode = record.getMode();
+		type = record.getType();
+		duration = record.getDuration();
+		isStarPlayer = record.getIsStarPlayer();
+		result = record.getResult();
+		resultRank = record.getResultRank();
 		groupRecords = record.getGroupRecords().stream().map(r -> RecordDto.createGroupRecord(r))
 				.collect(Collectors.toList());
 	}
@@ -33,6 +40,9 @@ public class RecordDto {
 		recordDto.setBrawlerName(record.getBrawlerName());
 		recordDto.setPower(record.getPower());
 		recordDto.setTrophies(record.getTrophies());
+		recordDto.setIsStarPlayer(record.getIsStarPlayer());
+		recordDto.setResult(record.getResult());
+		recordDto.setResultRank(record.getResultRank());
 		return recordDto;
 	}
 
@@ -41,5 +51,18 @@ public class RecordDto {
 	private String brawlerName;
 	private Integer power;
 	private Integer trophies;
+	private String map;
+	private String mode;
+	private String type;
+	
+
+	//Trio
+	private Integer duration;
+	private Boolean isStarPlayer;
+	private String result;
+	
+	//duo, solo
+	private Integer resultRank;
+	
 	List<RecordDto> groupRecords;
 }

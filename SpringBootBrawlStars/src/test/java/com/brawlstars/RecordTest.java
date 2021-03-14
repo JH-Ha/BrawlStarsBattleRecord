@@ -5,6 +5,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.brawlstars.api.RecordController;
 import com.brawlstars.domain.Record;
@@ -22,7 +25,8 @@ public class RecordTest {
 	@Test
 	public void getRecordsByTag() {
 		String tag = "#9QU209UYC";
-		List<RecordDto> records = recordService.getFindByTag(tag);
+		Pageable pageable = PageRequest.of(1, 10);
+		Page<RecordDto> records = recordService.getFindByTag(tag, pageable);
 		records.stream().forEach(record -> {
 			System.out.println(record.getBattleTime());
 		});
@@ -44,7 +48,7 @@ public class RecordTest {
 		record.setParent(record);
 		recordService.save(record);
 
-		List<RecordDto> records = recordController.getRecords("#test");
+		Page<RecordDto> records = recordController.getRecords("#test",PageRequest.of(1,10));
 
 		// List<Record> records = recordService.getFindByTag("#test");
 
