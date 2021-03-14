@@ -7,6 +7,7 @@ import BrawlerList from "./BrawlerList";
 import playStyles from "./PlayList.scss";
 import styles from "./Base.scss";
 import SoloDuoMode from "./SoloDuoMode";
+import axios from "axios";
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
 //         ignoreQueryPrefix : true
@@ -24,7 +25,7 @@ class PlayList extends Component {
     winRate: 0,
     averageRank: 0,
     tag,
-    mode: "gemGrab",
+    mode: "ALL",
     brawlerName: "ALL",
     isEmpty: false,
   };
@@ -48,53 +49,65 @@ class PlayList extends Component {
   }
   getBattleLog(tag, mode, brawlerName) {
     let rows = [];
-    let statement = firestore.collection("battleLog").where("tag", "==", tag);
-    this.addBrawlerName(statement, brawlerName)
-      .where("mode", "==", mode)
-      .orderBy("battleTime", "desc")
-      .limit(25)
-      .get()
-      .then((snapshot) => {
-        let numVictory = 0;
-        let numGame = 0;
-        let sumRank = 0;
-        if (snapshot.empty) {
-          console.log("no document");
-          this.setState({
-            playRecord: [],
-            winRate: 0,
-            averageRank: 0,
-            isEmpty: true,
-          });
-          return;
-        }
-        snapshot.forEach((doc) => {
-          let data = doc.data();
-          let date = new Date(data["battleTime"]);
-          date.setHours(date.getHours() + 9);
-          //console.log(date.getFullYear(), date.getMonth());
-          data["battleTime"] = date.toString();
-          data["year"] = date.getFullYear();
-
-          data["month"] = this.addZero(date.getMonth() + 1);
-          data["date"] = this.addZero(date.getDate());
-          data["hour"] = this.addZero(date.getHours());
-          data["minute"] = this.addZero(date.getMinutes());
-          //console.log(doc.id);
-          //console.log(data);
-          rows.push(data);
-          numGame++;
-          sumRank += data.rank;
-          if (data.result === "victory") numVictory++;
-          //playRecord
-        });
-        this.setState({ playRecord: rows });
-        this.setState({ winRate: Math.floor((numVictory / numGame) * 100) });
-        this.setState({
-          averageRank: Math.floor((sumRank / numGame) * 100) / 100,
-        });
-        this.setState({ isEmpty: false });
+    console.log(tag);
+    tag = tag.replace("#", "%23");
+    console.log(tag);
+    axios.get(`http://localhost/record/${tag}?page=0&size=5`)
+      //axios.get(`http://localhost/record/${tag}`)
+      .then(response => {      // .then : 응답(상태코드200~300미만)성공시
+        console.log(response);
+        this.setState({ playRecord: response.data.content });
+      })
+      .catch(error => {
+        console.log(error);
       });
+    // let statement = firestore.collection("battleLog").where("tag", "==", tag);
+    // this.addBrawlerName(statement, brawlerName)
+    //   .where("mode", "==", mode)
+    //   .orderBy("battleTime", "desc")
+    //   .limit(25)
+    //   .get()
+    //   .then((snapshot) => {
+    //     let numVictory = 0;
+    //     let numGame = 0;
+    //     let sumRank = 0;
+    //     if (snapshot.empty) {
+    //       console.log("no document");
+    //       this.setState({
+    //         playRecord: [],
+    //         winRate: 0,
+    //         averageRank: 0,
+    //         isEmpty: true,
+    //       });
+    //       return;
+    //     }
+    //     snapshot.forEach((doc) => {
+    //       let data = doc.data();
+    //       let date = new Date(data["battleTime"]);
+    //       date.setHours(date.getHours() + 9);
+    //       //console.log(date.getFullYear(), date.getMonth());
+    //       data["battleTime"] = date.toString();
+    //       data["year"] = date.getFullYear();
+
+    //       data["month"] = this.addZero(date.getMonth() + 1);
+    //       data["date"] = this.addZero(date.getDate());
+    //       data["hour"] = this.addZero(date.getHours());
+    //       data["minute"] = this.addZero(date.getMinutes());
+    //       //console.log(doc.id);
+    //       //console.log(data);
+    //       rows.push(data);
+    //       numGame++;
+    //       sumRank += data.rank;
+    //       if (data.result === "victory") numVictory++;
+    //       //playRecord
+    //     });
+    //     this.setState({ playRecord: rows });
+    //     this.setState({ winRate: Math.floor((numVictory / numGame) * 100) });
+    //     this.setState({
+    //       averageRank: Math.floor((sumRank / numGame) * 100) / 100,
+    //     });
+    //     this.setState({ isEmpty: false });
+    //   });
   }
   componentDidMount() {
     let tag = this.getTag();
@@ -150,62 +163,48 @@ class PlayList extends Component {
         <div className={this.state.isEmpty ? "noRecord" : "displayNone"}>
           No record
         </div>
-        {!this.isTrio(this.state.mode) &&
+        {
           this.state.playRecord.map((data) => {
-            return (
-              <SoloDuoMode
-                key={data.battleTime}
-                battleTime={
-                  data.year +
-                  "-" +
-                  data.month +
-                  "-" +
-                  data.date +
-                  " " +
-                  data.hour +
-                  ":" +
-                  data.minute
-                }
-                rank={data.rank}
-                result={data.result}
-                brawler_name={data.brawler_name}
-                duration={data.duration}
-                isStarPalyer={data.isStarPlayer}
-                map={data.map}
-                power={data.power}
-                trophies={data.trophies}
-                trophyChange={data.trophyChange}
-                mode={data.mode}
-              />
-            );
-          })}
-        {this.isTrio(this.state.mode) &&
-          this.state.playRecord.map((data) => {
-            return (
-              <TrioMode
-                key={data.battleTime}
-                battleTime={
-                  data.year +
-                  "-" +
-                  data.month +
-                  "-" +
-                  data.date +
-                  " " +
-                  data.hour +
-                  ":" +
-                  data.minute
-                }
-                rank={data.rank}
-                result={data.result}
-                brawler_name={data.brawler_name}
-                duration={data.duration}
-                isStarPalyer={data.isStarPlayer}
-                map={data.map}
-                power={data.power}
-                trophies={data.trophies}
-                trophyChange={data.trophyChange}
-              />
-            );
+            if (this.isTrio(data.mode)) {
+              return (
+                <TrioMode
+                  key={data.battleTime}
+                  battleTime={data.battleTime
+                  }
+                  rank={data.rank}
+                  result={data.result}
+                  brawler_name={data.brawlerName}
+                  duration={data.duration}
+                  isStarPalyer={data.isStarPlayer}
+                  map={data.map}
+                  power={data.power}
+                  trophies={data.trophies}
+                  trophyChange={data.trophyChange}
+                  type={data.type}
+                  mode={data.mode}
+                  groupRecords={data.groupRecords}
+                />
+              );
+            } else {
+              return (
+                <SoloDuoMode
+                  key={data.battleTime}
+                  battleTime={
+                    data.battleTime
+                  }
+                  rank={data.rank}
+                  result={data.result}
+                  brawler_name={data.brawlerName}
+                  duration={data.duration}
+                  isStarPalyer={data.isStarPlayer}
+                  map={data.map}
+                  power={data.power}
+                  trophies={data.trophies}
+                  trophyChange={data.trophyChange}
+                  mode={data.mode}
+                />
+              );
+            }
           })}
       </div>
       // </div>
