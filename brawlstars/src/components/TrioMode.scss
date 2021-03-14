@@ -1,3 +1,6 @@
+*{
+  box-sizing: border-box;
+}
 .trioContainer {
   max-width: 500px;
   flex: 1 1 250px;
@@ -23,11 +26,25 @@
       background: #ebebeb;
     }
     .trophyChange {
-      float: right;
-      margin-right: 10px;
+      flex-basis: 30%;
+      text-align: right;
+      padding-right : 10px;
     }
   }
+  .battleTime{
+    position: absolute;
+    top:0;
+    right : 0;
+  }
+  .modeMap{
+    flex-basis: 30%;
+  }
+  .gameResult{
+    flex-basis: 30%;
+    text-align: center;
+  }
   .info {
+    
     &.victory {
       background: #bce4fe;
     }
@@ -62,6 +79,27 @@
       }
     }
   }
+  .trioPlayerContainer{
+    display: flex;
+  }
+  .typeInfo{
+    position: relative;
+  }
+  .playerInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .durationContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .gameInfo{
+    display: flex;
+    justify-content: space-between;
+    background-color: #786d98;
+  }
 }
 .result {
   display: inline-block;
@@ -83,3 +121,4 @@
   display: inline-block;
   color: #ffff6d;
 }
+
