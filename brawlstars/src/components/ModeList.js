@@ -25,6 +25,7 @@ class ModeList extends Component {
       <div className="selectBox">
         <label htmlFor="modeList">mode </label>
         <select id="modeList" onChange={this.change} value={this.state.value}>
+          <option value="ALL">ALL</option>
           <option value="gemGrab">gemGrab</option>
           <option value="heist">heist</option>
           <option value="brawlBall">brawlBall</option>
