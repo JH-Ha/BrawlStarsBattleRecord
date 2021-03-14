@@ -9,12 +9,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.brawlstars.domain.Member;
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.Item;
+import com.brawlstars.repository.MemberDto;
 import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.service.RecordService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -30,7 +32,7 @@ public class RecordSchedule {
 
 	// one hour
 	@Scheduled(fixedDelay = 3600000
-			//,initialDelay = 3600000
+			,initialDelay = 3600000
 			)
 	public void saveRecordsSchedule() {
 		saveRecords();
@@ -38,8 +40,8 @@ public class RecordSchedule {
 	
 	public void saveRecords() {
 
-		List<Member> members = memberRepository.findAll();
-		members.stream().forEach(member -> {
+		Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 1000));
+		members.getContent().stream().forEach(member -> {
 			String tag = member.getTag();
 			try {
 				Thread.sleep(100);
