@@ -17,7 +17,7 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	@GetMapping("/member")
-	@CrossOrigin(origins = "http://localhost:8081")
+	@CrossOrigin(origins = {"http://localhost:8081", "http://www.brawlstat.xyz:8080"})
 	public Page<MemberDto> getMembers(@RequestParam(defaultValue = "") String name, Pageable pageable){
 		return memberService.getMembers(name,pageable);
 	}

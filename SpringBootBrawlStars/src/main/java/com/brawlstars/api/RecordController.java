@@ -18,7 +18,7 @@ public class RecordController {
 	RecordService recordService;
 
 	@GetMapping("/record/{tag}")
-	@CrossOrigin(origins = "http://localhost:8081")
+	@CrossOrigin(origins = {"http://localhost:8081", "http://www.brawlstat.xyz:8080"})
 	public Page<RecordDto> getRecords(@PathVariable(name = "tag") String tag,
 			Pageable pageable) {
 		Page<RecordDto> recordDtos = recordService.getFindByTag(tag, pageable);
