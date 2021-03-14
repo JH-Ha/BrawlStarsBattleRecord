@@ -11,7 +11,7 @@ public class ScheduleTest {
 	
 	@Test
 	public void saveRecordsTest() {
-		recordSchedule.saveRecords();
+		//recordSchedule.saveRecords();
 	}
 	
 	@Test

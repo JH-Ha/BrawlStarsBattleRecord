@@ -47,6 +47,14 @@ public class Record {
 	private String mode;
 	private String type;
 
+	//Trio
+	private Integer duration;
+	private Boolean isStarPlayer;
+	private String result;
+	
+	//duo, solo
+	private Integer resultRank;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "group_key")
 	private Record parent;

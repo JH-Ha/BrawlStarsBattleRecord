@@ -10,6 +10,8 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -298,9 +300,9 @@ public class RecordService {
 		});
 	}
 
-	public List<RecordDto> getFindByTag(String tag) {
-		List<Record> records = recordRepository.findByTag(tag);
-		List<RecordDto> recordDtos = records.stream().map(record -> new RecordDto(record)).collect(Collectors.toList());
+	public Page<RecordDto> getFindByTag(String tag, Pageable pageable) {
+		Page<RecordDto> records = recordRepository.findByTag(tag, pageable);
+		//List<RecordDto> recordDtos = records.getContent().stream().map(record -> new RecordDto(record)).collect(Collectors.toList());
 
 //		records.stream().forEach(r -> {
 //		List<Record> groupRecords = r.getGroupRecords();
@@ -308,7 +310,7 @@ public class RecordService {
 //				System.out.println(rr.getBattleTime());
 //			});
 		// });
-		return recordDtos;
+		return records;
 	}
 
 	public void save(Record record) {
