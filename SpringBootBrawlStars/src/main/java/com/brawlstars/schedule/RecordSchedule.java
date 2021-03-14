@@ -31,7 +31,7 @@ public class RecordSchedule {
 	// one hour
 	@Scheduled(fixedDelay = 3600000)
 	public void saveRecordsSchedule() {
-		//saveRecords();
+		saveRecords();
 	}
 	
 	public void saveRecords() {
