@@ -2,9 +2,10 @@ package com.brawlstars.api;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,7 @@ public class BrawlStarsAPI {
 		List<Item> items = null;
 		try {
 			URL url = new URL(baseUrl + tagReplaced + "/battlelog");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
 			String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6IjgxYmYyZTVjLWVjNWUtNGY0NC1iM2NhLWQ5ZjI3MzlmYmJlOSIsImlhdCI6MTYxNTk4MTc1OCwic3ViIjoiZGV2ZWxvcGVyLzRmODljMjEyLWE0OWYtZWRiZS0zZjgzLTRhODJiZGE2N2NiNSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiNTguMTQzLjIwNi40MSIsIjExMC4xMC4xNTQuNjgiLCIxNS4xNjUuMTgyLjIyOCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.7vQ8OoFdLQfFRTIkrzqeA3Q4uh732LWX82T4_jVWWJKB0Ghk_DGxyH21iOhxL4hyKMSSzNyxL9g4cyHJrkdTEg";
 			conn.setRequestProperty("Authorization", "Bearer " + token);
