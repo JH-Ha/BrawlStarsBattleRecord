@@ -11,13 +11,13 @@ spring:
     #driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create 
     properties:
       hibernate:
         #show_sql: true
         format_sql: true
         default_batch_fetch_size : 100
-        
+        #dialect : org.hibernate.dialect.MySQLDialect
 logging:
   level:
     org.hibernate.SQL: debug

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.brawlstars.domain.Member;
 import com.brawlstars.repository.MemberDto;
 import com.brawlstars.repository.MemberRepository;
 
@@ -16,6 +17,10 @@ import com.brawlstars.repository.MemberRepository;
 public class MemberService {
 	@Autowired
 	MemberRepository memberRepository;
+	
+	public void save(Member member) {
+		memberRepository.save(member);
+	}
 	
 	public Page<MemberDto> getMembers(String name, Pageable pageable){
 		return memberRepository.findAll(name,pageable);

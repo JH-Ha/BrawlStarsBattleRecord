@@ -10,9 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import com.brawlstars.domain.Member;
 import com.brawlstars.repository.MemberDto;
 import com.brawlstars.repository.MemberRepository;
+import com.brawlstars.service.MemberService;
 
 @SpringBootTest
 public class MemberTest {
+	@Autowired
+	MemberService memberService;
 	@Autowired
 	MemberRepository memberRepository;
 	
@@ -23,7 +26,7 @@ public class MemberTest {
 		Member member = new Member();
 		member.setTag(tag);
 		member.setName(name);
-		memberRepository.save(member);
+		memberService.save(member);
 		
 		Member foundMember = memberRepository.findOne(tag);
 		Assertions.assertEquals(foundMember.getName(), name);
