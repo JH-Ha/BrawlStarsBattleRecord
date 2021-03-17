@@ -152,7 +152,8 @@ public class RecordService {
 					myRecord = recordTrio;
 				}
 				boolean isStarPlayer = false;
-				if (player.getTag().equals(item.getBattle().getStarPlayer().getTag())) {
+				if (item.getBattle().getStarPlayer() != null 
+						&& player.getTag().equals(item.getBattle().getStarPlayer().getTag())) {
 					isStarPlayer = true;
 				}
 				recordTrio.setIsStarPlayer(isStarPlayer);
