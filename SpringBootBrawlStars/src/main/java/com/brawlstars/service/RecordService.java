@@ -26,6 +26,7 @@ import com.brawlstars.json.Player;
 import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.repository.RecordDto;
 import com.brawlstars.repository.RecordRepository;
+import com.brawlstars.repository.RecordResultDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -304,7 +305,7 @@ public class RecordService {
 		});
 	}
 
-	public Page<RecordDto> getFindByTag(String tag, Pageable pageable) {
+	public Page<RecordDto> findByTag(String tag, Pageable pageable) {
 		Page<RecordDto> records = recordRepository.findByTag(tag, pageable);
 		//List<RecordDto> recordDtos = records.getContent().stream().map(record -> new RecordDto(record)).collect(Collectors.toList());
 
@@ -325,6 +326,11 @@ public class RecordService {
 	public long removeByTag(String tag) {
 		// TODO Auto-generated method stub
 		return recordRepository.removeByTag(tag);
+	}
+
+	public List<RecordResultDto> findByMap(String map) {
+		// TODO Auto-generated method stub
+		return recordRepository.findByMap(map);
 	}
 
 }
