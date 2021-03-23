@@ -1,5 +1,6 @@
 package com.brawlstars.repository;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
@@ -64,5 +65,14 @@ public class RecordRepository {
 		long result = queryFactory.delete(qRecord).where(qRecord.tag.eq(tag)).execute();
 
 		return result;
+	}
+
+	public List<RecordResultDto> findByMap(String map) {
+		// TODO Auto-generated method stub
+		QRecord qRecord = QRecord.record;
+		List<Record> record = queryFactory.selectFrom(qRecord)
+				.where(qRecord.map.eq(map))
+				.fetch();
+		return null;
 	}
 }

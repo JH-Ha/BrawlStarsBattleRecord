@@ -26,7 +26,7 @@ public class RecordTest {
 	public void getRecordsByTag() {
 		String tag = "#9QU209UYC";
 		Pageable pageable = PageRequest.of(1, 10);
-		Page<RecordDto> records = recordService.getFindByTag(tag, pageable);
+		Page<RecordDto> records = recordService.findByTag(tag, pageable);
 		records.stream().forEach(record -> {
 			System.out.println(record.getBattleTime());
 		});
