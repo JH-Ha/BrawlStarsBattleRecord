@@ -42,6 +42,7 @@ public class RecordTest {
 			System.out.println(record.getBattleTime());
 		});
 	}
+	
 
 	@Test
 	public void saveTest() {

@@ -85,4 +85,17 @@ public class RecordRepository {
 				.fetch();
 		return records;
 	}
+	
+	public List<GameMapDto> getDistinctGameMaps() {
+		// TODO Auto-generated method stub
+		QRecord qRecord = QRecord.record;
+		List<GameMapDto> gameMapDtos = 
+				queryFactory.select(Projections.constructor(GameMapDto.class
+						, qRecord.map
+						, qRecord.mode))
+				.from(qRecord)
+				.distinct()
+				.fetch();
+		return gameMapDtos;
+	}
 }
