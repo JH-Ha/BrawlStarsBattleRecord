@@ -36,12 +36,22 @@ public class RecordTest {
 	@Test
 	public void getRecordsByTag() {
 		String tag = "#9QU209UYC";
-		Pageable pageable = PageRequest.of(1, 10);
+		Pageable pageable = PageRequest.of(0, 10);
 		Page<RecordDto> records = recordService.findByTag(tag, pageable);
 		records.stream().forEach(record -> {
 			System.out.println(record.getBattleTime());
 		});
+		
+		tag = "#YCGPQRV90";
+		records = recordService.findByTag(tag, pageable);
+		records.stream().forEach(record -> {
+			System.out.println(record.getBattleTime());
+			record.getGroupRecords().stream().forEach(rr -> 
+				System.out.println(rr.getPlayerName())
+			);
+		});
 	}
+	
 	
 
 	@Test

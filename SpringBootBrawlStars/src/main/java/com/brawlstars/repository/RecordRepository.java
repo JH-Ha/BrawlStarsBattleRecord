@@ -42,16 +42,24 @@ public class RecordRepository {
 		return record;
 
 	}
-
+	
 	public Page<RecordDto> findByTag(String tag, Pageable pageable) {
 		QRecord qRecord = QRecord.record;
 
 		// QRecord qRecordGroup = QRecord.record;
-		QueryResults<Record> result = queryFactory.selectFrom(qRecord).where(qRecord.tag.eq(tag))
+		List<Long> groupKeys = queryFactory
+				.select(qRecord.parent.id)
+				.from(qRecord).where(qRecord.tag.eq(tag))
 				.orderBy(qRecord.battleTime.desc())
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize())
+				.fetch();
+		
+		QueryResults<Record> result = queryFactory
+				.selectFrom(qRecord)
+				.where(qRecord.id.in(groupKeys))
 				.fetchResults();
+		
 		return new PageImpl<>(result.getResults().stream()
 				.map(record -> new RecordDto(record))
 				.collect(Collectors.toList()),
