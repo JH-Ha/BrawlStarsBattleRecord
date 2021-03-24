@@ -44,5 +44,10 @@ public class RecordController {
 		List<RecordResultDto> records = recordService.findByMap(map);
 		return records;
 	}
+	
+	@GetMapping("/record/save/map")
+	public void saveDistinctMap() {
+		recordService.saveDistinctGameMap();
+	}
 
 }

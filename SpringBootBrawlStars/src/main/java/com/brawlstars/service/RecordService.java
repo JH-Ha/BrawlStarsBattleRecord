@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.brawlstars.api.BrawlStarsAPI;
+import com.brawlstars.domain.GameMap;
 import com.brawlstars.domain.Member;
 import com.brawlstars.domain.Record;
 import com.brawlstars.domain.RecordDuo;
@@ -23,6 +24,8 @@ import com.brawlstars.domain.RecordSolo;
 import com.brawlstars.domain.RecordTrio;
 import com.brawlstars.json.Item;
 import com.brawlstars.json.Player;
+import com.brawlstars.repository.GameMapDto;
+import com.brawlstars.repository.GameMapRepository;
 import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.repository.RecordDto;
 import com.brawlstars.repository.RecordRepository;
@@ -39,6 +42,8 @@ public class RecordService {
 	private RecordRepository recordRepository;
 	@Autowired
 	private MemberRepository memberRepository;
+	@Autowired
+	private GameMapRepository gameMapRepositry;
 	@Autowired
 	private BrawlStarsAPI brawlStarsAPI;
 
@@ -332,5 +337,25 @@ public class RecordService {
 		// TODO Auto-generated method stub
 		return recordRepository.findByMap(map);
 	}
+
+	public List<GameMapDto> getDistinctGameMaps(){
+		return recordRepository.getDistinctGameMaps();
+	}
+
+	public void saveDistinctGameMap() {
+		// TODO Auto-generated method stub
+		List<GameMapDto> gameMapDtos = getDistinctGameMaps();
+		List<GameMap> gameMaps = gameMapDtos.stream().map(dto ->{
+			GameMap gameMap = new GameMap();
+			gameMap.setMode(dto.getMode());
+			gameMap.setName(dto.getName());
+			return gameMap;
+		}).collect(Collectors.toList());
+		
+		gameMaps.stream().forEach(map ->{
+			gameMapRepositry.saveGameMap(map);
+		});
+	}
+
 
 }
