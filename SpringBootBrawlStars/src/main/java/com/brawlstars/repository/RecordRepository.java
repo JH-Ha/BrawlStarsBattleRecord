@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.brawlstars.domain.QRecord;
 import com.brawlstars.domain.Record;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository
@@ -70,9 +71,18 @@ public class RecordRepository {
 	public List<RecordResultDto> findByMap(String map) {
 		// TODO Auto-generated method stub
 		QRecord qRecord = QRecord.record;
-		List<Record> record = queryFactory.selectFrom(qRecord)
+		List<RecordResultDto> records = 
+				queryFactory.select(
+						Projections.constructor(RecordResultDto.class
+								, qRecord.brawlerName
+								, qRecord.result
+								, qRecord.count()
+				))
+				.from(qRecord)
 				.where(qRecord.map.eq(map))
+				.groupBy(qRecord.brawlerName
+						,qRecord.result)
 				.fetch();
-		return null;
+		return records;
 	}
 }

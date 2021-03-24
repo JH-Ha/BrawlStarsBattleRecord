@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import com.brawlstars.api.RecordController;
 import com.brawlstars.domain.Record;
 import com.brawlstars.repository.RecordDto;
+import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.RecordService;
 
 @SpringBootTest
@@ -22,6 +23,16 @@ public class RecordTest {
 	@Autowired
 	RecordController recordController;
 
+	@Test
+	public void getResults() {
+		String map = "Minecart Madness";
+		List<RecordResultDto> records = recordController.getRecordResults(map);
+		records.forEach(r -> 
+			System.out.println(r.getBrawlerName() + " " + r.getResult() + " " + r.getCnt())
+		);
+		
+	}
+	
 	@Test
 	public void getRecordsByTag() {
 		String tag = "#9QU209UYC";
