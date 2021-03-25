@@ -66,7 +66,7 @@ class Map extends Component {
     }
     render() {
         let { mapName } = this.props;
-        return <div className="map">
+        return <div className="mapClass">
             {mapName === "" ? (<div>invalid map name</div>) :
                 <div className="infoContainer">
                     {this.state.recordArr.map((ele, index) => {
