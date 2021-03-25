@@ -34,6 +34,9 @@ class TrioMode extends Component {
       <div className="center">
         <div className={`trioContainer ${result}`}>
           <div className={`typeInfo info ${result}`}>
+            <div className={`duration`}>
+              {duration} seconds
+            </div>
             {type}
             <div className={`battleTime`}>{battleTime.substr(0, 8)}</div>
           </div>
@@ -65,9 +68,6 @@ class TrioMode extends Component {
             </div>
             <div className={`durationContainer`}>
               <div>vs</div>
-              <div >
-                {duration} seconds
-              </div>
             </div>
             <div className={`trioPlayerContainer`}>
               {groupRecords.map(record => {
