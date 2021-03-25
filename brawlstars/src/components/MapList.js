@@ -6,10 +6,15 @@ class MapList extends Component {
     state = {
         gemGrabMaps: [],
     }
+    clickMap = (mapName) => {
+        console.log(this);
+        let { history } = this.props;
+        history.push(`/map?mapName=${mapName}`);
+    }
     componentDidMount() {
         axios.get(`http://brawlstat.xyz:8080/map`)
             //axios.get(`http://localhost/record/${tag}`)
-            .then(response => {      // .then : 응답(상태코드200~300미만)성공시
+            .then(response => {
                 console.log(response);
                 const data = response.data;
                 const gemGrabMaps = data.filter(x => {
@@ -26,8 +31,8 @@ class MapList extends Component {
     render() {
         return <div className="mapList">
             <div className="gemGrabContainer">{
-                this.state.gemGrabMaps.map(map => {
-                    return <div className="gemGrabItem">{map.name}
+                this.state.gemGrabMaps.map((map, index) => {
+                    return <div key={index} className="gemGrabItem" onClick={() => { this.clickMap(map.name) }}>{map.name}
                         <img src={`./images/maps/${map.name}.png`}></img>
                     </div>
                 })}
