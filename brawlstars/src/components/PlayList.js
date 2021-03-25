@@ -198,12 +198,12 @@ class PlayList extends Component {
           <option value="duoShowdown">duo</option>
           <option value="trio">trio</option>
         </select> */}
-        {this.isTrio(this.state.mode) && (
+        {/* {this.isTrio(this.state.mode) && (
           <h3>Win Rate : {this.state.winRate}%</h3>
-        )}
-        {!this.isTrio(this.state.mode) && (
+        )} */}
+        {/* {!this.isTrio(this.state.mode) && (
           <h3>Average Rank : {this.state.averageRank}</h3>
-        )}
+        )} */}
         <div className={this.state.isEmpty ? "noRecord" : "displayNone"}>
           No record
         </div>
@@ -257,7 +257,9 @@ class PlayList extends Component {
           pageUrl="/playerList"
           onClick={this.changePageHandler.bind(this)}
         ></Pagination>
-      </div>
+        <div style={{ 'marginBottom': "10px" }}>
+        </div>
+      </div >
       // </div>
     );
   }
