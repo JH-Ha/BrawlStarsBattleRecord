@@ -17,7 +17,7 @@ public class GameMapController {
 	@Autowired
 	GameMapRepository gameMapReposity;
 	
-	@GetMapping("/map")
+	@GetMapping("/gameMap")
 	public List<GameMapDto> getGameMaps(){
 		return gameMapReposity.getGameMaps("gemGrap");
 	}
