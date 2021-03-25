@@ -19,7 +19,7 @@ class Home extends Component {
     return (
       <div
         style={{
-          "margin-top": "30px",
+          "marginTop": "30px",
         }}
       >
         <div className="languageContainer">
@@ -28,9 +28,8 @@ class Home extends Component {
               onClick={() => {
                 this.changeLanguage(lang);
               }}
-              className={`language ${
-                lang === this.state.language ? "selected" : ""
-              }`}
+              className={`language ${lang === this.state.language ? "selected" : ""
+                }`}
               key={index}
             >
               {lang}

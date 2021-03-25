@@ -1,0 +1,25 @@
+.mapList{
+    display: flex;
+    justify-content: center;
+    
+    .gemGrabContainer{
+        width : 100%;
+        display: flex;
+        flex-wrap: wrap;
+        .gemGrabItem{
+            width : 49%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+    }
+    @media screen and (min-width : 768px){
+        .gemGrabContainer{
+            width : 768px;
+            .gemGrabItem{
+                width : 24%;
+            }
+        }
+    }
+    
+}
