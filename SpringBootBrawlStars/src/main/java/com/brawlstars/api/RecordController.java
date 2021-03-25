@@ -15,13 +15,13 @@ import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.RecordService;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:8081", "http://www.brawlstat.xyz:8080"})
 public class RecordController {
 
 	@Autowired
 	RecordService recordService;
 
 	@GetMapping("/record/{tag}")
-	@CrossOrigin(origins = {"http://localhost:8081", "http://www.brawlstat.xyz:8080"})
 	public Page<RecordDto> getRecords(@PathVariable(name = "tag") String tag,
 			Pageable pageable) {
 		Page<RecordDto> recordDtos = recordService.findByTag(tag, pageable);
