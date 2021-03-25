@@ -12,7 +12,7 @@ class MapList extends Component {
         history.push(`/map?mapName=${mapName}`);
     }
     componentDidMount() {
-        axios.get(`http://brawlstat.xyz:8080/map`)
+        axios.get(`http://brawlstat.xyz:8080/gameMap`)
             //axios.get(`http://localhost/record/${tag}`)
             .then(response => {
                 console.log(response);
