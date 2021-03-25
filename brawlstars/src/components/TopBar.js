@@ -13,6 +13,9 @@ class TopBar extends Component {
           <div className="item">
             <Link to="/userList">User List</Link>
           </div>
+          <div className="item">
+            <Link to="/mapList">Map List</Link>
+          </div>
         </div>
       </div>
     );
