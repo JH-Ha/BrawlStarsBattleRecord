@@ -82,4 +82,10 @@ public class RecordTest {
 		});
 
 	}
+	
+	@Test
+	public void savePlayers() {
+		String tag = "#9QU209UYC";
+		recordService.savePlayers(tag);
+	}
 }
