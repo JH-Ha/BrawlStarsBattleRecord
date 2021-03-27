@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.brawlstars.domain.RecordSearch;
 import com.brawlstars.repository.RecordDto;
 import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.RecordService;
@@ -23,8 +24,9 @@ public class RecordController {
 
 	@GetMapping("/record/{tag}")
 	public Page<RecordDto> getRecords(@PathVariable(name = "tag") String tag,
-			Pageable pageable) {
-		Page<RecordDto> recordDtos = recordService.findByTag(tag, pageable);
+			Pageable pageable,
+			RecordSearch recordSearch) {
+		Page<RecordDto> recordDtos = recordService.findByTag(tag, pageable, recordSearch);
 		return recordDtos;
 	}
 

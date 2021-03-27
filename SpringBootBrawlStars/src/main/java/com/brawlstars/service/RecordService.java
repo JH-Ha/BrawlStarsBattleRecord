@@ -20,6 +20,7 @@ import com.brawlstars.domain.GameMap;
 import com.brawlstars.domain.Member;
 import com.brawlstars.domain.Record;
 import com.brawlstars.domain.RecordDuo;
+import com.brawlstars.domain.RecordSearch;
 import com.brawlstars.domain.RecordSolo;
 import com.brawlstars.domain.RecordTrio;
 import com.brawlstars.json.Item;
@@ -310,8 +311,8 @@ public class RecordService {
 		});
 	}
 
-	public Page<RecordDto> findByTag(String tag, Pageable pageable) {
-		Page<RecordDto> records = recordRepository.findByTag(tag, pageable);
+	public Page<RecordDto> findByTag(String tag, Pageable pageable, RecordSearch recordSearch) {
+		Page<RecordDto> records = recordRepository.findByTag(tag, pageable,recordSearch);
 		//List<RecordDto> recordDtos = records.getContent().stream().map(record -> new RecordDto(record)).collect(Collectors.toList());
 
 //		records.stream().forEach(r -> {

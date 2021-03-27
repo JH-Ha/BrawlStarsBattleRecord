@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.brawlstars.api.RecordController;
 import com.brawlstars.domain.Record;
+import com.brawlstars.domain.RecordSearch;
 import com.brawlstars.repository.RecordDto;
 import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.RecordService;
@@ -37,13 +38,14 @@ public class RecordTest {
 	public void getRecordsByTag() {
 		String tag = "#9QU209UYC";
 		Pageable pageable = PageRequest.of(0, 10);
-		Page<RecordDto> records = recordService.findByTag(tag, pageable);
+		RecordSearch recordSearch = new RecordSearch(); 
+		Page<RecordDto> records = recordService.findByTag(tag, pageable, recordSearch);
 		records.stream().forEach(record -> {
 			System.out.println(record.getBattleTime());
 		});
 		
 		tag = "#YCGPQRV90";
-		records = recordService.findByTag(tag, pageable);
+		records = recordService.findByTag(tag, pageable, recordSearch);
 		records.stream().forEach(record -> {
 			System.out.println(record.getBattleTime());
 			record.getGroupRecords().stream().forEach(rr -> 
@@ -70,7 +72,9 @@ public class RecordTest {
 		record.setParent(record);
 		recordService.save(record);
 
-		Page<RecordDto> records = recordController.getRecords("#test",PageRequest.of(1,10));
+		RecordSearch recordSearch = new RecordSearch(); 
+		
+		Page<RecordDto> records = recordController.getRecords("#test",PageRequest.of(1,10), recordSearch);
 
 		// List<Record> records = recordService.getFindByTag("#test");
 

@@ -10,9 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.brawlstars.domain.QRecord;
 import com.brawlstars.domain.Record;
+import com.brawlstars.domain.RecordSearch;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -43,13 +46,24 @@ public class RecordRepository {
 
 	}
 	
-	public Page<RecordDto> findByTag(String tag, Pageable pageable) {
+	public Page<RecordDto> findByTag(String tag, Pageable pageable, RecordSearch recordSearch) {
 		QRecord qRecord = QRecord.record;
 
+		BooleanBuilder builder = new BooleanBuilder();
+		
+		builder.and(qRecord.tag.eq(tag));
+		if(StringUtils.hasText(recordSearch.getBrawlerName())) {
+			builder.and(qRecord.brawlerName.eq(recordSearch.getBrawlerName()));
+		}
+		if(StringUtils.hasText(recordSearch.getMode())) {
+			builder.and(qRecord.mode.eq(recordSearch.getMode()));
+		}
+		
 		// QRecord qRecordGroup = QRecord.record;
 		QueryResults<Long> groupKeys = queryFactory
 				.select(qRecord.parent.id)
-				.from(qRecord).where(qRecord.tag.eq(tag))
+				.from(qRecord)
+				.where(builder)
 				.orderBy(qRecord.battleTime.desc())
 				.offset(pageable.getOffset())
 				.limit(pageable.getPageSize())
@@ -58,6 +72,7 @@ public class RecordRepository {
 		QueryResults<Record> result = queryFactory
 				.selectFrom(qRecord)
 				.where(qRecord.id.in(groupKeys.getResults()))
+				.orderBy(qRecord.battleTime.desc())
 				.fetchResults();
 		
 		return new PageImpl<>(result.getResults().stream()
