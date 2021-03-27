@@ -16,6 +16,7 @@ class ModeList extends Component {
   }
   componentDidMount() {
     const { mode } = this.props;
+    console.log(`modeList : ${mode}`);
     this.setState({
       value: mode,
     });
