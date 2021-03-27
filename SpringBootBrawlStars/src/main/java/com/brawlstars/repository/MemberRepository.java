@@ -42,6 +42,9 @@ public class MemberRepository {
 		QMember qMember = QMember.member;
 		
 		BooleanBuilder builder = new BooleanBuilder();
+		
+		builder.and(qMember.isDeleted.eq(false));
+		
 		if(StringUtils.hasText(name)) {
 			builder.and(qMember.name.contains(name));
 		}
