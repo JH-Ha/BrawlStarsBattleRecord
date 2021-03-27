@@ -1,39 +1,78 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import mapListStyles from "./MapList.scss";
+import ModeList from './ModeList';
+import qs from 'qs';
 
 class MapList extends Component {
     state = {
-        gemGrabMaps: [],
+        mode: 'gemGrab',
+        maps: [],
+        filteredMaps: [],
     }
     clickMap = (mapName) => {
         console.log(this);
         let { history } = this.props;
         history.push(`/map?mapName=${mapName}`);
     }
+    setFilteredMap = (mode) => {
+        let filteredMaps = this.state.maps;
+        if (mode !== 'ALL' && mode !== undefined) {
+            filteredMaps = this.state.maps.filter(x => {
+                return x.mode === mode;
+            });
+        }
+        this.setState({
+            filteredMaps: filteredMaps,
+        });
+    }
+    changeMode = (mode) => {
+        console.log(`changeMode ${mode}`);
+        console.log(this);
+
+        this.setFilteredMap(mode);
+
+        let { history } = this.props;
+        history.push(`/mapList?mode=${mode}`);
+    }
     componentDidMount() {
-        axios.get(`http://brawlstat.xyz:8080/map`)
+        const query = qs.parse(this.props.location.search, {
+            ignoreQueryPrefix: true,
+        });
+        console.log(`query mode ${query.mode}`);
+
+        //this.setFilteredMap(query.mode);
+        axios.get(`http://brawlstat.xyz:8080/gameMap`)
             //axios.get(`http://localhost/record/${tag}`)
             .then(response => {
                 console.log(response);
                 const data = response.data;
-                const gemGrabMaps = data.filter(x => {
-                    return x.mode === "gemGrab"
-                });
+                // const gemGrabMaps = data.filter(x => {
+                //     return x.mode === "gemGrab"
+                // });
+                let mode = 'gemGrab';
+                if (query.mode !== undefined) {
+                    mode = query.mode;
+                }
                 this.setState({
-                    gemGrabMaps: gemGrabMaps
+                    maps: data,
+                    mode: mode
                 })
-                console.log(data);
+                this.setFilteredMap(mode);
+                //this.changeMode(query.mode);
             }).catch(error => {
                 console.log(error);
             });
     }
     render() {
         return <div className="mapList">
+            <div>
+                <ModeList key={this.state.mode} changeMode={this.changeMode} mode={this.state.mode}></ModeList>
+            </div>
             <div className="gemGrabContainer">{
-                this.state.gemGrabMaps.map((map, index) => {
+                this.state.filteredMaps.map((map, index) => {
                     return <div key={index} className="gemGrabItem" onClick={() => { this.clickMap(map.name) }}>{map.name}
-                        <img src={`./images/maps/${map.name}.png`}></img>
+                        <img src={`./images/maps/${map.mode}/${map.name}.png`}></img>
                     </div>
                 })}
             </div>

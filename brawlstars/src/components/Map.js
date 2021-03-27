@@ -81,7 +81,7 @@ class Map extends Component {
                                 {ele.totalGameNum} games
                             </div>
                             <div className="winRate">
-                                {Math.round(ele.winRate * 1000) / 10}%
+                                {Math.round(ele.winRate * 10000) / 100}%
                             </div>
                         </div>
                         )
