@@ -12,8 +12,9 @@ class MapList extends Component {
     }
     clickMap = (mapName) => {
         console.log(this);
+        let paramMapName = mapName.replace("&", "%26");
         let { history } = this.props;
-        history.push(`/map?mapName=${mapName}`);
+        history.push(`/map?mapName=${paramMapName}`);
     }
     setFilteredMap = (mode) => {
         let filteredMaps = this.state.maps;
