@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import qs from 'qs';
 import styles from "./Map.scss";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSortUp, faSortDown, faSort } from '@fortawesome/free-solid-svg-icons'
 
 class Map extends Component {
     state = {
@@ -78,8 +80,8 @@ class Map extends Component {
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
-                                <th>Win Rate</th>
-                                <th>Pick Rate</th>
+                                <th>Win Rate <FontAwesomeIcon icon={faSortDown} /></th>
+                                <th>Pick Rate <FontAwesomeIcon icon={faSort} /></th>
                             </tr>
                         </thead>
                         <tbody>
