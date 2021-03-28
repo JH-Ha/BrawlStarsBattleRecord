@@ -72,8 +72,8 @@ class MapList extends Component {
             </div>
             <div className="gemGrabContainer">{
                 this.state.filteredMaps.map((map, index) => {
-                    return <div key={index} className="gemGrabItem" onClick={() => { this.clickMap(map.name) }}>{map.name}
-                        <img src={`./images/maps/${map.mode}/${map.name}.png`}></img>
+                    return <div key={index} className="gemGrabItem" >{map.name}
+                        <img onClick={() => { this.clickMap(map.name) }} src={`./images/maps/${map.mode}/${map.name}.png`}></img>
                     </div>
                 })}
             </div>

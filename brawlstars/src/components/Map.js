@@ -7,6 +7,7 @@ class Map extends Component {
     state = {
         mapName: "",
         recordArr: [],
+        sumTotalGameNum: 0,
     }
     componentDidMount() {
         const query = qs.parse(this.props.location.search, {
@@ -38,6 +39,7 @@ class Map extends Component {
                     }
                 });
                 console.log(records);
+                let sumTotalGameNum = 0;
                 for (let key in records) {
                     let { victory, defeat, draw } = records[key];
                     const victoryNum = victory || 0;
@@ -52,13 +54,15 @@ class Map extends Component {
                         "winRate": (victoryNum) / totalGameNum,
                         "totalGameNum": totalGameNum
                     });
+                    sumTotalGameNum += totalGameNum;
                 }
                 recordArr.sort((a, b) => {
                     return b.winRate - a.winRate;
                 })
                 console.log(recordArr);
                 this.setState({
-                    recordArr: recordArr
+                    recordArr: recordArr,
+                    sumTotalGameNum: sumTotalGameNum
                 })
             }).catch(error => {
                 console.log(error);
@@ -69,23 +73,45 @@ class Map extends Component {
         return <div className="mapClass">
             {mapName === "" ? (<div>invalid map name</div>) :
                 <div className="infoContainer">
-                    {this.state.recordArr.map((ele, index) => {
-                        return (<div className="info" key={index}>
-                            <div className="brawler">
-                                <img src={`./images/${ele.brawlerName}.png`}></img>
-                                <div className="brawlerName">
-                                    {ele.brawlerName}
-                                </div>
-                            </div>
-                            <div className="totalGame">
-                                {ele.totalGameNum} games
-                            </div>
-                            <div className="winRate">
-                                {Math.round(ele.winRate * 10000) / 100}%
-                            </div>
-                        </div>
-                        )
-                    })}
+                    <table className="table info">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Win Rate</th>
+                                <th>Pick Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.state.recordArr.map((ele, index) => {
+                                return (
+                                    <tr>
+                                        <td>{index + 1}</td>
+                                        <td>
+                                            {/* <div className="info" key={index}> */}
+                                            <div className="brawler">
+                                                <img src={`./images/${ele.brawlerName}.png`}></img>
+                                                <div className="brawlerName">
+                                                    {ele.brawlerName}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div className="winRate">
+                                                {Math.round(ele.winRate * 1000) / 10}%
+                                        </div>
+                                        </td>
+                                        <td>
+                                            <div className="totalGame">
+                                                {Math.round(ele.totalGameNum / this.state.sumTotalGameNum * 10000) / 100}%
+                                        </div>
+                                        </td>
+                                        {/* </div> */}
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
                 </div>
             }
         </div>
