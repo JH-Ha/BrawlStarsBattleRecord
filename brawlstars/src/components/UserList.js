@@ -73,26 +73,13 @@ class UserList extends Component {
           numUser: data.totalElements
         });
 
-        //this.setState({ playRecord: response.data.content });
       })
       .catch(error => {
         console.log(error);
       });
 
   }
-  componentDidUpdate(prevProps) {
-    //console.log("update");
-    let prevQuery = this.getQuery(prevProps);
-    let query = this.getQuery(this.props);
-    // console.log(
-    //   `prevQuery.curpage ${prevQuery.curPage}, query.curPage ${query.curPage}`
-    // );
-    if (prevQuery.curPage !== query.curPage) {
-      console.log(`componentWill Update !!!! ${query.curPage}`);
-      this.getUserList(query.curPage);
-      //this.setState({curPage: query.curPage
-    }
-  }
+
   componentDidMount() {
     console.log("mount");
     let query = this.getQuery(this.props);
@@ -103,22 +90,14 @@ class UserList extends Component {
     if (curPage === undefined) curPage = 1;
     this.getUserList(curPage);
 
-    // firestore
-    //   .collection("PageInfo")
-    //   .doc("ID_LIST")
-    //   .get()
-    //   .then((doc) => {
-    //     const { numUser } = doc.data();
 
-    //     this.setState({ numUser: numUser });
-    //   });
   }
   changePageHandler(page) {
     let { history } = this.props;
     console.log("changePageHandler");
-    // this.setState({curPage : page});
+    this.setState({ curPage: page });
     history.push(`/userList?curPage=${page}`);
-    //this.getUserList(page);
+    this.getUserList(page);
   }
   showPlayList(tag) {
     let { history } = this.props;
@@ -130,7 +109,7 @@ class UserList extends Component {
     //console.log(this.state.nickname);
     axios.get(`http://brawlstat.xyz:8080/member?name=${this.state.nickname}&page=0&size=15`)
       //axios.get(`http://localhost/record/${tag}`)
-      .then(response => {      // .then : 응답(상태코드200~300미만)성공시
+      .then(response => {
         console.log(response);
         const data = response.data;
         this.setState({
@@ -143,16 +122,7 @@ class UserList extends Component {
       .catch(error => {
         console.log(error);
       });
-    // firestore
-    //   .collection("ID_LIST")
-    //   .where("name", "==", this.state.nickname)
-    //   .get()
-    //   .then((snapshot) => {
-    //     snapshot.forEach((doc) => {
-    //       console.log("doc", doc.data());
-    //     });
-    //     this.setUserList(snapshot, 1);
-    //   });
+
   }
   searchInputChange(event) {
     let value = event.target.value;
@@ -166,10 +136,6 @@ class UserList extends Component {
       <div>
         <h1>UserList</h1>
         <div>
-          {/* <select className="select">
-                        <option label = "nickname" value="nickname"></option>
-                        <option label = "tag" value = "tag"></option>
-                    </select> */}
           <input
             placeholder="search user nickname"
             onChange={this.searchInputChange}
@@ -205,6 +171,7 @@ class UserList extends Component {
           </tbody>
         </table>
         <Pagination
+          key={`pagination-${this.state.curPage}`}
           curPage={this.state.curPage}
           numTotal={this.state.numUser}
           numShowItems="15"

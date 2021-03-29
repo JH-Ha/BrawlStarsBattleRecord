@@ -87,7 +87,7 @@ class Map extends Component {
                         <tbody>
                             {this.state.recordArr.map((ele, index) => {
                                 return (
-                                    <tr>
+                                    <tr key={ele.brawlerName}>
                                         <td>{index + 1}</td>
                                         <td>
                                             {/* <div className="info" key={index}> */}

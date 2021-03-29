@@ -29,7 +29,7 @@ class TrioMode extends Component {
       mode,
       groupRecords,
     } = this.props;
-    console.log(groupRecords);
+    //console.log(groupRecords);
     return (
       <div className="center">
         <div className={`trioContainer ${result}`}>
@@ -37,7 +37,7 @@ class TrioMode extends Component {
             <div className={`duration`}>
               {duration} seconds
             </div>
-            {type}
+            {type || "game"}
             <div className={`battleTime`}>{battleTime.substr(0, 8)}</div>
           </div>
           <div className={`gameInfo top ${result}`}>
@@ -57,9 +57,9 @@ class TrioMode extends Component {
           </div>
           <div className={`playerInfo info ${result}`}>
             <div className={`trioPlayerContainer`}>
-              {groupRecords.map(record => {
+              {groupRecords.map((record, index) => {
                 if (record.teamId === 0)
-                  return <PlayerTile
+                  return <PlayerTile key={index}
                     brawlerName={record.brawlerName}
                     playerName={record.playerName}
                     trophies={record.trophies}
@@ -70,9 +70,9 @@ class TrioMode extends Component {
               <div>vs</div>
             </div>
             <div className={`trioPlayerContainer`}>
-              {groupRecords.map(record => {
+              {groupRecords.map((record, index) => {
                 if (record.teamId === 1)
-                  return <PlayerTile
+                  return <PlayerTile key={index}
                     brawlerName={record.brawlerName}
                     playerName={record.playerName}
                     trophies={record.trophies}
