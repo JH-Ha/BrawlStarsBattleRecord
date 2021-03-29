@@ -37,7 +37,7 @@ class TrioMode extends Component {
             <div className={`duration`}>
               {duration} seconds
             </div>
-            {type}
+            {type || "game"}
             <div className={`battleTime`}>{battleTime.substr(0, 8)}</div>
           </div>
           <div className={`gameInfo top ${result}`}>
