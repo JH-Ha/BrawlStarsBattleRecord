@@ -336,9 +336,14 @@ public class RecordService {
 		return recordRepository.removeByTag(tag);
 	}
 
-	public List<RecordResultDto> findByMap(String map) {
+	public List<RecordResultDto> findByMap(String map, String mode) {
 		// TODO Auto-generated method stub
-		return recordRepository.findByMap(map);
+		if(isTrioMode(mode)) {
+			return recordRepository.findByMap(map, mode);
+		}else if(isDuo(mode) || isSolo(mode)) {
+			return recordRepository.findSoloDuoByMap(map, mode);
+		}
+		return null;
 	}
 
 	public List<GameMapDto> getDistinctGameMaps(){
