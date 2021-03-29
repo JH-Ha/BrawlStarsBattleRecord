@@ -10,11 +10,11 @@ class MapList extends Component {
         maps: [],
         filteredMaps: [],
     }
-    clickMap = (mapName) => {
+    clickMap = (mapName, mapMode) => {
         console.log(this);
         let paramMapName = mapName.replace("&", "%26");
         let { history } = this.props;
-        history.push(`/map?mapName=${paramMapName}`);
+        history.push(`/map?mapName=${paramMapName}&mode=${mapMode}`);
     }
     setFilteredMap = (mode) => {
         let filteredMaps = this.state.maps;
@@ -44,7 +44,7 @@ class MapList extends Component {
 
         //this.setFilteredMap(query.mode);
         axios.get(`http://brawlstat.xyz:8080/gameMap`)
-            //axios.get(`http://localhost/record/${tag}`)
+            //axios.get(`http://localhost:8080/gameMap`)
             .then(response => {
                 console.log(response);
                 const data = response.data;
@@ -73,7 +73,8 @@ class MapList extends Component {
             <div className="gemGrabContainer">{
                 this.state.filteredMaps.map((map, index) => {
                     return <div key={index} className="gemGrabItem" >{map.name}
-                        <img onClick={() => { this.clickMap(map.name) }} src={`./images/maps/${map.mode}/${map.name}.png`}></img>
+                        {typeof map.mode}
+                        <img onClick={() => { this.clickMap(map.name, map.mode) }} src={`./images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.name}.png`}></img>
                     </div>
                 })}
             </div>
