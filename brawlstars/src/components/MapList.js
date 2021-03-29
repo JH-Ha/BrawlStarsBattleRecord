@@ -73,7 +73,6 @@ class MapList extends Component {
             <div className="gemGrabContainer">{
                 this.state.filteredMaps.map((map, index) => {
                     return <div key={index} className="gemGrabItem" >{map.name}
-                        {typeof map.mode}
                         <img onClick={() => { this.clickMap(map.name, map.mode) }} src={`./images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.name}.png`}></img>
                     </div>
                 })}
