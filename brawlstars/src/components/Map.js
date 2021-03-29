@@ -11,17 +11,44 @@ class Map extends Component {
         recordArr: [],
         sumTotalGameNum: 0,
     }
+    isSolo(mode) {
+        if (mode === "soloShowdown") {
+            return true;
+        }
+        return false;
+    }
+    isDuo(mode) {
+        if (mode === "duoShowdown") {
+            return true;
+        }
+        return false;
+    }
+    isTrio(mode) {
+        let result = false;
+        if (
+            mode === "gemGrab" ||
+            mode === "heist" ||
+            mode === "siege" ||
+            mode === "bounty" ||
+            mode === "brawlBall" ||
+            mode === "hotZone"
+        ) {
+            result = true;
+        }
+        return result;
+    }
     componentDidMount() {
         const query = qs.parse(this.props.location.search, {
             ignoreQueryPrefix: true,
         });
         console.log(query);
         const mapName = query.mapName;
+        const mode = query.mode;
         console.log(mapName);
         let records = {};
         let recordArr = [];
-        axios.get(`http://brawlstat.xyz:8080/record/map/${mapName}`)
-            //axios.get(`http://localhost/record/${tag}`)
+        axios.get(`http://brawlstat.xyz:8080/record/map/${mapName}?mode=${mode}`)
+            //axios.get(`http://localhost:8080/record/map/${mapName}?mode=${mode}`)
             .then(response => {
                 console.log(response);
                 const data = response.data;
@@ -31,36 +58,60 @@ class Map extends Component {
                     // cnt: 14
                     // result: "defeat"
                     // __proto__: Object
-                    if (records[e.brawlerName] === undefined) {
+                    if (this.isTrio(mode)) {
+                        if (records[e.brawlerName] === undefined) {
+                            records[e.brawlerName] = {
+                            };
+                        }
                         records[e.brawlerName] = {
-                        };
-                    }
-                    records[e.brawlerName] = {
-                        ...records[e.brawlerName],
-                        [e.result]: e.cnt
+                            ...records[e.brawlerName],
+                            [e.result]: e.cnt,
+                        }
+                    } else {
+                        records[e.brawlerName] = {
+                            brawlerName: e.brawlerName,
+                            averageRank: e.averageRank,
+                            cnt: e.cnt,
+                        }
                     }
                 });
                 console.log(records);
                 let sumTotalGameNum = 0;
-                for (let key in records) {
-                    let { victory, defeat, draw } = records[key];
-                    const victoryNum = victory || 0;
-                    const defeatNum = defeat || 0;
-                    const drawNum = draw || 0;
-                    const totalGameNum = victoryNum + defeatNum + drawNum;
-                    recordArr.push({
-                        "brawlerName": key,
-                        "victory": victoryNum,
-                        "defeat": defeatNum,
-                        "draw": drawNum,
-                        "winRate": (victoryNum) / totalGameNum,
-                        "totalGameNum": totalGameNum
-                    });
-                    sumTotalGameNum += totalGameNum;
+                if (this.isTrio(mode)) {
+                    for (let key in records) {
+                        let { victory, defeat, draw } = records[key];
+                        const victoryNum = victory || 0;
+                        const defeatNum = defeat || 0;
+                        const drawNum = draw || 0;
+                        const totalGameNum = victoryNum + defeatNum + drawNum;
+                        recordArr.push({
+                            "brawlerName": key,
+                            "victory": victoryNum,
+                            "defeat": defeatNum,
+                            "draw": drawNum,
+                            "winRate": (victoryNum) / totalGameNum,
+                            "totalGameNum": totalGameNum
+                        });
+                        sumTotalGameNum += totalGameNum;
+                    }
+
+                    recordArr.sort((a, b) => {
+                        return b.winRate - a.winRate;
+                    })
+                } else {
+                    for (let key in records) {
+                        let { averageRank, cnt } = records[key];
+                        recordArr.push({
+                            "brawlerName": key,
+                            "averageRank": averageRank,
+                            "totalGameNum": cnt
+                        });
+                        sumTotalGameNum += cnt;
+                    }
+                    recordArr.sort((a, b) => {
+                        return a.averageRank - b.averageRank;
+                    })
                 }
-                recordArr.sort((a, b) => {
-                    return b.winRate - a.winRate;
-                })
                 console.log(recordArr);
                 this.setState({
                     recordArr: recordArr,
@@ -71,7 +122,13 @@ class Map extends Component {
             });
     }
     render() {
-        let { mapName } = this.props;
+        const query = qs.parse(this.props.location.search, {
+            ignoreQueryPrefix: true,
+        });
+        console.log(query);
+        const mapName = query.mapName;
+        const mode = query.mode;
+
         return <div className="mapClass">
             {mapName === "" ? (<div>invalid map name</div>) :
                 <div className="infoContainer">
@@ -80,7 +137,11 @@ class Map extends Component {
                             <tr>
                                 <th>No</th>
                                 <th>Name</th>
-                                <th>Win Rate <FontAwesomeIcon icon={faSortDown} /></th>
+                                {this.isTrio(mode) ?
+                                    <th>Win Rate <FontAwesomeIcon icon={faSortDown} /></th>
+                                    :
+                                    <th>Avg Rank <FontAwesomeIcon icon={faSortDown} /></th>
+                                }
                                 <th>Pick Rate <FontAwesomeIcon icon={faSort} /></th>
                             </tr>
                         </thead>
@@ -99,9 +160,16 @@ class Map extends Component {
                                             </div>
                                         </td>
                                         <td>
-                                            <div className="winRate">
-                                                {Math.round(ele.winRate * 1000) / 10}%
-                                        </div>
+                                            {ele.winRate === undefined ?
+                                                <div className="averageRank">
+                                                    {Math.round(ele.averageRank * 100) / 100}
+                                                </div>
+                                                :
+                                                <div className="winRate">
+                                                    {Math.round(ele.winRate * 1000) / 10}%
+                                                </div>
+                                            }
+
                                         </td>
                                         <td>
                                             <div className="totalGame">
