@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import styles from "./Pagination.scss";
 
 class Page {
-  constructor(link, pageNum, content) {
+  constructor(link, pageNum, content, className) {
     this.link = link;
     this.pageNum = pageNum;
     this.content = content;
+    this.className = className;
   }
 }
 class Pagination extends Component {
@@ -56,13 +57,19 @@ class Pagination extends Component {
     if (startPage < 1) startPage = 1;
     if (endPage > maxPage) endPage = maxPage;
 
+    let prevPage = startPage - 1;
+    if (prevPage < 1) prevPage = 1;
+    let nextPage = endPage + 1;
+    if (nextPage > maxPage) nextPage = curPage;
     //console.log(`curPage ${curPage} startPage ${startPage} endPage ${endPage} `)
     let pageList = [];
-    pageList.push(new Page("", parseInt(curPage) - 1, "<"));
+    pageList.push(new Page("", 0, "<<"));
+    pageList.push(new Page("", prevPage, "<"));
     for (let i = startPage; i <= endPage; i++) {
-      pageList.push(new Page(`${pageUrl}?curPage=${i}`, i, i));
+      pageList.push(new Page(`${pageUrl}?curPage=${i}`, i, i, "number"));
     }
-    pageList.push(new Page("", parseInt(curPage) + 1, ">"));
+    pageList.push(new Page("", nextPage, ">"));
+    pageList.push(new Page("", maxPage, ">>", ""));
 
     //console.log("chagnePageHandler", this.props.onClick);
     return (
@@ -73,7 +80,7 @@ class Pagination extends Component {
               <button
                 key={page.content}
                 className={
-                  "btn-page " + (curPage == page.pageNum ? "activate" : "")
+                  "btn-page " + (curPage === page.pageNum && page.className === "number" ? "activate " : "")
                 }
                 onClick={() => onClick(page.pageNum)}
               >
