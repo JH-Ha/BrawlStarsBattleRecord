@@ -220,13 +220,15 @@ public class RecordService {
 				recordDuo.setBattleTime(item.getBattleTime());
 				recordDuo.setBrawlerName(player.getBrawler().getName());
 				recordDuo.setPower(player.getBrawler().getPower());
+				recordDuo.setTrophies(player.getBrawler().getTrophies());
+				
 				recordDuo.setMap(item.getEvent().getMap());
 				//recordDuo.setGroupKey(groupKey);
 				recordDuo.setMode(item.getEvent().getMode());
 				recordDuo.setType(item.getBattle().getType());
 				recordDuo.setResultRank(i + 1);
 				recordDuo.setPlayerName(player.getName());
-
+				
 				if (tag.equals(player.getTag())) {
 					recordDuo.setTrophyChange(item.getBattle().getTrophyChange());
 					myRecord = recordDuo;
