@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import UserList from "./UserList";
 import styles from "./Pagination.scss";
+
 class Page {
   constructor(link, pageNum, content) {
     this.link = link;
@@ -14,12 +13,12 @@ class Pagination extends Component {
     curPage: 1,
   };
   componentDidUpdate(prevProps) {
-    if (this.props.curPage !== prevProps.curPage) {
-      //console.log("update!!!!");
-      this.setState({
-        curPage: this.props.curPage,
-      });
-    }
+    // if (this.props.curPage !== prevProps.curPage) {
+    //   //console.log("update!!!!");
+    //   this.setState({
+    //     curPage: this.props.curPage,
+    //   });
+    // }
   }
   componentDidMount() {
     this.setState({
@@ -43,12 +42,12 @@ class Pagination extends Component {
     let curPage = this.state.curPage;
     const numShowPages = 10;
     let maxPage = Math.floor((numTotal - 1) / numShowItems) + 1;
-    console.log(`maxPage ${maxPage}`);
+    //console.log(`maxPage ${maxPage}`);
 
     if (curPage === undefined) curPage = 1;
     if (numShowItems === undefined) numShowItems = 15;
 
-    console.log(`curPage ${curPage}`);
+    //console.log(`curPage ${curPage}`);
     if (curPage < 1) curPage = 1;
     else if (curPage > maxPage) curPage = maxPage;
 
@@ -57,7 +56,7 @@ class Pagination extends Component {
     if (startPage < 1) startPage = 1;
     if (endPage > maxPage) endPage = maxPage;
 
-    console.log(`curPage ${curPage} startPage ${startPage} endPage ${endPage} `)
+    //console.log(`curPage ${curPage} startPage ${startPage} endPage ${endPage} `)
     let pageList = [];
     pageList.push(new Page("", parseInt(curPage) - 1, "<"));
     for (let i = startPage; i <= endPage; i++) {

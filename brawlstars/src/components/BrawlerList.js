@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 let brawlerNameList = [
-  "ALL",
   "SHELLY",
   "NITA",
   "COLT",
@@ -38,22 +37,38 @@ let brawlerNameList = [
   "MAX",
   "MR. P",
   "GALE",
+  "COLETTE",
+  "AMBER",
+  "BYRON",
+  "STU",
+  "COLONEL RUFFS",
+  "LOU",
+  "EDGAR",
+  "SURGE",
 ];
+brawlerNameList = brawlerNameList.sort();
+brawlerNameList.unshift("ALL");
 class BrawlerList extends Component {
   constructor(props) {
     super(props);
     this.change = this.change.bind(this);
     //this.setState({ changeBrawler: this.props.changeBrawler });
-    console.log(this.props.changeBrawler);
+    //console.log(this.props.changeBrawler);
   }
   state = {
-    value: "ALL",
+    brawlerName: "ALL",
     changeBrawler: "",
   };
   change(event) {
     let value = event.target.value;
     this.props.changeBrawler(value);
     this.setState({ value: value });
+  }
+  componentDidMount() {
+    const { brawlerName } = this.props;
+    this.setState({
+      brawlerName: brawlerName
+    });
   }
   render() {
     return (
@@ -62,7 +77,7 @@ class BrawlerList extends Component {
         <select
           id="brawlerName"
           onChange={this.change}
-          value={this.state.value}
+          value={this.state.brawlerName}
         >
           {brawlerNameList.map((brawlerName, index) => {
             return (
