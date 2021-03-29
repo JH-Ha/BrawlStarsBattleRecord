@@ -91,7 +91,7 @@ public class RecordRepository {
 		return result;
 	}
 
-	public List<RecordResultDto> findByMap(String map) {
+	public List<RecordResultDto> findByMap(String map, String mode) {
 		// TODO Auto-generated method stub
 		QRecord qRecord = QRecord.record;
 		List<RecordResultDto> records = 
@@ -120,5 +120,24 @@ public class RecordRepository {
 				.distinct()
 				.fetch();
 		return gameMapDtos;
+	}
+
+	public List<RecordResultDto> findSoloDuoByMap(String map, String mode) {
+		// TODO Auto-generated method stub
+		QRecord qRecord = QRecord.record;
+		List<RecordResultDto> records = 
+				queryFactory.select(
+						Projections.constructor(RecordResultDto.class
+								, qRecord.brawlerName
+								, qRecord.resultRank.avg()
+								, qRecord.count()
+				))
+				.from(qRecord)
+				.where(qRecord.map.eq(map)
+				        .and(qRecord.mode.eq(mode)))
+				.groupBy(qRecord.brawlerName
+						,qRecord.result)
+				.fetch();
+		return records;
 	}
 }
