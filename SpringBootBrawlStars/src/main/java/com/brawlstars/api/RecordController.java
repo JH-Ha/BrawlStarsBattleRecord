@@ -42,8 +42,9 @@ public class RecordController {
 	}
 	
 	@GetMapping("/record/map/{map}")
-	public List<RecordResultDto> getRecordResults(@PathVariable(name = "map") String map){
-		List<RecordResultDto> records = recordService.findByMap(map);
+	public List<RecordResultDto> getRecordResults(@PathVariable(name = "map") String map,
+								String mode){
+		List<RecordResultDto> records = recordService.findByMap(map, mode);
 		return records;
 	}
 	
