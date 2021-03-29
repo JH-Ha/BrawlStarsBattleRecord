@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import UserList from "./UserList";
 import styles from "./Pagination.scss";
+
 class Page {
-  constructor(link, pageNum, content) {
+  constructor(link, pageNum, content, className) {
     this.link = link;
     this.pageNum = pageNum;
     this.content = content;
+    this.className = className;
   }
 }
 class Pagination extends Component {
@@ -14,12 +14,12 @@ class Pagination extends Component {
     curPage: 1,
   };
   componentDidUpdate(prevProps) {
-    if (this.props.curPage !== prevProps.curPage) {
-      //console.log("update!!!!");
-      this.setState({
-        curPage: this.props.curPage,
-      });
-    }
+    // if (this.props.curPage !== prevProps.curPage) {
+    //   //console.log("update!!!!");
+    //   this.setState({
+    //     curPage: this.props.curPage,
+    //   });
+    // }
   }
   componentDidMount() {
     this.setState({
@@ -43,12 +43,12 @@ class Pagination extends Component {
     let curPage = this.state.curPage;
     const numShowPages = 10;
     let maxPage = Math.floor((numTotal - 1) / numShowItems) + 1;
-    console.log(`maxPage ${maxPage}`);
+    //console.log(`maxPage ${maxPage}`);
 
     if (curPage === undefined) curPage = 1;
     if (numShowItems === undefined) numShowItems = 15;
 
-    console.log(`curPage ${curPage}`);
+    //console.log(`curPage ${curPage}`);
     if (curPage < 1) curPage = 1;
     else if (curPage > maxPage) curPage = maxPage;
 
@@ -57,13 +57,19 @@ class Pagination extends Component {
     if (startPage < 1) startPage = 1;
     if (endPage > maxPage) endPage = maxPage;
 
-    console.log(`curPage ${curPage} startPage ${startPage} endPage ${endPage} `)
+    let prevPage = startPage - 1;
+    if (prevPage < 1) prevPage = 1;
+    let nextPage = endPage + 1;
+    if (nextPage > maxPage) nextPage = curPage;
+    //console.log(`curPage ${curPage} startPage ${startPage} endPage ${endPage} `)
     let pageList = [];
-    pageList.push(new Page("", parseInt(curPage) - 1, "<"));
+    pageList.push(new Page("", 0, "<<"));
+    pageList.push(new Page("", prevPage, "<"));
     for (let i = startPage; i <= endPage; i++) {
-      pageList.push(new Page(`${pageUrl}?curPage=${i}`, i, i));
+      pageList.push(new Page(`${pageUrl}?curPage=${i}`, i, i, "number"));
     }
-    pageList.push(new Page("", parseInt(curPage) + 1, ">"));
+    pageList.push(new Page("", nextPage, ">"));
+    pageList.push(new Page("", maxPage, ">>", ""));
 
     //console.log("chagnePageHandler", this.props.onClick);
     return (
@@ -74,7 +80,7 @@ class Pagination extends Component {
               <button
                 key={page.content}
                 className={
-                  "btn-page " + (curPage == page.pageNum ? "activate" : "")
+                  "btn-page " + (curPage === page.pageNum && page.className === "number" ? "activate " : "")
                 }
                 onClick={() => onClick(page.pageNum)}
               >
