@@ -135,8 +135,7 @@ public class RecordRepository {
 				.from(qRecord)
 				.where(qRecord.map.eq(map)
 				        .and(qRecord.mode.eq(mode)))
-				.groupBy(qRecord.brawlerName
-						,qRecord.result)
+				.groupBy(qRecord.brawlerName)
 				.fetch();
 		return records;
 	}
