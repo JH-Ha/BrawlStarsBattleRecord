@@ -4,6 +4,7 @@ import qs from 'qs';
 import styles from "./Map.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortUp, faSortDown, faSort } from '@fortawesome/free-solid-svg-icons'
+import { getData } from './ApiHandler';
 
 class Map extends Component {
     state = {
@@ -57,8 +58,7 @@ class Map extends Component {
         searchParams.set("mode", mode);
         searchParams.set("trophyRange", trophyRange);
 
-        //axios.get(`http://brawlstat.xyz:8080/record/map/${mapName}?mode=${mode}`)
-        axios.get(`http://localhost:8080/record/map/${mapName}?${searchParams}`)
+        getData(`/record/map/${mapName}?${searchParams}`)
             .then(response => {
                 console.log(response);
                 const data = response.data;

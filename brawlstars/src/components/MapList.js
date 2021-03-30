@@ -3,6 +3,7 @@ import axios from "axios";
 import mapListStyles from "./MapList.scss";
 import ModeList from './ModeList';
 import qs from 'qs';
+import { getData } from './ApiHandler';
 
 class MapList extends Component {
     state = {
@@ -43,27 +44,22 @@ class MapList extends Component {
         console.log(`query mode ${query.mode}`);
 
         //this.setFilteredMap(query.mode);
-        axios.get(`http://brawlstat.xyz:8080/gameMap`)
-            //axios.get(`http://localhost:8080/gameMap`)
-            .then(response => {
-                console.log(response);
-                const data = response.data;
-                // const gemGrabMaps = data.filter(x => {
-                //     return x.mode === "gemGrab"
-                // });
-                let mode = 'gemGrab';
-                if (query.mode !== undefined) {
-                    mode = query.mode;
-                }
-                this.setState({
-                    maps: data,
-                    mode: mode
-                })
-                this.setFilteredMap(mode);
-                //this.changeMode(query.mode);
-            }).catch(error => {
-                console.log(error);
-            });
+        getData(`/gameMap`).then(response => {
+            console.log(response);
+            const data = response.data;
+            let mode = 'gemGrab';
+            if (query.mode !== undefined) {
+                mode = query.mode;
+            }
+            this.setState({
+                maps: data,
+                mode: mode
+            })
+            this.setFilteredMap(mode);
+            //this.changeMode(query.mode);
+        }).catch(error => {
+            console.log(error);
+        });
     }
     render() {
         return <div className="mapList">

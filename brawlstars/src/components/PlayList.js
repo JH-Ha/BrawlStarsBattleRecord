@@ -7,8 +7,9 @@ import BrawlerList from "./BrawlerList";
 import playStyles from "./PlayList.scss";
 import styles from "./Base.scss";
 import SoloDuoMode from "./SoloDuoMode";
-import axios from "axios";
 import Pagination from "./Pagination";
+import { getData } from "./ApiHandler";
+
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
 //         ignoreQueryPrefix : true
@@ -79,19 +80,17 @@ class PlayList extends Component {
     searchParams.set("page", queryPage);
     searchParams.set("size", 5);
     console.log(`searchParams ${searchParams.toString()}`);
-    axios.get(`http://brawlstat.xyz:8080/record/${tag}?${searchParams.toString()}`)
-      //axios.get(`http://localhost/record/${tag}`)
-      .then(response => {      // .then : 응답(상태코드200~300미만)성공시
-        console.log(response);
-        const data = response.data;
-        this.setState({
-          playRecord: response.data.content,
-          curPage: data.pageable.pageNumber + 1,
-          totalElements: data.totalElements
-        })
-      }).catch(error => {
-        console.log(error);
-      });
+    getData(`/record/${tag}?${searchParams.toString()}`).then((response) => {      // .then : 응답(상태코드200~300미만)성공시
+      console.log(response);
+      const data = response.data;
+      this.setState({
+        playRecord: response.data.content,
+        curPage: data.pageable.pageNumber + 1,
+        totalElements: data.totalElements
+      })
+    }).catch((error) => {
+      console.log(error);
+    });
   }
   componentDidMount() {
     let searchParams = new URLSearchParams(this.props.location.search);
@@ -174,7 +173,7 @@ class PlayList extends Component {
         <h1>PlayList</h1>
         <ModeList key={`mode-${this.state.mode}`} changeMode={this.changeMode} mode={this.state.mode} />
         <BrawlerList key={this.state.brawlerName} brawlerName={this.state.brawlerName} changeBrawler={this.changeBrawler} />
-        <h2>Tag : {this.state.tag}</h2>
+        <h2>Name : {this.state.name} Tag : {this.state.tag}</h2>
 
         <div className={this.state.isEmpty ? "noRecord" : "displayNone"}>
           No record
