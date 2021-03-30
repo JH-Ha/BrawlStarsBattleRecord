@@ -57,8 +57,9 @@ class Map extends Component {
         let searchParams = new URLSearchParams();
         searchParams.set("mode", mode);
         searchParams.set("trophyRange", trophyRange);
+        searchParams.set("map", mapName);
 
-        getData(`/record/map/${mapName}?${searchParams}`)
+        getData(`/record/result?${searchParams}`)
             .then(response => {
                 console.log(response);
                 const data = response.data;
@@ -138,7 +139,7 @@ class Map extends Component {
         console.log(query);
         const mapName = query.mapName;
         const mode = query.mode;
-        const trophyRange = query.trophyRange;
+        const trophyRange = query.trophyRange || this.state.trophyRange;
         console.log(mapName);
         this.setState({
             trophyRange: trophyRange,
