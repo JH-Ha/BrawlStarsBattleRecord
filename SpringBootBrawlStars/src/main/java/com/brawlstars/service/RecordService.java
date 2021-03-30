@@ -336,12 +336,13 @@ public class RecordService {
 		return recordRepository.removeByTag(tag);
 	}
 
-	public List<RecordResultDto> findByMap(String map, String mode) {
+	public List<RecordResultDto> findByMap(String map, RecordSearch recordSearch) {
+		String mode = recordSearch.getMode();
 		// TODO Auto-generated method stub
 		if(isTrioMode(mode)) {
-			return recordRepository.findByMap(map, mode);
+			return recordRepository.findByMap(map, recordSearch);
 		}else if(isDuo(mode) || isSolo(mode)) {
-			return recordRepository.findSoloDuoByMap(map, mode);
+			return recordRepository.findSoloDuoByMap(map, recordSearch);
 		}
 		return null;
 	}

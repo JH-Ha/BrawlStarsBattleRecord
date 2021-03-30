@@ -91,9 +91,26 @@ public class RecordRepository {
 		return result;
 	}
 
-	public List<RecordResultDto> findByMap(String map, String mode) {
-		// TODO Auto-generated method stub
+	public List<RecordResultDto> findByMap(String map, RecordSearch recordSearch) {
+		
 		QRecord qRecord = QRecord.record;
+
+		BooleanBuilder builder = new BooleanBuilder();
+		
+		builder.and(qRecord.map.eq(map))
+				.and(qRecord.type.eq("ranked"));
+		if(StringUtils.hasText(recordSearch.getTrophyRange())) {
+			String trophyRange = recordSearch.getTrophyRange();
+			switch(trophyRange) {
+			case "lowRank":
+				builder.and(qRecord.trophies.lt(500));
+				break;
+			case "highRank":
+				builder.and(qRecord.trophies.gt(500));
+				break;
+			}
+		}
+		
 		List<RecordResultDto> records = 
 				queryFactory.select(
 						Projections.constructor(RecordResultDto.class
@@ -102,7 +119,7 @@ public class RecordRepository {
 								, qRecord.count()
 				))
 				.from(qRecord)
-				.where(qRecord.map.eq(map))
+				.where(builder)
 				.groupBy(qRecord.brawlerName
 						,qRecord.result)
 				.fetch();
@@ -112,6 +129,7 @@ public class RecordRepository {
 	public List<GameMapDto> getDistinctGameMaps() {
 		// TODO Auto-generated method stub
 		QRecord qRecord = QRecord.record;
+		
 		List<GameMapDto> gameMapDtos = 
 				queryFactory.select(Projections.constructor(GameMapDto.class
 						, qRecord.map
@@ -122,9 +140,28 @@ public class RecordRepository {
 		return gameMapDtos;
 	}
 
-	public List<RecordResultDto> findSoloDuoByMap(String map, String mode) {
+	public List<RecordResultDto> findSoloDuoByMap(String map, RecordSearch recordSearch) {
 		// TODO Auto-generated method stub
 		QRecord qRecord = QRecord.record;
+		
+		BooleanBuilder builder = new BooleanBuilder();
+		String mode = recordSearch.getMode();
+		builder.and(qRecord.map.eq(map))
+				.and(qRecord.type.eq("ranked"))
+				.and(qRecord.mode.eq(mode));
+		
+		if(StringUtils.hasText(recordSearch.getTrophyRange())) {
+			String trophyRange = recordSearch.getTrophyRange();
+			switch(trophyRange) {
+			case "lowRank":
+				builder.and(qRecord.trophies.lt(500));
+				break;
+			case "highRank":
+				builder.and(qRecord.trophies.gt(500));
+				break;
+			}
+		}
+		
 		List<RecordResultDto> records = 
 				queryFactory.select(
 						Projections.constructor(RecordResultDto.class
@@ -133,8 +170,7 @@ public class RecordRepository {
 								, qRecord.count()
 				))
 				.from(qRecord)
-				.where(qRecord.map.eq(map)
-				        .and(qRecord.mode.eq(mode)))
+				.where(builder)
 				.groupBy(qRecord.brawlerName)
 				.fetch();
 		return records;
