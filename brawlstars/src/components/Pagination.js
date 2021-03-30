@@ -41,7 +41,7 @@ class Pagination extends Component {
     let { numTotal, numShowItems, pageUrl, onClick } = this.props;
     //console.log(`pagination props ${this.state.curPage}`);
     let curPage = this.state.curPage;
-    const numShowPages = 10;
+    const numShowPages = 5;
     let maxPage = Math.floor((numTotal - 1) / numShowItems) + 1;
     //console.log(`maxPage ${maxPage}`);
 
