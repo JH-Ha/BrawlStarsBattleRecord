@@ -120,6 +120,13 @@ class PlayList extends Component {
     }
     //console.log(`compomentDidMount !!!!! ${brawlerName}`);
     this.getBattleLog(tag, mode, brawlerName, page + 1);
+    getData(`/member/${tag.replace("#", "%23")}`)
+      .then(response => {
+        const member = response.data;
+        this.setState({
+          name: member.name
+        });
+      })
   }
 
   changeMode(mode) {
@@ -173,7 +180,7 @@ class PlayList extends Component {
         <h1>PlayList</h1>
         <ModeList key={`mode-${this.state.mode}`} changeMode={this.changeMode} mode={this.state.mode} />
         <BrawlerList key={this.state.brawlerName} brawlerName={this.state.brawlerName} changeBrawler={this.changeBrawler} />
-        <h2>Name : {this.state.name} Tag : {this.state.tag}</h2>
+        <h2>{this.state.name}({this.state.tag})</h2>
 
         <div className={this.state.isEmpty ? "noRecord" : "displayNone"}>
           No record
