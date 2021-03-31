@@ -91,14 +91,18 @@ public class RecordRepository {
 		return result;
 	}
 
-	public List<RecordResultDto> findByMap(String map, RecordSearch recordSearch) {
+	public List<RecordResultDto> findByMap(RecordSearch recordSearch) {
 		
 		QRecord qRecord = QRecord.record;
 
 		BooleanBuilder builder = new BooleanBuilder();
+		String map = recordSearch.getMap();
+		if(StringUtils.hasText(map)) {
+			builder.and(qRecord.map.eq(map));
+		}
+//				.and(qRecord.type.eq("ranked"))
 		
-		builder.and(qRecord.map.eq(map))
-				.and(qRecord.type.eq("ranked"));
+		
 		if(StringUtils.hasText(recordSearch.getTrophyRange())) {
 			String trophyRange = recordSearch.getTrophyRange();
 			switch(trophyRange) {
@@ -109,6 +113,9 @@ public class RecordRepository {
 				builder.and(qRecord.trophies.gt(500));
 				break;
 			}
+		}
+		if(StringUtils.hasText(recordSearch.getTag())) {
+			builder.and(qRecord.tag.eq(recordSearch.getTag()));
 		}
 		
 		List<RecordResultDto> records = 
@@ -140,15 +147,18 @@ public class RecordRepository {
 		return gameMapDtos;
 	}
 
-	public List<RecordResultDto> findSoloDuoByMap(String map, RecordSearch recordSearch) {
+	public List<RecordResultDto> findSoloDuoByMap(RecordSearch recordSearch) {
 		// TODO Auto-generated method stub
 		QRecord qRecord = QRecord.record;
 		
 		BooleanBuilder builder = new BooleanBuilder();
 		String mode = recordSearch.getMode();
-		builder.and(qRecord.map.eq(map))
-				.and(qRecord.type.eq("ranked"))
-				.and(qRecord.mode.eq(mode));
+		String map = recordSearch.getMap();
+		if(StringUtils.hasText(map)) {
+			builder.and(qRecord.map.eq(map));
+		}
+//				.and(qRecord.type.eq("ranked"))
+		builder.and(qRecord.mode.eq(mode));
 		
 		if(StringUtils.hasText(recordSearch.getTrophyRange())) {
 			String trophyRange = recordSearch.getTrophyRange();
@@ -160,6 +170,10 @@ public class RecordRepository {
 				builder.and(qRecord.trophies.gt(500));
 				break;
 			}
+		}
+		
+		if(StringUtils.hasText(recordSearch.getTag())) {
+			builder.and(qRecord.tag.eq(recordSearch.getTag()));
 		}
 		
 		List<RecordResultDto> records = 

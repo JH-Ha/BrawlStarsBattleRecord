@@ -29,7 +29,8 @@ public class RecordTest {
 		String map = "Minecart Madness";
 		RecordSearch recordSearch = new RecordSearch();
 		recordSearch.setMode("gemGrab");
-		List<RecordResultDto> records = recordController.getRecordResults(map, recordSearch);
+		recordSearch.setMap(map);
+		List<RecordResultDto> records = recordController.getRecordResults(recordSearch);
 		records.forEach(r -> 
 			System.out.println(r.getBrawlerName() + " " + r.getResult() + " " + r.getCnt())
 		);
@@ -40,7 +41,8 @@ public class RecordTest {
 		String map = "The Galaxy";
 		RecordSearch recordSearch = new RecordSearch();
 		recordSearch.setMode("soloShowdown");
-		List<RecordResultDto> records = recordController.getRecordResults(map, recordSearch);
+		recordSearch.setMap(map);
+		List<RecordResultDto> records = recordController.getRecordResults(recordSearch);
 		records.forEach(r -> 
 			System.out.println(r.getBrawlerName() + " " + r.getAverageRank() + " " + r.getCnt())
 		);
