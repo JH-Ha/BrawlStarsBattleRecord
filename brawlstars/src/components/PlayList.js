@@ -171,6 +171,10 @@ class PlayList extends Component {
     }
     return result;
   }
+  goStatistics = () => {
+    const { history } = this.props;
+    history.push(`/statistics?tag=${this.state.tag}`)
+  }
   render() {
     return (
       <div>
@@ -178,6 +182,7 @@ class PlayList extends Component {
                 My Tag %239QU209UYC
                 */}
         <h1>PlayList</h1>
+        <button onClick={this.goStatistics} className="btn">Statistics</button>
         <ModeList key={`mode-${this.state.mode}`} changeMode={this.changeMode} mode={this.state.mode} />
         <BrawlerList key={this.state.brawlerName} brawlerName={this.state.brawlerName} changeBrawler={this.changeBrawler} />
         <h2>{this.state.name}({this.state.tag})</h2>
