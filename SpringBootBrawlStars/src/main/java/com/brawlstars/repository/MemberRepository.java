@@ -15,12 +15,17 @@ import com.brawlstars.domain.Member;
 import com.brawlstars.domain.QMember;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository
 public class MemberRepository {
 	@Autowired
 	private EntityManager em;
+	
+	@Autowired
+	JPAQueryFactory queryFactory;
 
 	public void save(Member member) {
 		if (member.getId() == null) {
@@ -58,5 +63,17 @@ public class MemberRepository {
 				result.getResults().stream().map(member -> new MemberDto(member)).collect(Collectors.toList()),
 				pageable, result.getTotal());
 		
+	}
+
+	public MemberDto findMemberByTag(String tag) {
+		
+		QMember qMember = QMember.member;
+		
+		MemberDto memberDto = queryFactory.select(Projections.constructor(MemberDto.class, qMember.tag, qMember.name))
+				.from(qMember)
+				.where(qMember.tag.eq(tag))
+				.fetchFirst();
+					
+		return memberDto;
 	}
 }

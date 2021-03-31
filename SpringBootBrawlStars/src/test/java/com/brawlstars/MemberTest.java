@@ -40,4 +40,10 @@ public class MemberTest {
 			System.out.println(m.getTag());
 		});
 	}
+	@Test
+	public void findMemberByTag() {
+		String tag = "#9QU209UYC";
+		MemberDto memberDto = memberRepository.findMemberByTag(tag);
+		System.out.println(memberDto.getName());;
+	}
 }
