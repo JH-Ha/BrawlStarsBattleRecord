@@ -11,5 +11,4 @@ public class BrawlstarsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BrawlstarsApplication.class, args);
 	}
-
 }

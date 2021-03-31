@@ -41,10 +41,9 @@ public class RecordController {
 		recordService.savePlayers(tag);
 	}
 	
-	@GetMapping("/record/map/{map}")
-	public List<RecordResultDto> getRecordResults(@PathVariable(name = "map") String map,
-								RecordSearch recordSearch){
-		List<RecordResultDto> records = recordService.findByMap(map, recordSearch);
+	@GetMapping("/record/result")
+	public List<RecordResultDto> getRecordResults(RecordSearch recordSearch){
+		List<RecordResultDto> records = recordService.findByMap(recordSearch);
 		return records;
 	}
 	
