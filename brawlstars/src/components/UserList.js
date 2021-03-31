@@ -4,8 +4,7 @@ import Pagination from "./Pagination";
 import qs from "qs";
 import styles from "./UserList.scss";
 import baseStyles from "./Base.scss";
-import { Router } from "react-router-dom";
-import axios from "axios";
+import { getData } from './ApiHandler';
 
 class User {
   constructor(tag, name) {
@@ -14,17 +13,6 @@ class User {
   }
 }
 
-// const getUserList = () => {
-//     return firestore.collection("ID_LIST")
-//         .get().then((snapshot) => {
-//             var rows = [];
-//             snapshot.forEach((doc) => {
-//                 var data = doc.data();
-//                 console.log(data);
-
-//             })
-//         });
-// }
 
 const tableStyle = {
   margin: "auto",
@@ -62,22 +50,19 @@ class UserList extends Component {
   getUserList(page) {
     console.log("getUserList");
     const queryPage = page - 1;
-    axios.get(`http://brawlstat.xyz:8080/member?page=${queryPage}&size=15`)
-      //axios.get(`http://localhost/record/${tag}`)
-      .then(response => {      // .then : 응답(상태코드200~300미만)성공시
+    getData(`/member?page=${queryPage}&size=15`)
+      .then((response) => {
         console.log(response);
         const data = response.data;
         this.setState({
           userList: data.content,
           curPage: data.number + 1,
           numUser: data.totalElements
+        })
+      }).catch(
+        (error) => {
+          console.log(error);
         });
-
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
   }
 
   componentDidMount() {
@@ -107,22 +92,17 @@ class UserList extends Component {
   }
   searchNickname() {
     //console.log(this.state.nickname);
-    axios.get(`http://brawlstat.xyz:8080/member?name=${this.state.nickname}&page=0&size=15`)
-      //axios.get(`http://localhost/record/${tag}`)
-      .then(response => {
+    getData(`/member?name=${this.state.nickname}&page=0&size=15`)
+      .then((response) => {
         console.log(response);
         const data = response.data;
         this.setState({
           userList: data.content,
           curPage: data.number + 1,
           numUser: data.totalElements
-        });
-        //this.setState({ playRecord: response.data.content });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
+        })
+      }
+      );
   }
   searchInputChange(event) {
     let value = event.target.value;

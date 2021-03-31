@@ -4,12 +4,14 @@ import qs from 'qs';
 import styles from "./Map.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortUp, faSortDown, faSort } from '@fortawesome/free-solid-svg-icons'
+import { getData } from './ApiHandler';
 
 class Map extends Component {
     state = {
         mapName: "",
         recordArr: [],
         sumTotalGameNum: 0,
+        trophyRange: 'highRank',
     }
     isSolo(mode) {
         if (mode === "soloShowdown") {
@@ -37,18 +39,27 @@ class Map extends Component {
         }
         return result;
     }
-    componentDidMount() {
-        const query = qs.parse(this.props.location.search, {
-            ignoreQueryPrefix: true,
+    changeTrophyRange = (e) => {
+        //console.log(e.target.value);
+        this.setState({
+            trophyRange: e.target.value,
         });
-        console.log(query);
-        const mapName = query.mapName;
-        const mode = query.mode;
-        console.log(mapName);
+        const { history } = this.props;
+        let searchParams = new URLSearchParams(this.props.location.search);
+        searchParams.set("trophyRange", e.target.value);
+        this.getRecordResult(searchParams.get("mapName"), searchParams.get("mode"), searchParams.get("trophyRange"));
+        history.push(`/map?${searchParams.toString()}`);
+
+    }
+    getRecordResult = (mapName, mode, trophyRange) => {
         let records = {};
         let recordArr = [];
-        axios.get(`http://brawlstat.xyz:8080/record/map/${mapName}?mode=${mode}`)
-            //axios.get(`http://localhost:8080/record/map/${mapName}?mode=${mode}`)
+        let searchParams = new URLSearchParams();
+        searchParams.set("mode", mode);
+        searchParams.set("trophyRange", trophyRange);
+        searchParams.set("map", mapName);
+
+        getData(`/record/result?${searchParams}`)
             .then(response => {
                 console.log(response);
                 const data = response.data;
@@ -121,6 +132,20 @@ class Map extends Component {
                 console.log(error);
             });
     }
+    componentDidMount() {
+        const query = qs.parse(this.props.location.search, {
+            ignoreQueryPrefix: true,
+        });
+        console.log(query);
+        const mapName = query.mapName;
+        const mode = query.mode;
+        const trophyRange = query.trophyRange || this.state.trophyRange;
+        console.log(mapName);
+        this.setState({
+            trophyRange: trophyRange,
+        })
+        this.getRecordResult(mapName, mode, trophyRange);
+    }
     render() {
         const query = qs.parse(this.props.location.search, {
             ignoreQueryPrefix: true,
@@ -130,6 +155,14 @@ class Map extends Component {
         const mode = query.mode;
 
         return <div className="mapClass">
+            {/* <div className="trophySelect">
+                <label htmlFor="trophyRange">Trophies</label>
+                <select id="trophyRange" value={this.state.trophyRange} onChange={this.changeTrophyRange}>
+                    <option value="ALL" label="ALL"></option>
+                    <option value="highRank" label="500~"></option>
+                    <option value="lowRank" label="0~500"></option>
+                </select>
+            </div> */}
             {mapName === "" ? (<div>invalid map name</div>) :
                 <div className="infoContainer">
                     <table className="table info">
