@@ -155,14 +155,14 @@ class Map extends Component {
         const mode = query.mode;
 
         return <div className="mapClass">
-            <div className="trophySelect">
+            {/* <div className="trophySelect">
                 <label htmlFor="trophyRange">Trophies</label>
                 <select id="trophyRange" value={this.state.trophyRange} onChange={this.changeTrophyRange}>
                     <option value="ALL" label="ALL"></option>
                     <option value="highRank" label="500~"></option>
                     <option value="lowRank" label="0~500"></option>
                 </select>
-            </div>
+            </div> */}
             {mapName === "" ? (<div>invalid map name</div>) :
                 <div className="infoContainer">
                     <table className="table info">
