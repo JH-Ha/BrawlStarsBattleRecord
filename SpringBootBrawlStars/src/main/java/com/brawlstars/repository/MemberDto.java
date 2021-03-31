@@ -8,8 +8,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberDto {
+	private String tag;
+	private String name;
+	public MemberDto(String tag, String name) {
+		this.tag = tag;
+		this.name = name;
+	}
+	
 	public MemberDto() {
-
+		
 	}
 
 	public MemberDto(Member member) {
@@ -17,6 +24,4 @@ public class MemberDto {
 		name = member.getName();
 	}
 
-	String tag;
-	String name;
 }

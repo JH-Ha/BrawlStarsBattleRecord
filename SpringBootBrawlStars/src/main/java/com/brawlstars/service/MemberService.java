@@ -25,4 +25,8 @@ public class MemberService {
 	public Page<MemberDto> getMembers(String name, Pageable pageable){
 		return memberRepository.findAll(name,pageable);
 	}
+	
+	public MemberDto getMemberByTag(String tag) {
+		return memberRepository.findMemberByTag(tag);
+		}
 }
