@@ -66,7 +66,9 @@ public class RecordService {
 		// TODO Auto-generated method stub
 		return "duoShowdown".equals(mode);
 	}
-
+	public boolean isAll(String mode) {
+		return "ALL".equals(mode);
+	}
 	public boolean isBigGame(String mode) {
 		if ("bigGame".equals(mode)) {
 			return true;
@@ -343,7 +345,10 @@ public class RecordService {
 			return recordRepository.findByMap(recordSearch);
 		}else if(isDuo(mode) || isSolo(mode)) {
 			return recordRepository.findSoloDuoByMap(recordSearch);
+		}else if(isAll(mode)) {
+			return recordRepository.findAllResult(recordSearch);
 		}
+		
 		return null;
 	}
 

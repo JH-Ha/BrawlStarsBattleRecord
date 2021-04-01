@@ -97,8 +97,13 @@ public class RecordRepository {
 
 		BooleanBuilder builder = new BooleanBuilder();
 		String map = recordSearch.getMap();
+		String mode = recordSearch.getMode();
+		
 		if(StringUtils.hasText(map)) {
 			builder.and(qRecord.map.eq(map));
+		}
+		if(StringUtils.hasText(mode)) {
+			builder.and(qRecord.mode.eq(recordSearch.getMode()));
 		}
 //				.and(qRecord.type.eq("ranked"))
 		
@@ -157,6 +162,9 @@ public class RecordRepository {
 		if(StringUtils.hasText(map)) {
 			builder.and(qRecord.map.eq(map));
 		}
+		if(StringUtils.hasText(mode)) {
+			builder.and(qRecord.mode.eq(mode));
+		}
 //				.and(qRecord.type.eq("ranked"))
 		builder.and(qRecord.mode.eq(mode));
 		
@@ -181,6 +189,29 @@ public class RecordRepository {
 						Projections.constructor(RecordResultDto.class
 								, qRecord.brawlerName
 								, qRecord.resultRank.avg()
+								, qRecord.count()
+				))
+				.from(qRecord)
+				.where(builder)
+				.groupBy(qRecord.brawlerName)
+				.fetch();
+		return records;
+	}
+
+	public List<RecordResultDto> findAllResult(RecordSearch recordSearch) {
+		
+		QRecord qRecord = QRecord.record;
+		
+		BooleanBuilder builder = new BooleanBuilder();
+				
+		if(StringUtils.hasText(recordSearch.getTag())) {
+			builder.and(qRecord.tag.eq(recordSearch.getTag()));
+		}
+		
+		List<RecordResultDto> records = 
+				queryFactory.select(
+						Projections.constructor(RecordResultDto.class
+								, qRecord.brawlerName
 								, qRecord.count()
 				))
 				.from(qRecord)
