@@ -173,7 +173,7 @@ class PlayList extends Component {
   }
   goStatistics = () => {
     const { history } = this.props;
-    history.push(`/statistics?tag=${this.state.tag}`)
+    history.push(`/statistics?tag=${this.state.tag.replace("#", "%23")}`)
   }
   render() {
     return (
