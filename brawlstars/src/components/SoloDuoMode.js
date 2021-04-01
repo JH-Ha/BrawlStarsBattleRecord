@@ -27,16 +27,35 @@ class SoloDuoMode extends Component {
     this.setState({ trophyChange: signTrophyChange });
   }
   render() {
-    const {
-      battleTime,
-      rank,
-      result,
-      brawler_name,
-      map,
-      power,
-      trophies,
-      trophyChange,
-    } = this.props;
+    // const {
+    //   battleTime,
+    //   rank,
+    //   result,
+    //   brawler_name,
+    //   map,
+    //   power,
+    //   trophies,
+    //   trophyChange,
+    //   groupRecords,
+    // } = this.props;
+    const { groupRecords, tag, map, mode } = this.props;
+    let battleTime = "";
+    let rank = "";
+    let brawlerName = "";
+    let power = "";
+    let trophies = "";
+    let trophyChange = "";
+    groupRecords.forEach(e => {
+      if (e.tag === tag) {
+        battleTime = e.battleTime;
+        rank = e.resultRank;
+        brawlerName = e.brawlerName;
+        power = e.power;
+        trophies = e.trophies;
+        trophyChange = e.trophyChange;
+      }
+    })
+
     return (
       <div className="center">
         <div className={`SoloDuoModeContainer rank${this.state.rankCss}`}>
@@ -49,8 +68,8 @@ class SoloDuoMode extends Component {
           </div>
           <div className={`gameInfoContainer rank${this.state.rankCss}`}>
             <div>
-              <img src={`/images/${brawler_name}.png`} width="50px" />
-              <div>{brawler_name}</div>
+              <img src={`/images/${brawlerName}.png`} width="50px" />
+              <div>{brawlerName}</div>
             </div>
             <div className="tableContainer">
               <table>

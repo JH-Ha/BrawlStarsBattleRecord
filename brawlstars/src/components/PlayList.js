@@ -229,6 +229,8 @@ class PlayList extends Component {
                   trophies={data.trophies}
                   trophyChange={data.trophyChange}
                   mode={data.mode}
+                  groupRecords={data.groupRecords}
+                  tag={this.state.tag}
                 />
               );
             }
