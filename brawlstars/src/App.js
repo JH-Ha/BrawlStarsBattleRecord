@@ -8,6 +8,7 @@ import TopBar from "./components/TopBar";
 import Home from "./components/Home";
 import MapList from "./components/MapList";
 import Map from "./components/Map";
+import Statistics from "./components/Statistics";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/userList" component={UserList} />
         <Route path="/mapList" component={MapList} />
         <Route path="/map" component={Map} />
+        <Route path="/statistics" component={Statistics} />
       </Router>
     </div>
   );
