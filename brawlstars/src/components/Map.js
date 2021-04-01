@@ -150,7 +150,7 @@ class Map extends Component {
                 </select>
             </div> */}
             {mapName === "" ? (<div>invalid map name</div>) :
-                <RecordResult key={this.state.recordArr} recordArr={this.state.recordArr} sumTotalGameNum={this.state.sumTotalGameNum} />
+                <RecordResult key={this.state.recordArr} recordArr={this.state.recordArr} sumTotalGameNum={this.state.sumTotalGameNum} mode={mode} />
             }
         </div>
     }
