@@ -3,6 +3,7 @@ import { getData } from "./ApiHandler";
 import ModeList from './ModeList';
 import { isTrio } from './BaseFunctions';
 import RecordResult from "./RecordResult";
+import style from "./Statistics.scss";
 
 class Statistics extends Component {
     state = {
@@ -11,18 +12,10 @@ class Statistics extends Component {
         recordArr: [],
         sumTotalGameNum: 0,
     }
-    componentDidMount() {
-        let searchParams = new URLSearchParams(this.props.location.search);
-        let tag = searchParams.get("tag");
-        let mode = "gemGrab";
-        searchParams.set("mode", mode);
-        //console.log(`tag : ${tag}`);
+    getRecordResult(searchParams) {
         let records = {};
         let recordArr = [];
-        this.setState({
-            tag: tag,
-        });
-
+        const mode = searchParams.get("mode");
         getData(`/record/result?${searchParams}`)
             .then(response => {
                 console.log(response);
@@ -52,7 +45,21 @@ class Statistics extends Component {
                 });
                 console.log(records);
                 let sumTotalGameNum = 0;
-                if (isTrio(mode)) {
+                if (mode === 'ALL') {
+                    for (let key in records) {
+                        const { brawlerName, cnt } = records[key];
+                        recordArr.push({
+                            "brawlerName": brawlerName,
+                            "totalGameNum": cnt,
+                        });
+                        sumTotalGameNum += cnt;
+                    }
+                    recordArr.sort((a, b) => {
+                        return b.totalGameNum - a.totalGameNum;
+                    });
+
+                }
+                else if (isTrio(mode)) {
                     for (let key in records) {
                         let { victory, defeat, draw } = records[key];
                         const victoryNum = victory || 0;
@@ -95,23 +102,40 @@ class Statistics extends Component {
             }).catch(error => {
                 console.log(error);
             });
+    }
+    componentDidMount() {
+        let searchParams = new URLSearchParams(this.props.location.search);
+        let tag = searchParams.get("tag");
+        const mode = searchParams.get("mode") || this.state.mode;
+        searchParams.set("mode", mode);
+        //console.log(`tag : ${tag}`);
 
+        this.setState({
+            tag: tag,
+        });
+
+        this.getRecordResult(searchParams);
     }
     changeMode = (mode) => {
         console.log(`changeMode`);
         this.setState({
             mode: mode,
-        })
+        });
+        let searchParams = new URLSearchParams(this.props.location.search);
+        searchParams.set("mode", mode);
+        this.getRecordResult(searchParams);
     }
 
     render() {
 
         return <div>
-            <ModeList key={this.state.mode} mode={this.state.mode} changeMode={this.changeMode} />
-            {isTrio(this.state.mode) ?
-                <RecordResult key={this.state.recordArr} recordArr={this.state.recordArr} sumTotalGameNum={this.state.sumTotalGameNum} />
-                : <div>soloDuo</div>
-            }
+            <div className="statistics">
+                <div className="modeListContainer">
+                    <ModeList key={this.state.mode} mode={this.state.mode} changeMode={this.changeMode} />
+                </div>
+                <RecordResult key={this.state.recordArr} recordArr={this.state.recordArr} sumTotalGameNum={this.state.sumTotalGameNum} mode={this.state.mode}
+                    isPersonal={true} />
+            </div>
         </div>
     }
 }

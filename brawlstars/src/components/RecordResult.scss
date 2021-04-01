@@ -1,0 +1,29 @@
+.recordResult{
+
+    img{
+        width: 30px;
+        height: 30px;
+    }
+    .infoContainer{
+        max-width : 400px;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        .info{
+            .brawler{
+                width : 100%;
+                display: flex;
+                .brawlerName{
+                    margin-left : 10px;
+                }
+            }
+        }
+    }
+    @media screen and (min-width : 768px) {
+        .infoContainer{
+            max-width: none;
+            width: 768px;
+            
+        }
+    }
+}
