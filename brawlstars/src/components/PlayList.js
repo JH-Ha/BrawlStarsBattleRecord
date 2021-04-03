@@ -92,6 +92,9 @@ class PlayList extends Component {
       console.log(error);
     });
   }
+  getBattleLogByUrl() {
+
+  }
   componentDidMount() {
     let searchParams = new URLSearchParams(this.props.location.search);
     const tag = searchParams.get("tag")
@@ -127,6 +130,21 @@ class PlayList extends Component {
           name: member.name
         });
       })
+  }
+
+  componentDidUpdate(prevProps) {
+    //console.log("update");
+    let prevQuery = this.getQuery(prevProps);
+    let query = this.getQuery(this.props);
+    console.log(
+      `prevQuery.curpage ${prevQuery.page}, query.curPage ${query.page}`
+    );
+
+    if (prevQuery.page !== query.page) {
+      console.log(`componentWill Update !!!! ${query.page}`);
+      this.getBattleLog(query.tag.replace("#", "%23"), query.mode, query.brawlerName, parseInt(query.page) + 1);
+      //this.setState({curPage: query.curPage
+    }
   }
 
   changeMode(mode) {
