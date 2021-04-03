@@ -74,8 +74,13 @@ class UserList extends Component {
     console.log(`curPage ${curPage}`);
     if (curPage === undefined) curPage = 1;
     this.getUserList(curPage);
-
-
+  }
+  componentDidUpdate(prevProps) {
+    let prevQuery = this.getQuery(prevProps);
+    let query = this.getQuery(this.props);
+    if (prevQuery.curPage !== query.curPage) {
+      this.getUserList(query.curPage);
+    }
   }
   changePageHandler(page) {
     let { history } = this.props;
