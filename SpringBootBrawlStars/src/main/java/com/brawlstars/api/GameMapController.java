@@ -11,7 +11,7 @@ import com.brawlstars.repository.GameMapDto;
 import com.brawlstars.repository.GameMapRepository;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:8081", "http://www.brawlstat.xyz"})
+@CrossOrigin(origins = {"http://localhost:8081", "http://www.brawlstat.xyz", "http://www.brawlstat.xyz:8080"})
 public class GameMapController {
 
 	@Autowired
