@@ -3,6 +3,7 @@ import styles from "./TrioMode.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PlayerTile from "./PlayerTile";
+import { calDisplayTime } from './BaseFunctions';
 class TrioMode extends Component {
   state = {
     imgSrc: "",
@@ -29,14 +30,7 @@ class TrioMode extends Component {
       mode,
       groupRecords,
     } = this.props;
-    console.log(`${battleTime}`);
-    let year = battleTime.substr(0, 4);
-    let month = battleTime.substr(4, 2);
-    let date = battleTime.substr(6, 2);
-    let time = battleTime.substr(8);
-    console.log(`${year} ${month} ${date} ${time}`);
-    console.log(new Date(`${year}-${month}-${date}${time}`));
-    //console.log(groupRecords);
+
     return (
       <div className="center">
         <div className={`trioContainer ${result}`}>
@@ -44,15 +38,22 @@ class TrioMode extends Component {
             <div className={`duration`}>
               {duration} seconds
             </div>
-            {type || "game"}
-            <div className={`battleTime`}>{battleTime.substr(0, 8)}</div>
+            <div className={"gameType"}>
+              {type || "game"}
+            </div>
+            <div className={`battleTime`}>{calDisplayTime(battleTime)}</div>
           </div>
           <div className={`gameInfo top ${result}`}>
-            <div className={`modeMap`}>
-              <div className={`mode`}>{mode}
+            <div className='modeInfo'>
+              <div className="modeImg">
+                <img src={`/images/mode/${mode}.png`}></img>
               </div>
-              <div className={`map`}>
-                {map}
+              <div className={`modeMap`}>
+                <div className={`mode`}>{mode}
+                </div>
+                <div className={`map`}>
+                  {map}
+                </div>
               </div>
             </div>
             <div className={`gameResult`}>
@@ -70,6 +71,7 @@ class TrioMode extends Component {
                     brawlerName={record.brawlerName}
                     playerName={record.playerName}
                     trophies={record.trophies}
+                    power={record.power}
                   ></PlayerTile>;
               })}
             </div>
@@ -83,6 +85,7 @@ class TrioMode extends Component {
                     brawlerName={record.brawlerName}
                     playerName={record.playerName}
                     trophies={record.trophies}
+                    power={record.power}
                   ></PlayerTile>
               })}
             </div>
