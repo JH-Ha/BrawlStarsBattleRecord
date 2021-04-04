@@ -48,7 +48,7 @@ function calDisplayTime(battleTime) {
     if (diffTime < 86400) {
         let diffHours = Math.floor(diffTime / 3600);
         let diffMinutes = Math.floor((diffTime / 60 - diffHours * 60));
-        console.log(`diffHours ${diffHours} diffMinues ${diffMinutes}`);
+
         if (diffHours >= 1) {
             displayTime += `${diffHours} h `;
         }

@@ -39,7 +39,7 @@ class SoloDuoMode extends Component {
     //   trophyChange,
     //   groupRecords,
     // } = this.props;
-    const { groupRecords, tag, map, mode } = this.props;
+    const { groupRecords, tag, map, mode, type } = this.props;
     let battleTime = "";
     let rank = "";
     let brawlerName = "";
@@ -60,6 +60,9 @@ class SoloDuoMode extends Component {
     return (
       <div className="center">
         <div className={`SoloDuoModeContainer rank${this.state.rankCss}`}>
+          <div>
+            {type}
+          </div>
           <div className={`topContainer rank${this.state.rankCss}`}>
             <div className={`rank rank${this.state.rankCss}Content`}>
               {rank}
