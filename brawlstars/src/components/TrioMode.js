@@ -29,6 +29,13 @@ class TrioMode extends Component {
       mode,
       groupRecords,
     } = this.props;
+    console.log(`${battleTime}`);
+    let year = battleTime.substr(0, 4);
+    let month = battleTime.substr(4, 2);
+    let date = battleTime.substr(6, 2);
+    let time = battleTime.substr(8);
+    console.log(`${year} ${month} ${date} ${time}`);
+    console.log(new Date(`${year}-${month}-${date}${time}`));
     //console.log(groupRecords);
     return (
       <div className="center">
