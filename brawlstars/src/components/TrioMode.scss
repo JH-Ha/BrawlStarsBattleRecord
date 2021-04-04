@@ -29,24 +29,58 @@
       flex-basis: 30%;
       text-align: right;
       padding-right : 10px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
     }
   }
+  .gameType{
+    flex-basis: 30%;
+  }
   .duration{
-    position: absolute;
-    top : 0;
-    left : 0;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-basis: 30%;
   }
   .battleTime{
-    position: absolute;
-    top:0;
-    right : 0;
-  }
-  .modeMap{
+    padding-right: 10px;
     flex-basis: 30%;
+    color : #30223c;
+    font-weight: bold;;
+    font-size : 12px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .modeInfo{
+    padding-left: 10px;
+    flex-basis: 30%;
+    display: flex;
+    .modeImg{
+      width: 30px;
+      height : 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img{
+        height: 100%;
+      }
+    }
+    .modeMap{
+      padding-left: 10px;
+      .map{
+        font-size : 10px;
+      }
+    }
   }
   .gameResult{
     flex-basis: 30%;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .info {
     
@@ -90,6 +124,8 @@
   }
   .typeInfo{
     position: relative;
+    display: flex;
+    justify-content: space-between;
   }
   .playerInfo{
     display: flex;

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styles from "./SoloDuoMode.scss";
+import { calDisplayTime } from './BaseFunctions';
 
 class SoloDuoMode extends Component {
   state = {
@@ -63,7 +64,7 @@ class SoloDuoMode extends Component {
             <div className={`rank rank${this.state.rankCss}Content`}>
               {rank}
             </div>
-            <div>{battleTime}</div>
+            <div>{calDisplayTime(battleTime)}</div>
             <div>{this.state.trophyChange}</div>
           </div>
           <div className={`gameInfoContainer rank${this.state.rankCss}`}>
