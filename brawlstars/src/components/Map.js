@@ -11,7 +11,7 @@ class Map extends Component {
         mapName: "",
         recordArr: [],
         sumTotalGameNum: 0,
-        trophyRange: 'highRank',
+        trophyRange: '',
     }
     isSolo(mode) {
         if (mode === "soloShowdown") {
