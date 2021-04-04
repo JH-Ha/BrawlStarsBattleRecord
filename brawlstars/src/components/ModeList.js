@@ -27,14 +27,14 @@ class ModeList extends Component {
         <label htmlFor="modeList">mode </label>
         <select id="modeList" onChange={this.change} value={this.state.value}>
           <option value="ALL">ALL</option>
-          <option value="gemGrab">gemGrab</option>
-          <option value="heist">heist</option>
-          <option value="brawlBall">brawlBall</option>
-          <option value="bounty">bounty</option>
-          <option value="siege">siege</option>
-          <option value="hotZone">hotZone</option>
-          <option value="soloShowdown">soloShowdown</option>
-          <option value="duoShowdown">duoShowdown</option>
+          <option value="gemGrab">Gem Grab</option>
+          <option value="heist">Heist</option>
+          <option value="brawlBall">Brawl Ball</option>
+          <option value="bounty">Bounty</option>
+          <option value="siege">Siege</option>
+          <option value="hotZone">Hot Zone</option>
+          <option value="soloShowdown">Solo Showdown</option>
+          <option value="duoShowdown">Duo Showdown</option>
         </select>
       </div>
     );
