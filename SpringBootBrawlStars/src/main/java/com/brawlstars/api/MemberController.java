@@ -14,7 +14,7 @@ import com.brawlstars.service.MemberService;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:8081", "http://www.brawlstat.xyz:8080"})
+@CrossOrigin(origins = {"http://localhost:8081", "http://www.brawlstat.xyz"})
 public class MemberController {
 	@Autowired
 	MemberService memberService;
