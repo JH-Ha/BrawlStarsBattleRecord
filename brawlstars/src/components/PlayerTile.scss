@@ -5,5 +5,31 @@
         width : 50px;
         font-size: 12px;
     }
+    .imgContainer{
+        height : 50px;
+        position : relative;
+        img{
+            border: 2px solid black;
+        }
+        .powerContainer{
+            position : absolute;
+            bottom : 0px;
+            right : 0px;
+            background: black;
+            display: flex;
+            
+            .levelText{
+                font-size : 8px;
+                color :#949494;
+                padding-right : 3px;
+
+            }
+            .power{
+                font-size:  10px;
+                color : white;
+                font-weight: bold;
+            }
+        }
+    }
 
 }
