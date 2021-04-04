@@ -16,7 +16,7 @@ import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.RecordService;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:8081", "http://www.brawlstat.xyz:8080"})
+@CrossOrigin(origins = {"http://localhost:8081", "http://www.brawlstat.xyz", "http://www.brawlstat.xyz:8080"})
 public class RecordController {
 
 	@Autowired
