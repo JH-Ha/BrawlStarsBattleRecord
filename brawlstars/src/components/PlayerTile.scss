@@ -7,9 +7,12 @@
     }
     .imgContainer{
         height : 50px;
+        width : 50px;
         position : relative;
         img{
             border: 2px solid black;
+            width : 100%;
+            height: 100%;
         }
         .powerContainer{
             position : absolute;
