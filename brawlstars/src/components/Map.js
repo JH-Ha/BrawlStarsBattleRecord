@@ -37,6 +37,7 @@ class Map extends Component {
         history.push(`/map?${searchParams.toString()}`);
 
     }
+
     getRecordResult = (mapName, mode, trophyRange) => {
         let records = {};
         let recordArr = [];

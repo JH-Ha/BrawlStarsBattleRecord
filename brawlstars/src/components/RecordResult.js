@@ -8,6 +8,7 @@ class RecordResult extends Component {
     state = {
         recordArr: [],
         sumTotalGameNum: 0,
+        winRateOrder: 'DESC',
     }
     componentDidMount() {
         const { recordArr, sumTotalGameNum } = this.props;
@@ -15,6 +16,29 @@ class RecordResult extends Component {
             recordArr: recordArr,
             sumTotalGameNum: sumTotalGameNum,
         })
+    }
+    toggleOrder = () => {
+        console.log("toggleOrder");
+
+        if (this.state.winRateOrder === 'DESC') {
+            console.log('to ASC');
+            this.state.winRateOrder = 'ASC';
+            let recordArr = this.state.recordArr.sort((a, b) => {
+                return a.winRate - b.winRate;
+            });
+            this.setState({
+                recordArr: recordArr
+            })
+        } else {
+            this.state.winRateOrder = 'DESC';
+            console.log('to DESC');
+            let recordArr = this.state.recordArr.sort((a, b) => {
+                return b.winRate - a.winRate;
+            });
+            this.setState({
+                recordArr: recordArr
+            })
+        }
     }
     render() {
         const { mode, isPersonal } = this.props;
@@ -27,7 +51,7 @@ class RecordResult extends Component {
                             <th>No</th>
                             <th>Name</th>
                             {isTrio(mode) ?
-                                <th>Win Rate <FontAwesomeIcon icon={faSortDown} /></th>
+                                <th onClick={this.toggleOrder}>Win Rate <FontAwesomeIcon icon={faSortDown} /></th>
                                 :
                                 isDuo(mode) || isSolo(mode) ?
                                     <th>Avg Rank <FontAwesomeIcon icon={faSortDown} /></th>
