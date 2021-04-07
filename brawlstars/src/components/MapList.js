@@ -15,7 +15,7 @@ class MapList extends Component {
         console.log(this);
         let paramMapName = mapName.replace("&", "%26");
         let { history } = this.props;
-        history.push(`/map?mapName=${paramMapName}&mode=${mapMode}`);
+        history.push(`/map/${paramMapName}/mode/${mapMode}`);
     }
     setFilteredMap = (mode) => {
         let filteredMaps = this.state.maps;

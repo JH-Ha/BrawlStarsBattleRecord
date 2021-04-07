@@ -1,5 +1,4 @@
 .mapClass{
-    margin-top : 20px;
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
@@ -16,6 +15,34 @@
     img{
         width: 30px;
         height: 30px;
+    }
+    .mapNameContainer{
+        margin-bottom: 10px;
+        cursor: pointer;
+        .mapName{
+            margin-right: 10px;
+        }
+    }
+    .mapImgContainer{
+        height: 300px;
+        transition: 500ms;
+        overflow: hidden;
+        margin-bottom: 10px;
+        &.none{
+            height: 0px;
+            overflow: hidden;
+            transition: 500ms;
+        }
+        .mapImg{
+            max-width: 200px;
+            width: auto;
+            height: auto;
+        }
+        &.showdown .mapImg{
+            max-width: 300px;
+            width: auto;
+            height: auto;
+        }
     }
     .infoContainer{
         max-width : 400px;

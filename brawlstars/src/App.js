@@ -19,7 +19,7 @@ function App() {
         <Route path="/playList" component={PlayList} exact={true} />
         <Route path="/userList" component={UserList} />
         <Route path="/mapList" component={MapList} />
-        <Route path="/map" component={Map} />
+        <Route path="/map/:map/mode/:mode" component={Map} />
         <Route path="/statistics" component={Statistics} />
       </Router>
     </div>
