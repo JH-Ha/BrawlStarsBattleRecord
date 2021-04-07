@@ -110,6 +110,7 @@ class Map extends Component {
                         return a.averageRank - b.averageRank;
                     })
                 }
+
                 console.log(recordArr);
                 this.setState({
                     recordArr: recordArr,
