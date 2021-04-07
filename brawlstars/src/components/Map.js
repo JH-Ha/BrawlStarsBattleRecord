@@ -37,7 +37,7 @@ class Map extends Component {
         const { history } = this.props;
         let searchParams = new URLSearchParams(this.props.location.search);
         searchParams.set("trophyRange", e.target.value);
-        this.getRecordResult(searchParams.get("mapName"), searchParams.get("mode"), searchParams.get("trophyRange"));
+        this.getRecordResult(unescape(searchParams.get("mapName")), searchParams.get("mode"), searchParams.get("trophyRange"));
         history.push(`/map?${searchParams.toString()}`);
 
     }
@@ -137,7 +137,7 @@ class Map extends Component {
         //console.log(query);
         // const mapName = query.mapName;
         // const mode = query.mode;
-        const mapName = params.map;
+        const mapName = unescape(params.map);
         const mode = params.mode;
         const trophyRange = query.trophyRange || this.state.trophyRange;
         console.log(mapName);
