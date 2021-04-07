@@ -21,7 +21,6 @@ class UserList extends Component {
   constructor(props) {
     super(props);
     this.searchNickname = this.searchNickname.bind(this);
-    this.searchInputChange = this.searchInputChange.bind(this);
   }
   state = {
     userList: [],
@@ -44,13 +43,13 @@ class UserList extends Component {
       console.log(data);
       rows.push(data);
     });
-    console.log(rows);
+
     this.setState({ userList: rows, curPage: page });
   }
   getUserList(page) {
     console.log("getUserList");
     const queryPage = page - 1;
-    getData(`/member?page=${queryPage}&size=15`)
+    getData(`/member?name=${this.state.nickname}&page=${queryPage}&size=15`)
       .then((response) => {
         console.log(response);
         const data = response.data;
@@ -66,12 +65,12 @@ class UserList extends Component {
   }
 
   componentDidMount() {
-    console.log("mount");
+
     let query = this.getQuery(this.props);
     let curPage = query.curPage;
     if (curPage === undefined) curPage = 1;
     curPage = parseInt(curPage);
-    console.log(`curPage ${curPage}`);
+
     if (curPage === undefined) curPage = 1;
     this.getUserList(curPage);
   }
@@ -82,24 +81,24 @@ class UserList extends Component {
       this.getUserList(query.curPage);
     }
   }
-  changePageHandler(page) {
+  changePageHandler = (page) => {
     let { history } = this.props;
-    console.log("changePageHandler");
+
     this.setState({ curPage: page });
     history.push(`/userList?curPage=${page}`);
-    this.getUserList(page);
+
   }
   showPlayList(tag) {
     let { history } = this.props;
     tag = tag.replace("#", "%23");
     history.push(`/battleLog/${tag}`);
-    console.log(tag);
+
   }
   searchNickname() {
     //console.log(this.state.nickname);
     getData(`/member?name=${this.state.nickname}&page=0&size=15`)
       .then((response) => {
-        console.log(response);
+
         const data = response.data;
         this.setState({
           userList: data.content,
@@ -109,7 +108,7 @@ class UserList extends Component {
       }
       );
   }
-  searchInputChange(event) {
+  searchInputChange = (event) => {
     let value = event.target.value;
     this.setState({
       nickname: value,
@@ -118,9 +117,9 @@ class UserList extends Component {
 
   render() {
     return (
-      <div>
-        <h1>UserList</h1>
-        <div>
+      <div className="userList">
+        <h1>User List</h1>
+        <div className="inputContainer">
           <input
             placeholder="search user nickname"
             onChange={this.searchInputChange}
@@ -161,7 +160,7 @@ class UserList extends Component {
           numTotal={this.state.numUser}
           numShowItems="15"
           pageUrl="/userList"
-          onClick={this.changePageHandler.bind(this)}
+          onClick={this.changePageHandler}
         />
       </div>
     );
