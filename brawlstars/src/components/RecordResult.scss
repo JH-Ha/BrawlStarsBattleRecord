@@ -19,6 +19,12 @@
             }
         }
     }
+    .rateHeader{
+        cursor: pointer;
+        .rateHeaderContent{
+            margin-right :10px;
+        }
+    }
     @media screen and (min-width : 768px) {
         .infoContainer{
             max-width: none;

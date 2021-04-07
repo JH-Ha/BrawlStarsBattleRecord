@@ -2,13 +2,20 @@ import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortUp, faSortDown, faSort } from '@fortawesome/free-solid-svg-icons'
 import { isTrio, isDuo, isSolo, isAll } from './BaseFunctions';
+import SortIcon from './SortIcon';
 import style from "./RecordResult.scss";
+
+const DEFAULT = "DEFAULT";
+const ASC = "ASC";
+const DESC = "DESC";
 
 class RecordResult extends Component {
     state = {
         recordArr: [],
         sumTotalGameNum: 0,
         winRateOrder: 'DESC',
+        avgRankOrder: ASC,
+        pickRateOrder: 'DEFAULT',
     }
     componentDidMount() {
         const { recordArr, sumTotalGameNum } = this.props;
@@ -17,28 +24,72 @@ class RecordResult extends Component {
             sumTotalGameNum: sumTotalGameNum,
         })
     }
-    toggleOrder = () => {
-        console.log("toggleOrder");
+    toggleWinRate = () => {
 
-        if (this.state.winRateOrder === 'DESC') {
-            console.log('to ASC');
-            this.state.winRateOrder = 'ASC';
-            let recordArr = this.state.recordArr.sort((a, b) => {
+        let recordArr = [];
+        let nextWinRateOrder = 'DEFAULT';
+        if (this.state.winRateOrder === DESC) {
+            nextWinRateOrder = ASC;
+            recordArr = this.state.recordArr.sort((a, b) => {
                 return a.winRate - b.winRate;
             });
-            this.setState({
-                recordArr: recordArr
-            })
+
         } else {
-            this.state.winRateOrder = 'DESC';
-            console.log('to DESC');
-            let recordArr = this.state.recordArr.sort((a, b) => {
+            nextWinRateOrder = DESC;
+            recordArr = this.state.recordArr.sort((a, b) => {
                 return b.winRate - a.winRate;
             });
-            this.setState({
-                recordArr: recordArr
-            })
         }
+        this.setState({
+            recordArr: recordArr,
+            winRateOrder: nextWinRateOrder,
+            pickRateOrder: DEFAULT,
+            avgRankOrder: DEFAULT,
+        })
+    }
+    togglePickRate = () => {
+
+        let recordArr = [];
+        let nextPickRateOrder = DEFAULT;
+        if (this.state.pickRateOrder === DESC) {
+            nextPickRateOrder = ASC;
+            recordArr = this.state.recordArr.sort((a, b) => {
+                return a.totalGameNum - b.totalGameNum;
+            });
+        } else {
+            nextPickRateOrder = DESC;
+            recordArr = this.state.recordArr.sort((a, b) => {
+                return b.totalGameNum - a.totalGameNum;
+            });
+        }
+        this.setState({
+            recordArr: recordArr,
+            winRateOrder: DEFAULT,
+            pickRateOrder: nextPickRateOrder,
+            avgRankOrder: DEFAULT,
+        })
+    }
+    toggleAvgRank = () => {
+        let recordArr = [];
+        let nextAvgRankOrder = DEFAULT;
+        if (this.state.avgRankOrder === DESC || this.state.avgRankOrder === DEFAULT) {
+            nextAvgRankOrder = ASC;
+            recordArr = this.state.recordArr.sort((a, b) => {
+                return a.averageRank - b.averageRank;
+            });
+
+        } else {
+            nextAvgRankOrder = DESC;
+            recordArr = this.state.recordArr.sort((a, b) => {
+                return b.averageRank - a.averageRank;
+            });
+        }
+        this.setState({
+            recordArr: recordArr,
+            winRateOrder: DEFAULT,
+            pickRateOrder: DEFAULT,
+            avgRankOrder: nextAvgRankOrder,
+        })
     }
     render() {
         const { mode, isPersonal } = this.props;
@@ -51,13 +102,15 @@ class RecordResult extends Component {
                             <th>No</th>
                             <th>Name</th>
                             {isTrio(mode) ?
-                                <th onClick={this.toggleOrder}>Win Rate <FontAwesomeIcon icon={faSortDown} /></th>
+                                <th onClick={this.toggleWinRate} className="rateHeader"><span className="rateHeaderContent">Win Rate</span>
+                                    <SortIcon order={this.state.winRateOrder} key={`winRate-${this.state.winRateOrder}`} />
+                                </th>
                                 :
                                 isDuo(mode) || isSolo(mode) ?
-                                    <th>Avg Rank <FontAwesomeIcon icon={faSortDown} /></th>
+                                    <th onClick={this.toggleAvgRank} className="rateHeader"><span className="rateHeaderContent">Avg Rank</span><SortIcon order={this.state.avgRankOrder} key={`avgRank-${this.state.avgRankOrder}`} /> </th>
                                     : <th># of Games</th>
                             }
-                            <th>Pick Rate <FontAwesomeIcon icon={faSort} /></th>
+                            <th onClick={this.togglePickRate} className="rateHeader"><span className="rateHeaderContent">Pick Rate </span><SortIcon order={this.state.pickRateOrder} key={`pickRate-${this.state.pickRateOrder}`} /></th>
                         </tr>
                     </thead>
                     <tbody>
