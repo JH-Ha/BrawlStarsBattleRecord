@@ -121,7 +121,7 @@ class RecordResult extends Component {
                                     <td>
                                         {/* <div className="info" key={index}> */}
                                         <div className="brawler">
-                                            <img src={`./images/${ele.brawlerName}.png`}></img>
+                                            <img src={`/images/${ele.brawlerName}.png`}></img>
                                             <div className="brawlerName">
                                                 {ele.brawlerName}
                                             </div>

@@ -5,13 +5,17 @@ import styles from "./Map.scss";
 import { getData } from './ApiHandler';
 import RecordResult from './RecordResult';
 import { isTrio } from './BaseFunctions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 
 class Map extends Component {
     state = {
         mapName: "",
+        mode: "",
         recordArr: [],
         sumTotalGameNum: 0,
         trophyRange: '',
+        isMapShown: false,
     }
     isSolo(mode) {
         if (mode === "soloShowdown") {
@@ -120,29 +124,52 @@ class Map extends Component {
                 console.log(error);
             });
     }
+    showMapImg = () => {
+        this.setState({
+            isMapShown: !this.state.isMapShown,
+        });
+    }
     componentDidMount() {
         const query = qs.parse(this.props.location.search, {
             ignoreQueryPrefix: true,
         });
-        console.log(query);
-        const mapName = query.mapName;
-        const mode = query.mode;
+        const params = this.props.match.params
+        //console.log(query);
+        // const mapName = query.mapName;
+        // const mode = query.mode;
+        const mapName = params.map;
+        const mode = params.mode;
         const trophyRange = query.trophyRange || this.state.trophyRange;
         console.log(mapName);
         this.setState({
             trophyRange: trophyRange,
-        })
+            mapName: mapName,
+            mode: mode,
+        });
         this.getRecordResult(mapName, mode, trophyRange);
     }
     render() {
-        const query = qs.parse(this.props.location.search, {
-            ignoreQueryPrefix: true,
-        });
-        console.log(query);
-        const mapName = query.mapName;
-        const mode = query.mode;
+        // const query = qs.parse(this.props.location.search, {
+        //     ignoreQueryPrefix: true,
+        // });
+        // console.log(query);
+        // const mapName = query.mapName;
+        // const mode = query.mode;
 
         return <div className="mapClass">
+            <h3>Statistics </h3>
+            <div className={`mapNameContainer`} onClick={this.showMapImg}>
+                <span className="mapName">{this.state.mapName}</span>
+                {this.state.isMapShown ?
+                    <FontAwesomeIcon icon={faChevronUp} />
+                    : <FontAwesomeIcon icon={faChevronDown} />
+                }
+            </div>
+            <div className={`mapImgContainer 
+            ${this.state.mode.includes("Showdown") ? 'showdown' : ''}
+            ${this.state.isMapShown ? '' : 'none'}`}>
+                <img className="mapImg" src={`/images/maps/${this.state.mode.includes("Showdown") ? 'showdown' : this.state.mode}/${this.state.mapName}.png`} />
+            </div>
             {/* <div className="trophySelect">
                 <label htmlFor="trophyRange">Trophies</label>
                 <select id="trophyRange" value={this.state.trophyRange} onChange={this.changeTrophyRange}>
@@ -151,8 +178,8 @@ class Map extends Component {
                     <option value="lowRank" label="0~500"></option>
                 </select>
             </div> */}
-            {mapName === "" ? (<div>invalid map name</div>) :
-                <RecordResult key={this.state.recordArr} recordArr={this.state.recordArr} sumTotalGameNum={this.state.sumTotalGameNum} mode={mode} />
+            {this.state.mapName === "" ? (<div>invalid map name</div>) :
+                <RecordResult key={this.state.recordArr} recordArr={this.state.recordArr} sumTotalGameNum={this.state.sumTotalGameNum} mode={this.state.mode} />
             }
         </div>
     }
