@@ -47,20 +47,19 @@ class PlayList extends Component {
 
   changePageHandler = (page) => {
 
+    const params = this.props.match.params;
     let searchParams = new URLSearchParams(this.props.location.search);
     const mode = searchParams.get("mode");
     console.log(`changePageHandler mode !! ${mode}`);
-    const tag = searchParams.get("tag");
+    const tag = params.tag;
     const brawlerName = searchParams.get("brawlerName");
     this.getBattleLog(tag, mode, brawlerName, page);
     const queryPage = page - 1;
     searchParams.set("page", queryPage);
     searchParams.set("size", 5);
     let { history } = this.props;
-    history.push(`/playList?${searchParams.toString()}`);
-    console.log(tag);
-    console.log(searchParams.toString());
-    console.log(searchParams.get("tag"));
+    history.push(`/battleLog/${tag}?${searchParams.toString()}`);
+
   }
   getBattleLog(tag, mode, brawlerName, page) {
     console.log(`getBattleLog tag ${tag} mode ${mode} bralerName ${brawlerName}`);
@@ -97,10 +96,12 @@ class PlayList extends Component {
   }
   componentDidMount() {
     let searchParams = new URLSearchParams(this.props.location.search);
-    const tag = searchParams.get("tag")
+    const params = this.props.match.params;
+
+    const tag = params.tag;
     if (tag !== null) {
       this.setState({
-        tag: tag
+        tag: unescape(tag)
       });
     }
     const mode = searchParams.get("mode");
@@ -136,13 +137,14 @@ class PlayList extends Component {
     //console.log("update");
     let prevQuery = this.getQuery(prevProps);
     let query = this.getQuery(this.props);
+    const params = this.props.match.params;
     console.log(
       `prevQuery.curpage ${prevQuery.page}, query.curPage ${query.page}`
     );
 
     if (prevQuery.page !== query.page) {
       console.log(`componentWill Update !!!! ${query.page}`);
-      this.getBattleLog(query.tag.replace("#", "%23"), query.mode, query.brawlerName, parseInt(query.page) + 1);
+      this.getBattleLog(params.tag.replace("#", "%23"), query.mode, query.brawlerName, parseInt(query.page) + 1);
       //this.setState({curPage: query.curPage
     }
   }
@@ -156,7 +158,8 @@ class PlayList extends Component {
     let searchParams = new URLSearchParams(this.props.location.search);
     searchParams.set("mode", mode);
     searchParams.set("page", 0);
-    history.push(`/playList?${searchParams}`);
+    const params = this.props.match.params;
+    history.push(`/battleLog/${params.tag}?${searchParams}`);
   }
   changeBrawler(brawlerName) {
     //console.log("change bralwer", brawlerName);
@@ -166,7 +169,8 @@ class PlayList extends Component {
     let searchParams = new URLSearchParams(this.props.location.search);
     searchParams.set("brawlerName", brawlerName);
     searchParams.set("page", 0);
-    history.push(`/playList?${searchParams.toString()}`);
+    const params = this.props.match.params;
+    history.push(`/battleLog/${params.tag}?${searchParams.toString()}`);
   }
   getQuery(props) {
     const query = qs.parse(props.location.search, {
@@ -196,10 +200,7 @@ class PlayList extends Component {
   render() {
     return (
       <div>
-        {/*
-                My Tag %239QU209UYC
-                */}
-        <h1>PlayList</h1>
+        <h1>Battle Log</h1>
         <button onClick={this.goStatistics} className="btn">Statistics</button>
         <ModeList key={`mode-${this.state.mode}`} changeMode={this.changeMode} mode={this.state.mode} />
         <BrawlerList key={this.state.brawlerName} brawlerName={this.state.brawlerName} changeBrawler={this.changeBrawler} />

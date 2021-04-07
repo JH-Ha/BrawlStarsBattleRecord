@@ -92,7 +92,7 @@ class UserList extends Component {
   showPlayList(tag) {
     let { history } = this.props;
     tag = tag.replace("#", "%23");
-    history.push(`/playList?tag=${tag}`);
+    history.push(`/battleLog/${tag}`);
     console.log(tag);
   }
   searchNickname() {

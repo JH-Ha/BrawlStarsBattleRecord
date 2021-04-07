@@ -16,7 +16,7 @@ function App() {
       <Router>
         <TopBar />
         <Route path="/" component={Home} exact={true} />
-        <Route path="/playList" component={PlayList} exact={true} />
+        <Route path="/battleLog/:tag" component={PlayList} exact={true} />
         <Route path="/userList" component={UserList} />
         <Route path="/mapList" component={MapList} />
         <Route path="/map/:map/mode/:mode" component={Map} />

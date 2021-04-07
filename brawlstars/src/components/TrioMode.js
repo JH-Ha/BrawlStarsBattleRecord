@@ -12,7 +12,7 @@ class TrioMode extends Component {
     console.log(this.props);
     const { brawler_name } = this.props;
     this.setState({
-      imgSrc: `images/${brawler_name}.png`,
+      imgSrc: `/images/${brawler_name}.png`,
     });
   }
   render() {
