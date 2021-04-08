@@ -3,12 +3,11 @@ import { withTranslation } from 'react-i18next';
 class ModeList extends Component {
   constructor(props) {
     super(props);
-    this.change = this.change.bind(this);
   }
   state = {
     value: "gemGrab",
   };
-  change(event) {
+  change = (event) => {
     const { changeMode } = this.props;
     let mode = event.target.value;
     this.setState({ value: mode });
@@ -16,7 +15,6 @@ class ModeList extends Component {
   }
   componentDidMount() {
     const { mode } = this.props;
-    console.log(`modeList : ${mode}`);
     this.setState({
       value: mode,
     });

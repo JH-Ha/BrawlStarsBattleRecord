@@ -82,7 +82,7 @@ class BrawlerList extends Component {
         "label": t(name)
       };
     });
-    console.log(bnList);
+
     bnList.sort((a, b) => {
       if (a.label < b.label) return -1
       else return 1;
