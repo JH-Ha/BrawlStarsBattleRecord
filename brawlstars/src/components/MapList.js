@@ -4,6 +4,7 @@ import mapListStyles from "./MapList.scss";
 import ModeList from './ModeList';
 import qs from 'qs';
 import { getData } from './ApiHandler';
+import { withTranslation } from 'react-i18next';
 
 class MapList extends Component {
     state = {
@@ -62,7 +63,11 @@ class MapList extends Component {
         });
     }
     render() {
+        const { t } = this.props;
         return <div className="mapList">
+            <h3>
+                {t('mapsGuide')}
+            </h3>
             <div>
                 <ModeList key={this.state.mode} changeMode={this.changeMode} mode={this.state.mode}></ModeList>
             </div>
@@ -77,4 +82,4 @@ class MapList extends Component {
     }
 }
 
-export default MapList;
+export default withTranslation()(MapList);

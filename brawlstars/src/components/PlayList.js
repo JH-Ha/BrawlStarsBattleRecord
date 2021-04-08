@@ -9,6 +9,7 @@ import styles from "./Base.scss";
 import SoloDuoMode from "./SoloDuoMode";
 import Pagination from "./Pagination";
 import { getData } from "./ApiHandler";
+import { withTranslation } from 'react-i18next';
 
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
@@ -198,9 +199,10 @@ class PlayList extends Component {
     history.push(`/statistics?tag=${this.state.tag.replace("#", "%23")}`)
   }
   render() {
+    const { t } = this.props;
     return (
       <div>
-        <h1>Battle Log</h1>
+        <h2>{t('battleLogTitle')}</h2>
         <button onClick={this.goStatistics} className="btn">Statistics</button>
         <ModeList key={`mode-${this.state.mode}`} changeMode={this.changeMode} mode={this.state.mode} />
         <BrawlerList key={this.state.brawlerName} brawlerName={this.state.brawlerName} changeBrawler={this.changeBrawler} />
@@ -270,4 +272,4 @@ class PlayList extends Component {
   }
 }
 
-export default PlayList;
+export default withTranslation()(PlayList);
