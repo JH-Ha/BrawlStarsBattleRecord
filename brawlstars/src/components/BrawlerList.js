@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { withTranslation } from 'react-i18next';
+
 
 let brawlerNameList = [
   "SHELLY",
@@ -46,8 +48,9 @@ let brawlerNameList = [
   "EDGAR",
   "SURGE",
 ];
-brawlerNameList = brawlerNameList.sort();
-brawlerNameList.unshift("ALL");
+//brawlerNameList = brawlerNameList.sort();
+//brawlerNameList.unshift("ALL");
+
 class BrawlerList extends Component {
   constructor(props) {
     super(props);
@@ -71,6 +74,25 @@ class BrawlerList extends Component {
     });
   }
   render() {
+    const { t } = this.props;
+
+    let bnList = brawlerNameList.map(name => {
+      return {
+        "value": name,
+        "label": t(name)
+      };
+    });
+    console.log(bnList);
+    bnList.sort((a, b) => {
+      if (a.label < b.label) return -1
+      else return 1;
+    });
+
+    bnList.unshift({
+      "value": "All",
+      "label": "All"
+    });
+
     return (
       <div className="selectBox">
         <label htmlFor="brawlerName">brawler</label>
@@ -79,10 +101,10 @@ class BrawlerList extends Component {
           onChange={this.change}
           value={this.state.brawlerName}
         >
-          {brawlerNameList.map((brawlerName, index) => {
+          {bnList.map((brawlerName, index) => {
             return (
-              <option key={brawlerName} label={brawlerName} value={brawlerName}>
-                {brawlerName}
+              <option key={brawlerName.value} label={brawlerName.label} value={brawlerName.value}>
+                {brawlerName.label}
               </option>
             );
           })}
@@ -92,4 +114,4 @@ class BrawlerList extends Component {
   }
 }
 
-export default BrawlerList;
+export default withTranslation()(BrawlerList);
