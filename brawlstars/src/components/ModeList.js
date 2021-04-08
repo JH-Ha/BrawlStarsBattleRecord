@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { withTranslation } from 'react-i18next';
 class ModeList extends Component {
   constructor(props) {
     super(props);
@@ -22,23 +22,24 @@ class ModeList extends Component {
     });
   }
   render() {
+    const { t } = this.props;
     return (
       <div className="selectBox">
-        <label htmlFor="modeList">mode </label>
+        <label htmlFor="modeList">{t("mode")} </label>
         <select id="modeList" onChange={this.change} value={this.state.value}>
-          <option value="ALL">ALL</option>
-          <option value="gemGrab">Gem Grab</option>
-          <option value="heist">Heist</option>
-          <option value="brawlBall">Brawl Ball</option>
-          <option value="bounty">Bounty</option>
-          <option value="siege">Siege</option>
-          <option value="hotZone">Hot Zone</option>
-          <option value="soloShowdown">Solo Showdown</option>
-          <option value="duoShowdown">Duo Showdown</option>
+          <option value="ALL">{t("All")}</option>
+          <option value="gemGrab">{t("gemGrab")}</option>
+          <option value="heist">{t("heist")}</option>
+          <option value="brawlBall">{t("brawlBall")}</option>
+          <option value="bounty">{t("bounty")}</option>
+          <option value="siege">{t("siege")}</option>
+          <option value="hotZone">{t("hotZone")}</option>
+          <option value="soloShowdown">{t("soloShowdown")}</option>
+          <option value="duoShowdown">{t("duoShowdown")}</option>
         </select>
       </div>
     );
   }
 }
 
-export default ModeList;
+export default withTranslation()(ModeList);
