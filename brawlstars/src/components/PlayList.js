@@ -67,11 +67,11 @@ class PlayList extends Component {
     tag = tag.replace("#", "%23");
     const queryPage = page - 1;
     let paramMode = mode;
-    if (mode === 'ALL' || mode === null || mode === undefined) {
+    if (mode === 'ALL' || mode === 'All' || mode === null || mode === undefined) {
       paramMode = '';
     }
     let paramBrawlerName = brawlerName;
-    if (brawlerName === 'ALL' || brawlerName === null || brawlerName === undefined) {
+    if (brawlerName === 'ALL' || brawlerName === 'All' || brawlerName === null || brawlerName === undefined) {
       paramBrawlerName = '';
     }
     let searchParams = new URLSearchParams();
