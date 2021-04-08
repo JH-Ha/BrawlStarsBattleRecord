@@ -94,6 +94,7 @@ contact : cubeprince@gmail.com`,
             "LOU": "로우",
             "EDGAR": "에드거",
             "SURGE": "서지",
+            "NANI": "나니",
         }
     },
     ja: {
@@ -105,7 +106,7 @@ Playersをクリックして、自分のニックネームを検索して、バ�
             
 Mapsではマップごとのキャラクターの勝率を確認できます。
 
-戦闘記録は1時間ごとに同期されます。
+バトル履歴は1時間ごとに同期されます。
 
 contact : cubeprince@gmail.com`,
             "mapsGuide": "マップのイメージをクリックしてキャラクターの勝率と選択率を確認してください。",
@@ -164,6 +165,7 @@ contact : cubeprince@gmail.com`,
             "LOU": "ルー",
             "EDGAR": "エドガー",
             "SURGE": "サージ",
+            "NANI": "ナーニ",
 
         }
     }

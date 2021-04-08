@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PlayerTile from "./PlayerTile";
 import { calDisplayTime } from './BaseFunctions';
+import { withTranslation } from 'react-i18next';
 class TrioMode extends Component {
   state = {
     imgSrc: "",
@@ -29,6 +30,7 @@ class TrioMode extends Component {
       type,
       mode,
       groupRecords,
+      t,
     } = this.props;
 
     return (
@@ -49,7 +51,7 @@ class TrioMode extends Component {
                 <img src={`/images/mode/${mode}.png`}></img>
               </div>
               <div className={`modeMap`}>
-                <div className={`mode`}>{mode}
+                <div className={`mode`}>{t(mode)}
                 </div>
                 <div className={`map`}>
                   {map}
@@ -96,4 +98,4 @@ class TrioMode extends Component {
   }
 }
 
-export default TrioMode;
+export default withTranslation()(TrioMode);

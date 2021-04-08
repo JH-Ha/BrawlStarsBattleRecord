@@ -96,6 +96,7 @@ class PlayList extends Component {
 
   }
   componentDidMount() {
+    console.log("playList didmount");
     let searchParams = new URLSearchParams(this.props.location.search);
     const params = this.props.match.params;
 

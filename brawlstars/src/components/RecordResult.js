@@ -4,6 +4,7 @@ import { faSortUp, faSortDown, faSort } from '@fortawesome/free-solid-svg-icons'
 import { isTrio, isDuo, isSolo, isAll } from './BaseFunctions';
 import SortIcon from './SortIcon';
 import style from "./RecordResult.scss";
+import { withTranslation } from 'react-i18next';
 
 const DEFAULT = "DEFAULT";
 const ASC = "ASC";
@@ -92,7 +93,7 @@ class RecordResult extends Component {
         })
     }
     render() {
-        const { mode, isPersonal } = this.props;
+        const { t, mode, isPersonal } = this.props;
 
         return <div className="recordResult">
             <div className="infoContainer">
@@ -123,7 +124,7 @@ class RecordResult extends Component {
                                         <div className="brawler">
                                             <img src={`/images/${ele.brawlerName}.png`}></img>
                                             <div className="brawlerName">
-                                                {ele.brawlerName}
+                                                {t(ele.brawlerName)}
                                             </div>
                                         </div>
                                     </td>
@@ -190,4 +191,4 @@ class RecordResult extends Component {
         </div>
     }
 }
-export default RecordResult;
+export default withTranslation()(RecordResult);
