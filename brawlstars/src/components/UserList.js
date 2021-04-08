@@ -5,6 +5,7 @@ import qs from "qs";
 import styles from "./UserList.scss";
 import baseStyles from "./Base.scss";
 import { getData } from './ApiHandler';
+import { withTranslation } from 'react-i18next';
 
 class User {
   constructor(tag, name) {
@@ -116,9 +117,13 @@ class UserList extends Component {
   }
 
   render() {
+    const { t, i18n } = this.props;
+    //const changelanguageToKo = () => i18n.changeLanguage('ko')
+    //const changelanguageToEn = () => i18n.changeLanguage('en')
+
     return (
       <div className="userList">
-        <h1>User List</h1>
+        <h3>{t('userListGuide')}</h3>
         <div className="inputContainer">
           <input
             placeholder="search user nickname"
@@ -167,4 +172,4 @@ class UserList extends Component {
   }
 }
 
-export default UserList;
+export default withTranslation()(UserList);

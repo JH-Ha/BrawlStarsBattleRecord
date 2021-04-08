@@ -8,6 +8,7 @@
     display: flex;
     width: 100%;
     justify-content: center;
+    align-items: center;
     background: #24252a;
     .item {
       padding: 10px;
@@ -18,6 +19,36 @@
       &.selected {
         background: #0289a7;
       }
+    }
+  }
+
+
+  .languageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: #eeeeee;
+    .language {
+      width : 25px;
+      height : 25px;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      color : black;
+      cursor: pointer;
+      
+      &.selected {
+        color: white;
+        background: #007bff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px #2477ca;
+      }
+    }
+    .language:last-child{
+      border-right: none;;
     }
   }
 }
