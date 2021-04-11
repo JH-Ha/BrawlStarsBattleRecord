@@ -24,10 +24,11 @@ public class RecordSolo extends Record {
 		recordSolo.setTrophies(player.getBrawler().getTrophies());
 		recordSolo.setMap(item.getEvent().getMap());
 		// recordSolo.setGroupKey(groupKey);
-		recordSolo.setMode(item.getEvent().getMode());
+		recordSolo.setMode(item.getBattle().getMode());
 		recordSolo.setType(item.getBattle().getType());
 		recordSolo.setPlayerName(player.getName());
-
+		recordSolo.setEventId(item.getEvent().getId());
+		recordSolo.setBrawlerId(player.getBrawler().getId());
 		if (tag.equals(player.getTag()))
 			recordSolo.setTrophyChange(item.getBattle().getTrophyChange());
 		recordSolo.setResultRank(resultRank);
