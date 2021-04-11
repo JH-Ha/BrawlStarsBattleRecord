@@ -27,7 +27,7 @@ public class RecordSchedule {
 
 	// one hour
 	@Scheduled(fixedDelay = 3600000
-	 ,initialDelay = 3600000
+	 ,initialDelay = 360000 // 10 minutes
 	)
 	public void saveRecordsSchedule() {
 		saveRecords();
@@ -55,12 +55,13 @@ public class RecordSchedule {
 		try {
 			items = brawlStarsAPI.getItems(tag);
 			items.stream().forEach(item -> {
+				String mode = item.getBattle().getMode();
 				System.out.println(item.getBattleTime());
-				if (recordService.isTrioMode(item.getEvent().getMode())) {
+				if (recordService.isTrioMode(mode)) {
 					recordService.saveTrio(tag, item);
-				} else if (recordService.isDuo(item.getEvent().getMode())) {
+				} else if (recordService.isDuo(mode)) {
 					recordService.saveDuo(tag, item);
-				} else if (recordService.isSolo(item.getEvent().getMode())) {
+				} else if (recordService.isSolo(mode)) {
 					recordService.saveSolo(tag, item);
 				}
 			});
