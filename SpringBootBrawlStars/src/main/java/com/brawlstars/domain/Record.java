@@ -37,10 +37,12 @@ public class Record {
 	private String tag;
 	private String battleTime;
 	private String brawlerName;
+	private String brawlerId;
 	private Integer power;
 	private Integer trophies;
 	private Integer trophyChange;
 	private String map;
+	private String eventId;
 	
 	private String playerName;
 
