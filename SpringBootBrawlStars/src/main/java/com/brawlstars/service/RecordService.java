@@ -59,7 +59,7 @@ public class RecordService {
 
 	public boolean isTrioMode(String mode) {
 		return "gemGrab".equals(mode) || "brawlBall".equals(mode) || "heist".equals(mode) || "bounty".equals(mode)
-				|| "siege".equals(mode) || "hotZone".equals(mode);
+				|| "siege".equals(mode) || "hotZone".equals(mode) || "knockout".equals(mode);
 	}
 
 	public boolean isDuo(String mode) {
@@ -149,12 +149,14 @@ public class RecordService {
 				// recordTrio.setGroupKey(groupKey);
 				recordTrio.setDuration(item.getBattle().getDuration());
 				recordTrio.setMap(item.getEvent().getMap());
-				recordTrio.setMode(item.getEvent().getMode());
+				recordTrio.setMode(item.getBattle().getMode());
 				recordTrio.setType(item.getBattle().getType());
 				recordTrio.setTag(player.getTag());
 				recordTrio.setTrophies(player.getBrawler().getTrophies());
 				recordTrio.setPlayerName(player.getName());
 				recordTrio.setTeamId(i);
+				recordTrio.setEventId(item.getEvent().getId());
+				recordTrio.setBrawlerId(player.getBrawler().getId());
 				// we don't know other players' trophy change
 				if (player.getTag().equals(tag)) {
 					recordTrio.setTrophyChange(item.getBattle().getTrophyChange());
@@ -226,11 +228,12 @@ public class RecordService {
 				
 				recordDuo.setMap(item.getEvent().getMap());
 				//recordDuo.setGroupKey(groupKey);
-				recordDuo.setMode(item.getEvent().getMode());
+				recordDuo.setMode(item.getBattle().getMode()); // event mode -> battle mode : event mode is null 
 				recordDuo.setType(item.getBattle().getType());
 				recordDuo.setResultRank(i + 1);
 				recordDuo.setPlayerName(player.getName());
-				
+				recordDuo.setEventId(item.getEvent().getId());
+				recordDuo.setBrawlerId(player.getBrawler().getId());
 				if (tag.equals(player.getTag())) {
 					recordDuo.setTrophyChange(item.getBattle().getTrophyChange());
 					myRecord = recordDuo;
