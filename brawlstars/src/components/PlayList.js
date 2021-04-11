@@ -10,6 +10,7 @@ import SoloDuoMode from "./SoloDuoMode";
 import Pagination from "./Pagination";
 import { getData } from "./ApiHandler";
 import { withTranslation } from 'react-i18next';
+import AdSense from 'react-adsense';
 
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
@@ -267,6 +268,13 @@ class PlayList extends Component {
         ></Pagination>
         <div style={{ 'marginBottom': "10px" }}>
         </div>
+        <AdSense.Google
+          style={{ display: 'block' }}
+          client='ca-pub-4114406385852589'
+          slot='4607116156'
+          format='auto'
+          responsive='true'
+        />
       </div >
       // </div>
     );
