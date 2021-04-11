@@ -103,15 +103,15 @@ class RecordResult extends Component {
                             <th>No</th>
                             <th>Name</th>
                             {isTrio(mode) ?
-                                <th onClick={this.toggleWinRate} className="rateHeader"><span className="rateHeaderContent">Win Rate</span>
+                                <th onClick={this.toggleWinRate} className="rateHeader"><span className="rateHeaderContent">{t("Win Rate")}</span>
                                     <SortIcon order={this.state.winRateOrder} key={`winRate-${this.state.winRateOrder}`} />
                                 </th>
                                 :
                                 isDuo(mode) || isSolo(mode) ?
-                                    <th onClick={this.toggleAvgRank} className="rateHeader"><span className="rateHeaderContent">Avg Rank</span><SortIcon order={this.state.avgRankOrder} key={`avgRank-${this.state.avgRankOrder}`} /> </th>
+                                    <th onClick={this.toggleAvgRank} className="rateHeader"><span className="rateHeaderContent">{t("Avg Rank")}</span><SortIcon order={this.state.avgRankOrder} key={`avgRank-${this.state.avgRankOrder}`} /> </th>
                                     : <th># of Games</th>
                             }
-                            <th onClick={this.togglePickRate} className="rateHeader"><span className="rateHeaderContent">Pick Rate </span><SortIcon order={this.state.pickRateOrder} key={`pickRate-${this.state.pickRateOrder}`} /></th>
+                            <th onClick={this.togglePickRate} className="rateHeader"><span className="rateHeaderContent">{t("Pick Rate")}</span><SortIcon order={this.state.pickRateOrder} key={`pickRate-${this.state.pickRateOrder}`} /></th>
                         </tr>
                     </thead>
                     <tbody>
