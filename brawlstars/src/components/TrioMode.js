@@ -5,6 +5,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import PlayerTile from "./PlayerTile";
 import { calDisplayTime } from './BaseFunctions';
 import { withTranslation } from 'react-i18next';
+
 class TrioMode extends Component {
   state = {
     imgSrc: "",
@@ -59,7 +60,7 @@ class TrioMode extends Component {
               </div>
             </div>
             <div className={`gameResult`}>
-              {result}
+              {t(result)}
             </div>
             <div className={`trophyChange`}>
               {trophyChange}
