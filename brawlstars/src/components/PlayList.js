@@ -11,6 +11,7 @@ import Pagination from "./Pagination";
 import { getData } from "./ApiHandler";
 import { withTranslation } from 'react-i18next';
 import { isTrio } from './BaseFunctions';
+import AdSense from 'react-adsense';
 
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
@@ -191,7 +192,7 @@ class PlayList extends Component {
     return (
       <div>
         <h2>{t('battleLogTitle')}</h2>
-        <button onClick={this.goStatistics} className="btn">Statistics</button>
+        <button onClick={this.goStatistics} className="btn">{t("Statistics")}</button>
         <ModeList key={`mode-${this.state.mode}`} changeMode={this.changeMode} mode={this.state.mode} />
         <BrawlerList key={this.state.brawlerName} brawlerName={this.state.brawlerName} changeBrawler={this.changeBrawler} />
         <h2>{this.state.name}({this.state.tag})</h2>
@@ -254,6 +255,13 @@ class PlayList extends Component {
         ></Pagination>
         <div style={{ 'marginBottom': "10px" }}>
         </div>
+        <AdSense.Google
+          style={{ display: 'block' }}
+          client='ca-pub-4114406385852589'
+          slot='4607116156'
+          format='auto'
+          responsive='true'
+        />
       </div >
       // </div>
     );
