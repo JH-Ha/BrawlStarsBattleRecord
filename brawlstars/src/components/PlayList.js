@@ -10,6 +10,7 @@ import SoloDuoMode from "./SoloDuoMode";
 import Pagination from "./Pagination";
 import { getData } from "./ApiHandler";
 import { withTranslation } from 'react-i18next';
+import { isTrio } from './BaseFunctions';
 
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
@@ -181,20 +182,6 @@ class PlayList extends Component {
     return query;
   }
 
-  isTrio(mode) {
-    let result = false;
-    if (
-      mode === "gemGrab" ||
-      mode === "heist" ||
-      mode === "siege" ||
-      mode === "bounty" ||
-      mode === "brawlBall" ||
-      mode === "hotZone"
-    ) {
-      result = true;
-    }
-    return result;
-  }
   goStatistics = () => {
     const { history } = this.props;
     history.push(`/statistics?tag=${this.state.tag.replace("#", "%23")}`)
@@ -214,7 +201,7 @@ class PlayList extends Component {
         </div>
         {
           this.state.playRecord.map((data) => {
-            if (this.isTrio(data.mode)) {
+            if (isTrio(data.mode)) {
               return (
                 <TrioMode
                   key={data.battleTime}
