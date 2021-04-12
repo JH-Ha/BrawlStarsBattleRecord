@@ -6,7 +6,6 @@ import styles from "./UserList.scss";
 import baseStyles from "./Base.scss";
 import { getData } from './ApiHandler';
 import { withTranslation } from 'react-i18next';
-import AdSense from 'react-adsense';
 
 class User {
   constructor(tag, name) {
@@ -167,13 +166,6 @@ class UserList extends Component {
           numShowItems="15"
           pageUrl="/userList"
           onClick={this.changePageHandler}
-        />
-        <AdSense.Google
-          style={{ display: 'block' }}
-          client='ca-pub-4114406385852589'
-          slot='4607116156'
-          format='auto'
-          responsive='true'
         />
       </div>
     );

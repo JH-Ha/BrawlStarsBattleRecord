@@ -4,7 +4,6 @@ import ModeList from './ModeList';
 import { isTrio } from './BaseFunctions';
 import RecordResult from "./RecordResult";
 import style from "./Statistics.scss";
-import AdSense from 'react-adsense';
 
 class Statistics extends Component {
     state = {
@@ -137,13 +136,6 @@ class Statistics extends Component {
                 <RecordResult key={this.state.recordArr} recordArr={this.state.recordArr} sumTotalGameNum={this.state.sumTotalGameNum} mode={this.state.mode}
                     isPersonal={true} />
             </div>
-            <AdSense.Google
-                style={{ display: 'block' }}
-                client='ca-pub-4114406385852589'
-                slot='4607116156'
-                format='auto'
-                responsive='true'
-            />
         </div>
     }
 }
