@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,4 +20,6 @@ public class GameMap {
 	private Long id;
 	String mode;
 	String name;
+	@ColumnDefault("false")
+	private boolean isDeleted;
 }

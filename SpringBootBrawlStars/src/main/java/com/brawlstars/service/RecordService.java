@@ -370,7 +370,9 @@ public class RecordService {
 		}).collect(Collectors.toList());
 		
 		gameMaps.stream().forEach(map ->{
-			gameMapRepositry.saveGameMap(map);
+			if(map.getName() != null) {
+				gameMapRepositry.saveGameMap(map);
+			}
 		});
 	}
 
