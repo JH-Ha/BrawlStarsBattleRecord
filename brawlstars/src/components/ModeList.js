@@ -32,6 +32,7 @@ class ModeList extends Component {
           <option value="bounty">{t("bounty")}</option>
           <option value="siege">{t("siege")}</option>
           <option value="hotZone">{t("hotZone")}</option>
+          <option value="knockout">{t("knockout")}</option>
           <option value="soloShowdown">{t("soloShowdown")}</option>
           <option value="duoShowdown">{t("duoShowdown")}</option>
         </select>

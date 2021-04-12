@@ -6,7 +6,8 @@ function isTrio(mode) {
         mode === "siege" ||
         mode === "bounty" ||
         mode === "brawlBall" ||
-        mode === "hotZone"
+        mode === "hotZone" ||
+        mode === "knockout"
     ) {
         result = true;
     }
