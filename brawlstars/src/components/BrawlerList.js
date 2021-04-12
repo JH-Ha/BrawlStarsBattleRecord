@@ -95,7 +95,7 @@ class BrawlerList extends Component {
 
     return (
       <div className="selectBox">
-        <label htmlFor="brawlerName">{t("brawler")}</label>
+        <label htmlFor="brawlerName">brawler</label>
         <select
           id="brawlerName"
           onChange={this.change}

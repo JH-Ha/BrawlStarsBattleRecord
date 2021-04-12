@@ -5,7 +5,6 @@ import ModeList from './ModeList';
 import qs from 'qs';
 import { getData } from './ApiHandler';
 import { withTranslation } from 'react-i18next';
-import AdSense from 'react-adsense';
 
 class MapList extends Component {
     state = {
@@ -65,7 +64,7 @@ class MapList extends Component {
     }
     render() {
         const { t } = this.props;
-        return <><div className="mapList">
+        return <div className="mapList">
             <h3>
                 {t('mapsGuide')}
             </h3>
@@ -74,22 +73,12 @@ class MapList extends Component {
             </div>
             <div className="gemGrabContainer">{
                 this.state.filteredMaps.map((map, index) => {
-                    return <div key={index} className="gemGrabItem" >{t(map.name)}
+                    return <div key={index} className="gemGrabItem" >{map.name}
                         <img onClick={() => { this.clickMap(map.name, map.mode) }} src={`./images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.name}.png`}></img>
                     </div>
                 })}
-
             </div>
-
         </div>
-            <AdSense.Google
-                style={{ display: 'block' }}
-                client='ca-pub-4114406385852589'
-                slot='4607116156'
-                format='auto'
-                responsive='true'
-            />
-        </>
     }
 }
 
