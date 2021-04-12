@@ -59,7 +59,7 @@ class TrioMode extends Component {
               </div>
             </div>
             <div className={`gameResult`}>
-              {result}
+              {t(result)}
             </div>
             <div className={`trophyChange`}>
               {trophyChange}

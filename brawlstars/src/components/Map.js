@@ -7,6 +7,8 @@ import RecordResult from './RecordResult';
 import { isTrio } from './BaseFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+import { withTranslation } from 'react-i18next';
+import AdSense from 'react-adsense';
 
 class Map extends Component {
     state = {
@@ -149,6 +151,7 @@ class Map extends Component {
         this.getRecordResult(mapName, mode, trophyRange);
     }
     render() {
+        const { t } = this.props;
         // const query = qs.parse(this.props.location.search, {
         //     ignoreQueryPrefix: true,
         // });
@@ -156,10 +159,10 @@ class Map extends Component {
         // const mapName = query.mapName;
         // const mode = query.mode;
 
-        return <div className="mapClass">
-            <h3>Statistics </h3>
+        return <><div className="mapClass">
+            <h3>{t("Statistics")}</h3>
             <div className={`mapNameContainer`} onClick={this.showMapImg}>
-                <span className="mapName">{this.state.mapName}</span>
+                <span className="mapName">{t(this.state.mapName)}</span>
                 {this.state.isMapShown ?
                     <FontAwesomeIcon icon={faChevronUp} />
                     : <FontAwesomeIcon icon={faChevronDown} />
@@ -182,7 +185,15 @@ class Map extends Component {
                 <RecordResult key={this.state.recordArr} recordArr={this.state.recordArr} sumTotalGameNum={this.state.sumTotalGameNum} mode={this.state.mode} />
             }
         </div>
+            <AdSense.Google
+                style={{ display: 'block' }}
+                client='ca-pub-4114406385852589'
+                slot='4607116156'
+                format='auto'
+                responsive='true'
+            />
+        </>
     }
 }
 
-export default Map;
+export default withTranslation()(Map);

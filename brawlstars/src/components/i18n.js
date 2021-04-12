@@ -25,6 +25,10 @@ contact : cubeprince@gmail.com`,
             "soloShowdown": "Solo Showdown",
             "duoShowdown": "Duo Showdown",
             "brawler": "brawler",
+            /* 승패 */
+            "victory": "victory",
+            "defeat": "defeat",
+            "draw": "draw",
         }
     },
     ko: {
@@ -41,6 +45,7 @@ MapS에서는 맵별 브롤러 승률을 알 수 있습니다.
 contact : cubeprince@gmail.com`,
             "mapsGuide": "맵 이미지를 클릭하여 브롤러의 승률과 픽률을 확인해보세요.",
             "battleLogTitle": "전투 기록",
+            "mode": "모드",
             "gemGrab": "젬 그랩",
             "heist": "하이스트",
             "brawlBall": "브롤 볼",
@@ -49,6 +54,7 @@ contact : cubeprince@gmail.com`,
             "hotZone": "핫 존",
             "soloShowdown": "솔로 쇼다운",
             "duoShowdown": "듀오 쇼다운",
+            "knockout": "녹아웃",
             /* 브롤러 이름 */
             "brawler": "브롤러",
             "SHELLY": "쉘리",
@@ -96,6 +102,79 @@ contact : cubeprince@gmail.com`,
             "EDGAR": "에드거",
             "SURGE": "서지",
             "NANI": "나니",
+            /* 승패 */
+            "victory": "승리",
+            "defeat": "패배",
+            "draw": "무승부",
+            /* 맵 이름 */
+            // gemGrab 
+            "Hard Rock Mine": "암석 광산",
+            "Crystal Arcade": "수정 오락실",
+            "Deathcap Trap": "독버섯 함정",
+            "Ice Fort": "얼음 요새",
+            "Undermine": "흔들 광산",
+            "Deep Diner": "지하굴 식당",
+            "Double Swoosh": "이중 곡선",
+            "Minecart Madness": "광기의 광산 열차",
+            "Snake Shop": "뱀의 가게",
+            "Corner Case": "코너 케이스",
+            "Flooded Dam": "침수된 댐",
+            "Rustic Arcade": "Rustic Arcade",
+            "Arène en folie": "Arène en folie",
+            "Red Herring": "Red Herring",
+            // heist
+            "Kaboom Canyon": "우당탕 협곡",
+            "Safe Zone": "안전지대",
+            "G.G. Mortuary": "GG 샵",
+            "Hot Potato": "뜨거운 감자",
+            "Turnaround": "역전",
+            "Gentral Traffic": "Gentral Traffic",
+            "Snaked Assault": "Snaked Assault",
+            // bounty 
+            "Snake Prairie": "뱀의 초원",
+            "Shooting Star": "별내림 계곡",
+            "Canal Grande": "대운하",
+            "Dry Season": "햇빛은 쨍쨍",
+            "Land Ahoy": "육지 발견",
+            "Purple Paradise": "퍼플 파라다이스",
+            "Quick Skip": "퀵 스킵",
+            "Open Plaza": "Open Plaza",
+            // brawlBall
+            "Backyard Bowl": "뒷마당 월드컵",
+            "Triple Dribble": "트리플 드리블",
+            "Sneaky Fields": "스키니 필드",
+            "Super Stadium": "슈퍼 스타디움",
+            "Center Stage": "센터 스테이지",
+            "Sunny Soccer": "화창한 날",
+            "Field Goal": "필드 골",
+            "Bank Shot": "뱅크슛",
+            // "Encirclement" :
+            // "Winter Party" :
+            // "Jumping Beans" :
+            // "Fast Fork" :
+            // "Clean Shot" :
+            // "Boxing Day" :
+            //siege
+            "Bot Drop": "로봇시대",
+            "Some Assembly Required": "조립의 조건",
+            "Nuts & Bolts": "볼트의 정석",
+            "Robo Highway": "로보 하이웨이",
+            "Factory Rush": "로봇 공장",
+            "Olive Branch": "올리브 나뭇가지",
+            //"Bot Riot": 
+            // hotZone
+            "Massive Attack": "대공격",
+            "Parallel Plays": "평행선",
+            "Split": "틈",
+            "Ring of Fire": "불의 고리",
+            "Dueling Beetles": "곤충 싸움",
+            // "Triumvirate": 
+            //     "Magnetic Field" :
+
+            "Statistics": "통계",
+            "Win Rate": "승률",
+            "Pick Rate": "픽률",
+            "Avg Rank": "평균 랭크",
         }
     },
     ja: {
@@ -112,6 +191,7 @@ Mapsではマップごとのキャラクターの勝率を確認できます。
 contact : cubeprince@gmail.com`,
             "mapsGuide": "マップのイメージをクリックしてキャラクターの勝率と選択率を確認してください。",
             "battleLogTitle": "バトル履歴",
+            "mode": "モード",
             "gemGrab": "エメラルドハント",
             "heist": "強奪",
             "brawlBall": "ブロストライカー",
@@ -120,6 +200,7 @@ contact : cubeprince@gmail.com`,
             "hotZone": "ホットゾーン",
             "soloShowdown": "ソロ バトルロイヤル",
             "duoShowdown": "デュオ バトルロイヤル",
+            "knockout": "ノックアウト",
             /* 브롤러 이름 */
             "brawler": "キャラクター",
             "SHELLY": "ジェリー",
@@ -167,7 +248,79 @@ contact : cubeprince@gmail.com`,
             "EDGAR": "エドガー",
             "SURGE": "サージ",
             "NANI": "ナーニ",
+            /* 승패 */
+            "victory": "勝利",
+            "defeat": "敗北",
+            "draw": "引き分け",
+            /* 맵 이름 */
+            // gemGrab 
+            "Hard Rock Mine": "ごつごつ坑道",
+            "Crystal Arcade": "クリスタルアーケード",
+            "Deathcap Trap": "サボテンの罠",
+            "Ice Fort": "氷の要塞",
+            "Undermine": "アンダーマイン",
+            "Deep Diner": "ディープダイナ―",
+            "Double Swoosh": "ダブルレール",
+            "Minecart Madness": "トロッコの狂気",
+            "Snake Shop": "スネークショップ",
+            "Corner Case": "コーナーケース",
+            "Flooded Dam": "決壊したダム",
+            "Rustic Arcade": "Rustic Arcade",
+            "Arène en folie": "Arène en folie",
+            "Red Herring": "Red Herring",
+            // heist
+            "Kaboom Canyon": "どんぱち谷",
+            "Safe Zone": "安全地帯",
+            "G.G. Mortuary": "G.G.遺体安置所",
+            "Hot Potato": "ホットポテト",
+            "Turnaround": "ターンアラウンド",
+            "Gentral Traffic": "Gentral Traffic",
+            "Snaked Assault": "Snaked Assault",
+            // bounty 
+            "Snake Prairie": "ジグザグ草原",
+            "Shooting Star": "流れ星",
+            "Canal Grande": "グランドカナル",
+            "Dry Season": "乾燥地帯",
+            "Land Ahoy": "上陸準備",
+            "Purple Paradise": "紫の楽園",
+            "Quick Skip": "クイックスキップ",
+            "Open Plaza": "Open Plaza",
+            // brawlBall
+            "Backyard Bowl": "鉄壁の護り",
+            "Triple Dribble": "トリプル　ドリブル",
+            "Sneaky Fields": "静かな広場",
+            "Super Stadium": "スーパースタジアム",
+            "Center Stage": "中央コート",
+            "Sunny Soccer": "サニーサッカー",
+            "Field Goal": "フィールドゴール",
+            "Bank Shot": "バンク　ショット",
+            // "Encirclement" :
+            // "Winter Party" :
+            // "Jumping Beans" :
+            // "Fast Fork" :
+            // "Clean Shot" :
+            // "Boxing Day" :
+            //siege
+            "Bot Drop": "ボットドロップ",
+            "Some Assembly Required": "受注生産品",
+            "Nuts & Bolts": "重要ポイント",
+            "Robo Highway": "ロボットハイウェイ",
+            "Factory Rush": "工場大乱闘",
+            "Olive Branch": "オリーブの枝",
+            //"Bot Riot": 
+            // hotZone
+            "Massive Attack": "大打撃",
+            "Parallel Plays": "パラレルワールド",
+            "Split": "スプリット",
+            "Ring of Fire": "炎のリング",
+            "Dueling Beetles": "ビートルバトル",
+            // "Triumvirate": 
+            //     "Magnetic Field" :
 
+            "Statistics": "通計",
+            "Win Rate": "勝率",
+            "Pick Rate": "選択率",
+            "Avg Rank": "平均ランク",
         }
     }
 };
