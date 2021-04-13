@@ -34,6 +34,7 @@ public class GameMapRepository {
 				    ,qGameMap.mode
 				))
 		.from(qGameMap)
+		.where(qGameMap.isDeleted.eq(false))
 		.fetch();
 		return gameMapDtos;
 	}
