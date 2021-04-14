@@ -355,13 +355,13 @@ public class RecordService {
 		return null;
 	}
 
-	public List<GameMapDto> getDistinctGameMaps(){
-		return recordRepository.getDistinctGameMaps();
+	public List<GameMapDto> getDistinctGameMaps(String mode){
+		return recordRepository.getDistinctGameMaps(mode);
 	}
 
-	public void saveDistinctGameMap() {
+	public void saveDistinctGameMap(String mode) {
 		// TODO Auto-generated method stub
-		List<GameMapDto> gameMapDtos = getDistinctGameMaps();
+		List<GameMapDto> gameMapDtos = getDistinctGameMaps(mode);
 		List<GameMap> gameMaps = gameMapDtos.stream().map(dto ->{
 			GameMap gameMap = new GameMap();
 			gameMap.setMode(dto.getMode());
@@ -371,7 +371,9 @@ public class RecordService {
 		
 		gameMaps.stream().forEach(map ->{
 			if(map.getName() != null) {
-				gameMapRepositry.saveGameMap(map);
+				List<GameMapDto> findMapDtos = gameMapRepositry.findByName(map.getName());
+				if(findMapDtos.isEmpty())
+					gameMapRepositry.saveGameMap(map);
 			}
 		});
 	}

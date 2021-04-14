@@ -138,15 +138,21 @@ public class RecordRepository {
 		return records;
 	}
 	
-	public List<GameMapDto> getDistinctGameMaps() {
+	public List<GameMapDto> getDistinctGameMaps(String mode) {
 		// TODO Auto-generated method stub
+		
 		QRecord qRecord = QRecord.record;
 		
+		BooleanBuilder builder = new BooleanBuilder();
+		if(StringUtils.hasText(mode)) {
+			builder.and(qRecord.mode.eq(mode));
+		}
 		List<GameMapDto> gameMapDtos = 
 				queryFactory.select(Projections.constructor(GameMapDto.class
 						, qRecord.map
 						, qRecord.mode))
 				.from(qRecord)
+				.where(builder)
 				.distinct()
 				.fetch();
 		return gameMapDtos;

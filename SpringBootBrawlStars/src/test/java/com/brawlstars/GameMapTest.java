@@ -16,7 +16,8 @@ public class GameMapTest {
 	
 	@Test
 	public void saveDistinctGameMap() {
-		recordService.saveDistinctGameMap();
+		String mode = "knockout";
+		recordService.saveDistinctGameMap(mode);
 	
 	}
 }
