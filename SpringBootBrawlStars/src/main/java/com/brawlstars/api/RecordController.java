@@ -47,9 +47,9 @@ public class RecordController {
 		return records;
 	}
 	
-	@GetMapping("/record/save/map")
-	public void saveDistinctMap() {
-		recordService.saveDistinctGameMap();
+	@GetMapping("/record/save/map/{mode}")
+	public void saveDistinctMap(@PathVariable(name = "mode") String mode) {
+		recordService.saveDistinctGameMap(mode);
 	}
 
 }

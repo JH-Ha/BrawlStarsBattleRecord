@@ -26,6 +26,20 @@ public class GameMapRepository {
 		}
 	}
 	
+	public List<GameMapDto> findByName(String name) {
+		JPAQuery<GameMap> query = new JPAQuery<GameMap>(em);
+		QGameMap qGameMap = QGameMap.gameMap;
+		List<GameMapDto> gameMapDtos = query.select(Projections.constructor(GameMapDto.class 
+					,qGameMap.name
+				    ,qGameMap.mode
+				))
+		.from(qGameMap)
+		.where(qGameMap.isDeleted.eq(false)
+				.and(qGameMap.name.eq(name)))
+		.fetch();
+		return gameMapDtos;
+	}
+	
 	public List<GameMapDto> getGameMaps(String mode){
 		JPAQuery<GameMap> query = new JPAQuery<GameMap>(em);
 		QGameMap qGameMap = QGameMap.gameMap;
