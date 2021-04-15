@@ -241,6 +241,7 @@ class PlayList extends Component {
                   mode={data.mode}
                   groupRecords={data.groupRecords}
                   tag={this.state.tag}
+                  type={data.type}
                 />
               );
             }
