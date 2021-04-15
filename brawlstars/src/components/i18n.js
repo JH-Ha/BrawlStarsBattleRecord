@@ -29,6 +29,10 @@ contact : cubeprince@gmail.com`,
             "victory": "victory",
             "defeat": "defeat",
             "draw": "draw",
+
+            "soloRanked": "Power League",
+            "teamRanked": "Power League",
+
         }
     },
     ko: {
@@ -175,6 +179,12 @@ contact : cubeprince@gmail.com`,
             "Win Rate": "승률",
             "Pick Rate": "픽률",
             "Avg Rank": "평균 랭크",
+
+            "friendly": "친선전",
+            "ranked": "경쟁전",
+
+            "soloRanked": "파워 리그",
+            "teamRanked": "파워 리그",
         }
     },
     ja: {
@@ -321,6 +331,13 @@ contact : cubeprince@gmail.com`,
             "Win Rate": "勝率",
             "Pick Rate": "選択率",
             "Avg Rank": "平均ランク",
+
+            //type
+            "friendly": "フレンドバトル",
+            "ranked": "ガチバトル",
+
+            "soloRanked": "パワーリーグ",
+            "teamRanked": "パワーリーグ",
         }
     }
 };

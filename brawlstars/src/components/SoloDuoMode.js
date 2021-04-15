@@ -77,7 +77,7 @@ class SoloDuoMode extends Component {
           <div className={`gameInfoContainer rank${this.state.rankCss}`}>
             <div className="left"></div>
             <div className={`type`}>
-              {type}
+              {t(type)}
             </div>
             <div className="battleTime">{calDisplayTime(battleTime)}</div>
           </div>
