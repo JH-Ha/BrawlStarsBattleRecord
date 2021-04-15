@@ -14,8 +14,8 @@ class PlayerTile extends Component {
         } = this.props;
         return <div className={`playerTile`}>
             <div>
-                <div>{trophies}</div>
                 <div class="imgContainer">
+                    <div class="trophies">{trophies}</div>
                     <img src={`/images/${brawlerName}.png`} width="50px" />
                     <div className="powerContainer">
                         <div className="levelText">Lv
