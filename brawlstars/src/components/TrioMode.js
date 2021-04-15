@@ -41,7 +41,7 @@ class TrioMode extends Component {
               {duration} seconds
             </div>
             <div className={"gameType"}>
-              {type || "game"}
+              {t(type) || "game"}
             </div>
             <div className={`battleTime`}>{calDisplayTime(battleTime)}</div>
           </div>
@@ -54,7 +54,7 @@ class TrioMode extends Component {
                 <div className={`mode`}>{t(mode)}
                 </div>
                 <div className={`map`}>
-                  {map}
+                  {t(map)}
                 </div>
               </div>
             </div>
