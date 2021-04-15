@@ -60,6 +60,11 @@ class SoloDuoMode extends Component {
     return (
       <div className="center">
         <div className={`SoloDuoModeContainer rank${this.state.rankCss}`}>
+          <div className={`playerContainer`}>
+            {groupRecords.map(e => {
+              return <img width="50px" height="50px" src={`/images/${e.brawlerName}.png`} />
+            })}
+          </div>
           <div>
             {type}
           </div>
