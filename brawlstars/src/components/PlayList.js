@@ -12,6 +12,7 @@ import { getData } from "./ApiHandler";
 import { withTranslation } from 'react-i18next';
 import { isTrio } from './BaseFunctions';
 import AdSense from 'react-adsense';
+import Loading from "./Loading";
 
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
@@ -35,6 +36,7 @@ class PlayList extends Component {
     isEmpty: false,
     curPage: 1,
     totalElements: 10,
+    loading: false,
   };
   getTag() {
     const query = qs.parse(this.props.location.search, {
@@ -82,16 +84,23 @@ class PlayList extends Component {
     searchParams.set("page", queryPage);
     searchParams.set("size", 5);
     console.log(`searchParams ${searchParams.toString()}`);
+    this.setState({
+      loading: true
+    })
     getData(`/record/${tag}?${searchParams.toString()}`).then((response) => {      // .then : 응답(상태코드200~300미만)성공시
       console.log(response);
       const data = response.data;
       this.setState({
         playRecord: response.data.content,
         curPage: data.pageable.pageNumber + 1,
-        totalElements: data.totalElements
+        totalElements: data.totalElements,
+        loading: false,
       })
     }).catch((error) => {
       console.log(error);
+      this.setState({
+        loading: false
+      })
     });
   }
   getBattleLogByUrl() {
@@ -191,6 +200,9 @@ class PlayList extends Component {
     const { t } = this.props;
     return (
       <div>
+        {this.state.loading ?
+          <Loading></Loading>
+          : ""}
         <h2>{t('battleLogTitle')}</h2>
         <button onClick={this.goStatistics} className="btn">{t("Statistics")}</button>
         <ModeList key={`mode-${this.state.mode}`} changeMode={this.changeMode} mode={this.state.mode} />

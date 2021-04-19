@@ -7,6 +7,7 @@ import baseStyles from "./Base.scss";
 import { getData } from './ApiHandler';
 import { withTranslation } from 'react-i18next';
 import AdSense from 'react-adsense';
+import Loading from "./Loading";
 
 class User {
   constructor(tag, name) {
@@ -30,6 +31,7 @@ class UserList extends Component {
     numUser: 0,
     pageUrl: "userList",
     nickname: "",
+    loading: false,
   };
   getQuery(props) {
     const query = qs.parse(props.location.search, {
@@ -51,8 +53,14 @@ class UserList extends Component {
   getUserList(page) {
     console.log("getUserList");
     const queryPage = page - 1;
+    this.setState({
+      loading: true,
+    })
     getData(`/member?name=${this.state.nickname}&page=${queryPage}&size=15`)
       .then((response) => {
+        this.setState({
+          loading: false,
+        });
         console.log(response);
         const data = response.data;
         this.setState({
@@ -124,6 +132,9 @@ class UserList extends Component {
 
     return (
       <div className="userList">
+        {this.state.loading ?
+          <Loading></Loading>
+          : ""}
         <h3>{t('userListGuide')}</h3>
         <div className="inputContainer">
           <input

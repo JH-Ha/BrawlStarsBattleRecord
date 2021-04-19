@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { withTranslation } from 'react-i18next';
 import AdSense from 'react-adsense';
+import Loading from './Loading';
 
 class Map extends Component {
     state = {
@@ -18,6 +19,7 @@ class Map extends Component {
         sumTotalGameNum: 0,
         trophyRange: '',
         isMapShown: false,
+        loading: false,
     }
     isSolo(mode) {
         if (mode === "soloShowdown") {
@@ -52,11 +54,17 @@ class Map extends Component {
         searchParams.set("trophyRange", trophyRange);
         searchParams.set("map", mapName);
 
+        this.setState({
+            loading: true,
+        })
         getData(`/record/result?${searchParams}`)
             .then(response => {
                 console.log(response);
                 const data = response.data;
-                console.log(data);
+                //console.log(data);
+                this.setState({
+                    loading: false,
+                })
                 data.forEach(e => {
                     // brawlerName: "COLETTE"
                     // cnt: 14
@@ -160,6 +168,10 @@ class Map extends Component {
         // const mode = query.mode;
 
         return <><div className="mapClass">
+            {this.state.loading ?
+                <Loading></Loading> :
+                ""
+            }
             <h3>{t("Statistics")}</h3>
             <div className={`mapNameContainer`} onClick={this.showMapImg}>
                 <span className="mapName">{t(this.state.mapName)}</span>

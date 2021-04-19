@@ -5,6 +5,7 @@ import { isTrio } from './BaseFunctions';
 import RecordResult from "./RecordResult";
 import style from "./Statistics.scss";
 import AdSense from 'react-adsense';
+import Loading from "./Loading";
 
 class Statistics extends Component {
     state = {
@@ -12,13 +13,20 @@ class Statistics extends Component {
         mode: 'gemGrab',
         recordArr: [],
         sumTotalGameNum: 0,
+        loading: false,
     }
     getRecordResult(searchParams) {
         let records = {};
         let recordArr = [];
         const mode = searchParams.get("mode");
+        this.setState({
+            loading: true,
+        })
         getData(`/record/result?${searchParams}`)
             .then(response => {
+                this.setState({
+                    loading: false,
+                });
                 console.log(response);
                 const data = response.data;
                 console.log(data);
@@ -130,6 +138,9 @@ class Statistics extends Component {
     render() {
 
         return <div>
+            {this.state.loading ?
+                <Loading></Loading>
+                : ""}
             <div className="statistics">
                 <div className="modeListContainer">
                     <ModeList key={this.state.mode} mode={this.state.mode} changeMode={this.changeMode} />
