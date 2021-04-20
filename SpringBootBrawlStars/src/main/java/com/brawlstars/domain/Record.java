@@ -36,6 +36,7 @@ public class Record {
 	private Long id;
 	private String tag;
 	private String battleTime;
+	@Column(length = 50)
 	private String brawlerName;
 	private String brawlerId;
 	private Integer power;
@@ -48,12 +49,14 @@ public class Record {
 
 	// @Column(name = "group_key", insertable = false, updatable = false)
 	// private String groupKey;
+	@Column(length = 50)
 	private String mode;
 	private String type;
 
 	//Trio
 	private Integer duration;
 	private Boolean isStarPlayer;
+	@Column(length = 50)
 	private String result;
 	
 	private Integer teamId;
