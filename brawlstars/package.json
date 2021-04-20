@@ -20,11 +20,14 @@
     "react-adsense": "^0.1.0",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.8.12",
+    "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-router-sitemap": "^1.2.0",
     "react-scripts": "^4.0.3",
     "react-toggle": "^4.1.2",
-    "save": "^2.4.0"
+    "redux": "^4.0.5",
+    "save": "^2.4.0",
+    "styled-components": "^5.2.3"
   },
   "scripts": {
     "start": "PORT=8081 react-scripts start",
