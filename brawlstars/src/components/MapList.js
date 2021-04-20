@@ -6,12 +6,14 @@ import qs from 'qs';
 import { getData } from './ApiHandler';
 import { withTranslation } from 'react-i18next';
 import AdSense from 'react-adsense';
+import Loading from './Loading';
 
 class MapList extends Component {
     state = {
         mode: 'gemGrab',
         maps: [],
         filteredMaps: [],
+        loading: false,
     }
     clickMap = (mapName, mapMode) => {
         console.log(this);
@@ -46,6 +48,9 @@ class MapList extends Component {
         console.log(`query mode ${query.mode}`);
 
         //this.setFilteredMap(query.mode);
+        this.setState({
+            loading: true,
+        })
         getData(`/gameMap`).then(response => {
             console.log(response);
             const data = response.data;
@@ -55,7 +60,8 @@ class MapList extends Component {
             }
             this.setState({
                 maps: data,
-                mode: mode
+                mode: mode,
+                loading: false,
             })
             this.setFilteredMap(mode);
             //this.changeMode(query.mode);
@@ -66,6 +72,9 @@ class MapList extends Component {
     render() {
         const { t } = this.props;
         return <><div className="mapList">
+            {this.state.loading ?
+                <Loading></Loading>
+                : ""}
             <h3>
                 {t('mapsGuide')}
             </h3>

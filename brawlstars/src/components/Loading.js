@@ -55,7 +55,7 @@ class Loading extends Component {
                 </div>
             </div>
             <div>
-                Loading Data...
+                Loading Data
             </div>
         </div>
     }
