@@ -32,6 +32,7 @@ contact : cubeprince@gmail.com`,
 
             "soloRanked": "Power League",
             "teamRanked": "Power League",
+            "registerGuide": "Register your tag for tracking",
 
         }
     },
@@ -185,6 +186,9 @@ contact : cubeprince@gmail.com`,
 
             "soloRanked": "파워 리그",
             "teamRanked": "파워 리그",
+
+            "registration": "등록하기",
+            "registerGuide": "전투기록을 트래킹하기 위해 태그를 등록하세요",
         }
     },
     ja: {
@@ -338,6 +342,9 @@ contact : cubeprince@gmail.com`,
 
             "soloRanked": "パワーリーグ",
             "teamRanked": "パワーリーグ",
+
+            "registration": "登録する",
+            "registerGuide": "バトル履歴をトラッキングするため、タグを登録してください",
         }
     }
 };
