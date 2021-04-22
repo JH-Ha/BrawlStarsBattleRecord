@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import MapList from "./components/MapList";
 import Map from "./components/Map";
 import Statistics from "./components/Statistics";
+import RegisterUser from "./components/RegisterUser";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/mapList" component={MapList} />
         <Route path="/map/:map/mode/:mode" component={Map} />
         <Route path="/statistics" component={Statistics} />
+        <Route path="/user" component={RegisterUser} />
       </Router>
     </div>
   );

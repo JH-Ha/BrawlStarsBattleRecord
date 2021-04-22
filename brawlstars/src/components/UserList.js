@@ -126,6 +126,10 @@ class UserList extends Component {
       nickname: value,
     });
   }
+  goRegisterPage = () => {
+    let { history } = this.props;
+    history.push(`/user`);
+  }
 
   render() {
     const { t, i18n } = this.props;
@@ -138,7 +142,7 @@ class UserList extends Component {
           <Loading></Loading>
           : ""}
         <h3>{t('userListGuide')}</h3>
-        <h3>Register your tag for tracking <FontAwesomeIcon icon={faArrowRight} /><button onClick={this.goRegisterPage} className="btn btn-register">register</button></h3>
+        <h3>{t('registerGuide')} <button onClick={this.goRegisterPage} className="btn btn-register">{t('registration')}</button></h3>
         <div className="inputContainer">
           <input
             placeholder="search user nickname"
