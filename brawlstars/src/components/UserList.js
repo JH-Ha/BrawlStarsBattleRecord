@@ -8,6 +8,8 @@ import { getData } from './ApiHandler';
 import { withTranslation } from 'react-i18next';
 import AdSense from 'react-adsense';
 import Loading from "./Loading";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 class User {
   constructor(tag, name) {
@@ -136,6 +138,7 @@ class UserList extends Component {
           <Loading></Loading>
           : ""}
         <h3>{t('userListGuide')}</h3>
+        <h3>Register your tag for tracking <FontAwesomeIcon icon={faArrowRight} /><button onClick={this.goRegisterPage} className="btn btn-register">register</button></h3>
         <div className="inputContainer">
           <input
             placeholder="search user nickname"
