@@ -41,7 +41,7 @@ public class MemberController {
 		return memberService.saveMember(tag);
 	}
 	
-	@GetMapping("/v1/member/api/{tag}")
+	@GetMapping("/member/api/{tag}")
 	public PlayerInfoDto getMemberFromApiServer(@PathVariable(name = "tag") String tag) {
 		PlayerInfo playerInfo = null;
 		PlayerInfoDto playerInfoDto = new PlayerInfoDto();
