@@ -7,12 +7,25 @@ class RegisterUser extends Component {
     }
     changeInput = (e) => {
         console.log(e.target.value);
+        let value = e.target.value;
+        let tag = "";
+        for (let i = 0; i < value.length; i++) {
+            console.log(value[i]);
+            if ((value[i] >= 'a' && value[i] <= 'z')
+                || (value[i] >= 'A' && value[i] <= 'Z')
+                || (value[i] >= '0' && value[i] <= '9')) {
+                tag += value[i];
+            }
+
+        }
         this.setState({
-            tag: e.target.value,
+            tag: tag,
         });
     }
     searchTag = () => {
-        getData(`/v1/user/${this.state.tag}`)
+        console.log(this.state.tag);
+        console.log(`/member/api/${this.state.tag}`);
+        getData(`/member/api/${this.state.tag}`)
             .then((response) => {
                 console.log(response);
             });
@@ -22,6 +35,7 @@ class RegisterUser extends Component {
             <h3>
                 Search your tag
             </h3>
+            <span>#</span>
             <input placeHolder="enter your tag" value={this.state.tag}
                 onChange={this.changeInput}
             ></input>

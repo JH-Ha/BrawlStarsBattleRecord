@@ -142,7 +142,8 @@ class UserList extends Component {
           <Loading></Loading>
           : ""}
         <h3>{t('userListGuide')}</h3>
-        <h3>{t('registerGuide')} <button onClick={this.goRegisterPage} className="btn btn-register">{t('registration')}</button></h3>
+        {/* TODO : implement registration
+        <h3>{t('registerGuide')} <button onClick={this.goRegisterPage} className="btn btn-register">{t('registration')}</button></h3> */}
         <div className="inputContainer">
           <input
             placeholder="search user nickname"
