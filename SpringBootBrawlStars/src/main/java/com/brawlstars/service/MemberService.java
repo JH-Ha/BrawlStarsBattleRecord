@@ -8,15 +8,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.brawlstars.api.BrawlStarsAPI;
 import com.brawlstars.domain.Member;
+import com.brawlstars.json.playerInfo.PlayerInfo;
 import com.brawlstars.repository.MemberDto;
 import com.brawlstars.repository.MemberRepository;
+import com.brawlstars.repository.ResultDto;
 
 @Service
 @Transactional
 public class MemberService {
 	@Autowired
 	MemberRepository memberRepository;
+	
+	@Autowired
+	BrawlStarsAPI brawlStarsAPI;
 	
 	public void save(Member member) {
 		memberRepository.save(member);
@@ -29,4 +35,35 @@ public class MemberService {
 	public MemberDto getMemberByTag(String tag) {
 		return memberRepository.findMemberByTag(tag);
 		}
+
+	public ResultDto saveMember(String tag) {
+		// TODO Auto-generated method stub
+		
+		ResultDto resultDto = new ResultDto();
+		// check it is already in DB
+		MemberDto memberDto = getMemberByTag(tag);
+		if(memberDto != null) {
+			resultDto.setMsg("alreay registered");
+			return resultDto;
+		}
+		
+		// check it is valid tag
+		PlayerInfo playerInfo = null;
+		try {
+			playerInfo = brawlStarsAPI.getPlayerInfo(tag);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(playerInfo == null) {
+			resultDto.setMsg("invalid tag");
+			return resultDto;
+		}
+		Member member = new Member();
+		member.setTag(tag);
+		member.setName(playerInfo.getName());
+		memberRepository.save(member);
+		
+		resultDto.setResult(true);
+		return resultDto;
+	}
 }
