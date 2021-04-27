@@ -51,14 +51,9 @@ class PlayList extends Component {
   }
 
   changePageHandler = (page) => {
-
     const params = this.props.match.params;
     let searchParams = new URLSearchParams(this.props.location.search);
-    const mode = searchParams.get("mode");
-    console.log(`changePageHandler mode !! ${mode}`);
     const tag = params.tag;
-    const brawlerName = searchParams.get("brawlerName");
-    this.getBattleLog(tag, mode, brawlerName, page);
     const queryPage = page - 1;
     searchParams.set("page", queryPage);
     searchParams.set("size", 5);
