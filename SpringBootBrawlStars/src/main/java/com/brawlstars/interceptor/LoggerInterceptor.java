@@ -24,8 +24,8 @@ public class LoggerInterceptor implements HandlerInterceptor {
 		
 		
 				
-		//ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
-		Date nowSeoul = Date.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant());				
+		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+		//Date nowSeoul = Date.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant());				
 		
 		String ip = request.getRemoteAddr();
 		String url = request.getRequestURL().toString();
