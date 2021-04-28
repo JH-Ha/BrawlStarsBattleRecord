@@ -21,13 +21,15 @@ public class AccessHistory {
 	String ip;
 	String url;
 	Date accessDate;
+	String userAgent;
 	
-	public static AccessHistory createHisotry(String ip, String url, Date accessDate) {
+	public static AccessHistory createHisotry(String ip, String url, Date accessDate, String userAgent) {
 		AccessHistory accessHistory = new AccessHistory();
 		
 		accessHistory.setIp (ip);
 		accessHistory.setUrl (url);
 		accessHistory.setAccessDate(accessDate);
+		accessHistory.setUserAgent(userAgent);
 		
 		return accessHistory;
 	}
