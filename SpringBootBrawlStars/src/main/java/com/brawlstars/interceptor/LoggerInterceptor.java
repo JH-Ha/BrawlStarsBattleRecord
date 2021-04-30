@@ -1,5 +1,7 @@
 package com.brawlstars.interceptor;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,16 +21,24 @@ public class LoggerInterceptor implements HandlerInterceptor {
 	public
 	boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
+		
+				
+		ZonedDateTime nowSeoul = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+		//Date nowSeoul = Date.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant());				
+		
 		String ip = request.getRemoteAddr();
 		String url = request.getRequestURL().toString();
 		String queryString = request.getQueryString();
+		String userAgent = request.getHeader("User-Agent");
+		
 		if(queryString != null) {
 			url += "/" + queryString;
 		}
 		if(url.length() > 255)
 			url = url.substring(0,254);
 		
-		AccessHistory accessHistory = AccessHistory.createHisotry(ip, url, new Date());
+		AccessHistory accessHistory = AccessHistory.createHisotry(ip, url, nowSeoul, userAgent);
 		accessHisotryService.saveAccessHistory(accessHistory);
 		
 		return true;
