@@ -33,7 +33,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     
     @Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(loggerInterceptor());
+		registry.addInterceptor(loggerInterceptor()).excludePathPatterns("/images/**","/static/**");
 	}
     
     @Bean
