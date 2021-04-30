@@ -3,7 +3,8 @@ import { getData } from './ApiHandler';
 
 class RegisterUser extends Component {
     state = {
-        tag: ""
+        tag: "",
+        found: "",
     }
     changeInput = (e) => {
         console.log(e.target.value);
@@ -28,6 +29,15 @@ class RegisterUser extends Component {
         getData(`/member/api/${this.state.tag}`)
             .then((response) => {
                 console.log(response);
+                const data = response.data;
+                this.setState({
+                    found: data.found,
+                });
+                if (data.found) {
+
+                } else {
+
+                }
             });
     }
     render() {
@@ -44,6 +54,11 @@ class RegisterUser extends Component {
 
                 <button>register</button>
             </div>
+            {this.state.found === false ? <div> not found </div>
+                : <div>
+                </div>
+
+            }
         </div>
     }
 }
