@@ -47,6 +47,7 @@ let brawlerNameList = [
   "LOU",
   "EDGAR",
   "SURGE",
+  "SQUEAK",
 ];
 //brawlerNameList = brawlerNameList.sort();
 //brawlerNameList.unshift("ALL");
