@@ -15,7 +15,7 @@
     "axios": "^0.21.1",
     "firebase": "^7.15.0",
     "i18next": "^20.2.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^5.0.0",
     "react": "^16.13.1",
     "react-adsense": "^0.1.0",
     "react-dom": "^16.13.1",
