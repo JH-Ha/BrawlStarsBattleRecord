@@ -35,13 +35,6 @@ public class MemberRepository {
 		}
 	}
 
-	public Member findOne(String tag) {
-		JPAQuery<Member> query = new JPAQuery<Member>(em);
-		QMember qMember = QMember.member;
-		Member member = query.from(qMember).where(qMember.tag.eq(tag)).fetchOne();
-		return member;
-	}
-
 	public Page<MemberDto> findAll(String name, Pageable pageable) {
 		JPAQuery<Member> query = new JPAQuery<Member>(em);
 		QMember qMember = QMember.member;
