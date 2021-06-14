@@ -15,13 +15,13 @@ spring:
     properties:
       hibernate:
         #show_sql: true
-        format_sql: true
+        #format_sql: true
         
 server:
   port: 8080
   
-logging:
-  level:
-    org.hibernate.SQL: debug
-    org.hibernate.type: trace
+#logging:
+  #level:
+    #org.hibernate.SQL: debug
+    #org.hibernate.type: trace
    
