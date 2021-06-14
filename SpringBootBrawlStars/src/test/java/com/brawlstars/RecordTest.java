@@ -78,7 +78,7 @@ public class RecordTest {
 		Pageable pageable = PageRequest.of(0, 10);
 		RecordSearch recordSearch = new RecordSearch(); 
 		Page<RecordDto> records = recordService.findByTag(tag, pageable, recordSearch);
-		Assertions.assertThat(records.getContent().size()).isEqualTo(6);
+		Assertions.assertThat(records.getContent().get(0).getGroupRecords().size()).isEqualTo(6);
 	}
 	
 	
