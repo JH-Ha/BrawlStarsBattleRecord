@@ -84,7 +84,7 @@ class SoloDuoMode extends Component {
           <div className={`topContainer rank${this.state.rankCss}`}>
             <div className="modeInfo">
               <div className="showdonwImgContainer">
-                <img src="/images/mode/showdown.png"></img>
+                <img src={`/images/mode/${mode}.png`}></img>
               </div>
               <div className="modeMapContainer">
                 <div className="mode">{t(mode)}

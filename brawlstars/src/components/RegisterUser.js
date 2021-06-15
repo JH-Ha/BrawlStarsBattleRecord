@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import { getData } from './ApiHandler';
+import Loading from './Loading';
+import { withTranslation } from 'react-i18next';
+import style from './RegisterUser.scss';
 
 class RegisterUser extends Component {
     state = {
         tag: "",
-        found: "",
+        searchResult: null,
+        loading: false,
     }
     changeInput = (e) => {
         console.log(e.target.value);
         let value = e.target.value;
         let tag = "";
-        for (let i = 0; i < value.length; i++) {
-            console.log(value[i]);
-            if ((value[i] >= 'a' && value[i] <= 'z')
-                || (value[i] >= 'A' && value[i] <= 'Z')
-                || (value[i] >= '0' && value[i] <= '9')) {
-                tag += value[i];
+        for (const v of value) {
+            if ((v >= 'a' && v <= 'z')
+                || (v >= 'A' && v <= 'Z')
+                || (v >= '0' && v <= '9')) {
+                tag += v;
             }
 
         }
@@ -25,23 +28,29 @@ class RegisterUser extends Component {
     }
     searchTag = () => {
         console.log(this.state.tag);
-        console.log(`/member/api/${this.state.tag}`);
-        getData(`/member/api/${this.state.tag}`)
+        console.log(`/member/api/%23${this.state.tag}`);
+        this.setState({ loading: true });
+        getData(`/member/api/%23${this.state.tag}`)
             .then((response) => {
                 console.log(response);
-                const data = response.data;
+                const searchResult = response.data;
                 this.setState({
-                    found: data.found,
-                });
-                if (data.found) {
+                    searchResult: searchResult,
 
-                } else {
+                });
+                if (searchResult.found) {
 
                 }
+                this.setState({ loading: false });
             });
     }
     render() {
-        return <div>
+        const { t } = this.props;
+        const playerInfo = this.state.searchResult?.playerInfo;
+        return <div className="registerUser">
+            {this.state.loading ?
+                <Loading></Loading>
+                : ""}
             <h3>
                 Search your tag
             </h3>
@@ -52,15 +61,61 @@ class RegisterUser extends Component {
             <button className="btn" onClick={this.searchTag}>search</button>
             <div>
 
-                <button>register</button>
+
             </div>
-            {this.state.found === false ? <div> not found </div>
+            {this.state.searchResult?.found === false ? <div> not found </div>
                 : <div>
                 </div>
-
             }
+            {this.state.searchResult?.found ?
+                <div className="rowContainer">
+                    <div className="row">
+                        <div className="component">
+                            <div>{t('highestTrophies')}</div>
+                            <div className='content'>{playerInfo.highestTrophies}</div>
+                        </div>
+                        <div className="component">
+                            <div>{t('trophies')}</div>
+                            <div className='content'>{playerInfo.trophies}</div>
+                        </div>
+                        <div className="component">
+                            <div>{t('expLevel')}</div>
+                            <div className='content'>{playerInfo.expLevel}</div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="component">
+                            <div>{t('3vs3Victories')}</div>
+                            <div className='icon'>
+                                <img className="iconImg" src="/images/mode/3vs3.png"></img>
+                            </div>
+                            <div className='content'>{playerInfo['3vs3Victories']}</div>
+
+                        </div>
+                        <div className="component">
+                            <div>{t('soloVictories')}</div>
+
+                            <div className='icon'>
+                                <img className="iconImg" src="/images/mode/soloShowdown.png"></img>
+                            </div>
+
+                            <div className='content'>{playerInfo['soloVictories']}</div>
+                        </div>
+                        <div className="component">
+                            <div>{t('duoVictories')}</div>
+                            <div className='icon'>
+                                <img className="iconImg" src="/images/mode/duoShowdown.png"></img>
+                            </div>
+                            <div className='content'>{playerInfo['duoVictories']}</div>
+                        </div>
+                    </div>
+                    <button>register</button>
+                </div>
+
+                : <div></div>}
         </div>
     }
 }
 
-export default RegisterUser;
+
+export default withTranslation()(RegisterUser);
