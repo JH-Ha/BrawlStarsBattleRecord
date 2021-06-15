@@ -1,0 +1,41 @@
+.registerUser{
+    .component{
+        flex-basis: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .icon {
+            width : 30px;
+            position : relative;
+            float: left;
+            .iconImg{
+                position: absolute;
+                width : 100%;
+                left: -47px;
+                top: 0px;
+            }
+        }
+        .content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding : 5px;
+            background-color: #003072;
+            color : white;
+            font-weight: bold;
+            width: 100px;
+            border-radius: 4px;
+        }
+    }
+    .rowContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .row{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+    }
+    
+}
