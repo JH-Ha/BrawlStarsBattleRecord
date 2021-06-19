@@ -27,6 +27,7 @@ import com.brawlstars.json.Item;
 import com.brawlstars.json.Player;
 import com.brawlstars.repository.GameMapDto;
 import com.brawlstars.repository.GameMapRepository;
+import com.brawlstars.repository.MemberDto;
 import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.repository.RecordDto;
 import com.brawlstars.repository.RecordRepository;
@@ -274,34 +275,39 @@ public class RecordService {
 	}
 
 	public void savePlayers(String tag) {
-		// TODO Auto-generated method stub
+		List<Item> items;
 		try {
-			List<Item> items = brawlStarsAPI.getItems(tag);
-			items.stream().forEach(item -> {
-				List<List<Player>> teams = item.getBattle().getTeams();
-				List<Player> players;
-				if (teams != null)
-					players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
-				else
-					players = item.getBattle().getPlayers();
-
-				for (int i = 0; i < players.size(); i++) {
-					Player player = players.get(i);
-					Member foundMember = memberRepository.findOne(player.getTag());
-					if (foundMember != null)
-						continue;
-					Member member = Member.createMember(player.getTag(), player.getName());
-					try {
-						memberRepository.save(member);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		} catch (Exception e1) {
+			items = brawlStarsAPI.getItems(tag);
+			savePlayersInItems(items);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
+	}
+	public void savePlayersInItems(List<Item> items) {
+		
+		items.stream().forEach(item -> {
+			List<List<Player>> teams = item.getBattle().getTeams();
+			List<Player> players;
+			if (teams != null)
+				players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
+			else
+				players = item.getBattle().getPlayers();
+
+			for (int i = 0; i < players.size(); i++) {
+				Player player = players.get(i);
+				MemberDto foundMember = memberRepository.findMemberByTag(player.getTag());
+				if (foundMember != null)
+					continue;
+				Member member = Member.createMember(player.getTag(), player.getName());
+				try {
+					memberRepository.save(member);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
 
 	}
 
@@ -359,7 +365,7 @@ public class RecordService {
 		return recordRepository.getDistinctGameMaps(mode);
 	}
 
-	public void saveDistinctGameMap(String mode) {
+	public int saveDistinctGameMap(String mode) {
 		// TODO Auto-generated method stub
 		List<GameMapDto> gameMapDtos = getDistinctGameMaps(mode);
 		List<GameMap> gameMaps = gameMapDtos.stream().map(dto ->{
@@ -369,13 +375,25 @@ public class RecordService {
 			return gameMap;
 		}).collect(Collectors.toList());
 		
-		gameMaps.stream().forEach(map ->{
-			if(map.getName() != null) {
-				List<GameMapDto> findMapDtos = gameMapRepositry.findByName(map.getName());
-				if(findMapDtos.isEmpty())
-					gameMapRepositry.saveGameMap(map);
-			}
-		});
+		List<FindMapDto> notSavedMaps = gameMaps.stream()
+				.filter(gameMap -> gameMap.getName()!= null)
+				.map(gameMap -> new FindMapDto(gameMap, gameMapRepositry.findByName(gameMap.getName())))
+				.filter(findMapDtos -> findMapDtos.gameMapDtos.isEmpty())
+				.collect(Collectors.toList());
+		
+		notSavedMaps.stream().forEach(findMapDtos -> gameMapRepositry.saveGameMap(findMapDtos.gameMap));
+				
+		return notSavedMaps.size();
+		
+	}
+	
+	class FindMapDto{
+		GameMap gameMap;
+		List<GameMapDto> gameMapDtos; 
+		public FindMapDto(GameMap gameMap, List<GameMapDto> gameMapDtos ) {
+			this.gameMap = gameMap;
+			this.gameMapDtos = gameMapDtos;
+		}
 	}
 
 

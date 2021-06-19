@@ -36,7 +36,7 @@ public class RecordSchedule {
 	public void saveRecords() {
 
 		Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
-		members.getContent().stream().forEach(member -> {
+		members.getContent().stream().parallel().forEach(member -> {
 			String tag = member.getTag();
 			try {
 				Thread.sleep(100);

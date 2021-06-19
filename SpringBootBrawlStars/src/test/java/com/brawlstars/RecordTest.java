@@ -1,7 +1,11 @@
 package com.brawlstars;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,9 +16,15 @@ import org.springframework.data.domain.Pageable;
 import com.brawlstars.api.RecordController;
 import com.brawlstars.domain.Record;
 import com.brawlstars.domain.RecordSearch;
+import com.brawlstars.json.BattleLog;
+import com.brawlstars.json.Item;
 import com.brawlstars.repository.RecordDto;
 import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.RecordService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 public class RecordTest {
@@ -24,48 +34,51 @@ public class RecordTest {
 	@Autowired
 	RecordController recordController;
 
-	@Test
-	public void getResults() {
-		String map = "Minecart Madness";
-		RecordSearch recordSearch = new RecordSearch();
-		recordSearch.setMode("gemGrab");
-		recordSearch.setMap(map);
-		List<RecordResultDto> records = recordController.getRecordResults(recordSearch);
-		records.forEach(r -> 
-			System.out.println(r.getBrawlerName() + " " + r.getResult() + " " + r.getCnt())
-		);
-		
+	@BeforeEach
+	public void init() throws JsonMappingException, JsonProcessingException {
+		String tag = "#9QU209UYC";
+		Scanner scanner = new Scanner(getClass().getResourceAsStream("sampleResponse.txt"));
+		String line = scanner.nextLine();
+		ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		BattleLog battleLog = mapper.readValue(line, BattleLog.class);	
+		List<Item> items = battleLog.getItems(); 
+		recordService.saveBattleLog(items, tag);
+		recordService.savePlayersInItems(items);
 	}
+	
 	@Test
 	public void getSoloResults() {
-		String map = "The Galaxy";
+		String map = "Cavern Churn";
 		RecordSearch recordSearch = new RecordSearch();
 		recordSearch.setMode("soloShowdown");
 		recordSearch.setMap(map);
 		List<RecordResultDto> records = recordController.getRecordResults(recordSearch);
-		records.forEach(r -> 
-			System.out.println(r.getBrawlerName() + " " + r.getAverageRank() + " " + r.getCnt())
-		);
+		
+		Optional<RecordResultDto> dto = records.stream().filter(r -> r.getBrawlerName().equals("SANDY")).findFirst();
+		
+		Assertions.assertThat(dto.get().getAverageRank()).isEqualTo(1);
+		
+	}
+	@Test
+	public void getTrioResults() {
+		String map = "Bot Drop";
+		RecordSearch recordSearch = new RecordSearch();
+		recordSearch.setMode("siege");
+		recordSearch.setMap(map);
+		List<RecordResultDto> records = recordController.getRecordResults(recordSearch);
+		
+		Optional<RecordResultDto> dto = records.stream().filter(r -> r.getBrawlerName().equals("POCO") && r.getResult().equals("victory")).findFirst();
+		
+		Assertions.assertThat(dto.get().getCnt()).isEqualTo(1);
 	}
 	
 	@Test
 	public void getRecordsByTag() {
-		String tag = "#9QU209UYC";
+		String tag = "#88RRY9PLL";
 		Pageable pageable = PageRequest.of(0, 10);
 		RecordSearch recordSearch = new RecordSearch(); 
 		Page<RecordDto> records = recordService.findByTag(tag, pageable, recordSearch);
-		records.stream().forEach(record -> {
-			System.out.println(record.getBattleTime());
-		});
-		
-		tag = "#YCGPQRV90";
-		records = recordService.findByTag(tag, pageable, recordSearch);
-		records.stream().forEach(record -> {
-			System.out.println(record.getBattleTime());
-			record.getGroupRecords().stream().forEach(rr -> 
-				System.out.println(rr.getPlayerName())
-			);
-		});
+		Assertions.assertThat(records.getContent().get(0).getGroupRecords().size()).isEqualTo(6);
 	}
 	
 	
