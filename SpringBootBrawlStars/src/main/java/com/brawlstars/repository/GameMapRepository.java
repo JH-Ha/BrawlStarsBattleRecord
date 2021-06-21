@@ -26,7 +26,7 @@ public class GameMapRepository {
 		}
 	}
 	
-	public List<GameMapDto> findByName(String name) {
+	public List<GameMapDto> findByNameAndMode(String name, String mode) {
 		JPAQuery<GameMap> query = new JPAQuery<GameMap>(em);
 		QGameMap qGameMap = QGameMap.gameMap;
 		List<GameMapDto> gameMapDtos = query.select(Projections.constructor(GameMapDto.class 
@@ -35,7 +35,8 @@ public class GameMapRepository {
 				))
 		.from(qGameMap)
 		.where(qGameMap.isDeleted.eq(false)
-				.and(qGameMap.name.eq(name)))
+				.and(qGameMap.name.eq(name)
+				.and(qGameMap.mode.eq(mode))))
 		.fetch();
 		return gameMapDtos;
 	}
