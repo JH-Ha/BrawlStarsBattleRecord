@@ -48,6 +48,11 @@ public class ScheduleTest {
 	}
 	
 	@Test
+	public void deleteRecordsTest() {
+		recordSchedule.deleteRecords();
+	}
+	
+	@Test
 	public void updateUser() {
 		
 	}
