@@ -387,6 +387,11 @@ public class RecordService {
 		
 	}
 	
+	public void deleteRecords() {
+		// TODO Auto-generated method stub
+		recordRepository.deleteRecords();
+	}
+	
 	class FindMapDto{
 		GameMap gameMap;
 		List<GameMapDto> gameMapDtos; 
@@ -395,6 +400,8 @@ public class RecordService {
 			this.gameMapDtos = gameMapDtos;
 		}
 	}
+
+	
 
 
 }
