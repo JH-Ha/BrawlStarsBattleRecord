@@ -71,6 +71,11 @@ public class RecordSchedule {
 		}
 
 	}
+
+	public void deleteRecords() {
+		// TODO Auto-generated method stub
+		recordService.deleteRecords();
+	}
 	
 
 }
