@@ -226,4 +226,11 @@ public class RecordRepository {
 				.fetch();
 		return records;
 	}
+
+	public void deleteRecords() {
+		// TODO Auto-generated method stub
+		
+		QRecord qRecord = QRecord.record;
+		queryFactory.delete(qRecord).where(qRecord.battleTime.lt("20210513"));
+	}
 }
