@@ -109,7 +109,8 @@ class RegisterUser extends Component {
                             <div className='content'>{playerInfo['duoVictories']}</div>
                         </div>
                     </div>
-                    <button>register</button>
+                    <div>registration user tag will be updated</div>
+                    {/* <button>register</button> */}
                 </div>
 
                 : <div></div>}
