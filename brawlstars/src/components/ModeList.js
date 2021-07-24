@@ -35,9 +35,7 @@ class ModeList extends Component {
           <option value="knockout">{t("knockout")}</option>
           <option value="volleyBrawl">{t("volleyBrawl")}</option>
           <option value="basketBrawl">{t("basketBrawl")}</option>
-          <option value="volleyBrawl">{t("volleyBrawl")}</option>
           <option value="holdTheTrophy">{t("holdTheTrophy")}</option>
-          <option value="trophyThieves">{t("trophyThieves")}</option>
           <option value="soloShowdown">{t("soloShowdown")}</option>
           <option value="duoShowdown">{t("duoShowdown")}</option>
         </select>
