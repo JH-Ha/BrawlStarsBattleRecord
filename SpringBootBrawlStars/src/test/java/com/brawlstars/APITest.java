@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.brawlstars.api.BrawlStarsAPI;
+import com.brawlstars.json.EventInfo;
 import com.brawlstars.json.Item;
 import com.brawlstars.json.playerInfo.PlayerInfo;
 import com.brawlstars.repository.MemberRepository;
@@ -50,4 +51,10 @@ public class APITest {
 		String name = playerInfo.getName();
 		assertThat(name).isEqualTo("ÆûÆû");
 	}
+	
+	@Test
+	public void getEventsRotation() throws Exception{
+		EventInfo[] eventInfos = brawlStarsAPI.getEventsRotation();
+		System.out.println(eventInfos);
+	}			
 }

@@ -11,7 +11,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.springframework.stereotype.Component;
 
 import com.brawlstars.json.BattleLog;
-import com.brawlstars.json.EventInfoContainer;
+import com.brawlstars.json.EventInfo;
 import com.brawlstars.json.Item;
 import com.brawlstars.json.playerInfo.PlayerInfo;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -44,17 +44,17 @@ public class BrawlStarsAPI {
 		return playerInfo;
 	}
 	
-	public EventInfoContainer getEventsRotation() throws Exception {
+	public EventInfo[] getEventsRotation() throws Exception {
 
-		EventInfoContainer eventInfoContainer = null;
+		EventInfo[] eventInfos = null;
 		try {
-			eventInfoContainer = getObjectFromJson(EVENTS_ROTATIONS_URL, EventInfoContainer.class);
+			eventInfos = getObjectFromJson(EVENTS_ROTATIONS_URL, EventInfo[].class);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return eventInfoContainer;
+		return eventInfos;
 	}
 	public <T> T getObjectFromJson(String stringUrl, Class<T> valueType) throws IOException {
 		URL url = new URL(stringUrl);
