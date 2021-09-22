@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import styles from "./TopBar.scss";
+import "./TopBar.scss";
 import i18n from "./i18n";
 
 
@@ -32,6 +32,9 @@ class TopBar extends Component {
         <div className="menuContainer">
           <div className="item">
             <Link to="/">Home</Link>
+          </div>
+          <div className="item">
+            <Link to="/info">Info</Link>
           </div>
           <div className="item">
             <Link to="/userList">Players</Link>

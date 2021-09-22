@@ -3,7 +3,7 @@ import { getData } from "./ApiHandler";
 import ModeList from './ModeList';
 import { isTrio } from './BaseFunctions';
 import RecordResult from "./RecordResult";
-import style from "./Statistics.scss";
+import "./Statistics.scss";
 import AdSense from 'react-adsense';
 import Loading from "./Loading";
 

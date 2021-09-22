@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styles from "./Pagination.scss";
+import "./Pagination.scss";
 
 class Page {
   constructor(link, pageNum, content, className) {

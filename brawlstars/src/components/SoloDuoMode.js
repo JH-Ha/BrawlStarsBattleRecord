@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styles from "./SoloDuoMode.scss";
+import "./SoloDuoMode.scss";
 import { calDisplayTime } from './BaseFunctions';
 import PlayerTile from './PlayerTile';
 import { withTranslation } from 'react-i18next';
@@ -17,7 +17,7 @@ class SoloDuoMode extends Component {
     } else {
       signTrophyChange = trophyChange;
     }
-    if (mode == "soloShowdown") {
+    if (mode === "soloShowdown") {
       this.setState({
         rankCss: Math.floor((rank + 1) / 2),
       });
@@ -44,18 +44,10 @@ class SoloDuoMode extends Component {
     const { groupRecords, tag, map, mode, type, t } = this.props;
     let battleTime = "";
     let rank = "";
-    let brawlerName = "";
-    let power = "";
-    let trophies = "";
-    let trophyChange = "";
     groupRecords.forEach(e => {
       if (e.tag === tag) {
         battleTime = e.battleTime;
         rank = e.resultRank;
-        brawlerName = e.brawlerName;
-        power = e.power;
-        trophies = e.trophies;
-        trophyChange = e.trophyChange;
       }
     })
     let displayGroup = [];
@@ -84,7 +76,7 @@ class SoloDuoMode extends Component {
           <div className={`topContainer rank${this.state.rankCss}`}>
             <div className="modeInfo">
               <div className="showdonwImgContainer">
-                <img src={`/images/mode/${mode}.png`}></img>
+                <img src={`/images/mode/${mode}.png`} alt={mode}></img>
               </div>
               <div className="modeMapContainer">
                 <div className="mode">{t(mode)}

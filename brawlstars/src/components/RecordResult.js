@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortUp, faSortDown, faSort } from '@fortawesome/free-solid-svg-icons'
 import { isTrio, isDuo, isSolo, isAll } from './BaseFunctions';
 import SortIcon from './SortIcon';
-import style from "./RecordResult.scss";
+import "./RecordResult.scss";
 import { withTranslation } from 'react-i18next';
 
 const DEFAULT = "DEFAULT";
@@ -122,7 +120,7 @@ class RecordResult extends Component {
                                     <td>
                                         {/* <div className="info" key={index}> */}
                                         <div className="brawler">
-                                            <img src={`/images/${ele.brawlerName}.png`}></img>
+                                            <img src={`/images/${ele.brawlerName}.png`} alt={ele.brawlerName}></img>
                                             <div className="brawlerName">
                                                 {t(ele.brawlerName)}
                                             </div>
@@ -148,7 +146,7 @@ class RecordResult extends Component {
                                     <td>
                                         <div className="totalGame">
                                             {Math.round(ele.totalGameNum / this.state.sumTotalGameNum * 10000) / 100}%
-                            </div>
+                                        </div>
                                     </td>
                                     {/* </div> */}
                                 </tr>
