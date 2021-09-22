@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { getData } from './ApiHandler';
 import Loading from './Loading';
 import { withTranslation } from 'react-i18next';
-import style from './RegisterUser.scss';
+import './RegisterUser.scss';
 
 class RegisterUser extends Component {
     state = {
@@ -87,7 +87,7 @@ class RegisterUser extends Component {
                         <div className="component">
                             <div>{t('3vs3Victories')}</div>
                             <div className='icon'>
-                                <img className="iconImg" src="/images/mode/3vs3.png"></img>
+                                <img className="iconImg" src="/images/mode/3vs3.png" alt="3vs3"></img>
                             </div>
                             <div className='content'>{playerInfo['3vs3Victories']}</div>
 
@@ -96,7 +96,7 @@ class RegisterUser extends Component {
                             <div>{t('soloVictories')}</div>
 
                             <div className='icon'>
-                                <img className="iconImg" src="/images/mode/soloShowdown.png"></img>
+                                <img className="iconImg" src="/images/mode/soloShowdown.png" alt="soloShowdown"></img>
                             </div>
 
                             <div className='content'>{playerInfo['soloVictories']}</div>
@@ -104,7 +104,7 @@ class RegisterUser extends Component {
                         <div className="component">
                             <div>{t('duoVictories')}</div>
                             <div className='icon'>
-                                <img className="iconImg" src="/images/mode/duoShowdown.png"></img>
+                                <img className="iconImg" src="/images/mode/duoShowdown.png" alt="duoShowdown"></img>
                             </div>
                             <div className='content'>{playerInfo['duoVictories']}</div>
                         </div>

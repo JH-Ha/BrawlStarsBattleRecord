@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import styles from './Loading.scss';
-import styled, { css } from 'styled-components';
-import LoadingBar from './LoadingBar';
+import './Loading.scss';
 
 class Loading extends Component {
     state = {
@@ -18,7 +16,7 @@ class Loading extends Component {
             opacityList: opacityList,
         });
         const intervalId = setInterval(() => {
-            let nextIdx = --this.state.startIdx;
+            let nextIdx = this.state.startIdx - 1;
             if (nextIdx < 0) nextIdx += 12;
             this.setState({
                 startIdx: nextIdx,
@@ -42,8 +40,7 @@ class Loading extends Component {
             <div className="barsContainer">
                 <div className="bars">
                     {bars.map((bar, index) => {
-                        //return <LoadingBar></LoadingBar>
-                        return <div className="bar" style={{
+                        return <div key={`Loading-${index}`} className="bar" style={{
                             transform: `rotate(${bar}deg)`,
                             left: `${30 * Math.sin(bar / 360 * 2 * Math.PI)}px`,
                             top: `${30 - 30 * Math.cos(bar / 360 * 2 * Math.PI)}px`,

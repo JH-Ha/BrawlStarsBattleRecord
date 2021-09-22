@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import styles from "./TrioMode.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import "./TrioMode.scss";
 import PlayerTile from "./PlayerTile";
 import { calDisplayTime } from './BaseFunctions';
 import { withTranslation } from 'react-i18next';
@@ -19,12 +17,8 @@ class TrioMode extends Component {
   render() {
     const {
       battleTime,
-      brawler_name,
       duration,
-      isStarPalyer,
       map,
-      power,
-      trophies,
       trophyChange,
       result,
       type,
@@ -48,7 +42,7 @@ class TrioMode extends Component {
           <div className={`gameInfo top ${result}`}>
             <div className='modeInfo'>
               <div className="modeImg">
-                <img src={`/images/mode/${mode}.png`}></img>
+                <img src={`/images/mode/${mode}.png`} alt={mode}></img>
               </div>
               <div className={`modeMap`}>
                 <div className={`mode`}>{t(mode)}
@@ -74,7 +68,10 @@ class TrioMode extends Component {
                     playerName={record.playerName}
                     trophies={record.trophies}
                     power={record.power}
-                  ></PlayerTile>;
+                  ></PlayerTile>
+                else {
+                  return <div></div>;
+                };
               })}
             </div>
             <div className={`durationContainer`}>
@@ -89,6 +86,9 @@ class TrioMode extends Component {
                     trophies={record.trophies}
                     power={record.power}
                   ></PlayerTile>
+                else {
+                  return <div></div>
+                }
               })}
             </div>
           </div>

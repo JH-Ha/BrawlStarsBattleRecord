@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { withTranslation } from 'react-i18next';
 class ModeList extends Component {
-  constructor(props) {
-    super(props);
-  }
+
   state = {
     value: "gemGrab",
   };

@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import playerTileStyles from "./PlayerTile.scss";
+import "./PlayerTile.scss";
 
 class PlayerTile extends Component {
-    constructor() {
-        super();
-    }
     render() {
         const {
             brawlerName,
@@ -16,7 +13,7 @@ class PlayerTile extends Component {
             <div>
                 <div className="imgContainer">
                     <div className="trophies">{trophies}</div>
-                    <img src={`/images/${brawlerName}.png`} width="50px" />
+                    <img src={`/images/${brawlerName}.png`} alt={brawlerName} width="50px" />
                     <div className="powerContainer">
                         <div className="levelText">Lv
                         </div>
