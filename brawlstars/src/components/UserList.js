@@ -1,22 +1,12 @@
 import React, { Component } from "react";
-import firestore from "./Firestore";
 import Pagination from "./Pagination";
 import qs from "qs";
-import styles from "./UserList.scss";
-import baseStyles from "./Base.scss";
+import "./UserList.scss";
+import "./Base.scss";
 import { getData } from './ApiHandler';
 import { withTranslation } from 'react-i18next';
 import AdSense from 'react-adsense';
 import Loading from "./Loading";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-
-class User {
-  constructor(tag, name) {
-    this.tag = tag;
-    this.name = name;
-  }
-}
 
 
 const tableStyle = {
@@ -132,9 +122,7 @@ class UserList extends Component {
   }
 
   render() {
-    const { t, i18n } = this.props;
-    //const changelanguageToKo = () => i18n.changeLanguage('ko')
-    //const changelanguageToEn = () => i18n.changeLanguage('en')
+    const { t } = this.props;
 
     return (
       <div className="userList">
