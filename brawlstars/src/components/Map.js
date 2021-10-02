@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import qs from 'qs';
-import styles from "./Map.scss";
+import "./Map.scss";
 import { getData } from './ApiHandler';
 import RecordResult from './RecordResult';
 import { isTrio } from './BaseFunctions';
@@ -144,9 +143,6 @@ class Map extends Component {
             ignoreQueryPrefix: true,
         });
         const params = this.props.match.params
-        //console.log(query);
-        // const mapName = query.mapName;
-        // const mode = query.mode;
         const mapName = unescape(params.map);
         const mode = params.mode;
         const trophyRange = query.trophyRange || this.state.trophyRange;
@@ -160,12 +156,6 @@ class Map extends Component {
     }
     render() {
         const { t } = this.props;
-        // const query = qs.parse(this.props.location.search, {
-        //     ignoreQueryPrefix: true,
-        // });
-        // console.log(query);
-        // const mapName = query.mapName;
-        // const mode = query.mode;
 
         return <><div className="mapClass">
             {this.state.loading ?
@@ -183,7 +173,7 @@ class Map extends Component {
             <div className={`mapImgContainer 
             ${this.state.mode.includes("Showdown") ? 'showdown' : ''}
             ${this.state.isMapShown ? '' : 'none'}`}>
-                <img className="mapImg" src={`/images/maps/${this.state.mode.includes("Showdown") ? 'showdown' : this.state.mode}/${this.state.mapName}.png`} />
+                <img className="mapImg" src={`/images/maps/${this.state.mode.includes("Showdown") ? 'showdown' : this.state.mode}/${this.state.mapName}.png`} alt={this.state.mapName} />
             </div>
             {/* <div className="trophySelect">
                 <label htmlFor="trophyRange">Trophies</label>

@@ -1,13 +1,8 @@
 import React, { Component } from "react";
-import styles from "./Home.scss";
+import "./Home.scss";
 import { withTranslation } from 'react-i18next';
 import AdSense from 'react-adsense';
-import Loading from './Loading';
 
-const languageList = ["korean", "english", "japanese"];
-const displayNone = {
-  display: "none",
-};
 class Home extends Component {
   render() {
     const { t } = this.props;

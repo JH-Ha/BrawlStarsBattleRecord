@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import qs from "qs";
-import firestore from "./Firestore";
 import ModeList from "./ModeList";
 import TrioMode from "./TrioMode";
 import BrawlerList from "./BrawlerList";
-import playStyles from "./PlayList.scss";
-import styles from "./Base.scss";
+import "./PlayList.scss";
+import "./Base.scss";
 import SoloDuoMode from "./SoloDuoMode";
 import Pagination from "./Pagination";
 import { getData } from "./ApiHandler";
@@ -19,7 +18,6 @@ import Loading from "./Loading";
 //         ignoreQueryPrefix : true
 //     });
 //     const tag = query.tag || "tag를 입력해주세요";
-let myTag = null || "tag를 입력해주세요";
 class PlayList extends Component {
   constructor(props) {
     super(props);
@@ -46,7 +44,7 @@ class PlayList extends Component {
   }
   addZero(number) {
     let str = number.toString();
-    if (str.length == 1) str = "0" + str;
+    if (str.length === 1) str = "0" + str;
     return str;
   }
 
