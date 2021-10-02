@@ -36,16 +36,19 @@ function isAll(mode) {
     }
     return false;
 }
+function getLocalTime(time) {
+    let year = time.substr(0, 4);
+    let month = time.substr(4, 2);
+    let date = time.substr(6, 2);
+    let hours = time.substr(8, 3);
+    let minutes = time.substr(11, 2);
+    let seconds = time.substr(13);
 
+    return new Date(`${year}-${month}-${date}${hours}:${minutes}:${seconds}`);
+}
 function calDisplayTime(battleTime) {
-    let year = battleTime.substr(0, 4);
-    let month = battleTime.substr(4, 2);
-    let date = battleTime.substr(6, 2);
-    let hours = battleTime.substr(8, 3);
-    let minutes = battleTime.substr(11, 2);
-    let seconds = battleTime.substr(13);
 
-    let localeBattleTime = new Date(`${year}-${month}-${date}${hours}:${minutes}:${seconds}`);
+    let localeBattleTime = getLocalTime(battleTime);
     let now = new Date();
     let diffTime = (now - localeBattleTime) / 1000;
     let displayTime = '';
@@ -73,4 +76,4 @@ function calDisplayTime(battleTime) {
     return displayTime;
 }
 
-export { isTrio, isSolo, isDuo, isAll, calDisplayTime };
+export { isTrio, isSolo, isDuo, isAll, getLocalTime, calDisplayTime };
