@@ -76,4 +76,67 @@ function calDisplayTime(battleTime) {
     return displayTime;
 }
 
-export { isTrio, isSolo, isDuo, isAll, getLocalTime, calDisplayTime };
+function calWinRate(data, mode) {
+    let records = {};
+    let recordArr = [];
+    let sumTotalGameNum = 0;
+    //console.log(`data : ${data}`);
+
+    data.forEach(e => {
+
+        if (isTrio(mode)) {
+            if (records[e.brawlerName] === undefined) {
+                records[e.brawlerName] = {
+                };
+            }
+            records[e.brawlerName] = {
+                ...records[e.brawlerName],
+                [e.result]: e.cnt,
+            }
+        } else {
+            records[e.brawlerName] = {
+                brawlerName: e.brawlerName,
+                averageRank: e.averageRank,
+                cnt: e.cnt,
+            }
+        }
+    });
+    if (isTrio(mode)) {
+        for (let key in records) {
+            let { victory, defeat, draw } = records[key];
+            const victoryNum = victory || 0;
+            const defeatNum = defeat || 0;
+            const drawNum = draw || 0;
+            const totalGameNum = victoryNum + defeatNum + drawNum;
+            recordArr.push({
+                "brawlerName": key,
+                "victory": victoryNum,
+                "defeat": defeatNum,
+                "draw": drawNum,
+                "winRate": (victoryNum) / totalGameNum,
+                "totalGameNum": totalGameNum
+            });
+            sumTotalGameNum += totalGameNum;
+        }
+
+        recordArr.sort((a, b) => {
+            return b.winRate - a.winRate;
+        })
+    } else {
+        for (let key in records) {
+            let { averageRank, cnt } = records[key];
+            recordArr.push({
+                "brawlerName": key,
+                "averageRank": averageRank,
+                "totalGameNum": cnt
+            });
+            sumTotalGameNum += cnt;
+        }
+        recordArr.sort((a, b) => {
+            return a.averageRank - b.averageRank;
+        })
+    }
+    return recordArr;
+}
+
+export { isTrio, isSolo, isDuo, isAll, getLocalTime, calDisplayTime, calWinRate };

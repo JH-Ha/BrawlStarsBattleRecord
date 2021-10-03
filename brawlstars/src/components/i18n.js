@@ -28,6 +28,7 @@ contact : cubeprince@gmail.com`,
             "trophyThieves": "Trophy Thieves",
             "soloShowdown": "Solo Showdown",
             "duoShowdown": "Duo Showdown",
+            "superCityRampage": "Super City Rampage",
             "brawler": "brawler",
             /* 승패 */
             "victory": "victory",
@@ -37,6 +38,13 @@ contact : cubeprince@gmail.com`,
             "soloRanked": "Power League",
             "teamRanked": "Power League",
             "registerGuide": "Register your tag for tracking",
+            "newEventMsg": "New Events in",
+            "endEventMsg": "Event Ends in",
+
+            //시간표시
+            "days": "d",
+            "hours": "h",
+            "minutes": "m",
 
         }
     },
@@ -164,6 +172,7 @@ contact : cubeprince@gmail.com`,
             "Sunny Soccer": "화창한 날",
             "Field Goal": "필드 골",
             "Bank Shot": "뱅크슛",
+            "superCityRampage": "슈퍼 시티 램피지",
             // "Encirclement" :
             // "Winter Party" :
             // "Jumping Beans" :
@@ -186,6 +195,7 @@ contact : cubeprince@gmail.com`,
             "Dueling Beetles": "곤충 싸움",
             // "Triumvirate": 
             //     "Magnetic Field" :
+            "SUPER CITY": "슈퍼 시티",
 
             "Statistics": "통계",
             "Win Rate": "승률",
@@ -200,6 +210,12 @@ contact : cubeprince@gmail.com`,
 
             "registration": "등록하기",
             "registerGuide": "전투기록을 트래킹하기 위해 태그를 등록하세요",
+            "newEventMsg": "신규 이벤트까지",
+            "endEventMsg": "이벤트 종료까지",
+            //시간 표시
+            "days": "일",
+            "hours": "시간",
+            "minutes": "분",
         }
     },
     ja: {
@@ -325,6 +341,7 @@ contact : cubeprince@gmail.com`,
             "Sunny Soccer": "サニーサッカー",
             "Field Goal": "フィールドゴール",
             "Bank Shot": "バンク　ショット",
+            "superCityRampage": "スーパーシティ乱闘",
             // "Encirclement" :
             // "Winter Party" :
             // "Jumping Beans" :
@@ -347,6 +364,8 @@ contact : cubeprince@gmail.com`,
             "Dueling Beetles": "ビートルバトル",
             // "Triumvirate": 
             //     "Magnetic Field" :
+            //super city rampage
+            "SUPER CITY": "スーパーシティ",
 
             "Statistics": "通計",
             "Win Rate": "勝率",
@@ -362,6 +381,13 @@ contact : cubeprince@gmail.com`,
 
             "registration": "登録する",
             "registerGuide": "バトル履歴をトラッキングするため、タグを登録してください",
+            "newEventMsg": "新イベントまで",
+            "endEventMsg": "イベント終了まで",
+
+            //시간표시
+            "days": "日",
+            "hours": "時間",
+            "minutes": "分",
         }
     }
 };
