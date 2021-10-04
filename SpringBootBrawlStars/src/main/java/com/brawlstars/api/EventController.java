@@ -11,10 +11,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.brawlstars.domain.RecordSearch;
+import com.brawlstars.domain.Statistics;
 import com.brawlstars.json.EventInfo;
-import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.RecordService;
+import com.brawlstars.service.StatisticsService;
 
 @RestController
 public class EventController {
@@ -24,6 +24,9 @@ public class EventController {
 	
 	@Autowired
 	RecordService recordService;
+	
+	@Autowired
+	StatisticsService statisticsService;
 	
 	EventInfo[] eventInfos;
 	
@@ -48,10 +51,7 @@ public class EventController {
 			for(int i = 0; i < eventInfos.length; i ++) {
 				EventInfo eventInfo = eventInfos[i];
 				String mode = eventInfo.getEvent().getMode();
-				RecordSearch recordSearch = new RecordSearch();
-				recordSearch.setMode(mode);
-				recordSearch.setMap(eventInfo.getEvent().getMap());
-				List<RecordResultDto> statistics = recordService.findByMap(recordSearch);
+				List<Statistics> statistics = statisticsService.getStats(mode, eventInfo.getEvent().getMap());
 				eventInfo.setStatistics(statistics);
 			}
 		} catch (Exception e) {

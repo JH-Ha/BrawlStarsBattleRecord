@@ -48,8 +48,9 @@ public class ScheduleTest {
 	}
 	
 	@Test
-	public void deleteRecordsTest() {
-		recordSchedule.deleteRecords();
+	public void deleteRecordstTest() {
+		recordService.deleteOldRecords("#9QU209UYC", 10L);
+		
 	}
 	
 	@Test
