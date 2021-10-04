@@ -56,7 +56,7 @@ public class RecordTest {
 		
 		Optional<RecordResultDto> dto = records.stream().filter(r -> r.getBrawlerName().equals("SANDY")).findFirst();
 		
-		Assertions.assertThat(dto.get().getAverageRank()).isEqualTo(1);
+		Assertions.assertThat(dto.get().getRankSum()).isEqualTo(1);
 		
 	}
 	@Test

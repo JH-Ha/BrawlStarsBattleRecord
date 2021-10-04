@@ -129,7 +129,7 @@ public class RecordService {
 				String map = item.getEvent().getMap();
 				String mode = item.getBattle().getMode();
 				String brawlerName = player.getBrawler().getName();
-				Integer throphies = player.getBrawler().getTrophies();
+				Integer trophies = player.getBrawler().getTrophies();
 				RecordTrio recordTrio = new RecordTrio();
 				recordTrio.setBattleTime(item.getBattleTime());
 				recordTrio.setBrawlerName(brawlerName);
@@ -140,7 +140,7 @@ public class RecordService {
 				recordTrio.setMode(mode);
 				recordTrio.setType(item.getBattle().getType());
 				recordTrio.setTag(player.getTag());
-				recordTrio.setTrophies(throphies);
+				recordTrio.setTrophies(trophies);
 				recordTrio.setPlayerName(player.getName());
 				recordTrio.setTeamId(i);
 				recordTrio.setEventId(item.getEvent().getId());
@@ -167,9 +167,9 @@ public class RecordService {
 				// recordRepository.save(recordTrio);
 				
 				//save Statistics
-				if(throphies >= 500) {
-					saveTrioStat(mode, map, brawlerName, result);
-				}
+//				if(trophies != null && trophies >= 500) {
+//					saveTrioStat(mode, map, brawlerName, result);
+//				}
 			}
 		}
 		Record.setRelation(myRecord, groupRecords);
@@ -209,14 +209,14 @@ public class RecordService {
 				String map = item.getEvent().getMap(); 
 				Long rank = i + 1L;
 				String brawlerName = player.getBrawler().getName();
-				Integer throphies = player.getBrawler().getTrophies();
+				Integer trophies = player.getBrawler().getTrophies();
 				
 				RecordDuo recordDuo = new RecordDuo();
 				recordDuo.setTag(player.getTag());
 				recordDuo.setBattleTime(item.getBattleTime());
 				recordDuo.setBrawlerName(brawlerName);
 				recordDuo.setPower(player.getBrawler().getPower());
-				recordDuo.setTrophies(throphies);
+				recordDuo.setTrophies(trophies);
 				
 				recordDuo.setMap(map);
 				//recordDuo.setGroupKey(groupKey);
@@ -235,9 +235,9 @@ public class RecordService {
 				//recordRepository.save(recordDuo);
 				
 				//save Statistics
-				if(throphies >= 500) {
-					saveDuoSoloStat(mode, map, brawlerName, rank);
-				}
+//				if(trophies!= null && trophies >= 500) {
+//					saveDuoSoloStat(mode, map, brawlerName, rank);
+//				}
 			}
 		}
 		Record.setRelation(myRecord, groupRecords);
@@ -267,9 +267,9 @@ public class RecordService {
 			//recordRepository.save(recordSolo);
 			
 			//save Statistics
-			if(recordSolo.getTrophies() >= 500) {
-				saveDuoSoloStat(recordSolo.getMode(), recordSolo.getMap(), recordSolo.getBrawlerName(), Long.valueOf(recordSolo.getResultRank()));
-			}
+//			if(recordSolo.getTrophies()!= null && recordSolo.getTrophies() >= 500) {
+//				saveDuoSoloStat(recordSolo.getMode(), recordSolo.getMap(), recordSolo.getBrawlerName(), Long.valueOf(recordSolo.getResultRank()));
+//			}
 		}
 		Record.setRelation(myRecord, groupRecords);
 		recordRepository.save(myRecord);
@@ -385,7 +385,6 @@ public class RecordService {
 		notSavedMaps.stream().forEach(findMapDtos -> gameMapRepositry.saveGameMap(findMapDtos.gameMap));
 				
 		return notSavedMaps.size();
-		
 	}
 	
 	public void deleteOldRecords(String tag, Long offset) {
@@ -404,7 +403,7 @@ public class RecordService {
 
 	
 
-	public void saveTrioStat(String mode, String map, String brawlerName, String result) {
+	public void saveTrioStat(String mode, String map, String brawlerName, String result, Integer cnt) {
 		Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerNameAndResult(mode, map, brawlerName, result);
 		if(statistics == null) {
 			statistics = new Statistics();
@@ -412,13 +411,14 @@ public class RecordService {
 			statistics.setMap(map);
 			statistics.setBrawlerName(brawlerName);
 			statistics.setResult(result);
-			statistics.setCnt(1L);
+			statistics.setCnt(Long.valueOf(cnt));
 			statisticsRepository.save(statistics);
 		}else {
-			statistics.setCnt(statistics.getCnt() + 1);
+			statistics.setCnt(statistics.getCnt() + cnt);
 		}
 	}
-	public void saveDuoSoloStat(String mode, String map, String brawlerName, Long rank) {
+	public void saveDuoSoloStat(String mode, String map, String brawlerName, Long rank, Integer cnt) {
+		try {
 		Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerName(mode, map, brawlerName);
 		if(statistics == null) {
 			statistics = new Statistics();
@@ -426,12 +426,50 @@ public class RecordService {
 			statistics.setMap(map);
 			statistics.setBrawlerName(brawlerName);
 			statistics.setRankSum(rank);
-			statistics.setCnt(1L);
+			statistics.setCnt(Long.valueOf(cnt));
 			statisticsRepository.save(statistics);
 		}else {
-			statistics.setCnt(statistics.getCnt() + 1);
+			statistics.setCnt(statistics.getCnt() + cnt);
 			statistics.setRankSum(statistics.getRankSum() + rank);
 		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public void saveStats(String start, String end) {
+		// TODO Auto-generated method stub
+		List<GameMapDto> modes = recordRepository.getDistinctModes();
+		for(GameMapDto gameMode : modes) {			
+			saveDistinctGameMap(gameMode.getMode());
+		}
+		List<GameMapDto> maps = gameMapRepositry.getGameMaps(null);
+		maps.stream().forEach(map ->{
+			String mode = map.getMode();
+			RecordSearch recordSearch = new RecordSearch();
+			recordSearch.setMode(mode);
+			recordSearch.setMap(map.getName());
+			recordSearch.setStart(start);
+			recordSearch.setEnd(end);
+			recordSearch.setTrophyRange("highRank");
+			List<RecordResultDto> stats;
+			if(CommonUtil.isTrioMode(map.getMode())) {
+				stats = recordRepository.findByMap(recordSearch);
+				for(RecordResultDto stat : stats) {
+					saveTrioStat(mode, map.getName(), stat.getBrawlerName(),  stat.getResult(), stat.getCnt().intValue());
+				};
+			}else {
+				stats = recordRepository.findSoloDuoByMap(recordSearch);
+				for(RecordResultDto stat : stats) {
+					saveDuoSoloStat(mode, map.getName(), stat.getBrawlerName(), Long.valueOf(stat.getRankSum()), stat.getCnt().intValue());
+				}
+			}
+			
+		});
+		
+		
+		
 	}
 
 }
