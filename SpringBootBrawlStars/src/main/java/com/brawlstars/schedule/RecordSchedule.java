@@ -33,7 +33,7 @@ public class RecordSchedule {
 	Logger logger = LoggerFactory.getLogger(RecordSchedule.class);
 	// one hour
 	@Scheduled(fixedDelay = 3600000
-	 //,initialDelay = 360000 // 10 minutes
+	 ,initialDelay = 360000 // 10 minutes
 	)
 	public void saveRecordsSchedule() {
 		saveRecords();
@@ -76,7 +76,7 @@ public class RecordSchedule {
 	// This lefts recent 50 records,and delete old records.
 	
 	@Scheduled(fixedDelay = 8640000 // 1 day
-			 ,initialDelay = 1 // 10 minutes
+			 ,initialDelay = 60000 // 10 minutes
 			)
 	public void deleteRecords() {
 		Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
