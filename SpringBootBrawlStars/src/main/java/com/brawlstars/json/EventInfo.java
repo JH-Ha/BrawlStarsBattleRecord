@@ -2,7 +2,7 @@ package com.brawlstars.json;
 
 import java.util.List;
 
-import com.brawlstars.repository.RecordResultDto;
+import com.brawlstars.domain.Statistics;
 
 import lombok.Data;
 
@@ -13,5 +13,5 @@ public class EventInfo {
 	Event event;
 	
 	//for frontEnd
-	List<RecordResultDto> statistics;
+	List<Statistics> statistics;
 }
