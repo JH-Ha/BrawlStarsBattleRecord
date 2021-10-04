@@ -32,6 +32,7 @@ import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.repository.RecordDto;
 import com.brawlstars.repository.RecordRepository;
 import com.brawlstars.repository.RecordResultDto;
+import com.brawlstars.util.CommonUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -58,33 +59,7 @@ public class RecordService {
 		return result;
 	}
 
-	public boolean isTrioMode(String mode) {
-		return "gemGrab".equals(mode) || "brawlBall".equals(mode) || "heist".equals(mode) || "bounty".equals(mode)
-				|| "siege".equals(mode) || "hotZone".equals(mode) || "knockout".equals(mode) || "basketBrawl".equals(mode)
-				|| "volleyBrawl".equals(mode) || "holdTheTrophy".equals(mode) || "trophyThieves".equals(mode);
-	}
-
-	public boolean isDuo(String mode) {
-		// TODO Auto-generated method stub
-		return "duoShowdown".equals(mode);
-	}
-	public boolean isAll(String mode) {
-		return "ALL".equals(mode);
-	}
-	public boolean isBigGame(String mode) {
-		if ("bigGame".equals(mode)) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean isSolo(String mode) {
-		if ("soloShowdown".equals(mode)) {
-			return true;
-		}
-		return false;
-	}
-
+	
 	public Date makeBattleTimeDate(String battleTime) {
 		// TODO Auto-generated method stub
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss.SSS'Z'");
@@ -315,11 +290,11 @@ public class RecordService {
 	public void saveBattleLog(List<Item> items, String tag) {
 		items.stream().forEach(item -> {
 			System.out.println(item.getBattleTime());
-			if (isTrioMode(item.getEvent().getMode())) {
+			if (CommonUtil.isTrioMode(item.getEvent().getMode())) {
 				saveTrio(tag, item);
-			} else if (isDuo(item.getEvent().getMode())) {
+			} else if (CommonUtil.isDuo(item.getEvent().getMode())) {
 				saveDuo(tag, item);
-			} else if (isSolo(item.getEvent().getMode())) {
+			} else if (CommonUtil.isSolo(item.getEvent().getMode())) {
 				saveSolo(tag, item);
 			}
 		});
@@ -351,11 +326,11 @@ public class RecordService {
 	public List<RecordResultDto> findByMap(RecordSearch recordSearch) {
 		String mode = recordSearch.getMode();
 		// TODO Auto-generated method stub
-		if(isTrioMode(mode)) {
+		if(CommonUtil.isTrioMode(mode)) {
 			return recordRepository.findByMap(recordSearch);
-		}else if(isDuo(mode) || isSolo(mode)) {
+		}else if(CommonUtil.isDuo(mode) || CommonUtil.isSolo(mode)) {
 			return recordRepository.findSoloDuoByMap(recordSearch);
-		}else if(isAll(mode)) {
+		}else if(CommonUtil.isAll(mode)) {
 			return recordRepository.findAllResult(recordSearch);
 		}
 		

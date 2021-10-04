@@ -13,6 +13,7 @@ import com.brawlstars.json.Item;
 import com.brawlstars.repository.MemberDto;
 import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.service.RecordService;
+import com.brawlstars.util.CommonUtil;
 
 @Component
 public class RecordSchedule {
@@ -57,11 +58,11 @@ public class RecordSchedule {
 			items.stream().forEach(item -> {
 				String mode = item.getBattle().getMode();
 				System.out.println(item.getBattleTime());
-				if (recordService.isTrioMode(mode)) {
+				if (CommonUtil.isTrioMode(mode)) {
 					recordService.saveTrio(tag, item);
-				} else if (recordService.isDuo(mode)) {
+				} else if (CommonUtil.isDuo(mode)) {
 					recordService.saveDuo(tag, item);
-				} else if (recordService.isSolo(mode)) {
+				} else if (CommonUtil.isSolo(mode)) {
 					recordService.saveSolo(tag, item);
 				}
 			});
