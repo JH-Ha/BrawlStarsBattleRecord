@@ -12,4 +12,7 @@ public class GameMapDto {
 		this.name = name;
 		this.mode = mode;
 	}
+	public GameMapDto(String mode) {
+		this.mode = mode;
+	}
 }

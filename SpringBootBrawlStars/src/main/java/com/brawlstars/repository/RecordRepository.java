@@ -122,7 +122,12 @@ public class RecordRepository {
 		if(StringUtils.hasText(recordSearch.getTag())) {
 			builder.and(qRecord.tag.eq(recordSearch.getTag()));
 		}
-		
+		if(StringUtils.hasText(recordSearch.getStart())) {
+			builder.and(qRecord.battleTime.gt(recordSearch.getStart()));
+		}
+		if(StringUtils.hasText(recordSearch.getEnd())) {
+			builder.and(qRecord.battleTime.lt(recordSearch.getEnd()));
+		}
 		List<RecordResultDto> records = 
 				queryFactory.select(
 						Projections.constructor(RecordResultDto.class
@@ -157,6 +162,18 @@ public class RecordRepository {
 				.fetch();
 		return gameMapDtos;
 	}
+	
+	public List<GameMapDto> getDistinctModes(){
+		QRecord qRecord = QRecord.record;
+		
+		List<GameMapDto> gameMapDtos = 
+				queryFactory.select(Projections.constructor(GameMapDto.class
+						, qRecord.mode))
+				.from(qRecord)
+				.distinct()
+				.fetch();
+		return gameMapDtos;
+	}
 
 	public List<RecordResultDto> findSoloDuoByMap(RecordSearch recordSearch) {
 		// TODO Auto-generated method stub
@@ -185,6 +202,12 @@ public class RecordRepository {
 				break;
 			}
 		}
+		if(StringUtils.hasText(recordSearch.getStart())) {
+			builder.and(qRecord.battleTime.gt(recordSearch.getStart()));
+		}
+		if(StringUtils.hasText(recordSearch.getEnd())) {
+			builder.and(qRecord.battleTime.lt(recordSearch.getEnd()));
+		}
 		
 		if(StringUtils.hasText(recordSearch.getTag())) {
 			builder.and(qRecord.tag.eq(recordSearch.getTag()));
@@ -194,7 +217,7 @@ public class RecordRepository {
 				queryFactory.select(
 						Projections.constructor(RecordResultDto.class
 								, qRecord.brawlerName
-								, qRecord.resultRank.avg()
+								, qRecord.resultRank.sum()
 								, qRecord.count()
 				))
 				.from(qRecord)
