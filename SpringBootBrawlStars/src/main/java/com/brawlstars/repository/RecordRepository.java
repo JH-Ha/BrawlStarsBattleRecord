@@ -233,4 +233,28 @@ public class RecordRepository {
 		QRecord qRecord = QRecord.record;
 		queryFactory.delete(qRecord).where(qRecord.battleTime.lt("20210513"));
 	}
+
+	public void deleteOldRecords(String tag, Long offset) {
+		// TODO Auto-generated method stub
+		QRecord qRecord = QRecord.record;
+		
+		List<Record> records = queryFactory.select(qRecord)
+					.from(qRecord)
+					.where(qRecord.tag.eq(tag))
+					.orderBy(qRecord.battleTime.desc())
+					.offset(offset)
+					.fetch();
+		
+//		queryFactory.delete(qRecord)
+//					.where(qRecord.parent.id.in(ids))
+//					.execute();
+//		Long cnt = queryFactory.delete(qRecord)
+//					.where(qRecord.id.in(ids))
+//					.execute();
+		for(Record record : records) {
+			em.remove(record);
+		}
+		
+	}
+	
 }

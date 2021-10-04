@@ -2,6 +2,8 @@ package com.brawlstars.schedule;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,9 +28,10 @@ public class RecordSchedule {
 	@Autowired
 	MemberRepository memberRepository;
 
+	Logger logger = LoggerFactory.getLogger(RecordSchedule.class);
 	// one hour
 	@Scheduled(fixedDelay = 3600000
-	 ,initialDelay = 360000 // 10 minutes
+	 //,initialDelay = 360000 // 10 minutes
 	)
 	public void saveRecordsSchedule() {
 		saveRecords();
@@ -39,12 +42,7 @@ public class RecordSchedule {
 		Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
 		members.getContent().stream().parallel().forEach(member -> {
 			String tag = member.getTag();
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			logger.info("save member : " + member.getName() + " tag : " + tag);
 			saveRecord(tag);
 		});
 
@@ -57,7 +55,6 @@ public class RecordSchedule {
 			items = brawlStarsAPI.getItems(tag);
 			items.stream().forEach(item -> {
 				String mode = item.getBattle().getMode();
-				System.out.println(item.getBattleTime());
 				if (CommonUtil.isTrioMode(mode)) {
 					recordService.saveTrio(tag, item);
 				} else if (CommonUtil.isDuo(mode)) {
@@ -72,11 +69,26 @@ public class RecordSchedule {
 		}
 
 	}
-
+	
+	//
+	// This lefts recent 50 records,and delete old records.
+	
+	@Scheduled(fixedDelay = 8640000 // 1 day
+			 ,initialDelay = 1 // 10 minutes
+			)
 	public void deleteRecords() {
-		// TODO Auto-generated method stub
-		recordService.deleteRecords();
+		Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
+		members.getContent().stream().forEach(member -> {
+			String tag = member.getTag();
+			logger.debug("delete member : " + tag );
+			recordService.deleteOldRecords(tag, 50L);
+		});
 	}
+//
+//	public void deleteRecords() {
+//		// TODO Auto-generated method stub
+//		recordService.deleteRecords();
+//	}
 	
 
 }
