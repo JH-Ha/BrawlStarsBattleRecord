@@ -56,7 +56,8 @@ class Map extends Component {
         this.setState({
             loading: true,
         })
-        getData(`/record/result?${searchParams}`)
+        getData(`/api/statistics/mode/${mode}/map/${mapName}`)
+            // getData(`/record/result?${searchParams}`)
             .then(response => {
                 console.log(response);
                 const data = response.data;
@@ -81,7 +82,7 @@ class Map extends Component {
                     } else {
                         records[e.brawlerName] = {
                             brawlerName: e.brawlerName,
-                            averageRank: e.averageRank,
+                            averageRank: e.rankSum / e.cnt,
                             cnt: e.cnt,
                         }
                     }

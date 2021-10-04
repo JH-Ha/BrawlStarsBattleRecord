@@ -96,7 +96,7 @@ function calWinRate(data, mode) {
         } else {
             records[e.brawlerName] = {
                 brawlerName: e.brawlerName,
-                averageRank: e.averageRank,
+                averageRank: e.rankSum / e.cnt,
                 cnt: e.cnt,
             }
         }

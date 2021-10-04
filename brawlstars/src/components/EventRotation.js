@@ -108,7 +108,7 @@ const EventRotation = () => {
                         <div className="topBar">
                             <div>{t('newEventMsg')}</div>
                             <div>:&nbsp;</div>
-                            <DisplayTime endTime={ele.endTime}></DisplayTime>
+                            <DisplayTime endTime={ele.startTime}></DisplayTime>
                         </div>
                         <div className={`${ele.event.mode} info ${ele.event.isPlus ? 'plus' : ''}`}
                             onClick={() => onClickEvent(ele.event.map, ele.event.mode)}>
