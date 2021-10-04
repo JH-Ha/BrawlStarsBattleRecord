@@ -14,6 +14,7 @@ class Statistics extends Component {
         recordArr: [],
         sumTotalGameNum: 0,
         loading: false,
+        changed: 0,
     }
     getRecordResult(searchParams) {
         let records = {};
@@ -47,7 +48,7 @@ class Statistics extends Component {
                     } else {
                         records[e.brawlerName] = {
                             brawlerName: e.brawlerName,
-                            averageRank: e.averageRank,
+                            averageRank: e.rankSum / e.cnt,
                             cnt: e.cnt,
                         }
                     }
@@ -106,7 +107,8 @@ class Statistics extends Component {
                 console.log(recordArr);
                 this.setState({
                     recordArr: recordArr,
-                    sumTotalGameNum: sumTotalGameNum
+                    sumTotalGameNum: sumTotalGameNum,
+                    changed: this.state.changed + 1,
                 })
             }).catch(error => {
                 console.log(error);
@@ -145,7 +147,7 @@ class Statistics extends Component {
                 <div className="modeListContainer">
                     <ModeList key={this.state.mode} mode={this.state.mode} changeMode={this.changeMode} />
                 </div>
-                <RecordResult key={this.state.recordArr} recordArr={this.state.recordArr} sumTotalGameNum={this.state.sumTotalGameNum} mode={this.state.mode}
+                <RecordResult key={this.state.changed} recordArr={this.state.recordArr} sumTotalGameNum={this.state.sumTotalGameNum} mode={this.state.mode}
                     isPersonal={true} />
             </div>
             <AdSense.Google
