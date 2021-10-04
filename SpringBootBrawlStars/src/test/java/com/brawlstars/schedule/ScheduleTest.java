@@ -30,6 +30,7 @@ public class ScheduleTest {
 	@Autowired
 	RecordService recordService;
 	
+	
 	@BeforeEach
 	public void init() throws JsonMappingException, JsonProcessingException {
 		String tag = "#9QU209UYC";
@@ -54,7 +55,7 @@ public class ScheduleTest {
 	}
 	
 	@Test
-	public void updateUser() {
-		
+	public void update() {
+		recordSchedule.updateStatistics();
 	}
 }

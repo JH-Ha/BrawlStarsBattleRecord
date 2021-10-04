@@ -11,4 +11,6 @@ public class RecordSearch {
 	private String mode;
 	private String brawlerName;
 	private String trophyRange;
+	private String start;
+	private String end;
 }
