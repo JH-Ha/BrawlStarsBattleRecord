@@ -1,7 +1,5 @@
 package com.brawlstars.schedule;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -88,16 +86,19 @@ public class RecordSchedule {
 	}
 	
 	//every hour
-	@Scheduled(cron = "0 15 * * * *")
+	//@Scheduled(cron = "0 15 * * * *")
+	@Scheduled(fixedDelay = 1800000) // 30minutes
 	public void updateStatistics() {
-		ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC"));
-		ZonedDateTime oneHourAgo = now.minusSeconds(3600);
-		String nowStr = now.toString().replace(":","").replace("-","");
-		nowStr = nowStr.substring(0,nowStr.indexOf("."));
-		String oneHourAgoStr = oneHourAgo.toString().replace(":","").replace("-","");
-		oneHourAgoStr = oneHourAgoStr.substring(0, oneHourAgoStr.indexOf("."));
-		System.out.println(nowStr + " " + oneHourAgoStr);
-		recordService.saveStats(oneHourAgoStr, nowStr);
+		/*
+		 * ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC")); ZonedDateTime
+		 * oneHourAgo = now.minusSeconds(3600); String nowStr =
+		 * now.toString().replace(":","").replace("-",""); nowStr =
+		 * nowStr.substring(0,nowStr.indexOf(".")); String oneHourAgoStr =
+		 * oneHourAgo.toString().replace(":","").replace("-",""); oneHourAgoStr =
+		 * oneHourAgoStr.substring(0, oneHourAgoStr.indexOf("."));
+		 * System.out.println(nowStr + " " + oneHourAgoStr);
+		 */
+		recordService.saveStats();
 	}
 //
 //	public void deleteRecords() {

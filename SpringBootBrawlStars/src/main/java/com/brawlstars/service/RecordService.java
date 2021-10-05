@@ -162,6 +162,7 @@ public class RecordService {
 				else
 					result = getOppositeResult(item.getBattle().getResult());
 
+				recordTrio.setStatUpdated(false);
 				recordTrio.setResult(result);
 				groupRecords.add(recordTrio);
 				// recordRepository.save(recordTrio);
@@ -230,7 +231,7 @@ public class RecordService {
 					recordDuo.setTrophyChange(item.getBattle().getTrophyChange());
 					myRecord = recordDuo;
 				}
-				
+				recordDuo.setStatUpdated(false);
 				groupRecords.add(recordDuo);
 				//recordRepository.save(recordDuo);
 				
@@ -263,6 +264,7 @@ public class RecordService {
 			if(tag.equals(player.getTag())) {
 				myRecord = recordSolo;
 			}
+			recordSolo.setStatUpdated(false);
 			groupRecords.add(recordSolo);
 			//recordRepository.save(recordSolo);
 			
@@ -438,7 +440,7 @@ public class RecordService {
 	}
 
 
-	public void saveStats(String start, String end) {
+	public void saveStats() {
 		// TODO Auto-generated method stub
 		List<GameMapDto> modes = recordRepository.getDistinctModes();
 		for(GameMapDto gameMode : modes) {			
@@ -450,26 +452,23 @@ public class RecordService {
 			RecordSearch recordSearch = new RecordSearch();
 			recordSearch.setMode(mode);
 			recordSearch.setMap(map.getName());
-			recordSearch.setStart(start);
-			recordSearch.setEnd(end);
 			recordSearch.setTrophyRange("highRank");
+			recordSearch.setStatUpdated(false);
 			List<RecordResultDto> stats;
 			if(CommonUtil.isTrioMode(map.getMode())) {
 				stats = recordRepository.findByMap(recordSearch);
+				recordRepository.updateStatUpdated(recordSearch);
 				for(RecordResultDto stat : stats) {
 					saveTrioStat(mode, map.getName(), stat.getBrawlerName(),  stat.getResult(), stat.getCnt().intValue());
 				};
 			}else {
 				stats = recordRepository.findSoloDuoByMap(recordSearch);
+				recordRepository.updateStatUpdated(recordSearch);
 				for(RecordResultDto stat : stats) {
 					saveDuoSoloStat(mode, map.getName(), stat.getBrawlerName(), Long.valueOf(stat.getRankSum()), stat.getCnt().intValue());
 				}
 			}
-			
 		});
-		
-		
-		
 	}
 
 }

@@ -128,6 +128,9 @@ public class RecordRepository {
 		if(StringUtils.hasText(recordSearch.getEnd())) {
 			builder.and(qRecord.battleTime.lt(recordSearch.getEnd()));
 		}
+		if(recordSearch.getStatUpdated() != null) {
+			builder.and(qRecord.statUpdated.eq(recordSearch.getStatUpdated()));
+		}
 		List<RecordResultDto> records = 
 				queryFactory.select(
 						Projections.constructor(RecordResultDto.class
@@ -212,6 +215,9 @@ public class RecordRepository {
 		if(StringUtils.hasText(recordSearch.getTag())) {
 			builder.and(qRecord.tag.eq(recordSearch.getTag()));
 		}
+		if(recordSearch.getStatUpdated() != null) {
+			builder.and(qRecord.statUpdated.eq(recordSearch.getStatUpdated()));
+		}
 		
 		List<RecordResultDto> records = 
 				queryFactory.select(
@@ -279,5 +285,15 @@ public class RecordRepository {
 		}
 		
 	}
-	
+
+	public Long updateStatUpdated(RecordSearch recordSearch) {
+		QRecord qRecord = QRecord.record;
+		Long updatedStatCnt = queryFactory.update(qRecord)
+					.where(qRecord.map.eq(recordSearch.getMap())
+							.and(qRecord.mode.eq(recordSearch.getMode())
+							.and(qRecord.statUpdated.eq(false))))
+					.set(qRecord.statUpdated, true)
+					.execute();
+		return updatedStatCnt;
+	}
 }

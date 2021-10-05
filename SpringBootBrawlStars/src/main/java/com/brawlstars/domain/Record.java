@@ -18,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -70,6 +72,9 @@ public class Record {
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	private List<Record> groupRecords = new ArrayList<>();
 
+	@ColumnDefault("false")
+	private Boolean statUpdated;
+	
 	public static void setRelation(Record parent, List<Record> groupRecords) {
 		parent.setGroupRecords(groupRecords);
 		groupRecords.stream().forEach(gr -> {
