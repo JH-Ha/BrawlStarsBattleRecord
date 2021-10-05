@@ -13,4 +13,5 @@ public class RecordSearch {
 	private String trophyRange;
 	private String start;
 	private String end;
+	private Boolean statUpdated;
 }
