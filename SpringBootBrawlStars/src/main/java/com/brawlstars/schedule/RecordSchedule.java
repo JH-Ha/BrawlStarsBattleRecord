@@ -29,8 +29,8 @@ public class RecordSchedule {
 	MemberRepository memberRepository;
 
 	Logger logger = LoggerFactory.getLogger(RecordSchedule.class);
-	// one hour
-	@Scheduled(fixedDelay = 3600000
+	// 30 minutes
+	@Scheduled(fixedDelay = 1800000
 	 ,initialDelay = 360000 // 10 minutes
 	)
 	public void saveRecordsSchedule() {
