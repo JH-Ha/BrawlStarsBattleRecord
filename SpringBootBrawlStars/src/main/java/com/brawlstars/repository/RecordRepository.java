@@ -115,7 +115,8 @@ public class RecordRepository {
 				builder.and(qRecord.trophies.lt(500));
 				break;
 			case "highRank":
-				builder.and(qRecord.trophies.gt(500));
+				builder.and(qRecord.trophies.gt(500)
+						.or(qRecord.type.eq("challenge")));
 				break;
 			}
 		}
@@ -201,7 +202,8 @@ public class RecordRepository {
 				builder.and(qRecord.trophies.lt(500));
 				break;
 			case "highRank":
-				builder.and(qRecord.trophies.gt(500));
+				builder.and(qRecord.trophies.gt(500)
+						.or(qRecord.type.eq("challenge")));
 				break;
 			}
 		}
