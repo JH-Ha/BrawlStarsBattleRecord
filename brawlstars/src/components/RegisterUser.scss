@@ -1,9 +1,61 @@
 .registerUser{
+    
+    width: 100%;
+    height: 100%;
+    .inputContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .sharpSign{
+            font-size: 20px;
+            margin-right: 5px;
+        }
+        input{
+            padding-left: 5px;
+            width : 200px;
+            margin-right : 10px;
+        }
+        .btn{
+            height : 40px;
+        }
+    }
+    .found{
+        padding : 10px;
+        background-color: #0578d0;
+        border-radius: 10px;
+        width: 500px;
+        margin : auto;
+        margin-top : 10px;
+        position: relative;
+
+        .name{
+            width: 100px;
+            padding : 5px;
+            border-radius: 5px;
+            background-color: #343c4f;
+            color : white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin : auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .registerBtn{
+            position: absolute;
+            right : 30px;
+        }
+        .message {
+            color : white;
+        }
+    }
+
     .component{
         flex-basis: 150px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        
         .icon {
             width : 30px;
             position : relative;
@@ -15,6 +67,10 @@
                 top: 0px;
             }
         }
+        .title{
+            margin-bottom: 5px;
+            color: white;
+        }
         .content{
             display: flex;
             justify-content: center;
@@ -25,6 +81,8 @@
             font-weight: bold;
             width: 100px;
             border-radius: 4px;
+            margin-bottom: 10px;
+            
         }
     }
     .rowContainer{
@@ -34,6 +92,14 @@
         .row{
             display: flex;
             justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+    }
+
+    
+    @media only screen and (max-width: 600px) {
+        .found {
             width: 100%;
         }
     }
