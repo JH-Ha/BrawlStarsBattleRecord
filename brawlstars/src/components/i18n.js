@@ -46,6 +46,14 @@ contact : cubeprince@gmail.com`,
             "hours": "h",
             "minutes": "m",
 
+            // search user
+            "highestTrophies": "Highest Trophies",
+            "trophies": "Trophies",
+            "expLevel": "Exp Level",
+            "3vs3Victories": "3vs3 Victories",
+            "soloVictories": "Solo Victories",
+            "duoVictories": "Duo Victories",
+
         }
     },
     ko: {
@@ -146,6 +154,8 @@ contact : cubeprince@gmail.com`,
             "Rustic Arcade": "Rustic Arcade",
             "Arène en folie": "Arène en folie",
             "Red Herring": "Red Herring",
+            "Gem Fort": "보석 요새",
+
             // heist
             "Kaboom Canyon": "우당탕 협곡",
             "Safe Zone": "안전지대",
@@ -216,6 +226,14 @@ contact : cubeprince@gmail.com`,
             "days": "일",
             "hours": "시간",
             "minutes": "분",
+
+            // search user
+            "highestTrophies": "최대 트로피",
+            "trophies": "현재 트로피",
+            "expLevel": "경험치 레벨",
+            "3vs3Victories": "3대3 승리",
+            "soloVictories": "솔로 승리",
+            "duoVictories": "듀오 승리",
         }
     },
     ja: {
@@ -315,6 +333,8 @@ contact : cubeprince@gmail.com`,
             "Rustic Arcade": "Rustic Arcade",
             "Arène en folie": "Arène en folie",
             "Red Herring": "Red Herring",
+            "Gem Fort": "エメラルドの要塞",
+
             // heist
             "Kaboom Canyon": "どんぱち谷",
             "Safe Zone": "安全地帯",
@@ -388,6 +408,14 @@ contact : cubeprince@gmail.com`,
             "days": "日",
             "hours": "時間",
             "minutes": "分",
+
+            // search user
+            "highestTrophies": "最大トロフィー数",
+            "trophies": "現在トロフィー数",
+            "expLevel": "レベル",
+            "3vs3Victories": "3対3勝利数",
+            "soloVictories": "ソロ勝利数",
+            "duoVictories": "デュオ勝利数",
         }
     }
 };

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://brawlstat.xyz";
+const baseUrl = "https://brawlstat.xyz";
 //const baseUrl = "http://localhost:8080";
 
 let getData = (paramUrl) => {
@@ -8,5 +8,9 @@ let getData = (paramUrl) => {
 
     return axios.get(url);
 }
+let postData = (paramUrl, data) => {
+    let url = baseUrl + paramUrl;
 
-export { getData };
+    return axios.post(url, data);
+}
+export { getData, postData };
