@@ -43,4 +43,19 @@ label {
 .btn{
   outline : none;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary{
+  background-color: #003072;
+  color: white;
+  border : none;
+  padding : 10px;
+  font-size: 16px;
+}
+.btn-primary:hover{
+  background-color: #0046a8;
+}
+.btn-primary:active{
+  background-color: #002150;
 }
