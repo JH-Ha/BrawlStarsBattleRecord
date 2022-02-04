@@ -1,6 +1,16 @@
 .userList{
     .inputContainer{
+        justify-content: center;
+        align-items: center;
+        display: flex;
         margin-bottom:  10px;
+        input{
+            width: 200px;
+            margin-right : 10px;
+        }
+        .btn{
+            height: 40px;
+        }
     }
     .cursor{
         cursor : pointer;

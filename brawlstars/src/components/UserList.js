@@ -131,9 +131,9 @@ class UserList extends Component {
           : ""}
         <h3>{t('userListGuide')}</h3>
         {/* TODO : implement registration */}
-        <h3>{t('registerGuide')} <button onClick={this.goRegisterPage} className="btn btn-register">{t('registration')}</button></h3>
+        <h3>{t('registerGuide')} <button onClick={this.goRegisterPage} className="btn btn-primary">{t('registration')}</button></h3>
         <div className="inputContainer">
-          <input
+          <input type="text"
             placeholder="search user nickname"
             onChange={this.searchInputChange}
             value={this.state.nickname}
