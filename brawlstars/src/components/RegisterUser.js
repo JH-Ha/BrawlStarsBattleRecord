@@ -9,7 +9,7 @@ class RegisterUser extends Component {
         tag: "",
         searchResult: null,
         loading: false,
-        registerResult: false,
+        registerResult: null,
     }
     changeInput = (e) => {
         console.log(e.target.value);
@@ -63,23 +63,25 @@ class RegisterUser extends Component {
             <h3>
                 Search your tag
             </h3>
-            <span>#</span>
-            <input placeHolder="enter your tag" value={this.state.tag}
-                onChange={this.changeInput}
-            ></input>
-            <button className="btn" onClick={this.searchTag}>search</button>
-            <div>
-
-
+            <div className='inputContainer'>
+                <span className='sharpSign'>#</span>
+                <input type="text" placeHolder="enter your tag" value={this.state.tag}
+                    onChange={this.changeInput}
+                ></input>
+                <button className="btn btn-primary" onClick={this.searchTag}>search</button>
             </div>
             {this.state.searchResult?.found === false ? <div> not found </div>
                 : <div>
                 </div>
             }
             {this.state.searchResult?.found ?
-                <div>
-                    <div className='name'>{playerInfo.name}</div>
+                <div className='found'>
+
                     <div className="rowContainer">
+                        <div className='row'>
+                            <div className='name'>{playerInfo.name}</div>
+                            <button className="registerBtn btn btn-primary" onClick={this.register}>register</button>
+                        </div>
                         <div className="row">
                             <div className="component">
                                 <div className='title'>{t('highestTrophies')}</div>
@@ -120,9 +122,8 @@ class RegisterUser extends Component {
                             </div>
                         </div>
                         {/* <div>registration user tag will be updated</div> */}
-                        <button className="btn btn-primary" onClick={this.register}>register</button>
-                        {this.state.registerResult == false ? <div> already registered user</div> : <div></div>}
-                        {this.state.registerResult == true ? <div> completly registered </div> : <div></div>}
+                        {this.state.registerResult && <div className='message'> completely registered </div>}
+                        {this.state.registerResult === false && <div className='message'> already registered user </div>}
                     </div>
 
                 </div>
