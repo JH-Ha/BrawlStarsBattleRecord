@@ -1,15 +1,16 @@
 spring:
   datasource:
     #url : jdbc:h2:mem:test
-    url: jdbc:mysql://database-brawl.chsxiosrbq1b.ap-northeast-2.rds.amazonaws.com:3306/sys
+    url: jdbc:mysql://brawlstat.c3snsgqvsofs.ap-northeast-2.rds.amazonaws.com:3306/sys
     username: admin
-    password: 6s8GJggs8q9Ol3biXshz
+    password: 6s8GJggs8q9Ol3biXsha
     driver-class-name: com.mysql.cj.jdbc.Driver
     #url: jdbc:h2:tcp://localhost/~/jpashop
     #username: sa
     #password:
     #driver-class-name: org.h2.Driver
   jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update 
     properties:

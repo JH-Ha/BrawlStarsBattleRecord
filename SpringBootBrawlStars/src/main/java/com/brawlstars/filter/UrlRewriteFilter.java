@@ -19,17 +19,18 @@ public class UrlRewriteFilter implements Filter{
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		String requestURL = req.getServerName();
-		// for local test
-		if(requestURL.contains("localhost")) {
-			chain.doFilter(request, response);
-		}
-		//ip access or 8080 port access go to brawlstat.xyz:80 
-		else if(!requestURL.contains("brawlstat.xyz") || req.getServerPort() == 8080) {
-			res.sendRedirect("http://brawlstat.xyz" + req.getRequestURI());
-		}else {
-			chain.doFilter(req, res);
-		}		
+//		String requestURL = req.getServerName();
+//		// for local test
+//		if(requestURL.contains("localhost")) {
+//			chain.doFilter(request, response);
+//		}
+//		//ip access or 8080 port access go to brawlstat.xyz:80 
+//		else if(!requestURL.contains("brawlstat.xyz") || req.getServerPort() == 8080) {
+//			res.sendRedirect("http://brawlstat.xyz" + req.getRequestURI());
+//		}else {
+//			chain.doFilter(req, res);
+//		}
+		chain.doFilter(req, res);
 	}
 
 }
