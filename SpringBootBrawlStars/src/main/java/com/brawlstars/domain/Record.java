@@ -36,7 +36,10 @@ public class Record {
 	@GeneratedValue
 	@Column(name = "record_id")
 	private Long id;
+	
+	@Column(length = 20)
 	private String tag;
+	@Column(length = 25)
 	private String battleTime;
 	@Column(length = 50)
 	private String brawlerName;
@@ -44,15 +47,22 @@ public class Record {
 	private Integer power;
 	private Integer trophies;
 	private Integer trophyChange;
+	
+	@Column(length = 50)
 	private String map;
+	
+	@Column(length = 25)
 	private String eventId;
 	
+	@Column(length = 100)
 	private String playerName;
 
 	// @Column(name = "group_key", insertable = false, updatable = false)
 	// private String groupKey;
 	@Column(length = 50)
 	private String mode;
+	
+	@Column(length = 25)
 	private String type;
 
 	//Trio
