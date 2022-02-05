@@ -9,6 +9,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { withTranslation } from 'react-i18next';
 import AdSense from 'react-adsense';
 import Loading from './Loading';
+import { ReactTitle } from 'react-meta-tags';
 
 class Map extends Component {
     state = {
@@ -159,11 +160,12 @@ class Map extends Component {
         const { t } = this.props;
 
         return <><div className="mapClass">
+            <ReactTitle title={`${t(this.state.mapName)} ${t("Win Rate")} ${t("Statistics")}`} />
             {this.state.loading ?
                 <Loading></Loading> :
                 ""
             }
-            <h3>{t("Statistics")}</h3>
+            <h3>{t("Win Rate")} {t("Statistics")}</h3>
             <div className={`mapNameContainer`} onClick={this.showMapImg}>
                 <span className="mapName">{t(this.state.mapName)}</span>
                 {this.state.isMapShown ?

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from "react-router";
 import "./EventRotation.scss";
 import DisplayTime from './DisplayTime';
+import { ReactTitle } from 'react-meta-tags';
 
 const EventRotation = () => {
     //const [events, setEvents] = useState([]);
@@ -62,6 +63,7 @@ const EventRotation = () => {
 
     return (
         <div className="eventRotation">
+            <ReactTitle title={`Brawl Stat Event Rotation`} />
             <div className="title">
                 Today's Events
             </div>

@@ -12,6 +12,7 @@ import { withTranslation } from 'react-i18next';
 import { isTrio } from './BaseFunctions';
 import AdSense from 'react-adsense';
 import Loading from "./Loading";
+import { ReactTitle } from 'react-meta-tags';
 
 // const PlayList = ({location}) =>{
 //     const query = qs.parse(location.search,{
@@ -193,6 +194,7 @@ class PlayList extends Component {
     const { t } = this.props;
     return (
       <div>
+        <ReactTitle title={`${t('battleLogTitle')} ${this.state.tag} ${this.state.name}`} />
         {this.state.loading ?
           <Loading></Loading>
           : ""}
