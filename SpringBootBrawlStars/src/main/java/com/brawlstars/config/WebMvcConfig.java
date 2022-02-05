@@ -47,6 +47,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:8081", "http://www.brawlstat.xyz", "http://www.brawlstat.xyz:8080",
-                		"https://www.brawlstat.xyz", "https://brawlstat.xyz");
+                		"https://www.brawlstat.xyz", "https://brawlstat.xyz",
+                		"https://brawlmeta.com", "https://www.brawlmeta.com");
     }
 }
