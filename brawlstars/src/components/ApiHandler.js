@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://brawlstat.xyz";
+const baseUrl = "https://brawlmeta.xyz";
 //const baseUrl = "http://localhost:8080";
 
 let getData = (paramUrl) => {
