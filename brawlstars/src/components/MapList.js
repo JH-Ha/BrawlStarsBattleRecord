@@ -6,6 +6,7 @@ import { getData } from './ApiHandler';
 import { withTranslation } from 'react-i18next';
 import AdSense from 'react-adsense';
 import Loading from './Loading';
+import { ReactTitle } from 'react-meta-tags';
 
 class MapList extends Component {
     state = {
@@ -71,6 +72,7 @@ class MapList extends Component {
     render() {
         const { t } = this.props;
         return <><div className="mapList">
+            <ReactTitle title={`Brawl Stat Maps`} />
             {this.state.loading ?
                 <Loading></Loading>
                 : ""}
