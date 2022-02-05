@@ -7,6 +7,7 @@ import { getData } from './ApiHandler';
 import { withTranslation } from 'react-i18next';
 import AdSense from 'react-adsense';
 import Loading from "./Loading";
+import { ReactTitle } from 'react-meta-tags';
 
 
 const tableStyle = {
@@ -126,6 +127,7 @@ class UserList extends Component {
 
     return (
       <div className="userList">
+        <ReactTitle title={`User List`} />
         {this.state.loading ?
           <Loading></Loading>
           : ""}
