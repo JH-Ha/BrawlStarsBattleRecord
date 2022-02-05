@@ -14,7 +14,7 @@ class Home extends Component {
         }}
         className="home"
       >
-        <ReactTitle title={`Brawl Stat Info`} />
+        <ReactTitle title={`Brawl Meta Info`} />
         <div className="contentContainer">
           <div className="content">
             {t('homeGuide')}

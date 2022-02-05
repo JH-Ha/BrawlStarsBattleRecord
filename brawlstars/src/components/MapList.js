@@ -72,7 +72,7 @@ class MapList extends Component {
     render() {
         const { t } = this.props;
         return <><div className="mapList">
-            <ReactTitle title={`Brawl Stat Maps`} />
+            <ReactTitle title={`Brawl Meta Maps`} />
             {this.state.loading ?
                 <Loading></Loading>
                 : ""}
