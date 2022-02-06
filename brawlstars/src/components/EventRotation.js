@@ -88,7 +88,7 @@ const EventRotation = () => {
                             </div>
                             <div className="winRateInfo">
                                 {ele.winRate?.map(e => {
-                                    return <div>
+                                    return <div key={`${ele.event.mode}-${e.brawlerName}`}>
                                         <img className="brawlerImg" src={`/images/${e.brawlerName}.png`} alt={e.brawlerName} />
                                         {isTrio(ele.event.mode) ?
                                             <div>{Math.floor(e.winRate * 100)}%</div>
@@ -96,8 +96,8 @@ const EventRotation = () => {
                                         }
 
                                     </div>
-
                                 })}
+                                {ele.winRate?.length === 0 ? <div className='noStats'> No Statistics </div> : <div></div>}
                             </div>
                         </div>
                     </div>
