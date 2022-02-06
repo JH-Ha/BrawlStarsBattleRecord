@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./TopBar.scss";
 import i18n from "./i18n";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 
 class TopBar extends Component {
   state = {
     language: 'en',
+    toggleActive: false,
   }
   changelanguageToKo = () => {
     i18n.changeLanguage('ko');
@@ -26,9 +29,14 @@ class TopBar extends Component {
       language: 'ja',
     })
   }
+  clickToggleBtn = () => {
+    this.setState({
+      toggleActive: !this.state.toggleActive,
+    })
+  }
   render() {
     return (
-      <div className="topBar">
+      <div className="naviBar">
         <div className="logo">
           <Link to="/" className="container">
             <img src="/brawlMeta.png" alt="brawlMeta.png" />
@@ -36,24 +44,19 @@ class TopBar extends Component {
             </div>
           </Link>
         </div>
-        <div className="menuContainer">
-          <div className="item">
-            <Link to="/">Home</Link>
-          </div>
-          <div className="item">
-            <Link to="/info">Info</Link>
-          </div>
-          <div className="item">
-            <Link to="/userList">Players</Link>
-          </div>
-          <div className="item">
-            <Link to="/mapList">Maps</Link>
-          </div>
+        <div className={`menuContainer ${this.state.toggleActive && "active"}`}>
+          <Link to="/" className="item">Home</Link>
+          <Link to="/info" className="item">Info</Link>
+          <Link to="/userList" className="item">Players</Link>
+          <Link to="/mapList" className="item">Maps</Link>
           <div className="languageContainer">
             <div className={`language ${this.state.language === 'en' ? 'selected' : ''}`} onClick={this.changelanguageToEn}>en</div>
             <div className={`language ${this.state.language === 'ko' ? 'selected' : ''}`} onClick={this.changelanguageToKo}>ko</div>
             <div className={`language ${this.state.language === 'ja' ? 'selected' : ''}`} onClick={this.changelanguageToJa}>ja</div>
           </div>
+        </div>
+        <div className="toggleBtn" onClick={this.clickToggleBtn}>
+          <FontAwesomeIcon icon={faBars} />
         </div>
       </div>
     );
