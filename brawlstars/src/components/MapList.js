@@ -16,7 +16,6 @@ class MapList extends Component {
         loading: false,
     }
     clickMap = (mapName, mapMode) => {
-        console.log(this);
         let paramMapName = mapName.replace("&", "%26");
         let { history } = this.props;
         history.push(`/map/${paramMapName}/mode/${mapMode}`);
@@ -33,9 +32,6 @@ class MapList extends Component {
         });
     }
     changeMode = (mode) => {
-        console.log(`changeMode ${mode}`);
-        console.log(this);
-
         this.setFilteredMap(mode);
 
         let { history } = this.props;
@@ -45,15 +41,15 @@ class MapList extends Component {
         const query = qs.parse(this.props.location.search, {
             ignoreQueryPrefix: true,
         });
-        console.log(`query mode ${query.mode}`);
 
         //this.setFilteredMap(query.mode);
         this.setState({
             loading: true,
         })
         getData(`/gameMap`).then(response => {
-            console.log(response);
-            const data = response.data;
+            const data = response.data.sort((a, b) => {
+                return a.mode.localeCompare(b.mode);
+            });
             let mode = 'gemGrab';
             if (query.mode !== undefined) {
                 mode = query.mode;
