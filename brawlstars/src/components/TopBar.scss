@@ -1,34 +1,56 @@
-.topBar {
+.naviBar {
   a,
   a:visited,
   a:link {
     text-decoration: none;
+    color: white;
+  }
+  color: white;
+  background: #263343;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 50px;
+  .logo{
+    position: absolute;
+    left: 0px;
+    height: 100%;
+    
+    .container{
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+    }
+    img{
+      width: 30px;
+      margin-right: 10px;
+    }
   }
   .menuContainer {
     display: flex;
-    width: 100%;
     justify-content: center;
     align-items: center;
-    background: #24252a;
+    
     .item {
       padding: 10px;
-      a {
-        color: white;
-      }
 
       &.selected {
         background: #0289a7;
       }
+      &:hover{
+          background-color:#d49466;
+          border-radius: 4px;
+        }
     }
   }
-
-
   .languageContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     background: #eeeeee;
+    margin-left : 10px;
     .language {
       width : 25px;
       height : 25px;
@@ -49,6 +71,43 @@
     }
     .language:last-child{
       border-right: none;;
+    }
+  }
+  .toggleBtn{
+    display: none;
+  }
+  @media screen and (max-width: 768px){
+    height: inherit;
+    flex-direction: column;
+    .logo{
+      position: relative;
+      display: flex;
+      .container{
+        padding : 10px;
+      }
+    }
+    .menuContainer{
+      display: none;
+      &.active{
+        display: flex;
+      }
+      flex-direction: column;
+      .item{
+        width: 100%;
+        
+      }
+      .languageContainer{
+        margin : 10px auto;
+      }
+    }
+    .toggleBtn{
+      cursor: pointer;
+      display: block;
+      top : 10px;
+      font-size : 24px;
+      color : #d49466;
+      position: absolute;
+      right : 32px;
     }
   }
 }
