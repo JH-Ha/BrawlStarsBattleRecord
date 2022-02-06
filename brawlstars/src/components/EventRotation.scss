@@ -1,5 +1,9 @@
 .eventRotation{
-    
+    .noStats{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .title{
         background-color: #0d2153;    
         color: white;
@@ -7,6 +11,7 @@
         margin-top : 10px;
         font-size: 18px;
         padding: 5px;
+        border-radius: 4px;
     }
     max-width: 1000px;
     @media screen and (max-width: 768px){
@@ -19,7 +24,7 @@
         justify-content: space-around;
         .event{
             @media screen and (max-width : 768px){
-                flex-basis: 300px;
+                flex-basis: 350px;
             }
             flex-basis: 47%;
             margin: 5px;
@@ -32,6 +37,8 @@
         background-color: #000;
         display: flex;
         justify-content: center;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
     }
     .info{
         color: white;
@@ -60,6 +67,7 @@
     .winRateInfo{
         display: flex;
         justify-content: center;
+        height : 90px;
         .brawlerImg{
             width: 50px;
             margin: 10px 10px 0 10px;
