@@ -10,6 +10,7 @@ import Map from "./components/Map";
 import Statistics from "./components/Statistics";
 import RegisterUser from "./components/RegisterUser";
 import EventRotation from "./components/EventRotation";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/statistics" component={Statistics} />
         <Route path="/user" component={RegisterUser} />
       </Router>
+      <Footer />
     </div>
   );
 }
