@@ -20,13 +20,13 @@ class Home extends Component {
             {t('homeGuide')}
           </div>
         </div>
-        <AdSense.Google
+        {/* <AdSense.Google
           style={{ display: 'block' }}
           client='ca-pub-4114406385852589'
           slot='4607116156'
           format='auto'
           responsive='true'
-        />
+        /> */}
 
       </div>
     );
