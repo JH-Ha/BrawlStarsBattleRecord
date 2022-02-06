@@ -35,7 +35,7 @@ public class RecordDto {
 				.collect(Collectors.toList());
 		teamId = record.getTeamId();
 	}
-
+	
 	public static RecordDto createGroupRecord(Record record) {
 		RecordDto recordDto = new RecordDto();
 		recordDto.setTag(record.getTag());

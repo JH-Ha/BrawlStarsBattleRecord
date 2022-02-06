@@ -56,7 +56,7 @@ public class RecordService {
 	StatisticsRepository statisticsRepository;
 	
 
-	public String getOppositeResult(String result) {
+	public static String getOppositeResult(String result) {
 		if ("defeat".equals(result)) {
 			return "victory";
 		} else if ("victory".equals(result)) {
@@ -125,52 +125,13 @@ public class RecordService {
 			List<Player> team = teams.get(i);
 			for (int j = 0; j < team.size(); j++) {
 				Player player = team.get(j);
-				
-				String map = item.getEvent().getMap();
-				String mode = item.getBattle().getMode();
-				String brawlerName = player.getBrawler().getName();
-				Integer trophies = player.getBrawler().getTrophies();
-				RecordTrio recordTrio = new RecordTrio();
-				recordTrio.setBattleTime(item.getBattleTime());
-				recordTrio.setBrawlerName(brawlerName);
-				recordTrio.setPower(player.getBrawler().getPower());
-				// recordTrio.setGroupKey(groupKey);
-				recordTrio.setDuration(item.getBattle().getDuration());
-				recordTrio.setMap(map);
-				recordTrio.setMode(mode);
-				recordTrio.setType(item.getBattle().getType());
-				recordTrio.setTag(player.getTag());
-				recordTrio.setTrophies(trophies);
-				recordTrio.setPlayerName(player.getName());
-				recordTrio.setTeamId(i);
-				recordTrio.setEventId(item.getEvent().getId());
-				recordTrio.setBrawlerId(player.getBrawler().getId());
+				RecordTrio recordTrio = RecordTrio.createRecord(item , tag, player, playerGroupIdx, i);
 				// we don't know other players' trophy change
 				if (player.getTag().equals(tag)) {
 					recordTrio.setTrophyChange(item.getBattle().getTrophyChange());
 					myRecord = recordTrio;
 				}
-				boolean isStarPlayer = false;
-				if (item.getBattle().getStarPlayer() != null 
-						&& player.getTag().equals(item.getBattle().getStarPlayer().getTag())) {
-					isStarPlayer = true;
-				}
-				recordTrio.setIsStarPlayer(isStarPlayer);
-				String result = null;
-				if (i == playerGroupIdx)
-					result = item.getBattle().getResult();
-				else
-					result = getOppositeResult(item.getBattle().getResult());
-
-				recordTrio.setStatUpdated(false);
-				recordTrio.setResult(result);
 				groupRecords.add(recordTrio);
-				// recordRepository.save(recordTrio);
-				
-				//save Statistics
-//				if(trophies != null && trophies >= 500) {
-//					saveTrioStat(mode, map, brawlerName, result);
-//				}
 			}
 		}
 		Record.setRelation(myRecord, groupRecords);
