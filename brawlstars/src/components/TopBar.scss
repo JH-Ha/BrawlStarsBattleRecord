@@ -1,13 +1,11 @@
-.topBar {
+.naviBar {
   a,
   a:visited,
   a:link {
     text-decoration: none;
     color: white;
   }
-  a:hover {
-    color : rgb(196, 196, 196);
-  }
+  color: white;
   background: #263343;
   display: flex;
   justify-content: center;
@@ -40,16 +38,19 @@
       &.selected {
         background: #0289a7;
       }
+      &:hover{
+          background-color:#d49466;
+          border-radius: 4px;
+        }
     }
   }
-
-
   .languageContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     background: #eeeeee;
+    margin-left : 10px;
     .language {
       width : 25px;
       height : 25px;
@@ -72,6 +73,41 @@
       border-right: none;;
     }
   }
+  .toggleBtn{
+    display: none;
+  }
   @media screen and (max-width: 768px){
+    height: inherit;
+    flex-direction: column;
+    .logo{
+      position: relative;
+      display: flex;
+      .container{
+        padding : 10px;
+      }
+    }
+    .menuContainer{
+      display: none;
+      &.active{
+        display: flex;
+      }
+      flex-direction: column;
+      .item{
+        width: 100%;
+        
+      }
+      .languageContainer{
+        margin : 10px auto;
+      }
+    }
+    .toggleBtn{
+      cursor: pointer;
+      display: block;
+      top : 10px;
+      font-size : 24px;
+      color : #d49466;
+      position: absolute;
+      right : 32px;
+    }
   }
 }
