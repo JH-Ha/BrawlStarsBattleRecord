@@ -63,7 +63,7 @@ const EventRotation = () => {
 
     return (
         <div className="eventRotation">
-            <ReactTitle title={`Brawl Stat Event Rotation`} />
+            <ReactTitle title={`Brawl Meta Event Rotation`} />
             <div className="title">
                 Today's Events
             </div>
