@@ -29,6 +29,13 @@ class TopBar extends Component {
   render() {
     return (
       <div className="topBar">
+        <div className="logo">
+          <Link to="/" className="container">
+            <img src="/brawlMeta.png" alt="brawlMeta.png" />
+            <div>Brawl Meta
+            </div>
+          </Link>
+        </div>
         <div className="menuContainer">
           <div className="item">
             <Link to="/">Home</Link>
