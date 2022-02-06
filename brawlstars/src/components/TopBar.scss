@@ -3,18 +3,39 @@
   a:visited,
   a:link {
     text-decoration: none;
+    color: white;
+  }
+  a:hover {
+    color : rgb(196, 196, 196);
+  }
+  background: #263343;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 50px;
+  .logo{
+    position: absolute;
+    left: 0px;
+    height: 100%;
+    
+    .container{
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+    }
+    img{
+      width: 30px;
+      margin-right: 10px;
+    }
   }
   .menuContainer {
     display: flex;
-    width: 100%;
     justify-content: center;
     align-items: center;
-    background: #24252a;
+    
     .item {
       padding: 10px;
-      a {
-        color: white;
-      }
 
       &.selected {
         background: #0289a7;
@@ -50,5 +71,7 @@
     .language:last-child{
       border-right: none;;
     }
+  }
+  @media screen and (max-width: 768px){
   }
 }
