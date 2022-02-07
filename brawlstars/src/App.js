@@ -11,6 +11,8 @@ import Statistics from "./components/Statistics";
 import RegisterUser from "./components/RegisterUser";
 import EventRotation from "./components/EventRotation";
 import Footer from "./components/Footer";
+import BlogList from "./components/BlogList";
+import Blog from "./components/Blog";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/map/:map/mode/:mode" component={Map} />
         <Route path="/statistics" component={Statistics} />
         <Route path="/user" component={RegisterUser} />
+        <Route path="/blog" component={BlogList} exact={true} />
+        <Route path="/blog/:id" component={Blog} />
       </Router>
       <Footer />
     </div>
