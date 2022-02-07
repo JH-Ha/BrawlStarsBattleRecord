@@ -45,10 +45,10 @@ class TopBar extends Component {
           </Link>
         </div>
         <ul className={`menuContainer ${this.state.toggleActive && "active"}`}>
-          <li><Link to="/" className="item">Home</Link></li>
-          <li><Link to="/info" className="item">Info</Link></li>
-          <li><Link to="/userList" className="item">Players</Link></li>
-          <li><Link to="/mapList" className="item">Maps</Link></li>
+          <li className="item"><Link to="/" >Home</Link></li>
+          <li className="item"><Link to="/info">Info</Link></li>
+          <li className="item"><Link to="/userList">Players</Link></li>
+          <li className="item"><Link to="/mapList" >Maps</Link></li>
           <div className="languageContainer">
             <div className={`language ${this.state.language === 'en' ? 'selected' : ''}`} onClick={this.changelanguageToEn}>en</div>
             <div className={`language ${this.state.language === 'ko' ? 'selected' : ''}`} onClick={this.changelanguageToKo}>ko</div>
