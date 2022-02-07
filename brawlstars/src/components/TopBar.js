@@ -49,6 +49,7 @@ class TopBar extends Component {
           <li className="item"><Link to="/info">Info</Link></li>
           <li className="item"><Link to="/userList">Players</Link></li>
           <li className="item"><Link to="/mapList" >Maps</Link></li>
+          <li className="item"><Link to="/blog" >Blog</Link></li>
           <div className="languageContainer">
             <div className={`language ${this.state.language === 'en' ? 'selected' : ''}`} onClick={this.changelanguageToEn}>en</div>
             <div className={`language ${this.state.language === 'ko' ? 'selected' : ''}`} onClick={this.changelanguageToKo}>ko</div>
