@@ -201,5 +201,12 @@
         <loc>https://brawlmeta.com/map/Close%20Call/mode/knockout</loc>
         <lastmod>2021-04-08T18:58:59+00:00</lastmod>
     </url>
-    
+    <url>
+        <loc>https://brawlmeta.com/blog</loc>
+        <lastmod>2021-02-07T18:58:59+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://brawlmeta.com/blog/1</loc>
+        <lastmod>2022-02-07T18:58:59+00:00</lastmod>
+    </url>
 </urlset>
