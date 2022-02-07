@@ -1,9 +1,10 @@
 import React from 'react';
 import "./Blog.scss";
-
+import { ReactTitle } from 'react-meta-tags';
 const Blog = () => {
     return (
         <div className='blog'>
+            <ReactTitle title={`신규 브롤러 팽, 그 실력은?`} />
             <div className='title'>신규 브롤러 팽, 그 실력은?</div>
             <div className='content'>
                 시즌 10 '호랑이의 해'의 신규 브롤러 팽이 등장했습니다.
