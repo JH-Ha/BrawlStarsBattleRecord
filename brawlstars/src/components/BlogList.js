@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import "./BlogList.scss";
+import { ReactTitle } from 'react-meta-tags';
 
 const BlogList = () => {
     return (
         <div className='blogList'>
+            <ReactTitle title={`Brawl Meta Blog`} />
             <table className='table'>
                 <thead>
                     <tr>
