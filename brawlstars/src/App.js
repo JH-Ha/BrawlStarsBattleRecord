@@ -13,23 +13,22 @@ import EventRotation from "./components/EventRotation";
 import Footer from "./components/Footer";
 import BlogList from "./components/BlogList";
 import Blog from "./components/Blog";
+import './components/i18n';
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <TopBar />
-        <Route path="/" component={EventRotation} exact={true} />
-        <Route path="/info" component={Home} exact={true} />
-        <Route path="/battleLog/:tag" component={PlayList} exact={true} />
-        <Route path="/userList" component={UserList} />
-        <Route path="/mapList" component={MapList} />
-        <Route path="/map/:map/mode/:mode" component={Map} />
-        <Route path="/statistics" component={Statistics} />
-        <Route path="/user" component={RegisterUser} />
-        <Route path="/blog" component={BlogList} exact={true} />
-        <Route path="/blog/:id" component={Blog} />
-      </Router>
+      <TopBar />
+      <Route path="/" component={EventRotation} exact={true} />
+      <Route path="/info" component={Home} exact={true} />
+      <Route path="/battleLog/:tag" component={PlayList} exact={true} />
+      <Route path="/userList" component={UserList} />
+      <Route path="/mapList" component={MapList} />
+      <Route path="/map/:map/mode/:mode" component={Map} />
+      <Route path="/statistics" component={Statistics} />
+      <Route path="/user" component={RegisterUser} />
+      <Route path="/blog" component={BlogList} exact={true} />
+      <Route path="/blog/:id" component={Blog} />
       <Footer />
     </div>
   );
