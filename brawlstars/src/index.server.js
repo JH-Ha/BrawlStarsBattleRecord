@@ -24,8 +24,22 @@ function createPage(root) {
       <link rel="shortcut icon" href="/favicon.ico" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <meta name="theme-color" content="#000000" />
+      <meta name="description" content="You can check win rate and pick rate of brawlers at each map. Also, you can check your battle log
+             브롤스타즈 전적 기록 및 승률 확인 사이트입니다. 맵 마다 브롤러 별 승률과 선택률을 확인할 수 있습니다. 또한 당신의 전투 기록도 확인 가능합니다." />
       <title>Brawl Meta</title>
       <link href="${manifest.files["main.css"]}" rel="stylesheet" />
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4114406385852589"
+            crossorigin="anonymous"></script>
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-34JGP66PP0"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-34JGP66PP0');
+        </script>
     </head>
     <body>
       <noscript>You need to enable JavaScript to run this app.</noscript>
