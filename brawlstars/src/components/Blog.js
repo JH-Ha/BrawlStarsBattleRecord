@@ -6,7 +6,6 @@ import resources from './BlogResouce';
 const Blog = (props) => {
     const id = props.match.params.id;
     const article = resources.find(a => a.id === id);
-    console.log(article);
     return (
         <div className='blog'>
             <ReactTitle title={article?.title} />
