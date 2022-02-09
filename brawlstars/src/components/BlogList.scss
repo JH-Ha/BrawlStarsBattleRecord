@@ -1,6 +1,10 @@
 .blogList{
     a{
         text-decoration: none;
+        color : black;
+    }
+    a:visited{
+        color : #6e6e6e;
     }
     table{
         margin:auto;

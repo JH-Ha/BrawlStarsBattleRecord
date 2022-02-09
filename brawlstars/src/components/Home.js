@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Home.scss";
 import { withTranslation } from 'react-i18next';
-import AdSense from 'react-adsense';
+//import AdSense from 'react-adsense';
 import { ReactTitle } from 'react-meta-tags';
 
 class Home extends Component {
