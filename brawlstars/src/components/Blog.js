@@ -9,9 +9,9 @@ const Blog = (props) => {
     console.log(article);
     return (
         <div className='blog'>
-            <ReactTitle title={article.title} />
-            <div className='title'>{article.title}</div>
-            <div className='content' dangerouslySetInnerHTML={{ __html: article.content }} />
+            <ReactTitle title={article?.title} />
+            <div className='title'>{article?.title}</div>
+            <div className='content' dangerouslySetInnerHTML={{ __html: article?.content }} />
         </div>
     )
 }
