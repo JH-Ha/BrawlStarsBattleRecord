@@ -10,7 +10,7 @@ import Pagination from "./Pagination";
 import { getData } from "./ApiHandler";
 import { withTranslation } from 'react-i18next';
 import { isTrio } from './BaseFunctions';
-import AdSense from 'react-adsense';
+//import AdSense from 'react-adsense';
 import Loading from "./Loading";
 import { ReactTitle } from 'react-meta-tags';
 

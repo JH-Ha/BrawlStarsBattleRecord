@@ -2,8 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import "./BlogList.scss";
 import { ReactTitle } from 'react-meta-tags';
-
+import resources from './BlogResouce';
 const BlogList = () => {
+    resources.sort((a, b) => {
+        if (a.date > b.date) return -1;
+        else return 1;
+    });
     return (
         <div className='blogList'>
             <ReactTitle title={`Brawl Meta Blog`} />
@@ -16,15 +20,18 @@ const BlogList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="contentTr">
-                        <td>1</td>
-                        <td>
-                            <Link to="/blog/1">
-                                신규 브롤러 팽, 그 실력은?
-                            </Link>
-                        </td>
-                        <td>2022-02-08</td>
-                    </tr>
+                    {resources.map((resource, index) => {
+                        return (<tr key={`blogkey-${resource.id}`} className="contentTr">
+                            <td>{index + 1}</td>
+                            <td>
+                                <Link to={`/blog/${resource.id}`}>
+                                    {resource.title}
+                                </Link>
+                            </td>
+                            <td>{resource.date}</td>
+                        </tr>)
+                    })}
+
                 </tbody>
             </table>
         </div>

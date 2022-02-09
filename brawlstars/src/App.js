@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import PlayList from "./components/PlayList";
 import UserList from "./components/UserList";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import TopBar from "./components/TopBar";
 import Home from "./components/Home";
 import MapList from "./components/MapList";
