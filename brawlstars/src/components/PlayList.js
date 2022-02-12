@@ -187,8 +187,8 @@ class PlayList extends Component {
   }
 
   goStatistics = () => {
-    const { history } = this.props;
-    history.push(`/statistics?tag=${this.state.tag.replace("#", "%23")}`)
+    const { history, i18n } = this.props;
+    history.push(`/${i18n.language}/statistics?tag=${this.state.tag.replace("#", "%23")}`)
   }
   render() {
     const { t } = this.props;
