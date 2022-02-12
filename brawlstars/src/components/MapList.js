@@ -17,8 +17,8 @@ class MapList extends Component {
     }
     clickMap = (mapName, mapMode) => {
         let paramMapName = mapName.replace("&", "%26");
-        let { history } = this.props;
-        history.push(`/map/${paramMapName}/mode/${mapMode}`);
+        let { history, i18n } = this.props;
+        history.push(`/${i18n.language}/map/${paramMapName}/mode/${mapMode}`);
     }
     setFilteredMap = (mode) => {
         let filteredMaps = this.state.maps;
@@ -34,8 +34,8 @@ class MapList extends Component {
     changeMode = (mode) => {
         this.setFilteredMap(mode);
 
-        let { history } = this.props;
-        history.push(`/mapList?mode=${mode}`);
+        let { history, i18n } = this.props;
+        history.push(`/${i18n.language}/mapList?mode=${mode}`);
     }
     componentDidMount() {
         const query = qs.parse(this.props.location.search, {
