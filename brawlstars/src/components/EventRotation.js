@@ -58,7 +58,7 @@ const EventRotation = () => {
     }, []);
 
     const onClickEvent = (map, mode) => {
-        history.push(`/map/${map}/mode/${mode}`);
+        history.push(`/${t.language}/map/${map}/mode/${mode}`);
     }
 
     return (
@@ -79,7 +79,7 @@ const EventRotation = () => {
                             onClick={() => onClickEvent(ele.event.map, ele.event.mode)}>
                             <div className="eventInfoContainer">
                                 <div className="modeImg">
-                                    <img src={`images/mode/${ele.event.mode}.png`} alt={ele.event.mode}></img>
+                                    <img src={`/images/mode/${ele.event.mode}.png`} alt={ele.event.mode}></img>
                                 </div>
                                 <div className="eventInfo">
                                     <div>{t(ele.event.mode)}</div>

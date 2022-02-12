@@ -38,11 +38,11 @@ class Map extends Component {
         this.setState({
             trophyRange: e.target.value,
         });
-        const { history } = this.props;
+        const { history, i18n } = this.props;
         let searchParams = new URLSearchParams(this.props.location.search);
         searchParams.set("trophyRange", e.target.value);
         this.getRecordResult(unescape(searchParams.get("mapName")), searchParams.get("mode"), searchParams.get("trophyRange"));
-        history.push(`/map?${searchParams.toString()}`);
+        history.push(`/${i18n.language}/map?${searchParams.toString()}`);
 
     }
 

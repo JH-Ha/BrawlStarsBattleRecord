@@ -56,8 +56,8 @@ class PlayList extends Component {
     const queryPage = page - 1;
     searchParams.set("page", queryPage);
     searchParams.set("size", 5);
-    let { history } = this.props;
-    history.push(`/battleLog/${tag}?${searchParams.toString()}`);
+    let { history, i18n } = this.props;
+    history.push(`/${i18n.language}/battleLog/${tag}?${searchParams.toString()}`);
 
   }
   getBattleLog(tag, mode, brawlerName, page) {
@@ -161,23 +161,23 @@ class PlayList extends Component {
     //console.log(this.state.tag, mode, this.state.brawlerName);
     this.setState({ mode: mode });
     this.getBattleLog(this.state.tag, mode, this.state.brawlerName, 1);
-    const { history } = this.props;
+    const { history, i18n } = this.props;
     let searchParams = new URLSearchParams(this.props.location.search);
     searchParams.set("mode", mode);
     searchParams.set("page", 0);
     const params = this.props.match.params;
-    history.push(`/battleLog/${params.tag}?${searchParams}`);
+    history.push(`/${i18n.language}/battleLog/${params.tag}?${searchParams}`);
   }
   changeBrawler(brawlerName) {
     //console.log("change bralwer", brawlerName);
     this.setState({ brawlerName: brawlerName });
     this.getBattleLog(this.state.tag, this.state.mode, brawlerName, 1);
-    const { history } = this.props;
+    const { history, i18n } = this.props;
     let searchParams = new URLSearchParams(this.props.location.search);
     searchParams.set("brawlerName", brawlerName);
     searchParams.set("page", 0);
     const params = this.props.match.params;
-    history.push(`/battleLog/${params.tag}?${searchParams.toString()}`);
+    history.push(`/${i18n.language}/battleLog/${params.tag}?${searchParams.toString()}`);
   }
   getQuery(props) {
     const query = qs.parse(props.location.search, {
