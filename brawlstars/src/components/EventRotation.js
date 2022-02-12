@@ -116,7 +116,7 @@ const EventRotation = () => {
                             onClick={() => onClickEvent(ele.event.map, ele.event.mode)}>
                             <div className="eventInfoContainer">
                                 <div className="modeImg">
-                                    <img src={`images/mode/${ele.event.mode}.png`} alt={ele.event.mode}></img>
+                                    <img src={`/images/mode/${ele.event.mode}.png`} alt={ele.event.mode}></img>
                                 </div>
                                 <div className="eventInfo">
                                     <div>{t(ele.event.mode)}</div>
@@ -131,10 +131,10 @@ const EventRotation = () => {
                                             <div>{Math.floor(e.winRate * 100)}%</div>
                                             : <div>{Math.floor(e.averageRank * 100) / 100}</div>
                                         }
-
                                     </div>
 
                                 })}
+                                {ele.winRate?.length === 0 ? <div className='noStats'> No Statistics </div> : <div></div>}
                             </div>
                         </div>
                     </div>
