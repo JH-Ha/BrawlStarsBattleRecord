@@ -30,7 +30,7 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### 구현된 기능
 
-- UserList에서 유저를 클릭하면 전투 기록을 볼 수 있습니다. V1.0과는 다르게 전체 모드에 상관없이 기록을 보여줄 수 있도록 구현을 바꾸었으며, 모드 별 보기는 추가 예정입니다.
+- UserList에서 유저를 클릭하면 전투 기록을 볼 수 있습니다. V1.0과는 다르게 전체 모드에 상관없이 기록을 보여줄 수 있도록 구현을 바꾸었습니다.
 - 유저 이름으로 검색하여 전투 기록을 찾아 볼 수 있습니다. (V1.0과 동일)
 - 3대 3매칭에서 맵에서 어떤 브롤러가 승률이 높은지 확인할 수 있습니다.
 
@@ -53,6 +53,7 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
   - brawlstat.xyz에서 brawlmeta.com으로 도메인을 변경하였습니다.
   - https가 적용되었습니다.
   - 구글 애널리틱스를 적용시켰습니다.
+  - 신규 유저 태그 조회 및 등록 기능이 추가되었습니다.
     
 - v2.0.2 (2021.10.04)
    
@@ -64,10 +65,11 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### 개발 예정
 
-- 신규 유저 태그 조회 및 등록 기능
+- Duel 모드 수집할 수 있도록 업데이트 예정
+- 
 
 ## Demo Page
 
 hosting page
-- version 1.0 : http://brawlstars-260814.web.app
-- version 2.0 : https://www.brawlmeta.com
+- version 1 : http://brawlstars-260814.web.app
+- version 2 : https://www.brawlmeta.com
