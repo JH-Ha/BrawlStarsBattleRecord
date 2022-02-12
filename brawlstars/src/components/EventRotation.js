@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getData } from "./ApiHandler";
 import { calWinRate, getLocalTime, isTrio } from './BaseFunctions';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import "./EventRotation.scss";
 import DisplayTime from './DisplayTime';
 import { ReactTitle } from 'react-meta-tags';

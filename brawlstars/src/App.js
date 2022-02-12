@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import PlayList from "./components/PlayList";
 import UserList from "./components/UserList";
-import { Route } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import TopBar from "./components/TopBar";
 import Home from "./components/Home";
 import MapList from "./components/MapList";
@@ -19,16 +19,20 @@ function App() {
   return (
     <div className="App">
       <TopBar />
-      <Route path="/" component={EventRotation} exact={true} />
-      <Route path="/info" component={Home} exact={true} />
-      <Route path="/battleLog/:tag" component={PlayList} exact={true} />
-      <Route path="/userList" component={UserList} />
-      <Route path="/mapList" component={MapList} />
-      <Route path="/map/:map/mode/:mode" component={Map} />
-      <Route path="/statistics" component={Statistics} />
-      <Route path="/user" component={RegisterUser} />
-      <Route path="/blog" component={BlogList} exact={true} />
-      <Route path="/blog/:id" component={Blog} />
+
+      <Switch>
+        <Route path="/:lang" component={EventRotation} exact={true} />
+        <Route path="/:lang/info" component={Home} exact={true} />
+        <Route path="/:lang/battleLog/:tag" component={PlayList} exact={true} />
+        <Route path="/:lang/userList" component={UserList} />
+        <Route path="/:lang/mapList" component={MapList} />
+        <Route path="/:lang/map/:map/mode/:mode" component={Map} />
+        <Route path="/:lang/statistics" component={Statistics} />
+        <Route path="/:lang/user" component={RegisterUser} />
+        <Route path="/:lang/blog" component={BlogList} exact={true} />
+        <Route path="/:lang/blog/:id" component={Blog} />
+        <Redirect to="/en" />
+      </Switch>
       <Footer />
     </div>
   );
