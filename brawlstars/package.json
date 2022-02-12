@@ -43,7 +43,7 @@
     "eslint-webpack-plugin": "^2.5.2",
     "express": "^4.17.2",
     "file-loader": "6.1.1",
-    "follow-redirects": "^1.14.7",
+    "follow-redirects": "^1.14.8",
     "fs-extra": "^9.0.1",
     "glob-parent": "^6.0.2",
     "html-parse-stringify2": "^2.0.1",
