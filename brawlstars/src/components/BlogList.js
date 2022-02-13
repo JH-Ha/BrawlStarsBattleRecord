@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import "./BlogList.scss";
 import { ReactTitle } from 'react-meta-tags';
 import resources from './BlogResouce';
+import i18n from "./i18n";
+
 const BlogList = () => {
+
     resources.sort((a, b) => {
         if (a.date > b.date) return -1;
         else return 1;
@@ -24,7 +27,7 @@ const BlogList = () => {
                         return (<tr key={`blogkey-${resource.id}`} className="contentTr">
                             <td>{index + 1}</td>
                             <td>
-                                <Link to={`/blog/${resource.id}`}>
+                                <Link to={`/${i18n.language}/blog/${resource.id}`}>
                                     {resource.title}
                                 </Link>
                             </td>
