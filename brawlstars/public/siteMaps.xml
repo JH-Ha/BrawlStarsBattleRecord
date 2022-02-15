@@ -213,8 +213,11 @@
         <loc>https://brawlmeta.com/en/blog/2</loc>
         <lastmod>2021-02-14T18:58:59+00:00</lastmod>
     </url>
-
-        <url>
+    <url>
+        <loc>https://brawlmeta.com/en/blog/3</loc>
+        <lastmod>2021-02-14T18:58:59+00:00</lastmod>
+    </url>
+    <url>
         <loc>https://brawlmeta.com/ko</loc>
         <lastmod>2021-02-14T18:58:59+00:00</lastmod>
     </url>
@@ -426,6 +429,10 @@
     </url>
     <url>
         <loc>https://brawlmeta.com/ko/blog/2</loc>
+        <lastmod>2021-02-14T18:58:59+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://brawlmeta.com/ko/blog/3</loc>
         <lastmod>2021-02-14T18:58:59+00:00</lastmod>
     </url>
 
@@ -641,6 +648,10 @@
     </url>
     <url>
         <loc>https://brawlmeta.com/ja/blog/2</loc>
+        <lastmod>2021-02-14T18:58:59+00:00</lastmod>
+    </url>
+    <url>
+        <loc>https://brawlmeta.com/ja/blog/3</loc>
         <lastmod>2021-02-14T18:58:59+00:00</lastmod>
     </url>
 </urlset>
