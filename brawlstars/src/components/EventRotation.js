@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import "./EventRotation.scss";
 import DisplayTime from './DisplayTime';
 import { ReactTitle } from 'react-meta-tags';
+import i18n from './i18n';
 
 const EventRotation = () => {
     //const [events, setEvents] = useState([]);
@@ -58,7 +59,7 @@ const EventRotation = () => {
     }, []);
 
     const onClickEvent = (map, mode) => {
-        history.push(`/${t.language}/map/${map}/mode/${mode}`);
+        history.push(`/${i18n.language}/map/${map}/mode/${mode}`);
     }
 
     return (
