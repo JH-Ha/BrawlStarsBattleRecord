@@ -37,6 +37,7 @@ public class RecordTrio extends Record {
 		recordTrio.setTeamId(i);
 		recordTrio.setEventId(item.getEvent().getId());
 		recordTrio.setBrawlerId(player.getBrawler().getId());
+		recordTrio.setRecordDate(item.getBattleTime().substring(0, 8));
 		
 		boolean isStarPlayer = false;
 		if (item.getBattle().getStarPlayer() != null 
