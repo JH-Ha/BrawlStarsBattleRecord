@@ -253,6 +253,23 @@ contact : cubeprince@gmail.com`,
             "Luis' Revenge": "루이스의 복수",
             "Deep End": "딥 엔드",
             "Goldarm Gulch": "골드암 협곡",
+
+            // showdown
+            "Dark Passage": "어두운 통로",
+            "Scorched Stone": "불타는 돌무덤",
+            "Cavern Churn": "우당탕 진흙탕",
+            "Skull Creek": "해골천",
+            "Ruins": "폐허",
+            "Mystic Touch": "신비의 손길",
+            "Double Trouble": "더블 트러블",
+            "Dried Up River": "바짝 마른 강",
+            "Acid Lakes": "산성 호수",
+            "Dark Fantasies": "다크 판타지",
+            "Feast or Famine": "모 아니면 도",
+            "Safety Center": "안전 센터",
+            "Rockwall Brawl": "바위 장벽 전투",
+            "Stocky Stockades": "단단한 울타리",
+
             // "Triumvirate": 
             //     "Magnetic Field" :
             "SUPER CITY": "슈퍼 시티",
@@ -483,6 +500,21 @@ contact : cubeprince@gmail.com`,
             //     "Magnetic Field" :
             //super city rampage
             "SUPER CITY": "スーパーシティ",
+            // showdown
+            "Dark Passage": " 暗い廊下",
+            "Scorched Stone": "焼け野原",
+            "Cavern Churn": "激動の洞窟",
+            "Skull Creek": "ガイコツ川",
+            "Ruins": "廃墟",
+            "Mystic Touch": "神の手",
+            "Double Trouble": "ダブルトラブル",
+            "Dried Up River": "枯れた川",
+            "Acid Lakes": "酸性湖",
+            "Dark Fantasies": "暗黒のファンタジー",
+            "Feast or Famine": "天国と地獄",
+            "Safety Center": "安全センター",
+            "Rockwall Brawl": "岩壁の決戦",
+            "Stocky Stockades": "山盛りの在庫",
 
             "Statistics": "通計",
             "Win Rate": "勝率",
