@@ -54,7 +54,6 @@ public class RecordService {
 
 	@Autowired
 	StatisticsRepository statisticsRepository;
-	
 
 	public static String getOppositeResult(String result) {
 		if ("defeat".equals(result)) {
@@ -65,7 +64,6 @@ public class RecordService {
 		return result;
 	}
 
-	
 	public Date makeBattleTimeDate(String battleTime) {
 		// TODO Auto-generated method stub
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss.SSS'Z'");
@@ -104,8 +102,9 @@ public class RecordService {
 		}
 
 		List<List<Player>> teams = item.getBattle().getTeams();
-		//List<Player> players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
-		//String groupKey = makeGroupKey(players, item.getBattleTime());
+		// List<Player> players =
+		// teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
+		// String groupKey = makeGroupKey(players, item.getBattleTime());
 
 		int playerGroupIdx = 0;
 		for (int i = 0; i < teams.size(); i++) {
@@ -125,7 +124,7 @@ public class RecordService {
 			List<Player> team = teams.get(i);
 			for (int j = 0; j < team.size(); j++) {
 				Player player = team.get(j);
-				RecordTrio recordTrio = RecordTrio.createRecord(item , tag, player, playerGroupIdx, i);
+				RecordTrio recordTrio = RecordTrio.createRecord(item, tag, player, playerGroupIdx, i);
 				// we don't know other players' trophy change
 				if (player.getTag().equals(tag)) {
 					recordTrio.setTrophyChange(item.getBattle().getTrophyChange());
@@ -138,19 +137,20 @@ public class RecordService {
 		recordRepository.save(myRecord);
 	}
 
-	public void saveDuo(String tag, Item item) {
-		
-		//if there is a saved record already, then just update throphychange 
+	public void saveDuoShowdown(String tag, Item item) {
+
+		// if there is a saved record already, then just update throphychange
 		Record foundRecord = recordRepository.findOne(tag, item.getBattleTime());
-		if(foundRecord != null) {
+		if (foundRecord != null) {
 			foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
-			recordRepository.save(foundRecord); 
+			recordRepository.save(foundRecord);
 			return;
 		}
-		
+
 		List<List<Player>> teams = item.getBattle().getTeams();
-		//List<Player> players = teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
-		//String groupKey = makeGroupKey(players, item.getBattleTime());
+		// List<Player> players =
+		// teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
+		// String groupKey = makeGroupKey(players, item.getBattleTime());
 
 		// Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
 
@@ -162,27 +162,27 @@ public class RecordService {
 
 		Record myRecord = null;
 		List<Record> groupRecords = new ArrayList<Record>();
-		
+
 		for (int i = 0; i < teams.size(); i++) {
 			List<Player> team = teams.get(i);
 			for (int j = 0; j < team.size(); j++) {
 				Player player = team.get(j);
-				String mode = item.getBattle().getMode() ; // event mode -> battle mode : event mode is null
-				String map = item.getEvent().getMap(); 
+				String mode = item.getBattle().getMode(); // event mode -> battle mode : event mode is null
+				String map = item.getEvent().getMap();
 				Long rank = i + 1L;
 				String brawlerName = player.getBrawler().getName();
 				Integer trophies = player.getBrawler().getTrophies();
-				
+
 				RecordDuo recordDuo = new RecordDuo();
 				recordDuo.setTag(player.getTag());
 				recordDuo.setBattleTime(item.getBattleTime());
 				recordDuo.setBrawlerName(brawlerName);
 				recordDuo.setPower(player.getBrawler().getPower());
 				recordDuo.setTrophies(trophies);
-				
+
 				recordDuo.setMap(map);
-				//recordDuo.setGroupKey(groupKey);
-				recordDuo.setMode(mode);  
+				// recordDuo.setGroupKey(groupKey);
+				recordDuo.setMode(mode);
 				recordDuo.setType(item.getBattle().getType());
 				recordDuo.setResultRank(rank.intValue());
 				recordDuo.setPlayerName(player.getName());
@@ -193,10 +193,11 @@ public class RecordService {
 					myRecord = recordDuo;
 				}
 				recordDuo.setStatUpdated(false);
+				recordDuo.setRecordDate(item.getBattleTime().substring(0, 8));
 				groupRecords.add(recordDuo);
-				//recordRepository.save(recordDuo);
-				
-				//save Statistics
+				// recordRepository.save(recordDuo);
+
+				// save Statistics
 //				if(trophies!= null && trophies >= 500) {
 //					saveDuoSoloStat(mode, map, brawlerName, rank);
 //				}
@@ -207,7 +208,7 @@ public class RecordService {
 	}
 
 	public void saveSolo(String tag, Item item) {
-		
+
 		Record foundRecord = recordRepository.findOne(tag, item.getBattleTime());
 		if (foundRecord != null) {
 			foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
@@ -215,21 +216,21 @@ public class RecordService {
 			return;
 		}
 		List<Player> players = item.getBattle().getPlayers();
-		//String groupKey = makeGroupKey(players, item.getBattleTime());
+		// String groupKey = makeGroupKey(players, item.getBattleTime());
 		// Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
 		Record myRecord = null;
 		List<Record> groupRecords = new ArrayList<Record>();
 		for (int i = 0; i < players.size(); i++) {
 			Player player = players.get(i);
 			RecordSolo recordSolo = RecordSolo.createSoloRecord(tag, item, player, i + 1);
-			if(tag.equals(player.getTag())) {
+			if (tag.equals(player.getTag())) {
 				myRecord = recordSolo;
 			}
 			recordSolo.setStatUpdated(false);
 			groupRecords.add(recordSolo);
-			//recordRepository.save(recordSolo);
-			
-			//save Statistics
+			// recordRepository.save(recordSolo);
+
+			// save Statistics
 //			if(recordSolo.getTrophies()!= null && recordSolo.getTrophies() >= 500) {
 //				saveDuoSoloStat(recordSolo.getMode(), recordSolo.getMap(), recordSolo.getBrawlerName(), Long.valueOf(recordSolo.getResultRank()));
 //			}
@@ -248,8 +249,9 @@ public class RecordService {
 			e.printStackTrace();
 		}
 	}
+
 	public void savePlayersInItems(List<Item> items) {
-		
+
 		items.stream().forEach(item -> {
 			List<List<Player>> teams = item.getBattle().getTeams();
 			List<Player> players;
@@ -271,7 +273,6 @@ public class RecordService {
 				}
 			}
 		});
-		
 
 	}
 
@@ -280,8 +281,8 @@ public class RecordService {
 			System.out.println(item.getBattleTime());
 			if (CommonUtil.isTrioMode(item.getEvent().getMode())) {
 				saveTrio(tag, item);
-			} else if (CommonUtil.isDuo(item.getEvent().getMode())) {
-				saveDuo(tag, item);
+			} else if (CommonUtil.isDuoShowdown(item.getEvent().getMode())) {
+				saveDuoShowdown(tag, item);
 			} else if (CommonUtil.isSolo(item.getEvent().getMode())) {
 				saveSolo(tag, item);
 			}
@@ -289,8 +290,9 @@ public class RecordService {
 	}
 
 	public Page<RecordDto> findByTag(String tag, Pageable pageable, RecordSearch recordSearch) {
-		Page<RecordDto> records = recordRepository.findByTag(tag, pageable,recordSearch);
-		//List<RecordDto> recordDtos = records.getContent().stream().map(record -> new RecordDto(record)).collect(Collectors.toList());
+		Page<RecordDto> records = recordRepository.findByTag(tag, pageable, recordSearch);
+		// List<RecordDto> recordDtos = records.getContent().stream().map(record -> new
+		// RecordDto(record)).collect(Collectors.toList());
 
 //		records.stream().forEach(r -> {
 //		List<Record> groupRecords = r.getGroupRecords();
@@ -314,61 +316,59 @@ public class RecordService {
 	public List<RecordResultDto> findByMap(RecordSearch recordSearch) {
 		String mode = recordSearch.getMode();
 		// TODO Auto-generated method stub
-		if(CommonUtil.isTrioMode(mode)) {
+		if (CommonUtil.isTrioMode(mode)) {
 			return recordRepository.findByMap(recordSearch);
-		}else if(CommonUtil.isDuo(mode) || CommonUtil.isSolo(mode)) {
+		} else if (CommonUtil.isDuoShowdown(mode) || CommonUtil.isSolo(mode)) {
 			return recordRepository.findSoloDuoByMap(recordSearch);
-		}else if(CommonUtil.isAll(mode)) {
+		} else if (CommonUtil.isAll(mode)) {
 			return recordRepository.findAllResult(recordSearch);
 		}
-		
+
 		return null;
 	}
 
-	public List<GameMapDto> getDistinctGameMaps(String mode){
+	public List<GameMapDto> getDistinctGameMaps(String mode) {
 		return recordRepository.getDistinctGameMaps(mode);
 	}
 
 	public int saveDistinctGameMap(String mode) {
 		// TODO Auto-generated method stub
 		List<GameMapDto> gameMapDtos = getDistinctGameMaps(mode);
-		List<GameMap> gameMaps = gameMapDtos.stream().map(dto ->{
+		List<GameMap> gameMaps = gameMapDtos.stream().map(dto -> {
 			GameMap gameMap = new GameMap();
 			gameMap.setMode(dto.getMode());
 			gameMap.setName(dto.getName());
 			return gameMap;
 		}).collect(Collectors.toList());
-		
-		List<FindMapDto> notSavedMaps = gameMaps.stream()
-				.filter(gameMap -> gameMap.getName()!= null)
+
+		List<FindMapDto> notSavedMaps = gameMaps.stream().filter(gameMap -> gameMap.getName() != null)
 				.map(gameMap -> new FindMapDto(gameMap, gameMapRepositry.findByNameAndMode(gameMap.getName(), mode)))
-				.filter(findMapDtos -> findMapDtos.gameMapDtos.isEmpty())
-				.collect(Collectors.toList());
-		
+				.filter(findMapDtos -> findMapDtos.gameMapDtos.isEmpty()).collect(Collectors.toList());
+
 		notSavedMaps.stream().forEach(findMapDtos -> gameMapRepositry.saveGameMap(findMapDtos.gameMap));
-				
+
 		return notSavedMaps.size();
 	}
-	
+
 	public void deleteOldRecords(String tag, Long offset) {
 		// TODO Auto-generated method stub
-		recordRepository.deleteOldRecords(tag, offset); 
+		recordRepository.deleteOldRecords(tag, offset);
 	}
-	
-	class FindMapDto{
+
+	class FindMapDto {
 		GameMap gameMap;
-		List<GameMapDto> gameMapDtos; 
-		public FindMapDto(GameMap gameMap, List<GameMapDto> gameMapDtos ) {
+		List<GameMapDto> gameMapDtos;
+
+		public FindMapDto(GameMap gameMap, List<GameMapDto> gameMapDtos) {
 			this.gameMap = gameMap;
 			this.gameMapDtos = gameMapDtos;
 		}
 	}
 
-	
-
 	public void saveTrioStat(String mode, String map, String brawlerName, String result, Integer cnt) {
-		Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerNameAndResult(mode, map, brawlerName, result);
-		if(statistics == null) {
+		Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerNameAndResult(mode, map, brawlerName,
+				result);
+		if (statistics == null) {
 			statistics = new Statistics();
 			statistics.setMode(mode);
 			statistics.setMap(map);
@@ -376,39 +376,39 @@ public class RecordService {
 			statistics.setResult(result);
 			statistics.setCnt(Long.valueOf(cnt));
 			statisticsRepository.save(statistics);
-		}else {
+		} else {
 			statistics.setCnt(statistics.getCnt() + cnt);
 		}
 	}
+
 	public void saveDuoSoloStat(String mode, String map, String brawlerName, Long rank, Integer cnt) {
 		try {
-		Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerName(mode, map, brawlerName);
-		if(statistics == null) {
-			statistics = new Statistics();
-			statistics.setMode(mode);
-			statistics.setMap(map);
-			statistics.setBrawlerName(brawlerName);
-			statistics.setRankSum(rank);
-			statistics.setCnt(Long.valueOf(cnt));
-			statisticsRepository.save(statistics);
-		}else {
-			statistics.setCnt(statistics.getCnt() + cnt);
-			statistics.setRankSum(statistics.getRankSum() + rank);
-		}
-		}catch(Exception e) {
+			Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerName(mode, map, brawlerName);
+			if (statistics == null) {
+				statistics = new Statistics();
+				statistics.setMode(mode);
+				statistics.setMap(map);
+				statistics.setBrawlerName(brawlerName);
+				statistics.setRankSum(rank);
+				statistics.setCnt(Long.valueOf(cnt));
+				statisticsRepository.save(statistics);
+			} else {
+				statistics.setCnt(statistics.getCnt() + cnt);
+				statistics.setRankSum(statistics.getRankSum() + rank);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-
 	public void saveStats() {
 		// TODO Auto-generated method stub
 		List<GameMapDto> modes = recordRepository.getDistinctModes();
-		for(GameMapDto gameMode : modes) {			
+		for (GameMapDto gameMode : modes) {
 			saveDistinctGameMap(gameMode.getMode());
 		}
 		List<GameMapDto> maps = gameMapRepositry.getGameMaps(null);
-		maps.stream().forEach(map ->{
+		maps.stream().forEach(map -> {
 			String mode = map.getMode();
 			RecordSearch recordSearch = new RecordSearch();
 			recordSearch.setMode(mode);
@@ -416,20 +416,73 @@ public class RecordService {
 			recordSearch.setTrophyRange("highRank");
 			recordSearch.setStatUpdated(false);
 			List<RecordResultDto> stats;
-			if(CommonUtil.isTrioMode(map.getMode())) {
+			if (CommonUtil.isTrioMode(map.getMode())) {
 				stats = recordRepository.findByMap(recordSearch);
 				recordRepository.updateStatUpdated(recordSearch);
-				for(RecordResultDto stat : stats) {
-					saveTrioStat(mode, map.getName(), stat.getBrawlerName(),  stat.getResult(), stat.getCnt().intValue());
-				};
-			}else {
+				for (RecordResultDto stat : stats) {
+					saveTrioStat(mode, map.getName(), stat.getBrawlerName(), stat.getResult(),
+							stat.getCnt().intValue());
+				}
+				;
+			} else {
 				stats = recordRepository.findSoloDuoByMap(recordSearch);
 				recordRepository.updateStatUpdated(recordSearch);
-				for(RecordResultDto stat : stats) {
-					saveDuoSoloStat(mode, map.getName(), stat.getBrawlerName(), Long.valueOf(stat.getRankSum()), stat.getCnt().intValue());
+				for (RecordResultDto stat : stats) {
+					saveDuoSoloStat(mode, map.getName(), stat.getBrawlerName(), Long.valueOf(stat.getRankSum()),
+							stat.getCnt().intValue());
 				}
 			}
 		});
+	}
+
+	public void saveDuels(String tag, Item item) {
+		// TODO : not completed
+		// if there is a saved record already, then just update throphychange
+		Record foundRecord = recordRepository.findOne(tag, item.getBattleTime());
+		if (foundRecord != null) {
+			foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+			recordRepository.save(foundRecord);
+			return;
+		}
+
+		List<Player> players = item.getBattle().getPlayers();
+
+		Record myRecord = null;
+		List<Record> groupRecords = new ArrayList<Record>();
+
+		for (int i = 0; i < players.size(); i++) {
+			Player player = players.get(i);
+			String mode = item.getBattle().getMode(); // event mode -> battle mode : event mode is null
+			String map = item.getEvent().getMap();
+			Long rank = i + 1L;
+			String brawlerName = player.getBrawler().getName();
+			Integer trophies = player.getBrawler().getTrophies();
+
+			RecordDuo recordDuo = new RecordDuo();
+			recordDuo.setTag(player.getTag());
+			recordDuo.setBattleTime(item.getBattleTime());
+			recordDuo.setBrawlerName(brawlerName);
+			recordDuo.setPower(player.getBrawler().getPower());
+			recordDuo.setTrophies(trophies);
+
+			recordDuo.setMap(map);
+			// recordDuo.setGroupKey(groupKey);
+			recordDuo.setMode(mode);
+			recordDuo.setType(item.getBattle().getType());
+			recordDuo.setResultRank(rank.intValue());
+			recordDuo.setPlayerName(player.getName());
+			recordDuo.setEventId(item.getEvent().getId());
+			recordDuo.setBrawlerId(player.getBrawler().getId());
+			if (tag.equals(player.getTag())) {
+				recordDuo.setTrophyChange(item.getBattle().getTrophyChange());
+				myRecord = recordDuo;
+			}
+			recordDuo.setStatUpdated(false);
+			groupRecords.add(recordDuo);
+
+		}
+		Record.setRelation(myRecord, groupRecords);
+		recordRepository.save(myRecord);
 	}
 
 }

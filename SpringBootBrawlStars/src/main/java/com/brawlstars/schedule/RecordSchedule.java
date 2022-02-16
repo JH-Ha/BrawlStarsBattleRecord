@@ -57,10 +57,12 @@ public class RecordSchedule {
 				String mode = item.getBattle().getMode();
 				if (CommonUtil.isTrioMode(mode)) {
 					recordService.saveTrio(tag, item);
-				} else if (CommonUtil.isDuo(mode)) {
-					recordService.saveDuo(tag, item);
+				} else if (CommonUtil.isDuoShowdown(mode)) {
+					recordService.saveDuoShowdown(tag, item);
 				} else if (CommonUtil.isSolo(mode)) {
 					recordService.saveSolo(tag, item);
+				} else if (CommonUtil.isDuels(mode)) {
+					//recordService.saveDuels(tag, item);
 				}
 			});
 		} catch (Exception e) {
