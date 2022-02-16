@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import "./TopBar.scss";
 import i18n from "./i18n";
@@ -12,6 +12,13 @@ const TopBar = () => {
 
   const location = useLocation();
   const history = useHistory();
+
+  useEffect(() => {
+    const curLang = location.pathname.slice(1, 3);
+    setLanguage(curLang);
+    i18n.changeLanguage(curLang);
+  }, []);
+
   const changelanguageToKo = () => {
     i18n.changeLanguage('ko');
     setLanguage('ko');
