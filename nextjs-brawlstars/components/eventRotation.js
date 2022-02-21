@@ -80,8 +80,8 @@ function EventRotation({ todayEvents, nextEvents }) {
                             </div>
                             <div className={styles.winRateInfo}>
                                 {ele.winRate?.map(e => {
-                                    return <div key={`${ele.event.map}-${e.event.mode}-${e.brawlerName}`}>
-                                        <img className="brawlerImg" src={`/images/${e.brawlerName}.png`} alt={e.brawlerName} />
+                                    return <div key={`${ele.event.map}-${ele.event.mode}-${e.brawlerName}`}>
+                                        <img className={styles.brawlerImg} src={`/images/${e.brawlerName}.png`} alt={e.brawlerName} />
                                         {isTrio(ele.event.mode) ?
                                             <div>{Math.floor(e.winRate * 100)}%</div>
                                             : <div>{Math.floor(e.averageRank * 100) / 100}</div>
