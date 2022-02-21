@@ -301,6 +301,9 @@ contact : cubeprince@gmail.com`,
             "3vs3Victories": "3대3 승리",
             "soloVictories": "솔로 승리",
             "duoVictories": "듀오 승리",
+
+            "Today's Events": "오늘의 이벤트",
+            "Next Events": "다음 이벤트",
         }
     },
     ja: {
@@ -545,6 +548,9 @@ contact : cubeprince@gmail.com`,
             "3vs3Victories": "3対3勝利数",
             "soloVictories": "ソロ勝利数",
             "duoVictories": "デュオ勝利数",
+
+            "Today's Events": "今日のイベント",
+            "Next Events": "ネクストイベント",
         }
     }
 };
