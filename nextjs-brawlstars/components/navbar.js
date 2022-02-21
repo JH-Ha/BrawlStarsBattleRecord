@@ -11,11 +11,7 @@ const Navbar = () => {
     const [language, setLanguage] = useState('en');
     const [toggleActive, setToggleActive] = useState(false);
 
-    //const location = useLocation();
-    //const history = useHistory();
     const router = useRouter();
-    console.log("test");
-    console.log(router);
 
     useEffect(() => {
         //const curLang = location.pathname.slice(1, 3);
