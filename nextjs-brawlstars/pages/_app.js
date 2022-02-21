@@ -6,13 +6,9 @@ import Loading from '../components/Loading'
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const handleRouteChange = (url, { shallow }) => {
-      console.log(
-        `App is changing to ${url} ${shallow ? 'with' : 'without'
-        } shallow routing`
-      );
       setIsLoading(true);
     }
     const handleRouteComplete = (url, { shallow }) => {
