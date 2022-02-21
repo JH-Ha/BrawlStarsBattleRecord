@@ -6,55 +6,9 @@ import styles from "../styles/EventRotation.module.scss";
 import DisplayTime from './DisplayTime';
 import i18n from './i18n';
 
-const EventRotation = () => {
-    //const [events, setEvents] = useState([]);
+function EventRotation({ todayEvents, nextEvents }) {
 
-    const [todayEvents, setTodayEvents] = useState([]);
-    const [nextEvents, setNextEvents] = useState([]);
-    const [update, setUpdate] = useState(0);
     const { t } = useTranslation();
-    //const history = useHistory();
-
-    //update components every minutes
-    setInterval(() => {
-        setUpdate(update + 1);
-    }, 60000);
-
-    useEffect(() => {
-        const eventInfo = getData("/api/events/rotation").then(response => {
-            //console.log(response.data);
-            const events = response.data;
-            let now = new Date();
-            let todayEventsTemp = [];
-            let nextEventsTemp = [];
-
-            //console.log(showdownEvents);
-
-            events
-                .filter(e => e.event.mode !== 'duoShowdown')
-                .forEach(e => {
-                    const startTime = getLocalTime(e.startTime);
-                    const endTime = getLocalTime(e.endTime);
-                    if ((startTime < now) && (now <= endTime)) {
-                        todayEventsTemp.push(e);
-                    } else {
-                        nextEventsTemp.push(e);
-                    }
-                    //console.log(`${startTime} - ${now} -${endTime}`);
-                    if (e.event.mode === 'soloShowdown' && e.startTime.substr(9, 2) ===
-                        "08") {
-                        e.event.isPlus = true;
-                    }
-                    if (e.statistics !== null) {
-                        e.winRate = calWinRate(e.statistics, e.event.mode).slice(0, 5);
-                    }
-                });
-            setTodayEvents(todayEventsTemp);
-            setNextEvents(nextEventsTemp);
-            return response.data;
-        })
-        console.log(eventInfo);
-    }, []);
 
     const onClickEvent = (map, mode) => {
         history.push(`/${i18n.language}/map/${map}/mode/${mode}`);
@@ -144,5 +98,7 @@ const EventRotation = () => {
         </div>
     )
 }
+
+
 
 export default EventRotation;
