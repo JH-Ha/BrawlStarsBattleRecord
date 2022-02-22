@@ -5,13 +5,14 @@ import { useTranslation } from 'react-i18next';
 import styles from "../styles/EventRotation.module.scss";
 import DisplayTime from './DisplayTime';
 import i18n from './i18n';
+import { useRouter } from 'next/router';
 
 function EventRotation({ todayEvents, nextEvents }) {
 
     const { t } = useTranslation();
-
+    const router = useRouter();
     const onClickEvent = (map, mode) => {
-        history.push(`/${i18n.language}/map/${map}/mode/${mode}`);
+        router.push(`/${i18n.language}/map/${map}/mode/${mode}`);
     }
 
     return (

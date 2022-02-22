@@ -23,7 +23,14 @@ export default function MapList({ mode, filteredMaps }) {
     const clickMap = (mapName, mapMode) => {
         let paramMapName = mapName.replace("&", "%26");
         // let { history, i18n } = this.props;
-        // history.push(`/${i18n.language}/map/${paramMapName}/mode/${mapMode}`);
+        router.push({
+            pathname: "/map/[map]/mode/[mode]",
+            query: {
+                map: paramMapName,
+                mode: mapMode
+            }
+        });
+        //`/${i18n.language}/map/${paramMapName}/mode/${mapMode}`);
     }
 
     const changeMode = (value) => {
