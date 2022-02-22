@@ -18,6 +18,8 @@
     }
     .mapNameContainer{
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
         cursor: pointer;
         .mapName{
             margin-right: 10px;
