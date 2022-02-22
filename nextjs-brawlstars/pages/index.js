@@ -4,6 +4,7 @@ import EventRotation from '../components/eventRotation'
 import { getData } from '../components/ApiHandler'
 import { calWinRate, getLocalTime, isTrio } from '../components/BaseFunctions';
 import Script from 'next/script'
+import i18n from '../components/i18n';
 
 export default function Home({ todayEvents, nextEvents }) {
   return (
@@ -35,12 +36,13 @@ export default function Home({ todayEvents, nextEvents }) {
 
 
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ locale }) {
   // Fetch data from external API
   // Pass data to the page via props
 
   const res = await getData("/api/events/rotation");
   //const data = await res.json();
+  i18n.changeLanguage(locale);
 
   const events = res.data;
   let now = new Date();

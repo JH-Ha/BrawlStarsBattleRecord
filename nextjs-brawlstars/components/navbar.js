@@ -12,35 +12,23 @@ const Navbar = () => {
     const [toggleActive, setToggleActive] = useState(false);
 
     const router = useRouter();
-
+    const { pathname, asPath, query } = router;
     useEffect(() => {
-        //const curLang = location.pathname.slice(1, 3);
         const curLang = router.locale;
         setLanguage(curLang);
-        i18n.changeLanguage(curLang);
     }, []);
 
     const changelanguageToKo = () => {
-        i18n.changeLanguage('ko');
         setLanguage('ko');
-        console.log(history);
-        router.push(router.pathname, { locale: 'ko' });
-        //const nextLocation = location.pathname.replace(language, "ko");
-        //router.push(nextLocation);
+        router.push({ pathname, query }, asPath, { locale: 'ko' });
     }
     const changelanguageToEn = () => {
-        i18n.changeLanguage('en');
         setLanguage('en');
-        //const nextLocation = location.pathname.replace(language, "en");
-        //router.push(nextLocation);
-        router.push(router.pathname, { locale: 'en' });
+        router.push({ pathname, query }, asPath, { locale: 'en' });
     }
     const changelanguageToJa = () => {
-        i18n.changeLanguage('ja');
         setLanguage('ja');
-        //const nextLocation = location.pathname.replace(language, "ja");
-        //router.push(nextLocation);
-        router.push(router.pathname, { locale: 'ja' });
+        router.push({ pathname, query }, asPath, { locale: 'ja' });
     }
     const clickToggleBtn = () => {
         setToggleActive((value) => {
