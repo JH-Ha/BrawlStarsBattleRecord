@@ -1,7 +1,7 @@
 import Layout from '../components/layout'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import '../styles/globals.css'
+import '../styles/globals.scss'
 import Loading from '../components/Loading'
 
 function MyApp({ Component, pageProps }) {

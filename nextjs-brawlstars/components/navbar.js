@@ -63,7 +63,7 @@ const Navbar = () => {
                 <li className={styles.item}><Link href={`/${language}/`} >Home</Link></li>
                 <li className={styles.item}><Link href={`/${language}/info`}>Info</Link></li>
                 <li className={styles.item}><Link href={`/${language}/userList`}>Players</Link></li>
-                <li className={styles.item}><Link href={`/${language}/mapList`} >Maps</Link></li>
+                <li className={styles.item}><Link href={`/${language}/mapList/gemGrab`} >Maps</Link></li>
                 <li className={styles.item}><Link href={`/${language}/blog`} >Blog</Link></li>
                 <div className={styles.languageContainer}>
                     <div className={`${styles.language} ${language === 'en' ? styles.selected : ''}`} onClick={changelanguageToEn}>en</div>
