@@ -50,7 +50,7 @@ function EventRotation({ todayEvents, nextEvents }) {
 
                                     </div>
                                 })}
-                                {ele.winRate?.length === 0 ? <div className='noStats'> No Statistics </div> : <div></div>}
+                                {ele.winRate?.length === 0 ? <div className={styles.noStats}> No Statistics </div> : <div></div>}
                             </div>
                         </div>
                     </div>
