@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { getData } from '../../components/ApiHandler';
 import ModeList from '../../components/modeList';
 import styles from '../../styles/MapList.module.scss';
+import Head from 'next/head';
 
 const getFilteredMap = (maps, mode) => {
     let filteredMaps = maps;
@@ -41,9 +42,9 @@ export default function MapList({ mode, filteredMaps }) {
     }
 
     return (<><div className={styles.mapList}>
-        {/* {this.state.loading ?
-            <Loading></Loading>
-            : ""} */}
+        <Head>
+            <title>Map List - Brawl Meta</title>
+        </Head>
         <h3>
             {t('mapsGuide')}
         </h3>
