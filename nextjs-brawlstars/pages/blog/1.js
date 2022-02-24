@@ -48,7 +48,7 @@ export default function Post1() {
                     <div className={styles.discription}>모 아니면 도</div>
                 </div>
                 <div>
-                    쇼다운에는 어떨까요? 며칠 전에 등장했던 '모 아니면 도'에서는 13위로
+                    쇼다운에는 어떨까요? 며칠 전에 등장했던 &apos;모 아니면 도&apos;에서는 13위로
                     잼그랩에 비하면 낮은 순위를 기록하고 있습니다.
                     오늘 등장한 맵인 호수 천국에서도 16위로 다소 부진한 성적을 내고 있는데요.
                     <br />
