@@ -48,11 +48,11 @@ const Navbar = () => {
                 </Link>
             </div>
             <ul className={`${styles.menuContainer} ${toggleActive && styles.active}`}>
-                <li className={styles.item}><Link href={`/${language}/`} >Home</Link></li>
-                <li className={styles.item}><Link href={`/${language}/info`}>Info</Link></li>
-                <li className={styles.item}><Link href={`/${language}/userList`}>Players</Link></li>
-                <li className={styles.item}><Link href={`/${language}/mapList/gemGrab`} >Maps</Link></li>
-                <li className={styles.item}><Link href={`/${language}/blog`} >Blog</Link></li>
+                <li className={styles.item}><Link href={`/`} >Home</Link></li>
+                <li className={styles.item}><Link href={`/info`}>Info</Link></li>
+                <li className={styles.item}><Link href={`/userList`}>Players</Link></li>
+                <li className={styles.item}><Link href={`/mapList/gemGrab`} >Maps</Link></li>
+                <li className={styles.item}><Link href={`/blog`} >Blog</Link></li>
                 <div className={styles.languageContainer}>
                     <div className={`${styles.language} ${language === 'en' ? styles.selected : ''}`} onClick={changelanguageToEn}>en</div>
                     <div className={`${styles.language} ${language === 'ko' ? styles.selected : ''}`} onClick={changelanguageToKo}>ko</div>
