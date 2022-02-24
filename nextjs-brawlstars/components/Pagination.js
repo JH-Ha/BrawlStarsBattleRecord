@@ -73,7 +73,7 @@ class Pagination extends Component {
 
     //console.log("chagnePageHandler", this.props.onClick);
     return (
-      <div className={`${styles.pagination} center`}>
+      <div className={`${styles.pagination} ${styles.center}`}>
         <div className={styles.btnContainer}>
           {pageList.map((page, index) => {
             return (
