@@ -8,7 +8,7 @@ const Footer = () => {
         <footer className={styles.footer}>
             This material is unofficial and is not endorsed by Supercell.
             <br />
-            For more information see <a href="https://www.supercell.com/fan-content-policy">Supercell's Fan Content Policy</a>
+            For more information see <a href="https://www.supercell.com/fan-content-policy">Supercell&apos;s Fan Content Policy</a>
         </footer>
     )
 };

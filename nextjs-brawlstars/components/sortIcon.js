@@ -8,7 +8,7 @@ const DESC = "DESC";
 class SortIcon extends Component {
     render() {
         const { order } = this.props;
-        return <div>
+        return <div style={{ width: "10px" }}>
             {order === DEFAULT ?
                 <FontAwesomeIcon icon={faSort} />
                 : order === DESC ?
