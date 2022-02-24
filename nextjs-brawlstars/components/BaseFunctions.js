@@ -47,7 +47,6 @@ function getLocalTime(time) {
     return new Date(`${year}-${month}-${date}${hours}:${minutes}:${seconds}`);
 }
 function calDisplayTime(battleTime) {
-
     let localeBattleTime = getLocalTime(battleTime);
     let now = new Date();
     let diffTime = (now - localeBattleTime) / 1000;
