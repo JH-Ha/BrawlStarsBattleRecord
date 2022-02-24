@@ -57,8 +57,8 @@ export default function UserList({ userList, curPage, numUser, propNickname }) {
         <title>{`User List`}</title>
       </Head>
       <h3>{t('userListGuide')}</h3>
-      {/* TODO : implement registration */}
-      <h3>{t('registerGuide')} <button onClick={goRegisterPage} className="btn btn-primary">{t('registration')}</button></h3>
+      {/* TODO : migrate register user */}
+      {/* <h3>{t('registerGuide')} <button onClick={goRegisterPage} className="btn btn-primary">{t('registration')}</button></h3> */}
       <div className={styles.inputContainer}>
         <input type="text"
           placeholder="search user nickname"
