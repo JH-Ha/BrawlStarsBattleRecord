@@ -1,5 +1,10 @@
 package com.brawlstars.schedule;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,8 +16,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.Item;
 import com.brawlstars.repository.MemberRepository;
+import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.MemberService;
 import com.brawlstars.service.RecordService;
+import com.brawlstars.service.StatisticsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -29,6 +36,8 @@ public class ScheduleTest {
 	MemberRepository memberRepository;
 	@Autowired
 	RecordService recordService;
+	@Autowired
+	StatisticsService statisticsService;
 	
 	
 	@BeforeEach
@@ -55,7 +64,19 @@ public class ScheduleTest {
 	}
 	
 	@Test
-	public void update() {
+	public void saveStatisticsTest() {
 		recordSchedule.updateStatistics();
+		
+		LocalDate localDate = LocalDate.now();
+		String yearMonth = localDate.format(DateTimeFormatter.ofPattern("yyyyMM"));
+		List<String> yearMonthList = new ArrayList<>();
+		yearMonthList.add(yearMonth);
+		
+		List<RecordResultDto> recordResultDtos = statisticsService.getStats("siege", "Bot Drop", yearMonthList);
+		recordResultDtos.forEach(a -> {
+			System.out.println(a.getBrawlerName() + " " + a.getResult() + " " + a.getCnt());
+		});
+		RecordResultDto recordResultDto = recordResultDtos.stream().filter(a -> a.getBrawlerName().equals("BARLEY")).findFirst().get();
+		assertThat(recordResultDto.getResult()).isEqualTo("victory");
 	}
 }

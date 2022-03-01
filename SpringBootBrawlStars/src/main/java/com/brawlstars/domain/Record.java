@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -28,8 +29,11 @@ import lombok.Setter;
 @DiscriminatorColumn(name = "game_type")
 @Getter
 @Setter
-@Table(uniqueConstraints = { @UniqueConstraint(name = "uniqueGame", columnNames = { "tag", "battleTime" }) })
-
+@Table(uniqueConstraints = { @UniqueConstraint(name = "uniqueGame", columnNames = { "tag", "battleTime", "brawlerName" }) },
+		indexes = {
+			@Index(name = "gameStatIdx", columnList = "mode, map, statUpdated"),
+			@Index(name = "gameTrendIdx", columnList = "recordDate, mode, map, brawlerName")
+		})
 public class Record {
 
 	@Id
@@ -37,12 +41,15 @@ public class Record {
 	@Column(name = "record_id")
 	private Long id;
 	
+	@Column(length = 8)
+	private String recordDate;
 	@Column(length = 20)
 	private String tag;
 	@Column(length = 25)
 	private String battleTime;
-	@Column(length = 50)
+	@Column(length = 25)
 	private String brawlerName;
+	@Column(length = 25)
 	private String brawlerId;
 	private Integer power;
 	private Integer trophies;
@@ -84,6 +91,9 @@ public class Record {
 
 	@ColumnDefault("false")
 	private Boolean statUpdated;
+	
+	@ColumnDefault("false")
+	private Boolean isStatCandidate;
 	
 	public static void setRelation(Record parent, List<Record> groupRecords) {
 		parent.setGroupRecords(groupRecords);

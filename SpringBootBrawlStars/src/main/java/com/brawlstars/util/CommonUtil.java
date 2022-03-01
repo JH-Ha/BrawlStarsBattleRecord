@@ -7,25 +7,23 @@ public class CommonUtil {
 				|| "volleyBrawl".equals(mode) || "holdTheTrophy".equals(mode) || "trophyThieves".equals(mode);
 	}
 
-	public static boolean isDuo(String mode) {
-		// TODO Auto-generated method stub
+	public static boolean isDuoShowdown(String mode) {
 		return "duoShowdown".equals(mode);
 	}
+	
+	public static boolean isDuels(String mode) {
+		return "duels".equals(mode);
+	}
+	
 	public static boolean isAll(String mode) {
 		return "ALL".equals(mode);
 	}
 	public static boolean isBigGame(String mode) {
-		if ("bigGame".equals(mode)) {
-			return true;
-		}
-		return false;
+		return "bigGame".equals(mode);
 	}
 
 	public static boolean isSolo(String mode) {
-		if ("soloShowdown".equals(mode)) {
-			return true;
-		}
-		return false;
+		return "soloShowdown".equals(mode);
 	}
 
 }
