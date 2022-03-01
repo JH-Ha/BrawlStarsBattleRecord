@@ -40,7 +40,7 @@ public class StatisticsController {
 		
 		if(CommonUtil.isTrioMode(mode)) {
 			return statisticsService.getTrioStats(mode, map, yearMonth);
-		}else if(CommonUtil.isDuoShowdown(mode)) {
+		}else if(CommonUtil.isDuoShowdown(mode) || CommonUtil.isSolo(mode)) {
 			return statisticsService.getDuoSoloStats(mode, map, yearMonth);
 		} else {
 			// TODO : add duel
