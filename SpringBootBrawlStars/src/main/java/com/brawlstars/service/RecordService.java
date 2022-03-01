@@ -2,6 +2,8 @@ package com.brawlstars.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -33,7 +35,7 @@ import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.repository.RecordDto;
 import com.brawlstars.repository.RecordRepository;
 import com.brawlstars.repository.RecordResultDto;
-import com.brawlstars.repository.StatisticsRepository;
+import com.brawlstars.repository.StatisticsRepositoryInterface;
 import com.brawlstars.util.CommonUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -53,7 +55,7 @@ public class RecordService {
 	private BrawlStarsAPI brawlStarsAPI;
 
 	@Autowired
-	StatisticsRepository statisticsRepository;
+	StatisticsRepositoryInterface statisticsRepository;
 
 	public static String getOppositeResult(String result) {
 		if ("defeat".equals(result)) {
@@ -365,9 +367,10 @@ public class RecordService {
 		}
 	}
 
-	public void saveTrioStat(String mode, String map, String brawlerName, String result, Integer cnt) {
-		Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerNameAndResult(mode, map, brawlerName,
-				result);
+	public void saveTrioStat(String mode, String map, String brawlerName, String result, Integer cnt,
+			String yearMonth) {
+		Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerNameAndResultAndYearMonth(mode, map,
+				brawlerName, result, yearMonth);
 		if (statistics == null) {
 			statistics = new Statistics();
 			statistics.setMode(mode);
@@ -375,15 +378,17 @@ public class RecordService {
 			statistics.setBrawlerName(brawlerName);
 			statistics.setResult(result);
 			statistics.setCnt(Long.valueOf(cnt));
+			statistics.setYearMonth(yearMonth);
 			statisticsRepository.save(statistics);
 		} else {
 			statistics.setCnt(statistics.getCnt() + cnt);
 		}
 	}
 
-	public void saveDuoSoloStat(String mode, String map, String brawlerName, Long rank, Integer cnt) {
+	public void saveDuoSoloStat(String mode, String map, String brawlerName, Long rank, Integer cnt, String yearMonth) {
 		try {
-			Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerName(mode, map, brawlerName);
+			Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerNameAndYearMonth(mode, map,
+					brawlerName, yearMonth);
 			if (statistics == null) {
 				statistics = new Statistics();
 				statistics.setMode(mode);
@@ -391,6 +396,7 @@ public class RecordService {
 				statistics.setBrawlerName(brawlerName);
 				statistics.setRankSum(rank);
 				statistics.setCnt(Long.valueOf(cnt));
+				statistics.setYearMonth(yearMonth);
 				statisticsRepository.save(statistics);
 			} else {
 				statistics.setCnt(statistics.getCnt() + cnt);
@@ -402,7 +408,10 @@ public class RecordService {
 	}
 
 	public void saveStats() {
-		// TODO Auto-generated method stub
+
+		LocalDate localDate = LocalDate.now();
+		String yearMonth = localDate.format(DateTimeFormatter.ofPattern("yyyyMM"));
+
 		List<GameMapDto> modes = recordRepository.getDistinctModes();
 		for (GameMapDto gameMode : modes) {
 			saveDistinctGameMap(gameMode.getMode());
@@ -420,8 +429,8 @@ public class RecordService {
 				stats = recordRepository.findByMap(recordSearch);
 				recordRepository.updateStatUpdated(recordSearch);
 				for (RecordResultDto stat : stats) {
-					saveTrioStat(mode, map.getName(), stat.getBrawlerName(), stat.getResult(),
-							stat.getCnt().intValue());
+					saveTrioStat(mode, map.getName(), stat.getBrawlerName(), stat.getResult(), stat.getCnt().intValue(),
+							yearMonth);
 				}
 				;
 			} else {
@@ -429,7 +438,7 @@ public class RecordService {
 				recordRepository.updateStatUpdated(recordSearch);
 				for (RecordResultDto stat : stats) {
 					saveDuoSoloStat(mode, map.getName(), stat.getBrawlerName(), Long.valueOf(stat.getRankSum()),
-							stat.getCnt().intValue());
+							stat.getCnt().intValue(), yearMonth);
 				}
 			}
 		});
