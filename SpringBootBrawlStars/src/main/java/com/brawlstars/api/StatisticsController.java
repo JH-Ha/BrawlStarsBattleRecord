@@ -43,7 +43,7 @@ public class StatisticsController {
 		}else if(CommonUtil.isDuoShowdown(mode)) {
 			return statisticsService.getDuoSoloStats(mode, map, yearMonth);
 		} else {
-			// TODO : 모드 나누서 수정하기
+			// TODO : add duel
 			return statisticsService.getTrioStats(mode, map, yearMonth);
 		}
 	}
