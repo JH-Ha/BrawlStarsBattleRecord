@@ -116,7 +116,9 @@ public class RecordRepository {
 				break;
 			case "highRank":
 				builder.and(qRecord.trophies.gt(500)
-						.or(qRecord.type.eq("challenge")));
+						.or(qRecord.type.eq("challenge"))
+						.or(qRecord.type.eq("soloRanked"))
+						.or(qRecord.type.eq("teamRanked")));
 				break;
 			}
 		}
