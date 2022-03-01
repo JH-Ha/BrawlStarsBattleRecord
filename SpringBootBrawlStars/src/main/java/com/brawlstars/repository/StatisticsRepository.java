@@ -29,7 +29,7 @@ public class StatisticsRepository {
 				.from(qStatistics)
 				.where(qStatistics.mode.eq(mode)
 						.and(qStatistics.map.eq(map))
-						.and(qStatistics.yearMonth.in(yearMonth)))
+						.and(qStatistics.statsYearMonth.in(yearMonth)))
 				.groupBy(qStatistics.brawlerName, qStatistics.result).fetch();
 		return result;
 	}
@@ -41,7 +41,9 @@ public class StatisticsRepository {
 				.select(Projections.constructor(RecordResultDto.class, qStatistics.brawlerName, qStatistics.rankSum.sum(),
 						qStatistics.cnt.sum()))
 				.from(qStatistics)
-				.where(qStatistics.mode.eq(mode).and(qStatistics.map.eq(map)).and(qStatistics.yearMonth.in(yearMonth)))
+				.where(qStatistics.mode.eq(mode)
+						.and(qStatistics.map.eq(map))
+						.and(qStatistics.statsYearMonth.in(yearMonth)))
 				.groupBy(qStatistics.brawlerName).fetch();
 		return result;
 	}
