@@ -1,5 +1,8 @@
 package com.brawlstars.api;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,8 +14,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.brawlstars.domain.Statistics;
 import com.brawlstars.json.EventInfo;
+import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.RecordService;
 import com.brawlstars.service.StatisticsService;
 
@@ -48,10 +51,20 @@ public class EventController {
 		EventInfo[] eventInfos = null;
 		try {
 			eventInfos = brawlStarsAPI.getEventsRotation();
+			List<String> yearMonth = new ArrayList<>();
+			LocalDate today = LocalDate.now();
+			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMM");
+			
+			for(int i = 0; i < 3; i++) {
+				String iMonthsAgo = today.minusMonths(i).format(format);
+				yearMonth.add(iMonthsAgo);	
+			}
+			
 			for(int i = 0; i < eventInfos.length; i ++) {
 				EventInfo eventInfo = eventInfos[i];
 				String mode = eventInfo.getEvent().getMode();
-				List<Statistics> statistics = statisticsService.getStats(mode, eventInfo.getEvent().getMap());
+				
+				List<RecordResultDto> statistics = statisticsService.getStats(mode, eventInfo.getEvent().getMap(), yearMonth);
 				eventInfo.setStatistics(statistics);
 			}
 		} catch (Exception e) {

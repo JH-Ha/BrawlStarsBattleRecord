@@ -23,6 +23,7 @@ public class Statistics {
 	private String result;
 	private Long cnt;
 	private Long rankSum;
+	private String yearMonth;
 	
 	@Version
 	private Long version;
