@@ -65,4 +65,18 @@ public class StatisticsControllerTest {
 		//.andExpect(jsonPath(, matcher))
 		// Then
 	}
+	
+	@Test
+	public void testGetStatisticsWhenModeIsDuoshodown() throws Exception {
+		// Given
+		String mode = "duoShowdown";
+		String map = "Acid Lakes";
+		
+		// When
+		mockMvc.perform(get("/api/statistics/mode/"+ mode +"/map/" + map))
+		.andDo(print())
+		.andExpect(status().isOk());
+		//.andExpect(jsonPath(, matcher))
+		// Then
+	}
 }
