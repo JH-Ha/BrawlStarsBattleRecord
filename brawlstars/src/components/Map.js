@@ -7,7 +7,7 @@ import { isTrio } from './BaseFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { withTranslation } from 'react-i18next';
-import AdSense from 'react-adsense';
+//import AdSense from 'react-adsense';
 import Loading from './Loading';
 import { ReactTitle } from 'react-meta-tags';
 
@@ -38,11 +38,11 @@ class Map extends Component {
         this.setState({
             trophyRange: e.target.value,
         });
-        const { history } = this.props;
+        const { history, i18n } = this.props;
         let searchParams = new URLSearchParams(this.props.location.search);
         searchParams.set("trophyRange", e.target.value);
         this.getRecordResult(unescape(searchParams.get("mapName")), searchParams.get("mode"), searchParams.get("trophyRange"));
-        history.push(`/map?${searchParams.toString()}`);
+        history.push(`/${i18n.language}/map?${searchParams.toString()}`);
 
     }
 

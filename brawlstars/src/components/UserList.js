@@ -5,7 +5,7 @@ import "./UserList.scss";
 import "./Base.scss";
 import { getData } from './ApiHandler';
 import { withTranslation } from 'react-i18next';
-import AdSense from 'react-adsense';
+//import AdSense from 'react-adsense';
 import Loading from "./Loading";
 import { ReactTitle } from 'react-meta-tags';
 
@@ -85,16 +85,16 @@ class UserList extends Component {
     }
   }
   changePageHandler = (page) => {
-    let { history } = this.props;
+    let { history, i18n } = this.props;
 
     this.setState({ curPage: page });
-    history.push(`/userList?curPage=${page}`);
+    history.push(`/${i18n.language}/userList?curPage=${page}`);
 
   }
   showPlayList(tag) {
-    let { history } = this.props;
+    let { history, i18n } = this.props;
     tag = tag.replace("#", "%23");
-    history.push(`/battleLog/${tag}`);
+    history.push(`/${i18n.language}/battleLog/${tag}`);
 
   }
   searchNickname() {
@@ -118,8 +118,8 @@ class UserList extends Component {
     });
   }
   goRegisterPage = () => {
-    let { history } = this.props;
-    history.push(`/user`);
+    let { history, i18n } = this.props;
+    history.push(`/${i18n.language}/user`);
   }
 
   render() {

@@ -4,15 +4,14 @@
 
 브롤스타즈의 전적은 최근 25게임만 조회가 가능합니다. 과거의 게임 기록을 조회할 수 없기에, 게임을 위한 유의미한 통계 데이터를 얻기가 힘듭니다. 그래서 게임 데이터를 지속적으로 저장하고 분석하기 위해서 이 프로젝트를 진행하게 되었습니다.
 
-Front-End는 React로 제작되었고, Back-End는 firebase를 이용하여 제작되었습니다.
+Front-End는 React로 제작되었고, Back-End는 Spring framework를 이용하여 제작되었습니다.
 
-server.js를 실행시키면, firebase에 있는 user data를 가져와서 1시간마다 전적을 업데이트 시킵니다. 현재는 약 200명의 유저의 데이터가 업데이트 되고 있습니다.
 
 UserList 페이지에서 유저이름을 클릭하면, 해당 유저의 전적정보를 볼 수 있습니다. 
 
 ## version 1.0
 
-React + firebase 를 이용해서 구현한 버전입니다.
+React + firebase + nodejs를 이용해서 구현한 버전입니다.
 
 nodejs 로 서버를 실행시켜 주기적으로 firestore에 전투 기록을 insert합니다.
 
@@ -31,7 +30,7 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### 구현된 기능
 
-- UserList에서 유저를 클릭하면 전투 기록을 볼 수 있습니다. V1.0과는 다르게 전체 모드에 상관없이 기록을 보여줄 수 있도록 구현을 바꾸었으며, 모드 별 보기는 추가 예정입니다.
+- UserList에서 유저를 클릭하면 전투 기록을 볼 수 있습니다. V1.0과는 다르게 전체 모드에 상관없이 기록을 보여줄 수 있도록 구현을 바꾸었습니다.
 - 유저 이름으로 검색하여 전투 기록을 찾아 볼 수 있습니다. (V1.0과 동일)
 - 3대 3매칭에서 맵에서 어떤 브롤러가 승률이 높은지 확인할 수 있습니다.
 
@@ -45,6 +44,17 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### Update Log
 
+- v2.2.0 (2022.02.12)
+  - 구글 봇이 언어별로 검색기록을 따로 수집할 수 있도록 Url 에 언어정보가 추가 되었습니다.
+  - navigation bar 디자인이 변경되었습니다.
+  - blog 메뉴가 추가되었습니다.
+  
+- v2.1.0 (2022.02.05)
+  - brawlstat.xyz에서 brawlmeta.com으로 도메인을 변경하였습니다.
+  - https가 적용되었습니다.
+  - 구글 애널리틱스를 적용시켰습니다.
+  - 신규 유저 태그 조회 및 등록 기능이 추가되었습니다.
+    
 - v2.0.2 (2021.10.04)
    
    현재 로테이션인 이벤트 목록을 볼 수 있는 페이지 추가
@@ -55,10 +65,11 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### 개발 예정
 
-- 신규 유저 태그 조회 및 등록 기능
+- Duel 모드 수집할 수 있도록 업데이트 예정
+- 
 
 ## Demo Page
 
 hosting page
-- version 1.0 : http://brawlstars-260814.web.app
-- version 2.0 : http://www.brawlstat.xyz:8080/
+- version 1 : http://brawlstars-260814.web.app
+- version 2 : https://www.brawlmeta.com

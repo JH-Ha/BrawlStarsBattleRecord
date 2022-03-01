@@ -1,0 +1,26 @@
+{
+  "name": "nextjs-brawlstars",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 8081",
+    "build": "next build",
+    "start": "next start -p 8081",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.0.0",
+    "@fortawesome/react-fontawesome": "^0.1.17",
+    "axios": "^0.26.0",
+    "i18next": "^21.6.11",
+    "next": "12.1.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-i18next": "^11.15.4",
+    "sass": "^1.49.8"
+  },
+  "devDependencies": {
+    "eslint": "8.9.0",
+    "eslint-config-next": "12.1.0"
+  }
+}

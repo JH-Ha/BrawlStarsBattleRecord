@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { getData } from "./ApiHandler";
 import { calWinRate, getLocalTime, isTrio } from './BaseFunctions';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import "./EventRotation.scss";
 import DisplayTime from './DisplayTime';
 import { ReactTitle } from 'react-meta-tags';
+import i18n from './i18n';
 
 const EventRotation = () => {
     //const [events, setEvents] = useState([]);
@@ -58,12 +59,12 @@ const EventRotation = () => {
     }, []);
 
     const onClickEvent = (map, mode) => {
-        history.push(`/map/${map}/mode/${mode}`);
+        history.push(`/${i18n.language}/map/${map}/mode/${mode}`);
     }
 
     return (
         <div className="eventRotation">
-            <ReactTitle title={`Brawl Stat Event Rotation`} />
+            <ReactTitle title={`Brawl Meta Event Rotation`} />
             <div className="title">
                 Today's Events
             </div>
@@ -79,7 +80,7 @@ const EventRotation = () => {
                             onClick={() => onClickEvent(ele.event.map, ele.event.mode)}>
                             <div className="eventInfoContainer">
                                 <div className="modeImg">
-                                    <img src={`images/mode/${ele.event.mode}.png`} alt={ele.event.mode}></img>
+                                    <img src={`/images/mode/${ele.event.mode}.png`} alt={ele.event.mode}></img>
                                 </div>
                                 <div className="eventInfo">
                                     <div>{t(ele.event.mode)}</div>
@@ -116,7 +117,7 @@ const EventRotation = () => {
                             onClick={() => onClickEvent(ele.event.map, ele.event.mode)}>
                             <div className="eventInfoContainer">
                                 <div className="modeImg">
-                                    <img src={`images/mode/${ele.event.mode}.png`} alt={ele.event.mode}></img>
+                                    <img src={`/images/mode/${ele.event.mode}.png`} alt={ele.event.mode}></img>
                                 </div>
                                 <div className="eventInfo">
                                     <div>{t(ele.event.mode)}</div>
@@ -131,10 +132,10 @@ const EventRotation = () => {
                                             <div>{Math.floor(e.winRate * 100)}%</div>
                                             : <div>{Math.floor(e.averageRank * 100) / 100}</div>
                                         }
-
                                     </div>
 
                                 })}
+                                {ele.winRate?.length === 0 ? <div className='noStats'> No Statistics </div> : <div></div>}
                             </div>
                         </div>
                     </div>

@@ -65,7 +65,7 @@ class RegisterUser extends Component {
             </h3>
             <div className='inputContainer'>
                 <span className='sharpSign'>#</span>
-                <input type="text" placeHolder="enter your tag" value={this.state.tag}
+                <input type="text" placeholder="enter your tag" value={this.state.tag}
                     onChange={this.changeInput}
                 ></input>
                 <button className="btn btn-primary" onClick={this.searchTag}>search</button>
