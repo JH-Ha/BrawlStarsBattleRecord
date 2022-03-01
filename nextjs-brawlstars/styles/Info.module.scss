@@ -1,0 +1,28 @@
+.home{
+  .languageContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    .language {
+      padding: 5px 10px;
+      background: white;
+      border: 1px solid #007bff;
+      color: #007bff;
+      cursor: pointer;
+
+      &.selected {
+        color: white;
+        background: #007bff;
+      }
+    }
+  }
+  .contentContainer{
+    display: flex;
+    justify-content: center;
+    .content{
+      width : 300px;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+  }
+}

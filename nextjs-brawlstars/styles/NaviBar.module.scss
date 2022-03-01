@@ -1,0 +1,125 @@
+.naviBar {
+  text-align: center;
+  a,
+  a:visited,
+  a:link {
+    text-decoration: none;
+    color: white;
+  }
+  ul{
+    list-style: none;
+    padding : 0px;
+  }
+  color: white;
+  background: #263343;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 50px;
+  .logo{
+    position: absolute;
+    left: 0px;
+    height: 100%;
+    
+    .container{
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+    }
+    img{
+      width: 30px;
+      margin-right: 10px;
+    }
+    .imgAndName{
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+    }
+  }
+  .menuContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .item {
+      padding: 10px;
+
+      &.selected {
+        background: #0289a7;
+      }
+      &:hover{
+          background-color:#d49466;
+          border-radius: 4px;
+        }
+    }
+  }
+  .languageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: #eeeeee;
+    margin-left : 10px;
+    .language {
+      width : 25px;
+      height : 25px;
+      
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+      color : black;
+      cursor: pointer;
+      
+      &.selected {
+        color: white;
+        background: #007bff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px #2477ca;
+      }
+    }
+    .language:last-child{
+      border-right: none;;
+    }
+  }
+  .toggleBtn{
+    display: none;
+  }
+  @media screen and (max-width: 768px){
+    height: inherit;
+    flex-direction: column;
+    .logo{
+      position: relative;
+      display: flex;
+      .container{
+        padding : 10px;
+      }
+    }
+    .menuContainer{
+      display: none;
+      &.active{
+        display: flex;
+      }
+      flex-direction: column;
+      .item{
+        width: 100%;
+        
+      }
+      .languageContainer{
+        margin : 10px auto;
+      }
+    }
+    .toggleBtn{
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      display: block;
+      top : 10px;
+      font-size : 24px;
+      color : #d49466;
+      position: absolute;
+      right : 32px;
+    }
+  }
+}

@@ -4,7 +4,7 @@ import ModeList from './ModeList';
 import qs from 'qs';
 import { getData } from './ApiHandler';
 import { withTranslation } from 'react-i18next';
-import AdSense from 'react-adsense';
+//import AdSense from 'react-adsense';
 import Loading from './Loading';
 import { ReactTitle } from 'react-meta-tags';
 
@@ -16,10 +16,9 @@ class MapList extends Component {
         loading: false,
     }
     clickMap = (mapName, mapMode) => {
-        console.log(this);
         let paramMapName = mapName.replace("&", "%26");
-        let { history } = this.props;
-        history.push(`/map/${paramMapName}/mode/${mapMode}`);
+        let { history, i18n } = this.props;
+        history.push(`/${i18n.language}/map/${paramMapName}/mode/${mapMode}`);
     }
     setFilteredMap = (mode) => {
         let filteredMaps = this.state.maps;
@@ -33,27 +32,24 @@ class MapList extends Component {
         });
     }
     changeMode = (mode) => {
-        console.log(`changeMode ${mode}`);
-        console.log(this);
-
         this.setFilteredMap(mode);
 
-        let { history } = this.props;
-        history.push(`/mapList?mode=${mode}`);
+        let { history, i18n } = this.props;
+        history.push(`/${i18n.language}/mapList?mode=${mode}`);
     }
     componentDidMount() {
         const query = qs.parse(this.props.location.search, {
             ignoreQueryPrefix: true,
         });
-        console.log(`query mode ${query.mode}`);
 
         //this.setFilteredMap(query.mode);
         this.setState({
             loading: true,
         })
         getData(`/gameMap`).then(response => {
-            console.log(response);
-            const data = response.data;
+            const data = response.data.sort((a, b) => {
+                return a.mode.localeCompare(b.mode);
+            });
             let mode = 'gemGrab';
             if (query.mode !== undefined) {
                 mode = query.mode;
@@ -85,7 +81,7 @@ class MapList extends Component {
             <div className="gemGrabContainer">{
                 this.state.filteredMaps.map((map, index) => {
                     return <div key={index} className="gemGrabItem" >{t(map.name)}
-                        <img onClick={() => { this.clickMap(map.name, map.mode) }} src={`./images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.name}.png`} alt={map.name}></img>
+                        <img onClick={() => { this.clickMap(map.name, map.mode) }} src={`/images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.name}.png`} alt={map.name}></img>
                     </div>
                 })}
             </div>

@@ -4,7 +4,7 @@ import ModeList from './ModeList';
 import { isTrio } from './BaseFunctions';
 import RecordResult from "./RecordResult";
 import "./Statistics.scss";
-import AdSense from 'react-adsense';
+//import AdSense from 'react-adsense';
 import Loading from "./Loading";
 
 class Statistics extends Component {
@@ -28,7 +28,7 @@ class Statistics extends Component {
                 this.setState({
                     loading: false,
                 });
-                console.log(response);
+
                 const data = response.data;
                 console.log(data);
                 data.forEach(e => {

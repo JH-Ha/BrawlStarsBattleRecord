@@ -1,66 +1,76 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component, useEffect, useState } from "react";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import "./TopBar.scss";
 import i18n from "./i18n";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 
-class TopBar extends Component {
-  state = {
-    language: 'en',
-    toggleActive: false,
-  }
-  changelanguageToKo = () => {
+const TopBar = () => {
+  const [language, setLanguage] = useState('en');
+  const [toggleActive, setToggleActive] = useState(false);
+
+  const location = useLocation();
+  const history = useHistory();
+
+  useEffect(() => {
+    const curLang = location.pathname.slice(1, 3);
+    setLanguage(curLang);
+    i18n.changeLanguage(curLang);
+  }, []);
+
+  const changelanguageToKo = () => {
     i18n.changeLanguage('ko');
-    this.setState({
-      language: 'ko',
-    })
+    setLanguage('ko');
+    console.log(history);
+    const nextLocation = location.pathname.replace(language, "ko");
+    history.push(nextLocation);
   }
-  changelanguageToEn = () => {
+  const changelanguageToEn = () => {
     i18n.changeLanguage('en');
-    this.setState({
-      language: 'en',
-    })
+    setLanguage('en');
+    const nextLocation = location.pathname.replace(language, "en");
+    history.push(nextLocation);
   }
-  changelanguageToJa = () => {
+  const changelanguageToJa = () => {
     i18n.changeLanguage('ja');
-    this.setState({
-      language: 'ja',
+    setLanguage('ja');
+    const nextLocation = location.pathname.replace(language, "ja");
+    history.push(nextLocation);
+  }
+  const clickToggleBtn = () => {
+    setToggleActive((value) => {
+      return !value;
     })
   }
-  clickToggleBtn = () => {
-    this.setState({
-      toggleActive: !this.state.toggleActive,
-    })
-  }
-  render() {
-    return (
-      <div className="naviBar">
-        <div className="logo">
-          <Link to="/" className="container">
-            <img src="/brawlMeta.png" alt="brawlMeta.png" />
-            <div>Brawl Meta
-            </div>
-          </Link>
-        </div>
-        <div className={`menuContainer ${this.state.toggleActive && "active"}`}>
-          <Link to="/" className="item">Home</Link>
-          <Link to="/info" className="item">Info</Link>
-          <Link to="/userList" className="item">Players</Link>
-          <Link to="/mapList" className="item">Maps</Link>
-          <div className="languageContainer">
-            <div className={`language ${this.state.language === 'en' ? 'selected' : ''}`} onClick={this.changelanguageToEn}>en</div>
-            <div className={`language ${this.state.language === 'ko' ? 'selected' : ''}`} onClick={this.changelanguageToKo}>ko</div>
-            <div className={`language ${this.state.language === 'ja' ? 'selected' : ''}`} onClick={this.changelanguageToJa}>ja</div>
+
+  return (
+    <nav className="naviBar">
+      <div className="logo">
+        <Link to="/" className="container">
+          <img src="/brawlMeta.png" alt="brawlMeta.png" />
+          <div>Brawl Meta
           </div>
-        </div>
-        <div className="toggleBtn" onClick={this.clickToggleBtn}>
-          <FontAwesomeIcon icon={faBars} />
-        </div>
+        </Link>
       </div>
-    );
-  }
+      <ul className={`menuContainer ${toggleActive && "active"}`}>
+        <li className="item"><Link to={`/${language}/`} >Home</Link></li>
+        <li className="item"><Link to={`/${language}/info`}>Info</Link></li>
+        <li className="item"><Link to={`/${language}/userList`}>Players</Link></li>
+        <li className="item"><Link to={`/${language}/mapList`} >Maps</Link></li>
+        <li className="item"><Link to={`/${language}/blog`} >Blog</Link></li>
+        <div className="languageContainer">
+          <div className={`language ${language === 'en' ? 'selected' : ''}`} onClick={changelanguageToEn}>en</div>
+          <div className={`language ${language === 'ko' ? 'selected' : ''}`} onClick={changelanguageToKo}>ko</div>
+          <div className={`language ${language === 'ja' ? 'selected' : ''}`} onClick={changelanguageToJa}>ja</div>
+        </div>
+      </ul>
+      <div className="toggleBtn" onClick={clickToggleBtn}>
+        <FontAwesomeIcon icon={faBars} />
+      </div>
+    </nav>
+  );
+
 }
 
 export default TopBar;

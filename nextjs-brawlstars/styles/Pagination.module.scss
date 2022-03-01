@@ -1,0 +1,29 @@
+.pagination{
+    button{
+        background : none;
+    }
+    &.center{
+        display: flex;
+        justify-content: center;
+    }
+    .btnPage{
+        
+        color : #333333;
+        border : 0px;
+        width : 30px;
+        height : 30px;
+
+        &.activate{
+            background : #2477ca;
+            color : white;
+            box-shadow: 0px 0px 5px #2477ca;
+            border-radius: 5px;
+        }
+    }
+    .btnContainer{
+        background : #eeeeee;
+        border-radius: 5px;
+        margin-top : 10px;
+        
+    }
+}
