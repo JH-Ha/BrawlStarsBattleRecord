@@ -32,7 +32,7 @@ export default function Statistics({ tag, mode, recordArr, sumTotalGameNum }) {
             <div className={styles.modeListContainer}>
                 <ModeList key={mode} mode={mode} changeMode={changeMode} />
             </div>
-            <RecordResult key={recordArr} recordArr={recordArr} sumTotalGameNum={sumTotalGameNum} mode={mode}
+            <RecordResult key={recordArr} _recordArr={recordArr} sumTotalGameNum={sumTotalGameNum} mode={mode}
                 isPersonal={true} />
         </div>
     </div>
