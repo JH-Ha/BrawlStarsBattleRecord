@@ -22,6 +22,12 @@ public class RecordResultDto {
 		this.cnt = cnt;
 	}
 	
+	public RecordResultDto(String brawlerName, Long rankSum, Long cnt) {
+		this.brawlerName = brawlerName;
+		this.rankSum = rankSum.intValue();
+		this.cnt = cnt;
+	}
+	
 	public RecordResultDto(String brawlerName, Long cnt) {
 		this.brawlerName = brawlerName;
 		this.cnt = cnt;

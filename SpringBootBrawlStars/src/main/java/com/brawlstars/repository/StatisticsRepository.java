@@ -2,16 +2,49 @@ package com.brawlstars.repository;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import javax.persistence.EntityManager;
 
-import com.brawlstars.domain.Statistics;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-public interface StatisticsRepository extends JpaRepository<Statistics, Long>{
+import com.brawlstars.domain.QStatistics;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
-	Statistics findByModeAndMapAndBrawlerNameAndResult(String mode, String map, String brawlerName, String result);
+@Repository
+public class StatisticsRepository {
 
-	Statistics findByModeAndMapAndBrawlerName(String mode, String map, String brawlerName);
+	@Autowired
+	private EntityManager em;
 
-	List<Statistics> findByModeAndMap(String mode, String map);
-	
+	@Autowired
+	JPAQueryFactory queryFactory;
+
+	public List<RecordResultDto> getTrioStatByListYearMonth(String mode, String map, List<String> yearMonth) {
+		QStatistics qStatistics = QStatistics.statistics;
+
+		List<RecordResultDto> result = queryFactory
+				.select(Projections.constructor(RecordResultDto.class, qStatistics.brawlerName, qStatistics.result,
+						qStatistics.cnt.sum()))
+				.from(qStatistics)
+				.where(qStatistics.mode.eq(mode)
+						.and(qStatistics.map.eq(map))
+						.and(qStatistics.statsYearMonth.in(yearMonth)))
+				.groupBy(qStatistics.brawlerName, qStatistics.result).fetch();
+		return result;
+	}
+
+	public List<RecordResultDto> getDuoSoloStatByListYearMonth(String mode, String map, List<String> yearMonth) {
+		QStatistics qStatistics = QStatistics.statistics;
+		
+		List<RecordResultDto> result = queryFactory
+				.select(Projections.constructor(RecordResultDto.class, qStatistics.brawlerName, qStatistics.rankSum.sum(),
+						qStatistics.cnt.sum()))
+				.from(qStatistics)
+				.where(qStatistics.mode.eq(mode)
+						.and(qStatistics.map.eq(map))
+						.and(qStatistics.statsYearMonth.in(yearMonth)))
+				.groupBy(qStatistics.brawlerName).fetch();
+		return result;
+	}
 }

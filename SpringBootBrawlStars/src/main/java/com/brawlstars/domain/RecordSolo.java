@@ -32,6 +32,7 @@ public class RecordSolo extends Record {
 		if (tag.equals(player.getTag()))
 			recordSolo.setTrophyChange(item.getBattle().getTrophyChange());
 		recordSolo.setResultRank(resultRank);
+		recordSolo.setRecordDate(item.getBattleTime().substring(0, 8));
 		return recordSolo;
 	}
 }
