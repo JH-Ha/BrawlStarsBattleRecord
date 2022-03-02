@@ -22,4 +22,6 @@ public class GameMap {
 	String name;
 	@ColumnDefault("false")
 	private boolean isDeleted;
+	private String startTime;
+	private String endTime;
 }

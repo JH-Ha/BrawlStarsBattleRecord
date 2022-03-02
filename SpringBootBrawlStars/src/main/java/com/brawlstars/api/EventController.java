@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.brawlstars.json.EventInfo;
 import com.brawlstars.repository.RecordResultDto;
+import com.brawlstars.schedule.GameMapService;
 import com.brawlstars.service.RecordService;
 import com.brawlstars.service.StatisticsService;
 
@@ -30,6 +31,9 @@ public class EventController {
 	
 	@Autowired
 	StatisticsService statisticsService;
+	
+	@Autowired
+	GameMapService gameMapService;
 	
 	EventInfo[] eventInfos;
 	
@@ -65,6 +69,7 @@ public class EventController {
 				String mode = eventInfo.getEvent().getMode();
 				
 				List<RecordResultDto> statistics = statisticsService.getStats(mode, eventInfo.getEvent().getMap(), yearMonth);
+				gameMapService.updateTime(mode, eventInfo.getEvent().getMap(), eventInfo.getStartTime(), eventInfo.getEndTime());
 				eventInfo.setStatistics(statistics);
 			}
 		} catch (Exception e) {
