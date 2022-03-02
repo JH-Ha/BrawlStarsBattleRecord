@@ -8,9 +8,13 @@ import lombok.Setter;
 public class GameMapDto {
 	private String name;
 	private String mode;
-	public GameMapDto(String name, String mode) {
+	private String startTime;
+	private String endTime;
+	public GameMapDto(String name, String mode, String startTime, String endTime) {
 		this.name = name;
 		this.mode = mode;
+		this.startTime = startTime;
+		this.endTime = endTime;
 	}
 	public GameMapDto(String mode) {
 		this.mode = mode;
