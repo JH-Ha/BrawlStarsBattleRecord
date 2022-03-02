@@ -74,6 +74,51 @@ function calDisplayTime(battleTime) {
     }
     return displayTime;
 }
+function calDisplayMapTime(startTime, endTime) {
+    let startLocalTime = getLocalTime(startTime);
+    let endLocalTime = getLocalTime(endTime);
+    let now = new Date();
+    let diffTime = (now - endLocalTime) / 1000;
+    let displayTime = '';
+    if (now <= endLocalTime && now >= startLocalTime) {
+        displayTime = 'now';
+    }
+    else if (diffTime < 0) {
+        diffTime = -diffTime;
+        let diffDays = Math.floor(diffTime / 86400);
+        let diffHours = Math.floor(diffTime / 3600 - diffDays * 24);
+        let diffMinutes = Math.floor((diffTime / 60 % 60));
+
+        if (diffDays >= 1) {
+            displayTime += `${diffDays}d `;
+        }
+        if (diffHours >= 1) {
+            displayTime += `${diffHours}h `;
+        }
+        if (diffMinutes >= 1) {
+            displayTime += `${diffMinutes}m `;
+        }
+
+        displayTime = `in ${displayTime}`;
+    }
+    // in one day
+    else if (diffTime < 86400) {
+        let diffHours = Math.floor(diffTime / 3600);
+        let diffMinutes = Math.floor((diffTime / 60 - diffHours * 60));
+
+        if (diffHours >= 1) {
+            displayTime += `${diffHours}h `;
+        }
+        if (diffMinutes >= 1) {
+            displayTime += `${diffMinutes}m `;
+        }
+        displayTime += `ago`;
+    } else {
+        let diffDays = Math.floor(diffTime / 86400);
+        displayTime = `${diffDays}d ago`;
+    }
+    return displayTime;
+}
 
 function calWinRate(data, mode) {
     let records = {};
@@ -138,4 +183,4 @@ function calWinRate(data, mode) {
     return recordArr;
 }
 
-export { isTrio, isSolo, isDuo, isAll, getLocalTime, calDisplayTime, calWinRate };
+export { isTrio, isSolo, isDuo, isAll, getLocalTime, calDisplayTime, calWinRate, calDisplayMapTime };
