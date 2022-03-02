@@ -5,6 +5,7 @@ import { getData } from '../../components/ApiHandler';
 import ModeList from '../../components/modeList';
 import styles from '../../styles/MapList.module.scss';
 import Head from 'next/head';
+import i18n from '../../components/i18n';
 
 const getFilteredMap = (maps, mode) => {
     let filteredMaps = maps;
@@ -64,7 +65,7 @@ export default function MapList({ mode, filteredMaps }) {
 
 export async function getServerSideProps(context) {
     let { mode } = context.query;
-
+    i18n.changeLanguage(context.locale);
     const res = await getData(`/gameMap`);
     const data = res.data.sort((a, b) => {
         return a.mode.localeCompare(b.mode);
