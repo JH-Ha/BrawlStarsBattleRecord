@@ -106,10 +106,12 @@ export default function Map({ mapName, mode, recordArr, sumTotalGameNum }) {
         <h3>{t("Win Rate")} {t("Statistics")}</h3>
         <div className={styles.mapNameContainer} onClick={() => showMapImg()}>
             <span className={styles.mapName}>{t(mapName)}</span>
-            {isMapShown ?
-                <FontAwesomeIcon icon={faChevronUp} />
-                : <FontAwesomeIcon icon={faChevronDown} />
-            }
+            <div className={styles.chevronContainer}>
+                {isMapShown ?
+                    <FontAwesomeIcon icon={faChevronUp} />
+                    : <FontAwesomeIcon icon={faChevronDown} />
+                }
+            </div>
         </div>
         <div className={`${styles.mapImgContainer}
             ${mode.includes("Showdown") ? `${styles.showdown}` : ''}
