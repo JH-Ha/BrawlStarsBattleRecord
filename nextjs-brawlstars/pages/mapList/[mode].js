@@ -6,6 +6,7 @@ import ModeList from '../../components/modeList';
 import styles from '../../styles/MapList.module.scss';
 import Head from 'next/head';
 import i18n from '../../components/i18n';
+import { calDisplayMapTime } from '../../components/BaseFunctions';
 
 const getFilteredMap = (maps, mode) => {
     let filteredMaps = maps;
@@ -54,8 +55,16 @@ export default function MapList({ mode, filteredMaps }) {
         </div>
         <div className={styles.gemGrabContainer}>{
             filteredMaps.map((map, index) => {
-                return <div key={index} className={styles.gemGrabItem} >{t(map.name)}
-                    <img onClick={() => { clickMap(map.name, map.mode) }} src={`/images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.name}.png`} alt={map.name}></img>
+                return <div key={index} className={styles.gemGrabItem} >
+                    <div className={styles.mapTimeContainer}>
+                        <div className={styles.mapTime}>
+                            {calDisplayMapTime(map.startTime, map.endTime)}
+                        </div>
+                    </div>
+                    <div className={styles.mapName}>{t(map.name)}</div>
+                    <div className={styles.imgContainer}>
+                        <img onClick={() => { clickMap(map.name, map.mode) }} src={`/images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.name}.png`} alt={map.name}></img>
+                    </div>
                 </div>
             })}
         </div>
@@ -67,9 +76,25 @@ export async function getServerSideProps(context) {
     let { mode } = context.query;
     i18n.changeLanguage(context.locale);
     const res = await getData(`/gameMap`);
-    const data = res.data.sort((a, b) => {
-        return a.mode.localeCompare(b.mode);
-    });;
+
+    const data = res.data.map(a => {
+        let oneYearAgo = '20210301T000000.000Z';
+        if (a.startTime === null) {
+            a.startTime = oneYearAgo;
+        }
+        if (a.endTime === null) {
+            a.endTime = oneYearAgo;
+        }
+        return a;
+    }).sort((a, b) => {
+        let cmpResult = a.mode.localeCompare(b.mode);
+        if (cmpResult == 0) {
+            return b.startTime.localeCompare(a.startTime);
+        } else {
+            return cmpResult;
+        }
+    });
+    console.log(data);
 
     if (mode === undefined) {
         mode = 'gemGrab';
