@@ -16,6 +16,10 @@ public class GameMapDto {
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
+	public GameMapDto(String name, String mode) {
+		this.name = name;
+		this.mode = mode;
+	}
 	public GameMapDto(String mode) {
 		this.mode = mode;
 	}
