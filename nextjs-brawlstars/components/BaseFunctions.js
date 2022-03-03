@@ -11,7 +11,8 @@ function isTrio(mode) {
         mode === "volleyBrawl" ||
         mode === "basketBrawl" ||
         mode === "holdTheTrophy" ||
-        mode === "trophyThieves"
+        mode === "trophyThieves" ||
+        mode === "wipeout"
     ) {
         result = true;
     }
