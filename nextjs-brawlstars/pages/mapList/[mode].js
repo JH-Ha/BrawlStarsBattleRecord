@@ -24,7 +24,7 @@ export default function MapList({ mode, filteredMaps }) {
     const router = useRouter();
 
     const clickMap = (mapName, mapMode) => {
-        let paramMapName = mapName.replace("&", "%26");
+        let paramMapName = encodeURIComponent(mapName);
         // let { history, i18n } = this.props;
         router.push({
             pathname: "/map/[map]/mode/[mode]",
@@ -79,6 +79,7 @@ export async function getServerSideProps(context) {
 
     const data = res.data.map(a => {
         let oneYearAgo = '20210301T000000.000Z';
+        a.name = a.name.replace(":", "");
         if (a.startTime === null) {
             a.startTime = oneYearAgo;
         }
@@ -94,7 +95,6 @@ export async function getServerSideProps(context) {
             return cmpResult;
         }
     });
-    console.log(data);
 
     if (mode === undefined) {
         mode = 'gemGrab';

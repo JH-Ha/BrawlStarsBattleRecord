@@ -133,7 +133,7 @@ export async function getServerSideProps(context) {
     //let recordArr = [];
     //let sumTotalGameNum = 0;
     if (params.length >= 3) {
-        mapName = params[0];
+        mapName = decodeURIComponent(params[0]).replace(":", "");
         mode = params[2];
     }
 
