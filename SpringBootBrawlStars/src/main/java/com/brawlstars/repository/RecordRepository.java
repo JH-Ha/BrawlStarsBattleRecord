@@ -68,6 +68,7 @@ public class RecordRepository {
 		// QRecord qRecordGroup = QRecord.record;
 		QueryResults<Long> groupKeys = queryFactory
 				.select(qRecord.parent.id)
+				.distinct() // to distinguish duels 
 				.from(qRecord)
 				.where(builder)
 				.orderBy(qRecord.battleTime.desc())
