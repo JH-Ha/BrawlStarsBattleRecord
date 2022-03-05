@@ -8,7 +8,7 @@ import SoloDuoMode from "../../components/SoloDuoMode";
 import Pagination from "../../components/Pagination";
 import { getData } from "../../components/ApiHandler";
 import { useTranslation } from 'next-i18next';
-import { isTrio } from "../../components/BaseFunctions";
+import { isDuels, isTrio } from "../../components/BaseFunctions";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -81,7 +81,7 @@ export default function BattleLog({ playRecord, curPage,
       </div>
       {
         playRecord.map((data) => {
-          if (isTrio(data.mode)) {
+          if (isTrio(data.mode) || isDuels(data.mode)) {
             return (
               <TrioMode
                 key={data.battleTime}
