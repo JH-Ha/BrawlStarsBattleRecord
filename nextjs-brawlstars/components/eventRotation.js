@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getData } from "./ApiHandler";
-import { calWinRate, getLocalTime, isTrio } from './BaseFunctions';
+import { calWinRate, getLocalTime, isDuels, isTrio } from './BaseFunctions';
 import { useTranslation } from 'next-i18next';
 import styles from "../styles/EventRotation.module.scss";
 import DisplayTime from './DisplayTime';
@@ -44,7 +44,7 @@ function EventRotation({ todayEvents, nextEvents }) {
                                 {ele.winRate?.map(e => {
                                     return <div key={`${ele.event.mode}-${e.brawlerName}`}>
                                         <img className={styles.brawlerImg} src={`/images/${e.brawlerName}.png`} alt={e.brawlerName} />
-                                        {isTrio(ele.event.mode) ?
+                                        {isTrio(ele.event.mode) || isDuels(ele.event.mode) ?
                                             <div>{Math.floor(e.winRate * 100)}%</div>
                                             : <div>{Math.floor(e.averageRank * 100) / 100}</div>
                                         }
@@ -83,7 +83,7 @@ function EventRotation({ todayEvents, nextEvents }) {
                                 {ele.winRate?.map(e => {
                                     return <div key={`${ele.event.map}-${ele.event.mode}-${e.brawlerName}`}>
                                         <img className={styles.brawlerImg} src={`/images/${e.brawlerName}.png`} alt={e.brawlerName} />
-                                        {isTrio(ele.event.mode) ?
+                                        {isTrio(ele.event.mode) || isDuels(ele.event.mode) ?
                                             <div>{Math.floor(e.winRate * 100)}%</div>
                                             : <div>{Math.floor(e.averageRank * 100) / 100}</div>
                                         }
