@@ -5,10 +5,11 @@ import RecordResult from '../../components/recordResult';
 import { isTrio } from '../../components/BaseFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import i18n from '../../components/i18n';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 
 async function getRecordResult(mapName, mode) {
@@ -130,6 +131,7 @@ export async function getServerSideProps(context) {
     let { params } = context.query;
     let mapName = '';
     let mode = '';
+    const { locale } = context;
     //let recordArr = [];
     //let sumTotalGameNum = 0;
     if (params.length >= 3) {
@@ -137,12 +139,17 @@ export async function getServerSideProps(context) {
         mode = params[2];
     }
 
-    i18n.changeLanguage(context.locale);
+    //i18n.changeLanguage(context.locale);
 
     //const mapName = unescape(params.map);
     //const mode = params.mode;
 
     let { recordArr, sumTotalGameNum } = await getRecordResult(mapName, mode);
 
-    return ({ props: { mode, mapName, recordArr, sumTotalGameNum } });
+    return ({
+        props: {
+            ...(await serverSideTranslations(locale, ['common'])),
+            mode, mapName, recordArr, sumTotalGameNum
+        }
+    });
 }

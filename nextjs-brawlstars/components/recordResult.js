@@ -2,7 +2,7 @@ import React, { Component, useState } from 'react'
 import { isTrio, isDuo, isSolo, isAll } from './BaseFunctions';
 import SortIcon from './sortIcon';
 import styles from "../styles/RecordResult.module.scss";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const DEFAULT = "DEFAULT";
 const ASC = "ASC";

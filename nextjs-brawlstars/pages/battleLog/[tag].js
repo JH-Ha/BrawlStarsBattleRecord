@@ -7,7 +7,7 @@ import styles from "../../styles/BattleLog.module.scss";
 import SoloDuoMode from "../../components/SoloDuoMode";
 import Pagination from "../../components/Pagination";
 import { getData } from "../../components/ApiHandler";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { isTrio } from "../../components/BaseFunctions";
 import Head from "next/head";
 import { useRouter } from "next/router";
