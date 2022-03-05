@@ -62,7 +62,7 @@ export default function MapList({ mode, filteredMaps }) {
                     </div>
                     <div className={styles.mapName}>{t(map.name)}</div>
                     <div className={styles.imgContainer}>
-                        <img onClick={() => { clickMap(map.name, map.mode) }} src={`/images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.name}.png`} alt={map.name}></img>
+                        <img onClick={() => { clickMap(map.name, map.mode) }} src={`/images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.displayName}.png`} alt={map.name}></img>
                     </div>
                 </div>
             })}
@@ -79,7 +79,7 @@ export async function getServerSideProps(context) {
 
     const data = res.data.map(a => {
         let oneYearAgo = '20210301T000000.000Z';
-        a.name = a.name.replace(":", "");
+        a.displayName = a.name.replace(":", "");
         if (a.startTime === null) {
             a.startTime = oneYearAgo;
         }
