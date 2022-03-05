@@ -88,7 +88,7 @@ async function getRecordResult(mapName, mode) {
     });
 }
 
-export default function Map({ mapName, mode, recordArr, sumTotalGameNum }) {
+export default function Map({ mapName, mode, recordArr, sumTotalGameNum, displayMapName }) {
 
     const { t } = useTranslation();
     const [isMapShown, setIsMapShown] = useState(false);
@@ -117,7 +117,7 @@ export default function Map({ mapName, mode, recordArr, sumTotalGameNum }) {
         <div className={`${styles.mapImgContainer}
             ${mode.includes("Showdown") ? `${styles.showdown}` : ''}
             ${isMapShown ? '' : `${styles.none}`}`}>
-            <img className={styles.mapImg} src={`/images/maps/${mode.includes("Showdown") ? 'showdown' : mode}/${mapName}.png`} alt={mapName} />
+            <img className={styles.mapImg} src={`/images/maps/${mode.includes("Showdown") ? 'showdown' : mode}/${displayMapName}.png`} alt={mapName} />
         </div>
 
         {mapName === "" ? (<div>invalid map name</div>) :
@@ -135,9 +135,10 @@ export async function getServerSideProps(context) {
     //let recordArr = [];
     //let sumTotalGameNum = 0;
     if (params.length >= 3) {
-        mapName = decodeURIComponent(params[0]).replace(":", "");
+        mapName = decodeURIComponent(params[0]);
         mode = params[2];
     }
+    let displayMapName = mapName.replace(":", "");
 
     //i18n.changeLanguage(context.locale);
 
@@ -149,7 +150,7 @@ export async function getServerSideProps(context) {
     return ({
         props: {
             ...(await serverSideTranslations(locale, ['common'])),
-            mode, mapName, recordArr, sumTotalGameNum
+            mode, mapName, displayMapName, recordArr, sumTotalGameNum
         }
     });
 }
