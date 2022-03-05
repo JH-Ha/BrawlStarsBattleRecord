@@ -32,6 +32,8 @@ public class GameMapRepository {
 		List<GameMapDto> gameMapDtos = query.select(Projections.constructor(GameMapDto.class 
 					,qGameMap.name
 				    ,qGameMap.mode
+				    ,qGameMap.startTime
+				    ,qGameMap.endTime
 				))
 		.from(qGameMap)
 		.where(qGameMap.isDeleted.eq(false)
@@ -40,6 +42,17 @@ public class GameMapRepository {
 		.fetch();
 		return gameMapDtos;
 	}
+	public GameMap getGameMap(String name, String mode){
+		JPAQuery<GameMap> query = new JPAQuery<GameMap>(em);
+		QGameMap qGameMap = QGameMap.gameMap;
+		GameMap gameMap = query.select(qGameMap)
+								.from(qGameMap)
+								.where(qGameMap.isDeleted.eq(false)
+										.and(qGameMap.name.eq(name)
+										.and(qGameMap.mode.eq(mode))))
+								.fetchOne();
+		return gameMap;
+	}
 	
 	public List<GameMapDto> getGameMaps(String mode){
 		JPAQuery<GameMap> query = new JPAQuery<GameMap>(em);
@@ -47,6 +60,8 @@ public class GameMapRepository {
 		List<GameMapDto> gameMapDtos = query.select(Projections.constructor(GameMapDto.class 
 					,qGameMap.name
 				    ,qGameMap.mode
+				    ,qGameMap.startTime
+				    ,qGameMap.endTime
 				))
 		.from(qGameMap)
 		.where(qGameMap.isDeleted.eq(false))
