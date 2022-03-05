@@ -5,10 +5,11 @@ import RecordResult from '../../components/recordResult';
 import { isTrio } from '../../components/BaseFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import i18n from '../../components/i18n';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 
 async function getRecordResult(mapName, mode) {
@@ -87,7 +88,7 @@ async function getRecordResult(mapName, mode) {
     });
 }
 
-export default function Map({ mapName, mode, recordArr, sumTotalGameNum }) {
+export default function Map({ mapName, mode, recordArr, sumTotalGameNum, displayMapName }) {
 
     const { t } = useTranslation();
     const [isMapShown, setIsMapShown] = useState(false);
@@ -116,7 +117,7 @@ export default function Map({ mapName, mode, recordArr, sumTotalGameNum }) {
         <div className={`${styles.mapImgContainer}
             ${mode.includes("Showdown") ? `${styles.showdown}` : ''}
             ${isMapShown ? '' : `${styles.none}`}`}>
-            <img className={styles.mapImg} src={`/images/maps/${mode.includes("Showdown") ? 'showdown' : mode}/${mapName}.png`} alt={mapName} />
+            <img className={styles.mapImg} src={`/images/maps/${mode.includes("Showdown") ? 'showdown' : mode}/${displayMapName}.png`} alt={mapName} />
         </div>
 
         {mapName === "" ? (<div>invalid map name</div>) :
@@ -130,19 +131,26 @@ export async function getServerSideProps(context) {
     let { params } = context.query;
     let mapName = '';
     let mode = '';
+    const { locale } = context;
     //let recordArr = [];
     //let sumTotalGameNum = 0;
     if (params.length >= 3) {
-        mapName = params[0];
+        mapName = decodeURIComponent(params[0]);
         mode = params[2];
     }
+    let displayMapName = mapName.replace(":", "");
 
-    i18n.changeLanguage(context.locale);
+    //i18n.changeLanguage(context.locale);
 
     //const mapName = unescape(params.map);
     //const mode = params.mode;
 
     let { recordArr, sumTotalGameNum } = await getRecordResult(mapName, mode);
 
-    return ({ props: { mode, mapName, recordArr, sumTotalGameNum } });
+    return ({
+        props: {
+            ...(await serverSideTranslations(locale, ['common'])),
+            mode, mapName, displayMapName, recordArr, sumTotalGameNum
+        }
+    });
 }

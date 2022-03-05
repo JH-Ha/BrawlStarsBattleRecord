@@ -2,7 +2,7 @@ import React, { Component, useState } from 'react'
 import { isTrio, isDuo, isSolo, isAll } from './BaseFunctions';
 import SortIcon from './sortIcon';
 import styles from "../styles/RecordResult.module.scss";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 const DEFAULT = "DEFAULT";
 const ASC = "ASC";
@@ -12,65 +12,60 @@ const RecordResult = ({ _recordArr, sumTotalGameNum, mode, isPersonal }) => {
     const [recordArr, setRecordArr] = useState(_recordArr);
     const [winRateOrder, setWinRateOrder] = useState(DESC);
     const [avgRankOrder, setAvgRankOrder] = useState(ASC);
-    const [pickRateOrder, setPickRateOrder] = useState(DESC);
+    const [pickRateOrder, setPickRateOrder] = useState(DEFAULT);
 
     const toggleWinRate = () => {
 
-        let recordArr = [];
-        let nextWinRateOrder = 'DEFAULT';
+        let nextWinRateOrder;
         if (winRateOrder === DESC) {
             nextWinRateOrder = ASC;
-            recordArr = recordArr.sort((a, b) => {
+            recordArr.sort((a, b) => {
                 return a.winRate - b.winRate;
             });
 
         } else {
             nextWinRateOrder = DESC;
-            recordArr = recordArr.sort((a, b) => {
+            recordArr.sort((a, b) => {
                 return b.winRate - a.winRate;
             });
         }
-        setRecordArr(recordArr);
         setWinRateOrder(nextWinRateOrder);
         setPickRateOrder(DEFAULT);
         setAvgRankOrder(DEFAULT);
     }
     const togglePickRate = () => {
 
-        let recordArr = [];
-        let nextPickRateOrder = DEFAULT;
+        let nextPickRateOrder;
         if (pickRateOrder === DESC) {
             nextPickRateOrder = ASC;
-            recordArr = recordArr.sort((a, b) => {
+            recordArr.sort((a, b) => {
                 return a.totalGameNum - b.totalGameNum;
             });
         } else {
             nextPickRateOrder = DESC;
-            recordArr = recordArr.sort((a, b) => {
+            recordArr.sort((a, b) => {
                 return b.totalGameNum - a.totalGameNum;
             });
         }
-        setRecordArr(recordArr);
         setWinRateOrder(DEFAULT);
-        setPickRateOrder(nextWinRateOrder);
+        setPickRateOrder(nextPickRateOrder);
         setAvgRankOrder(DEFAULT);
     }
     const toggleAvgRank = () => {
-        let recordArr = [];
-        let nextAvgRankOrder = DEFAULT;
+        let nextAvgRankOrder;
         if (avgRankOrder === DESC || avgRankOrder === DEFAULT) {
             nextAvgRankOrder = ASC;
-            recordArr = recordArr.sort((a, b) => {
+            recordArr.sort((a, b) => {
                 return a.averageRank - b.averageRank;
             });
 
         } else {
             nextAvgRankOrder = DESC;
-            recordArr = recordArr.sort((a, b) => {
+            recordArr.sort((a, b) => {
                 return b.averageRank - a.averageRank;
             });
         }
-        setRecordArr(recordArr);
+
         setWinRateOrder(DEFAULT);
         setPickRateOrder(DEFAULT);
         setAvgRankOrder(nextAvgRankOrder);

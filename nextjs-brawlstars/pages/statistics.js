@@ -5,6 +5,7 @@ import { isTrio } from "../components/BaseFunctions";
 import RecordResult from '../components/recordResult';
 import styles from "../styles/Statistics.module.scss";
 import { useRouter } from "next/router";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function Statistics({ tag, mode, recordArr, sumTotalGameNum }) {
     // state = {
@@ -120,6 +121,7 @@ async function getRecordResult(searchParams) {
     })
 }
 export async function getServerSideProps(context) {
+    const { locale } = context;
     let { tag, mode } = context.query;
     if (tag === undefined) {
         tag = '';
@@ -134,6 +136,7 @@ export async function getServerSideProps(context) {
     let { recordArr, sumTotalGameNum } = await getRecordResult(searchParams);
     return ({
         props: {
+            ...(await serverSideTranslations(locale, ['common'])),
             tag,
             mode,
             recordArr,

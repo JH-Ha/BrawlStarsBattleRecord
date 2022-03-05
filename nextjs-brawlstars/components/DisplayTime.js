@@ -1,6 +1,6 @@
 import React from 'react';
 import { getLocalTime } from "./BaseFunctions";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 const DisplayTime = (props) => {
     const { t } = useTranslation();
