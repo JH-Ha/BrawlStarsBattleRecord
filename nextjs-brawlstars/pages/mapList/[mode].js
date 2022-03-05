@@ -1,12 +1,11 @@
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router'
 import { getData } from '../../components/ApiHandler';
 import ModeList from '../../components/modeList';
 import styles from '../../styles/MapList.module.scss';
 import Head from 'next/head';
-import i18n from '../../components/i18n';
 import { calDisplayMapTime } from '../../components/BaseFunctions';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const getFilteredMap = (maps, mode) => {
     let filteredMaps = maps;
@@ -74,7 +73,8 @@ export default function MapList({ mode, filteredMaps }) {
 
 export async function getServerSideProps(context) {
     let { mode } = context.query;
-    i18n.changeLanguage(context.locale);
+    let locale = context.locale;
+    //i18n.changeLanguage(context.locale);
     const res = await getData(`/gameMap`);
 
     const data = res.data.map(a => {
@@ -102,5 +102,11 @@ export async function getServerSideProps(context) {
 
     let maps = data;
     let filteredMaps = getFilteredMap(maps, mode);
-    return { props: { mode, filteredMaps } }
+    return {
+        props: {
+            ...(await serverSideTranslations(locale, ['common'])),
+            mode,
+            filteredMaps
+        }
+    }
 }

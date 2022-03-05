@@ -2,9 +2,10 @@ import React, { Component, useState } from "react";
 import Pagination from "../components/Pagination";
 import styles from "../styles/UserList.module.scss";
 import { getData } from "../components/ApiHandler";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const tableStyle = {
   margin: "auto",
@@ -24,7 +25,7 @@ async function getUserList(page, nickname) {
 
 export default function UserList({ userList, curPage, numUser, propNickname }) {
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t } = useTranslation('common');
 
   const [nickname, setNickname] = useState(propNickname);
 
@@ -115,10 +116,12 @@ export async function getServerSideProps(context) {
   if (nickname !== undefined) {
     propNickname = nickname;
   }
+  let locale = context.locale;
 
   let { userList, curPage, numUser } = await getUserList(page, propNickname);
   return ({
     props: {
+      ...(await serverSideTranslations(locale, ['common'])),
       userList, curPage, numUser, propNickname
     }
   })

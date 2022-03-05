@@ -554,10 +554,10 @@ contact : cubeprince@gmail.com`,
         }
     }
 };
-i18n
-    .use(initReactI18next)
-    .init({
-        resources,
-        lng: "en",
-    });
-export default i18n;
+// i18n
+//     .use(initReactI18next)
+//     .init({
+//         resources,
+//         lng: "en",
+//     });
+//export default i18n;
