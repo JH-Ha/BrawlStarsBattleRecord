@@ -38,9 +38,12 @@ public class RecordTest {
 	public void init() throws JsonMappingException, JsonProcessingException {
 		String tag = "#9QU209UYC";
 		Scanner scanner = new Scanner(getClass().getResourceAsStream("sampleResponse.txt"));
-		String line = scanner.nextLine();
+		StringBuilder sb = new StringBuilder();
+		while(scanner.hasNext()) {
+			sb.append(scanner.nextLine());
+		}
 		ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		BattleLog battleLog = mapper.readValue(line, BattleLog.class);	
+		BattleLog battleLog = mapper.readValue(sb.toString(), BattleLog.class);	
 		List<Item> items = battleLog.getItems(); 
 		recordService.saveBattleLog(items, tag);
 		recordService.savePlayersInItems(items);
@@ -70,6 +73,23 @@ public class RecordTest {
 		Optional<RecordResultDto> dto = records.stream().filter(r -> r.getBrawlerName().equals("POCO") && r.getResult().equals("victory")).findFirst();
 		
 		Assertions.assertThat(dto.get().getCnt()).isEqualTo(1);
+	}
+	
+	@Test
+	public void getDuelResult() throws JsonMappingException, JsonProcessingException {
+		// given
+		String map = "NO SURRENDER";
+		RecordSearch recordSearch = new RecordSearch();
+		recordSearch.setMode("duels");
+		recordSearch.setMap(map);
+		
+		// When
+		List<RecordResultDto> records = recordController.getRecordResults(recordSearch);
+		
+		// Then
+		Optional<RecordResultDto> dto = records.stream().filter(r -> r.getBrawlerName().equals("SPIKE") && r.getResult().equals("defeat")).findFirst();
+		Assertions.assertThat(dto.get().getCnt()).isEqualTo(1);
+		
 	}
 	
 	@Test
