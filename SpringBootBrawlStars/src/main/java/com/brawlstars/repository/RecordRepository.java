@@ -43,7 +43,13 @@ public class RecordRepository {
 		Record record = queryFactory.selectFrom(qRecord)
 				.where(qRecord.tag.eq(tag).and(qRecord.battleTime.eq(battleTime))).fetchOne();
 		return record;
-
+	}
+	
+	public List<Record> findDuelRecords (String tag, String battleTime){
+		QRecord qRecord = QRecord.record;
+		List<Record> records = queryFactory.selectFrom(qRecord)
+				.where(qRecord.tag.eq(tag).and(qRecord.battleTime.eq(battleTime))).fetch();
+		return records;
 	}
 	
 	public Page<RecordDto> findByTag(String tag, Pageable pageable, RecordSearch recordSearch) {
@@ -62,6 +68,7 @@ public class RecordRepository {
 		// QRecord qRecordGroup = QRecord.record;
 		QueryResults<Long> groupKeys = queryFactory
 				.select(qRecord.parent.id)
+				.distinct() // to distinguish duels 
 				.from(qRecord)
 				.where(builder)
 				.orderBy(qRecord.battleTime.desc())

@@ -8,4 +8,7 @@ public class Brawler {
 	String name;
 	Integer power;
 	Integer trophies;
+	
+	//Duels
+	Integer trophyChange;
 }

@@ -48,6 +48,7 @@ public class RecordDto {
 		recordDto.setResultRank(record.getResultRank());
 		recordDto.setPlayerName(record.getPlayerName());
 		recordDto.setTeamId(record.getTeamId());
+		recordDto.setTrophyChange(record.getTrophyChange());
 		return recordDto;
 	}
 

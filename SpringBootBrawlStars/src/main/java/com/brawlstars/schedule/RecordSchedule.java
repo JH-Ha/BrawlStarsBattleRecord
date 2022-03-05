@@ -15,7 +15,6 @@ import com.brawlstars.json.Item;
 import com.brawlstars.repository.MemberDto;
 import com.brawlstars.repository.MemberRepository;
 import com.brawlstars.service.RecordService;
-import com.brawlstars.util.CommonUtil;
 
 @Component
 public class RecordSchedule {
@@ -53,18 +52,19 @@ public class RecordSchedule {
 		List<Item> items;
 		try {
 			items = brawlStarsAPI.getItems(tag);
-			items.stream().forEach(item -> {
-				String mode = item.getBattle().getMode();
-				if (CommonUtil.isTrioMode(mode)) {
-					recordService.saveTrio(tag, item);
-				} else if (CommonUtil.isDuoShowdown(mode)) {
-					recordService.saveDuoShowdown(tag, item);
-				} else if (CommonUtil.isSolo(mode)) {
-					recordService.saveSolo(tag, item);
-				} else if (CommonUtil.isDuels(mode)) {
-					//recordService.saveDuels(tag, item);
-				}
-			});
+			recordService.saveBattleLog(items, tag);
+//			items.stream().forEach(item -> {
+//				String mode = item.getBattle().getMode();
+//				if (CommonUtil.isTrioMode(mode)) {
+//					recordService.saveTrio(tag, item);
+//				} else if (CommonUtil.isDuoShowdown(mode)) {
+//					recordService.saveDuoShowdown(tag, item);
+//				} else if (CommonUtil.isSolo(mode)) {
+//					recordService.saveSolo(tag, item);
+//				} else if (CommonUtil.isDuels(mode)) {
+//					//recordService.saveDuels(tag, item);
+//				}
+//			});
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

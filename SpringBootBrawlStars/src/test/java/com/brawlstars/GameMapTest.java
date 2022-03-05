@@ -31,9 +31,12 @@ public class GameMapTest {
 	@BeforeEach
 	public void init() throws JsonMappingException, JsonProcessingException {
 		Scanner scanner = new Scanner(getClass().getResourceAsStream("sampleResponse.txt"));
-		String line = scanner.nextLine();
+		StringBuilder sb = new StringBuilder();
+		while(scanner.hasNext()) {
+			sb.append(scanner.nextLine());
+		}
 		ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		BattleLog battleLog = mapper.readValue(line, BattleLog.class);	
+		BattleLog battleLog = mapper.readValue(sb.toString(), BattleLog.class);	
 		List<Item> items = battleLog.getItems(); 
 		recordService.saveBattleLog(items, tag);
 	}
