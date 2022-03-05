@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { withTranslation } from 'react-i18next';
+import React, { useState } from "react";
+import { useTranslation } from 'next-i18next';
 
 
 let brawlerNameList = [
@@ -52,67 +52,50 @@ let brawlerNameList = [
 //brawlerNameList = brawlerNameList.sort();
 //brawlerNameList.unshift("ALL");
 
-class BrawlerList extends Component {
-  constructor(props) {
-    super(props);
-    this.change = this.change.bind(this);
-    //this.setState({ changeBrawler: this.props.changeBrawler });
-    //console.log(this.props.changeBrawler);
-  }
-  state = {
-    brawlerName: "ALL",
-    changeBrawler: "",
-  };
-  change(event) {
+const BrawlerList = ({ brawlerName, changeBrawler }) => {
+
+  const change = (event) => {
     let value = event.target.value;
-    this.props.changeBrawler(value);
-    this.setState({ value: value });
+    changeBrawler(value);
   }
-  componentDidMount() {
-    const { brawlerName } = this.props;
-    this.setState({
-      brawlerName: brawlerName
-    });
-  }
-  render() {
-    const { t } = this.props;
+  const { t } = useTranslation();
 
-    let bnList = brawlerNameList.map(name => {
-      return {
-        "value": name,
-        "label": t(name)
-      };
-    });
+  let bnList = brawlerNameList.map(name => {
+    return {
+      "value": name,
+      "label": t(name)
+    };
+  });
 
-    bnList.sort((a, b) => {
-      if (a.label < b.label) return -1
-      else return 1;
-    });
+  bnList.sort((a, b) => {
+    if (a.label < b.label) return -1
+    else return 1;
+  });
 
-    bnList.unshift({
-      "value": "All",
-      "label": "All"
-    });
+  bnList.unshift({
+    "value": "All",
+    "label": "All"
+  });
 
-    return (
-      <div className="selectBox">
-        <label htmlFor="brawlerName">{t("brawler")}</label>
-        <select
-          id="brawlerName"
-          onChange={this.change}
-          value={this.state.brawlerName}
-        >
-          {bnList.map((brawlerName, index) => {
-            return (
-              <option key={brawlerName.value} label={brawlerName.label} value={brawlerName.value}>
-                {brawlerName.label}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-    );
-  }
+  return (
+    <div className="selectBox">
+      <label htmlFor="brawlerName">{t("brawler")}</label>
+      <select
+        id="brawlerName"
+        onChange={change}
+        value={brawlerName}
+      >
+        {bnList.map((bn, index) => {
+          return (
+            <option key={bn.value} label={bn.label} value={bn.value}>
+              {bn.label}
+            </option>
+          );
+        })}
+      </select>
+    </div>
+  );
 }
 
-export default withTranslation()(BrawlerList);
+
+export default BrawlerList;

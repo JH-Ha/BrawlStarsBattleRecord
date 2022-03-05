@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { getData } from "./ApiHandler";
 import { calWinRate, getLocalTime, isTrio } from './BaseFunctions';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 import styles from "../styles/EventRotation.module.scss";
 import DisplayTime from './DisplayTime';
 import { useRouter } from 'next/router';
 
 function EventRotation({ todayEvents, nextEvents }) {
 
-    const { t, i18n } = useTranslation();
+    const { t, i18n } = useTranslation('common');
     const router = useRouter();
 
     const onClickEvent = (map, mode) => {
-        router.push(`/${i18n.language}/map/${map}/mode/${mode}`);
+        router.push(`/map/${map}/mode/${mode}`);
     }
 
     return (

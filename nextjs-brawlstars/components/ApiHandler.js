@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const baseUrl = "https://brawlmeta.com:28080";
-//const baseUrl = "http://localhost:8080";
+//const baseUrl = "http://127.0.0.1:8080";
+//const baseUrl = "http://172.19.128.1:8080";
 
 let getData = (paramUrl) => {
     let url = baseUrl + paramUrl;
