@@ -11,6 +11,7 @@ import { useTranslation } from 'next-i18next';
 import { isTrio } from "../../components/BaseFunctions";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export default function BattleLog({ playRecord, curPage,
   tag, mode, brawlerName, totalElements, name }) {
@@ -182,8 +183,7 @@ export async function getServerSideProps(context) {
   if (tag === undefined) {
     tag = '';
   }
-
-  //console.log(`compomentDidMount !!!!! ${brawlerName}`);
+  const { locale } = context;
   let { playRecord, curPage, totalElements } = await getBattleLog(tag, mode, brawlerName, page);
 
   let res = await getData(`/member/${tag.replace("#", "%23")}`);
@@ -191,6 +191,7 @@ export async function getServerSideProps(context) {
   let name = member.name;
   return ({
     props: {
+      ...(await serverSideTranslations(locale, ['common'])),
       playRecord, tag, curPage,
       mode, brawlerName, totalElements, name
     }
