@@ -136,7 +136,7 @@ function calWinRate(data, mode) {
 
     data.forEach(e => {
 
-        if (isTrio(mode)) {
+        if (isTrio(mode) || isDuels(mode)) {
             if (records[e.brawlerName] === undefined) {
                 records[e.brawlerName] = {
                 };
@@ -153,7 +153,7 @@ function calWinRate(data, mode) {
             }
         }
     });
-    if (isTrio(mode)) {
+    if (isTrio(mode) || isDuels(mode)) {
         for (let key in records) {
             let { victory, defeat, draw } = records[key];
             const victoryNum = victory || 0;
