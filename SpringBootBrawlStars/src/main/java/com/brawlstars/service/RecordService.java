@@ -466,9 +466,9 @@ public class RecordService {
 			String map = item.getEvent().getMap();
 
 			List<Brawler> brawlers = player.getBrawlers();
-			for(int j = 0; j < brawlers.size(); j ++) {
+			for (int j = 0; j < brawlers.size(); j++) {
 				Brawler brawler = brawlers.get(j);
-				
+
 				RecordDuels recordDuels = new RecordDuels();
 				recordDuels.setTag(player.getTag());
 				recordDuels.setBattleTime(item.getBattleTime());
@@ -483,18 +483,20 @@ public class RecordService {
 				recordDuels.setEventId(item.getEvent().getId());
 				recordDuels.setTrophyChange(brawler.getTrophyChange());
 				recordDuels.setRecordDate(item.getBattleTime().substring(0, 8));
-				
+				recordDuels.setDuration(item.getBattle().getDuration());
+				recordDuels.setTeamId(i);
+
 				String result = item.getBattle().getResult();
 				if (tag.equals(player.getTag())) {
 					myRecord = recordDuels;
 					recordDuels.setResult(result);
-				}else {
+				} else {
 					recordDuels.setResult(getOppositeResult(result));
 				}
 				recordDuels.setStatUpdated(false);
 				groupRecords.add(recordDuels);
 			}
-		
+
 		}
 		Record.setRelation(myRecord, groupRecords);
 		recordRepository.save(myRecord);
