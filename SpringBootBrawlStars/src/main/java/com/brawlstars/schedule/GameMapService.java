@@ -16,4 +16,16 @@ public class GameMapService {
 	public void saveGameMap(GameMap gameMap) {
 		gameMapRepository.saveGameMap(gameMap);
 	}
+
+	public void updateTime(String mode, String map, String startTime, String endTime) {
+		GameMap gameMap = gameMapRepository.getGameMap(map, mode);
+		if(gameMap == null) {
+			gameMap = new GameMap();
+			gameMap.setName(map);
+			gameMap.setMode(mode);
+		} 
+		gameMap.setStartTime(startTime);
+		gameMap.setEndTime(endTime);
+		saveGameMap(gameMap);
+	}
 }
