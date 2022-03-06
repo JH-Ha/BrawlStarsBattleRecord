@@ -1,7 +1,13 @@
 package com.brawlstars.schedule;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.stream.Collectors;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,95 +24,124 @@ import com.brawlstars.service.RecordService;
 
 @Component
 public class RecordSchedule {
-	@Autowired
-	BrawlStarsAPI brawlStarsAPI;
+    @Autowired
+    BrawlStarsAPI brawlStarsAPI;
 
-	@Autowired
-	RecordService recordService;
+    @Autowired
+    RecordService recordService;
 
-	@Autowired
-	MemberRepository memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
-	Logger logger = LoggerFactory.getLogger(RecordSchedule.class);
-	// 30 minutes
-	@Scheduled(fixedDelay = 1800000
-	 ,initialDelay = 360000 // 10 minutes
-	)
-	public void saveRecordsSchedule() {
-		saveRecords();
-	}
+    Logger logger = LoggerFactory.getLogger(RecordSchedule.class);
 
-	public void saveRecords() {
+    // 30 minutes
+    @Scheduled(fixedDelay = 1800000
+            //,initialDelay = 360000 // 10 minutes
+    )
+    public void saveRecordsSchedule() {
+        saveRecords();
+    }
 
-		Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
-		members.getContent().stream().parallel().forEach(member -> {
-			String tag = member.getTag();
-			logger.info("save member : " + member.getName() + " tag : " + tag);
-			saveRecord(tag);
-		});
+    public void saveRecords() {
+        Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
+        members.getContent().stream().parallel().forEach(member -> {
+            String tag = member.getTag();
+            logger.info("save member : " + member.getName() + " tag : " + tag);
+            saveRecord(tag);
+        });
+    }
 
-	}
+    public void saveRecordsV1(int page, int pageSize) {
+        Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(page, pageSize));
+        members.getContent().stream().parallel().forEach(member -> {
+            String tag = member.getTag();
+            List<Item> items = null;
+            try {
+                items = brawlStarsAPI.getItems(member.getTag());
+                recordService.saveBattleLog(items, tag);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
-	public void saveRecord(String tag) {
+    @Getter
+    @Setter
+    class ItemContainer {
+        List<Item> items;
+        String tag;
+    }
 
-		List<Item> items;
-		try {
-			items = brawlStarsAPI.getItems(tag);
-			recordService.saveBattleLog(items, tag);
-//			items.stream().forEach(item -> {
-//				String mode = item.getBattle().getMode();
-//				if (CommonUtil.isTrioMode(mode)) {
-//					recordService.saveTrio(tag, item);
-//				} else if (CommonUtil.isDuoShowdown(mode)) {
-//					recordService.saveDuoShowdown(tag, item);
-//				} else if (CommonUtil.isSolo(mode)) {
-//					recordService.saveSolo(tag, item);
-//				} else if (CommonUtil.isDuels(mode)) {
-//					//recordService.saveDuels(tag, item);
-//				}
-//			});
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    public void saveRecordsV2(int page, int pageSize, Executor executor) {
+        Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(page, pageSize));
+        List<CompletableFuture<Object>> itemFutures = members.getContent()
+                .stream()
+                .map(member ->
+                        CompletableFuture.supplyAsync(() -> {
+                            String tag = member.getTag();
+                            //logger.info("save member : " + member.getName() + " tag : " + tag);
+                            List<Item> items = null;
+                            ItemContainer itemContainer = new ItemContainer();
+                            try {
+                                items = brawlStarsAPI.getItems(member.getTag());
+                                itemContainer.setItems(items);
+                                itemContainer.setTag(tag);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            return itemContainer;
+                        }, executor))
+                .map(future ->
+                        CompletableFuture.supplyAsync(() -> {
+                            try {
+                                ItemContainer itemContainer = future.get();
+                                if(itemContainer.getItems() != null){
+                                    recordService.saveBattleLog(itemContainer.getItems(), itemContainer.getTag());
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            }
+                            return null;
+                        }, executor))
+                .collect(Collectors.toList());
+        itemFutures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList());
+    }
 
-	}
-	
-	//
-	// This lefts recent 50 records,and delete old records.
-	
-	@Scheduled(fixedDelay = 8640000 // 1 day
-			 ,initialDelay = 60000 // 10 minutes
-			)
-	public void deleteRecords() {
-		Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
-		members.getContent().stream().forEach(member -> {
-			String tag = member.getTag();
-			logger.debug("delete member : " + tag );
-			recordService.deleteOldRecords(tag, 50L);
-		});
-	}
-	
-	//every hour
-	//@Scheduled(cron = "0 15 * * * *")
-	@Scheduled(fixedDelay = 1800000) // 30minutes
-	public void updateStatistics() {
-		/*
-		 * ZonedDateTime now = ZonedDateTime.now(ZoneId.of("UTC")); ZonedDateTime
-		 * oneHourAgo = now.minusSeconds(3600); String nowStr =
-		 * now.toString().replace(":","").replace("-",""); nowStr =
-		 * nowStr.substring(0,nowStr.indexOf(".")); String oneHourAgoStr =
-		 * oneHourAgo.toString().replace(":","").replace("-",""); oneHourAgoStr =
-		 * oneHourAgoStr.substring(0, oneHourAgoStr.indexOf("."));
-		 * System.out.println(nowStr + " " + oneHourAgoStr);
-		 */
-		recordService.saveStats();
-	}
-//
-//	public void deleteRecords() {
-//		// TODO Auto-generated method stub
-//		recordService.deleteRecords();
-//	}
-	
+    public void saveRecord(String tag) {
 
+        List<Item> items;
+        try {
+            items = brawlStarsAPI.getItems(tag);
+            recordService.saveBattleLog(items, tag);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    // This lefts recent 50 records,and delete old records.
+    @Scheduled(fixedDelay = 8640000 // 1 day
+            // ,initialDelay = 60000 // 10 minutes
+    )
+    public void deleteRecords() {
+        Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
+        members.getContent().stream().forEach(member -> {
+            String tag = member.getTag();
+            logger.debug("delete member : " + tag);
+            recordService.deleteOldRecords(tag, 50L);
+        });
+    }
+
+    //every hour
+    //@Scheduled(cron = "0 15 * * * *")
+    @Scheduled(fixedDelay = 1800000) // 30minutes
+    public void updateStatistics() {
+        recordService.saveStats();
+    }
 }
