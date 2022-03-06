@@ -39,11 +39,12 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+// Intellij
+def querydslDir = "$buildDir/generated/querydsl"
+// eclipse
+//def querydslDir = "src/main/generated"
 
-//def querydslDir = "$buildDir/generated/querydsl"
-def querydslDir = "src/main/generated"
-
-/* Querydsl Q-class 추가 코드 */
+/* Querydsl Q-class code */
 querydsl {
 	jpa = true
 	querydslSourcesDir = querydslDir
