@@ -2,7 +2,7 @@ import React, { Component, useState } from 'react';
 import styles from "../../styles/Map.module.scss";
 import { getData } from '../../components/ApiHandler';
 import RecordResult from '../../components/recordResult';
-import { isTrio } from '../../components/BaseFunctions';
+import { isDuels, isTrio } from '../../components/BaseFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import { useTranslation } from 'next-i18next';
@@ -27,7 +27,7 @@ async function getRecordResult(mapName, mode) {
         })
     }
     data.forEach(e => {
-        if (isTrio(mode)) {
+        if (isTrio(mode) || isDuels(mode)) {
             if (records[e.brawlerName] === undefined) {
                 records[e.brawlerName] = {
                 };
@@ -46,7 +46,7 @@ async function getRecordResult(mapName, mode) {
     });
 
     let sumTotalGameNum = 0;
-    if (isTrio(mode)) {
+    if (isTrio(mode) || isDuels(mode)) {
         for (let key in records) {
             let { victory, defeat, draw } = records[key];
             const victoryNum = victory || 0;

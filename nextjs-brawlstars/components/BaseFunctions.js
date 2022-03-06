@@ -18,6 +18,13 @@ function isTrio(mode) {
     }
     return result;
 }
+function isDuels(mode) {
+    let result = false;
+    if (mode === "duels") {
+        result = true;
+    }
+    return result;
+}
 
 function isSolo(mode) {
     if (mode === "soloShowdown") {
@@ -184,4 +191,4 @@ function calWinRate(data, mode) {
     return recordArr;
 }
 
-export { isTrio, isSolo, isDuo, isAll, getLocalTime, calDisplayTime, calWinRate, calDisplayMapTime };
+export { isTrio, isDuels, isSolo, isDuo, isAll, getLocalTime, calDisplayTime, calWinRate, calDisplayMapTime };
