@@ -49,7 +49,7 @@ public class MemberTest {
 	@Test
 	public void findMemberByTag() {
 		String tag = "#9QU209UYC";
-		String name = "ÆûÆû";
+		String name = "í¼í¼";
 		
 		MemberDto foundMember = memberRepository.findMemberByTag(tag);
 		Assertions.assertThat(foundMember.getName()).isEqualTo(name);
