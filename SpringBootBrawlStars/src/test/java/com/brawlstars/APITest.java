@@ -31,13 +31,13 @@ public class APITest {
 	@Autowired
 	BrawlStarsAPI brawlStarsAPI;
 	
-	@Description("Brawl Stars API¸¦ È£ÃâÇØ Á¤»óÀûÀ¸·Î battleLog¸¦ °¡Á®¿À´ÂÁö È®ÀÎÇÑ´Ù.")
+	@Description("Check get battleLog from Brawl Stars API server properly")
 	@Test
 	public void getBattleLog() throws Exception {
 		String tag = "#9QU209UYC";
 		List<Item> items = null;
 		items = brawlStarsAPI.getItems(tag);
-		//25°³¾¿ brawl Starts API ¼­¹ö¿¡¼­ °¡Á®¿Â´Ù
+		//get 25 rocords from brawl Starts API Server
 		Assertions.assertThat(items.size()).isEqualTo(25);
 	}
 	
@@ -49,7 +49,7 @@ public class APITest {
 		playerInfo = brawlStarsAPI.getPlayerInfo(tag);
 		
 		String name = playerInfo.getName();
-		assertThat(name).isEqualTo("ÆûÆû");
+		assertThat(name).isEqualTo("í¼í¼");
 	}
 	
 	@Test
