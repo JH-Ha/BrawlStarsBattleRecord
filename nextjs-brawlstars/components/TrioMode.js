@@ -19,7 +19,7 @@ const TrioMode = ({ battleTime,
       <div className={`${styles.trioContainer} ${styles[result]}`}>
         <div className={`${styles.typeInfo} ${styles.info} ${styles[result]}`}>
           <div className={styles.duration}>
-            {duration} seconds
+            {duration} {t('seconds')}
           </div>
           <div className={styles.gameType}>
             {t(type) || "game"}
