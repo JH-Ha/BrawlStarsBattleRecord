@@ -15,7 +15,7 @@ In the Maps, we provides the Brawler win rate for each map.
             
 Stats and statistics are updated every hour.
 
-contact : cubeprince@gmail.com`
+contact : brawlmeta22@gmail.com`
     },
     ko: {
         "homeGuide": `브롤스타즈 전적 검색 및 승률 확인이 가능한 사이트입니다.
@@ -29,7 +29,7 @@ Maps에서는 맵별 브롤러 승률을 알 수 있습니다.
             
 1시간 마다 전적과 통계가 업데이트 됩니다.
             
-contact : cubeprince@gmail.com`,
+contact : brawlmeta22@gmail.com`,
     },
     ja: {
         "homeGuide": `ブロールスターズのバトル履歴と勝率通計が確認できるウェブサイトです。
@@ -43,7 +43,7 @@ Mapsでは、マップごとのキャラクターの勝率を提供していま�
             
 1時間ごとにバトル履歴と統計が更新されます。
 
-contact : cubeprince@gmail.com`,
+contact : brawlmeta22@gmail.com`,
     }
 }
 
