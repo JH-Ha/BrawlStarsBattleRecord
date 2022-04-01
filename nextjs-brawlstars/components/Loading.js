@@ -35,7 +35,6 @@ class Loading extends Component {
 
         }
 
-
         return <div className={styles.Loading}>
             <div className={styles.barsContainer}>
                 <div className={styles.bars}>
