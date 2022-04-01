@@ -1,0 +1,22 @@
+/** @format */
+
+@font-face {
+  font-family: "NotoSans";
+  src: url("NotoSans-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NotoSans";
+  src: url("NotoSans-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NotoSans";
+  src: url("NotoSans-Light.ttf") format("truetype");
+  font-weight: lighter;
+  font-style: normal;
+}

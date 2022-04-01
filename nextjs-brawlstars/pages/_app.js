@@ -12,13 +12,6 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false);
 
-  const { locale } = router;
-  const { i18n } = useTranslation();
-
-  useEffect(() => {
-    //i18n.changeLanguage(locale);
-  }, [locale]);
-
   useEffect(() => {
     const handleRouteChange = (url, { shallow }) => {
       setIsLoading(true);
