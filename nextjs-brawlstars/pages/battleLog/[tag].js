@@ -157,7 +157,7 @@ async function getBattleLog(tag, mode, brawlerName, page) {
   searchParams.set("brawlerName", paramBrawlerName);
   searchParams.set("page", queryPage);
   searchParams.set("size", 5);
-  console.log(`searchParams ${searchParams.toString()}`);
+  console.log(`${new Date()} tag: ${tag} searchParams ${searchParams.toString()}`);
 
   let res = await getData(`/record/${tag}?${searchParams.toString()}`);
   const data = res.data;
