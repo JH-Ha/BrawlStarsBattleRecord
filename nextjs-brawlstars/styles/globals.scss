@@ -1,10 +1,14 @@
+/** @format */
+
+//@import "../public/fonts/Noto_Sans/stylesheet.css";
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    text-align: center;
+  text-align: center;
 }
 
 a {
@@ -58,27 +62,28 @@ label {
   margin: 0px 10px;
 }
 
-.btn{
-  outline : none;
+.btn {
+  outline: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.btn-primary{
+.btn-primary {
   background-color: #003072;
   color: white;
-  border : none;
-  padding : 10px;
+  border: none;
+  padding: 10px;
   font-size: 16px;
 }
-.btn-primary:hover{
+.btn-primary:hover {
   background-color: #0046a8;
 }
-.btn-primary:active{
+.btn-primary:active {
   background-color: #002150;
 }
 
-input[type=text], select {
+input[type="text"],
+select {
   width: 100%;
   padding: 12px 10px;
   margin: 8px 0;
