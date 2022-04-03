@@ -19,6 +19,7 @@
     "next": "12.1.0",
     "next-i18next": "^10.5.0",
     "react": "17.0.2",
+    "react-bootstrap-icons": "^1.8.1",
     "react-dom": "17.0.2",
     "react-i18next": "^11.15.4",
     "sass": "^1.49.8"
