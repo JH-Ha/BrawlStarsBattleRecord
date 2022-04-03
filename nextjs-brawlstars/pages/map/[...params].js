@@ -102,7 +102,7 @@ export default function Map({ mapName, mode, recordArr, sumTotalGameNum, display
 
     return <><div className={styles.mapClass}>
         <Head>
-            <title>{`${t(mapName)} ${t("Win Rate")} ${t("Statistics")}`} </title>
+            <title>{`${t(mapName)} ${t("Win Rate")} ${t("Statistics")} - ${t("brawlStars")} - Brawl Meta`} </title>
         </Head>
         <h3>{t("Win Rate")} {t("Statistics")}</h3>
         <div className={styles.mapNameContainer} onClick={() => showMapImg()}>
@@ -132,8 +132,6 @@ export async function getServerSideProps(context) {
     let mapName = '';
     let mode = '';
     const { locale } = context;
-    //let recordArr = [];
-    //let sumTotalGameNum = 0;
     if (params.length >= 3) {
         mapName = decodeURIComponent(params[0]);
         mode = params[2];
