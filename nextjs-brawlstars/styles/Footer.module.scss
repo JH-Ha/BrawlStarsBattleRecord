@@ -1,11 +1,23 @@
-.footer{
-    margin-top: 100px;
-    padding : 30px 8px;
-    background-color: #263343;
-    color : white;
-    a, a:link{
-        font-weight: bold;
-        color: white;
-        text-decoration: none;
+/** @format */
+
+.footer {
+  margin-top: 100px;
+  padding: 30px 8px;
+  background-color: #263343;
+  color: white;
+  a,
+  a:link {
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+  }
+  .snsContainer {
+    display: flex;
+    justify-content: center;
+    svg {
+      path {
+        fill: white;
+      }
     }
+  }
 }
