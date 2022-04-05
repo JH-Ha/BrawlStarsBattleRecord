@@ -46,7 +46,7 @@ public class EventController {
 
 	@GetMapping("/api/events/rotation")
 	public EventInfo[] getEventsRotation(){
-		logger.warn("/api/events/rotation called");
+		logger.info("/api/events/rotation called");
 		return eventInfos;
 	}
 	
@@ -63,11 +63,10 @@ public class EventController {
 				String iMonthsAgo = today.minusMonths(i).format(format);
 				yearMonth.add(iMonthsAgo);	
 			}
-			
-			for(int i = 0; i < eventInfos.length; i ++) {
-				EventInfo eventInfo = eventInfos[i];
+
+			for (EventInfo eventInfo : eventInfos) {
 				String mode = eventInfo.getEvent().getMode();
-				
+
 				List<RecordResultDto> statistics = statisticsService.getStats(mode, eventInfo.getEvent().getMap(), yearMonth);
 				gameMapService.updateTime(mode, eventInfo.getEvent().getMap(), eventInfo.getStartTime(), eventInfo.getEndTime());
 				eventInfo.setStatistics(statistics);
