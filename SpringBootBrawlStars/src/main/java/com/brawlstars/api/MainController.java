@@ -10,10 +10,4 @@ public class MainController implements ErrorController{
 	public String index() {
 		return "index.html";
 	}
-
-	@Override
-	public String getErrorPath() {
-		// TODO Auto-generated method stub
-		return "/error";
-	}
 }
