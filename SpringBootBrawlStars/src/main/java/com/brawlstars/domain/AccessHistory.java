@@ -23,7 +23,7 @@ public class AccessHistory {
 	ZonedDateTime accessDate;
 	String userAgent;
 	
-	public static AccessHistory createHisotry(String ip, String url, ZonedDateTime accessDate, String userAgent) {
+	public static AccessHistory createHistory(String ip, String url, ZonedDateTime accessDate, String userAgent) {
 		AccessHistory accessHistory = new AccessHistory();
 		
 		accessHistory.setIp (ip);

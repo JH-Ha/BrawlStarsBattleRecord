@@ -9,11 +9,11 @@ import com.brawlstars.repository.AccessHistoryRepository;
 
 @Service
 @Transactional
-public class AccessHisotryService {
+public class AccessHistoryService {
 	@Autowired
-	public AccessHistoryRepository accessHistoryRepositry;
+	public AccessHistoryRepository accessHistoryRepository;
 	
 	public void saveAccessHistory(AccessHistory accessHistory) {
-		accessHistoryRepositry.saveAccessHistory(accessHistory);
+		accessHistoryRepository.save(accessHistory);
 	}
 }
