@@ -14,37 +14,40 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 @Repository
 public class StatisticsRepository {
 
-	@Autowired
-	private EntityManager em;
+  @Autowired
+  private EntityManager em;
 
-	@Autowired
-	JPAQueryFactory queryFactory;
+  @Autowired
+  JPAQueryFactory queryFactory;
 
-	public List<RecordResultDto> getTrioStatByListYearMonth(String mode, String map, List<String> yearMonth) {
-		QStatistics qStatistics = QStatistics.statistics;
+  public List<RecordResultDto> getTrioStatByListYearMonth(String mode, String map,
+      List<String> yearMonth) {
+    QStatistics qStatistics = QStatistics.statistics;
 
-		List<RecordResultDto> result = queryFactory
-				.select(Projections.constructor(RecordResultDto.class, qStatistics.brawlerName, qStatistics.result,
-						qStatistics.cnt.sum()))
-				.from(qStatistics)
-				.where(qStatistics.mode.eq(mode)
-						.and(qStatistics.map.eq(map))
-						.and(qStatistics.statsYearMonth.in(yearMonth)))
-				.groupBy(qStatistics.brawlerName, qStatistics.result).fetch();
-		return result;
-	}
+    return queryFactory.select(
+            Projections.constructor(RecordResultDto.class,
+                qStatistics.brawlerName,
+                qStatistics.result,
+                qStatistics.cnt.sum()))
+        .from(qStatistics)
+        .where(qStatistics.mode.eq(mode),
+            qStatistics.map.eq(map),
+            qStatistics.statsYearMonth.in(yearMonth))
+        .groupBy(qStatistics.brawlerName, qStatistics.result).fetch();
+  }
 
-	public List<RecordResultDto> getDuoSoloStatByListYearMonth(String mode, String map, List<String> yearMonth) {
-		QStatistics qStatistics = QStatistics.statistics;
-		
-		List<RecordResultDto> result = queryFactory
-				.select(Projections.constructor(RecordResultDto.class, qStatistics.brawlerName, qStatistics.rankSum.sum(),
-						qStatistics.cnt.sum()))
-				.from(qStatistics)
-				.where(qStatistics.mode.eq(mode)
-						.and(qStatistics.map.eq(map))
-						.and(qStatistics.statsYearMonth.in(yearMonth)))
-				.groupBy(qStatistics.brawlerName).fetch();
-		return result;
-	}
+  public List<RecordResultDto> getDuoSoloStatByListYearMonth(String mode, String map,
+      List<String> yearMonth) {
+    QStatistics qStatistics = QStatistics.statistics;
+
+    return queryFactory.select(
+            Projections.constructor(RecordResultDto.class, qStatistics.brawlerName,
+                qStatistics.rankSum.sum(),
+                qStatistics.cnt.sum()))
+        .from(qStatistics)
+        .where(qStatistics.mode.eq(mode), qStatistics.map.eq(map),
+            qStatistics.statsYearMonth.in(yearMonth))
+        .groupBy(qStatistics.brawlerName)
+        .fetch();
+  }
 }
