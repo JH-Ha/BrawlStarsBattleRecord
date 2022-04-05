@@ -2,7 +2,6 @@ package com.brawlstars.interceptor;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.brawlstars.domain.AccessHistory;
-import com.brawlstars.service.AccessHisotryService;
+import com.brawlstars.service.AccessHistoryService;
 
 public class LoggerInterceptor implements HandlerInterceptor {
 	@Autowired
-	AccessHisotryService accessHisotryService;
+	AccessHistoryService accessHistoryService;
 	
 	@Override
 	public
@@ -38,8 +37,8 @@ public class LoggerInterceptor implements HandlerInterceptor {
 		if(url.length() > 255)
 			url = url.substring(0,254);
 		
-		AccessHistory accessHistory = AccessHistory.createHisotry(ip, url, nowSeoul, userAgent);
-		accessHisotryService.saveAccessHistory(accessHistory);
+		AccessHistory accessHistory = AccessHistory.createHistory(ip, url, nowSeoul, userAgent);
+		accessHistoryService.saveAccessHistory(accessHistory);
 		
 		return true;
 	}
