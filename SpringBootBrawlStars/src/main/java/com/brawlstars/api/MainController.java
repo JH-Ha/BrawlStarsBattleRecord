@@ -1,13 +1,12 @@
 package com.brawlstars.api;
 
-import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-public class MainController implements ErrorController{
-	@GetMapping({"/","/error"})
+@RestController
+public class MainController{
+	@GetMapping("/")
 	public String index() {
-		return "index.html";
+		return "Hello Brawl Meta";
 	}
 }
