@@ -41,6 +41,7 @@ function MyApp({ Component, pageProps }) {
              브롤스타즈 전적 기록 및 승률 확인 사이트입니다. 맵 마다 브롤러 별 승률과 선택률을 확인할 수 있습니다. 또한 당신의 전투 기록도 확인 가능합니다.
              ブロスタのマップごとにキャラクターの勝率を提供しております。" />
         <link rel="icon" href="/favicon.ico" />
+        <meta name="google-site-verification" content="PKyTkz1szHjS3fgqOvyg59O8dyYvNfN-Wh4OoObqRXI" />
       </Head>
       <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4114406385852589" crossOrigin="anonymous"></Script>
       <Component {...pageProps} />
