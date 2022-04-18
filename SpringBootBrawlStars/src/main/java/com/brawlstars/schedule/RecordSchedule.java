@@ -24,124 +24,125 @@ import com.brawlstars.service.RecordService;
 
 @Component
 public class RecordSchedule {
-    @Autowired
-    BrawlStarsAPI brawlStarsAPI;
 
-    @Autowired
-    RecordService recordService;
+  @Autowired
+  BrawlStarsAPI brawlStarsAPI;
 
-    @Autowired
-    MemberRepository memberRepository;
+  @Autowired
+  RecordService recordService;
 
-    Logger logger = LoggerFactory.getLogger(RecordSchedule.class);
+  @Autowired
+  MemberRepository memberRepository;
 
-    // 30 minutes
-    @Scheduled(fixedDelay = 1800000
-            //,initialDelay = 360000 // 10 minutes
-    )
-    public void saveRecordsSchedule() {
-        saveRecords();
-    }
+  Logger logger = LoggerFactory.getLogger(RecordSchedule.class);
 
-    public void saveRecords() {
-        Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
-        members.getContent().stream().parallel().forEach(member -> {
-            String tag = member.getTag();
-            logger.info("save member : " + member.getName() + " tag : " + tag);
-            saveRecord(tag);
-        });
-    }
+  // 30 minutes
+  @Scheduled(fixedDelay = 3600_000
+      , initialDelay = 360_000 // 10 minutes
+  )
+  public void saveRecordsSchedule() {
+    saveRecords();
+  }
 
-    public void saveRecordsV1(int page, int pageSize) {
-        Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(page, pageSize));
-        members.getContent().stream().parallel().forEach(member -> {
-            String tag = member.getTag();
-            List<Item> items = null;
-            try {
+  public void saveRecords() {
+    Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
+    members.getContent().stream().parallel().forEach(member -> {
+      String tag = member.getTag();
+      logger.info("save member : " + member.getName() + " tag : " + tag);
+      saveRecord(tag);
+    });
+  }
+
+  public void saveRecordsV1(int page, int pageSize) {
+    Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(page, pageSize));
+    members.getContent().stream().parallel().forEach(member -> {
+      String tag = member.getTag();
+      List<Item> items = null;
+      try {
+        items = brawlStarsAPI.getItems(member.getTag());
+        recordService.saveBattleLog(items, tag);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    });
+  }
+
+  @Getter
+  @Setter
+  class ItemContainer {
+
+    List<Item> items;
+    String tag;
+  }
+
+  public void saveRecordsV2(int page, int pageSize, Executor executor) {
+    Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(page, pageSize));
+    List<CompletableFuture<Object>> itemFutures = members.getContent()
+        .stream()
+        .map(member ->
+            CompletableFuture.supplyAsync(() -> {
+              String tag = member.getTag();
+              //logger.info("save member : " + member.getName() + " tag : " + tag);
+              List<Item> items = null;
+              ItemContainer itemContainer = new ItemContainer();
+              try {
                 items = brawlStarsAPI.getItems(member.getTag());
-                recordService.saveBattleLog(items, tag);
-            } catch (Exception e) {
+                itemContainer.setItems(items);
+                itemContainer.setTag(tag);
+              } catch (Exception e) {
                 e.printStackTrace();
-            }
-        });
+              }
+              return itemContainer;
+            }, executor))
+        .map(future ->
+            CompletableFuture.supplyAsync(() -> {
+              try {
+                ItemContainer itemContainer = future.get();
+                if (itemContainer.getItems() != null) {
+                  recordService.saveBattleLog(itemContainer.getItems(), itemContainer.getTag());
+                }
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              } catch (ExecutionException e) {
+                e.printStackTrace();
+              }
+              return null;
+            }, executor))
+        .collect(Collectors.toList());
+    itemFutures.stream()
+        .map(CompletableFuture::join)
+        .collect(Collectors.toList());
+  }
+
+  public void saveRecord(String tag) {
+
+    List<Item> items;
+    try {
+      items = brawlStarsAPI.getItems(tag);
+      recordService.saveBattleLog(items, tag);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
-    @Getter
-    @Setter
-    class ItemContainer {
-        List<Item> items;
-        String tag;
-    }
+  }
 
-    public void saveRecordsV2(int page, int pageSize, Executor executor) {
-        Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(page, pageSize));
-        List<CompletableFuture<Object>> itemFutures = members.getContent()
-                .stream()
-                .map(member ->
-                        CompletableFuture.supplyAsync(() -> {
-                            String tag = member.getTag();
-                            //logger.info("save member : " + member.getName() + " tag : " + tag);
-                            List<Item> items = null;
-                            ItemContainer itemContainer = new ItemContainer();
-                            try {
-                                items = brawlStarsAPI.getItems(member.getTag());
-                                itemContainer.setItems(items);
-                                itemContainer.setTag(tag);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            return itemContainer;
-                        }, executor))
-                .map(future ->
-                        CompletableFuture.supplyAsync(() -> {
-                            try {
-                                ItemContainer itemContainer = future.get();
-                                if(itemContainer.getItems() != null){
-                                    recordService.saveBattleLog(itemContainer.getItems(), itemContainer.getTag());
-                                }
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            }
-                            return null;
-                        }, executor))
-                .collect(Collectors.toList());
-        itemFutures.stream()
-                .map(CompletableFuture::join)
-                .collect(Collectors.toList());
-    }
+  // This lefts recent 50 records,and delete old records.
+  @Scheduled(fixedDelay = 86400_000 // 1 day
+      // ,initialDelay = 60000 // 10 minutes
+  )
+  public void deleteRecords() {
+    Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
+    members.getContent().forEach(member -> {
+      String tag = member.getTag();
+      logger.debug("delete member : " + tag);
+      recordService.deleteOldRecords(tag, 50L);
+    });
+  }
 
-    public void saveRecord(String tag) {
-
-        List<Item> items;
-        try {
-            items = brawlStarsAPI.getItems(tag);
-            recordService.saveBattleLog(items, tag);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-    }
-
-    // This lefts recent 50 records,and delete old records.
-    @Scheduled(fixedDelay = 8640000 // 1 day
-            // ,initialDelay = 60000 // 10 minutes
-    )
-    public void deleteRecords() {
-        Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
-        members.getContent().stream().forEach(member -> {
-            String tag = member.getTag();
-            logger.debug("delete member : " + tag);
-            recordService.deleteOldRecords(tag, 50L);
-        });
-    }
-
-    //every hour
-    //@Scheduled(cron = "0 15 * * * *")
-    @Scheduled(fixedDelay = 1800000) // 30minutes
-    public void updateStatistics() {
-        recordService.saveStats();
-    }
+  //every hour
+  //@Scheduled(cron = "0 15 * * * *")
+  @Scheduled(fixedDelay = 1800_000) // 30minutes
+  public void updateStatistics() {
+    recordService.saveStats();
+  }
 }
