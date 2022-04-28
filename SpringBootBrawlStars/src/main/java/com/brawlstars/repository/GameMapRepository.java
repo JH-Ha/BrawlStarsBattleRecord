@@ -18,7 +18,6 @@ public class GameMapRepository {
 	@Autowired
 	private EntityManager em;
 	public void saveGameMap(GameMap gameMap) {
-		// TODO Auto-generated method stub
 		if(gameMap.getId() == null) {
 			em.persist(gameMap);
 		}else {

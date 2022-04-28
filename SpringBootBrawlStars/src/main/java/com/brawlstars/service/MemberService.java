@@ -37,8 +37,6 @@ public class MemberService {
 		}
 
 	public ResultDto saveMember(String tag) {
-		// TODO Auto-generated method stub
-		
 		ResultDto resultDto = new ResultDto();
 		// check it is already in DB
 		MemberDto memberDto = getMemberByTag(tag);
