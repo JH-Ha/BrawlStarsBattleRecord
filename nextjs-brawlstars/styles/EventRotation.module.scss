@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
   }
+
   .title {
     background-color: #0d2153;
     color: white;
@@ -15,24 +16,31 @@
     padding: 5px;
     border-radius: 4px;
   }
+
   max-width: 1000px;
+
   @media screen and (max-width: 768px) {
     max-width: 500px;
   }
+
   margin: auto;
+
   .eventContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+
     .event {
       @media screen and (max-width: 768px) {
         flex-basis: 350px;
       }
+
       flex-basis: 47%;
       margin: 5px;
       cursor: pointer;
     }
   }
+
   .topBar {
     color: white;
     background-color: #000;
@@ -41,24 +49,30 @@
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
   }
+
   .info {
     color: white;
     text-shadow: 1px 1px 5px #000;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
+
     .eventInfoContainer {
       display: flex;
     }
+
     .modeImg {
       width: 40px;
       display: flex;
       justify-content: center;
       align-items: center;
+
       img {
         width: 100%;
       }
+
       margin: 0 10px;
     }
+
     .eventInfo {
       display: flex;
       justify-content: center;
@@ -67,65 +81,88 @@
       height: 60px;
     }
   }
+
   .winRateInfo {
     display: flex;
     justify-content: center;
     height: 90px;
+
     .brawlerImg {
       width: 50px;
       margin: 10px 10px 0 10px;
     }
+
     background: rgba(0, 0, 0, 0.1);
   }
 
   .gemGrab {
     background-color: #9b3df3;
   }
+
   .soloShowdown {
     background-color: #81d621;
+
     &.plus {
       background-color: #f1c526;
     }
   }
+
   .heist {
     background-color: #d55cd3;
   }
+
   .bounty {
     background-color: #01cfff;
   }
+
   .brawlBall {
     background-color: #8ca0df;
   }
+
   .siege {
     background-color: #f04f32;
   }
+
   .hotZone {
     background-color: #e33c50;
   }
+
   .knockout {
     background-color: #f7831c;
   }
+
   .wipeout {
     background-color: #e93bb3;
   }
+
   .payload {
     background-color: #543ffe;
   }
+
   .duels {
     background-color: #f1c526;
   }
+
   .basketBrawl {
     background-color: #fa6207;
   }
+
+  .botDrop {
+    background-color: #04d7c0;
+  }
+
   .superCityRampage {
     background-color: #db19a0;
   }
+
   .bigGame {
     background-color: #ae0026;
   }
+
   .roboRumble {
     background-color: #ae0026;
   }
+
   .bossFight {
     background-color: #ae0026;
   }
