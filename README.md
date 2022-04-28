@@ -45,6 +45,11 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### Update Log
 
+- v2.3.2 (2022.04.29)
+
+  - Gather statistic data of Bot Drop mode
+  - Optimazation of saving battle record logic
+
 - v2.3.1 (2022.04.14)
 
   - Cache-control enabled for images to reduce transferring data
