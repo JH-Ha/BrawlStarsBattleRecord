@@ -468,7 +468,6 @@ public class RecordService {
               stat.getCnt().intValue(),
               yearMonth);
         }
-        ;
       } else {
         stats = recordRepository.findSoloDuoByMap(recordSearch);
         recordRepository.updateStatUpdated(recordSearch);

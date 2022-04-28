@@ -37,11 +37,11 @@ public class RecordRepository {
   }
 
   public List<Record> findByTagAndBattleTime(String tag, String battleTime) {
-    List<Record> record = queryFactory.selectFrom(qRecord)
+    List<Record> records = queryFactory.selectFrom(qRecord)
         .where(qRecord.tag.eq(tag)
             , qRecord.battleTime.eq(battleTime))
         .fetch();
-    return record;
+    return records;
   }
 
   public Record findOne(String tag, String battleTime, String brawlerName) {
