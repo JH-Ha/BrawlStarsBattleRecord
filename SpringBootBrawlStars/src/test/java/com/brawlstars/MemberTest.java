@@ -1,16 +1,5 @@
 package com.brawlstars;
 
-import java.util.List;
-import java.util.Scanner;
-
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.Item;
 import com.brawlstars.repository.MemberDto;
@@ -19,8 +8,17 @@ import com.brawlstars.service.MemberService;
 import com.brawlstars.service.RecordService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Scanner;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 @SpringBootTest
 public class MemberTest {
@@ -32,9 +30,11 @@ public class MemberTest {
 	RecordService recordService;
 	
 	@BeforeEach
-	public void init() throws JsonMappingException, JsonProcessingException {
+	public void init() throws JsonProcessingException {
 		String tag = "#9QU209UYC";
-		Scanner scanner = new Scanner(getClass().getResourceAsStream("sampleResponse.txt"));
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+		InputStream inputStream = classloader.getResourceAsStream("sampleResponse.txt");
+		Scanner scanner = new Scanner(inputStream);
 		StringBuilder sb = new StringBuilder();
 		while(scanner.hasNext()) {
 			sb.append(scanner.nextLine());
