@@ -5,7 +5,8 @@ public class CommonUtil {
 		return "gemGrab".equals(mode) || "brawlBall".equals(mode) || "heist".equals(mode) || "bounty".equals(mode)
 				|| "siege".equals(mode) || "hotZone".equals(mode) || "knockout".equals(mode)
 				|| "basketBrawl".equals(mode) || "volleyBrawl".equals(mode) || "holdTheTrophy".equals(mode)
-				|| "trophyThieves".equals(mode) || "wipeout".equals(mode) || "payload".equals(mode);
+				|| "trophyThieves".equals(mode) || "wipeout".equals(mode) || "payload".equals(mode)
+				|| "botDrop".equals(mode);
 	}
 
 	public static boolean isDuoShowdown(String mode) {
