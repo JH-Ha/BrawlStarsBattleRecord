@@ -1,24 +1,21 @@
 package com.brawlstars.repository;
 
+import com.brawlstars.domain.QRecord;
+import com.brawlstars.domain.Record;
+import com.brawlstars.domain.RecordSearch;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
-
-import com.brawlstars.domain.QRecord;
-import com.brawlstars.domain.Record;
-import com.brawlstars.domain.RecordSearch;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
-import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository
 public class RecordRepository {
@@ -75,27 +72,30 @@ public class RecordRepository {
       builder.and(qRecord.mode.eq(recordSearch.getMode()));
     }
 
-    QueryResults<Long> groupKeys = queryFactory
-        .select(qRecord.parent.id)
+    List<Tuple> groupKeys = queryFactory
+        .select(qRecord.parent.id, qRecord.battleTime)
         .distinct() // to distinguish duels
         .from(qRecord)
         .where(builder)
         .orderBy(qRecord.battleTime.desc())
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
-        .fetchResults();
+        .fetch();
 
-    QueryResults<Record> result = queryFactory
+    List<Record> result = queryFactory
         .selectFrom(qRecord)
-        .where(qRecord.id.in(groupKeys.getResults()))
+        .where(qRecord.id.in(
+            groupKeys.stream()
+                .map(tuple -> tuple.get(0, Long.class))
+                .collect(Collectors.toList())))
         .orderBy(qRecord.battleTime.desc())
-        .fetchResults();
+        .fetch();
 
-    return new PageImpl<>(result.getResults().stream()
-        .map(record -> new RecordDto(record))
+    return new PageImpl<>(result.stream()
+        .map(RecordDto::new)
         .collect(Collectors.toList()),
         pageable,
-        groupKeys.getTotal());
+        groupKeys.size());
 
   }
 
