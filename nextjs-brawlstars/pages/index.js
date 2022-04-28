@@ -33,7 +33,7 @@ export async function getServerSideProps({ locale }) {
   //console.log(showdownEvents);
 
   events
-    .filter(e => e.event.mode !== 'duoShowdown')
+    .filter(e => e.event.mode !== 'duoShowdown' && e.event.mode !== 'unknown')
     .forEach(e => {
       const startTime = getLocalTime(e.startTime);
       const endTime = getLocalTime(e.endTime);
