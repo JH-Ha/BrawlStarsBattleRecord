@@ -114,7 +114,7 @@ public class RecordTest {
 
 
   @Test
-  public void saveTest() {
+  public void testSave() {
     recordService.removeByTag("#test1");
     recordService.removeByTag("#test");
     Record record = new Record();
@@ -131,7 +131,7 @@ public class RecordTest {
 
     RecordSearch recordSearch = new RecordSearch();
 
-    Page<RecordDto> records = recordController.getRecords("#test", PageRequest.of(1, 10),
+    Page<RecordDto> records = recordService.findByTag("#test", PageRequest.of(0, 10),
         recordSearch);
 
     // List<Record> records = recordService.getFindByTag("#test");
@@ -141,6 +141,8 @@ public class RecordTest {
       groupRecords.forEach(rr -> System.out.println(rr.getTag() + rr.getBattleTime())
       );
     });
+    // Then
+    Assertions.assertThat(records.getContent().get(0).getGroupRecords().size()).isEqualTo(2);
 
   }
 
