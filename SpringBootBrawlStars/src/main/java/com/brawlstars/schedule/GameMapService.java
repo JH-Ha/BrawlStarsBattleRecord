@@ -18,7 +18,7 @@ public class GameMapService {
 	}
 
 	public void updateTime(String mode, String map, String startTime, String endTime) {
-		GameMap gameMap = gameMapRepository.getGameMap(map, mode);
+		GameMap gameMap = gameMapRepository.findOneByNameAndMode(map, mode);
 		if(gameMap == null) {
 			gameMap = new GameMap();
 			gameMap.setName(map);
