@@ -82,6 +82,13 @@ public class RecordRepository {
         .limit(pageable.getPageSize())
         .fetch();
 
+    Long totalCnt = queryFactory
+        .select(qRecord.count())
+        .distinct() // to distinguish duels
+        .from(qRecord)
+        .where(builder)
+        .fetchOne();
+
     List<Record> result = queryFactory
         .selectFrom(qRecord)
         .where(qRecord.id.in(
@@ -95,7 +102,7 @@ public class RecordRepository {
         .map(RecordDto::new)
         .collect(Collectors.toList()),
         pageable,
-        groupKeys.size());
+        totalCnt);
 
   }
 

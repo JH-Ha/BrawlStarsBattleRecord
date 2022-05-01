@@ -50,7 +50,7 @@ public class EventController {
 		return eventInfos;
 	}
 	
-	@Scheduled(fixedDelay = 60000)
+	@Scheduled(fixedDelay = 600_000)
 	public void updateEvents() {
 		EventInfo[] eventInfos = null;
 		try {
@@ -72,7 +72,6 @@ public class EventController {
 				eventInfo.setStatistics(statistics);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(eventInfos != null) {
