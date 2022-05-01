@@ -317,5 +317,7 @@
     "soloVictories": "ソロ勝利数",
     "duoVictories": "デュオ勝利数",
     "Today's Events": "今日のイベント",
-    "Next Events": "ネクストイベント"
+    "Next Events": "ネクストイベント",
+    "recent3months": "最近3か月",
+    "period": "期間"
 }
