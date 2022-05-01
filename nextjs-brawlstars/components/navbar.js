@@ -54,9 +54,9 @@ const Navbar = () => {
                 <li className={styles.item}><Link href={`/mapList/gemGrab`} >Maps</Link></li>
                 <li className={styles.item}><Link href={`/blog`} >Blog</Link></li>
                 <div className={styles.languageContainer}>
+                    <div className={`${styles.language} ${language === 'ja' ? styles.selected : ''}`} onClick={changelanguageToJa}>ja</div>
                     <div className={`${styles.language} ${language === 'en' ? styles.selected : ''}`} onClick={changelanguageToEn}>en</div>
                     <div className={`${styles.language} ${language === 'ko' ? styles.selected : ''}`} onClick={changelanguageToKo}>ko</div>
-                    <div className={`${styles.language} ${language === 'ja' ? styles.selected : ''}`} onClick={changelanguageToJa}>ja</div>
                 </div>
             </ul>
             <div className={styles.toggleBtn} onClick={clickToggleBtn}>
