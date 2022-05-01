@@ -1,23 +1,19 @@
 package com.brawlstars.repository;
 
+import com.brawlstars.domain.Member;
+import com.brawlstars.domain.QMember;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
-
-import com.brawlstars.domain.Member;
-import com.brawlstars.domain.QMember;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
-import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Repository
 public class MemberRepository {
@@ -47,16 +43,21 @@ public class MemberRepository {
       builder.and(qMember.name.contains(name));
     }
 
-    QueryResults<Member> result = queryFactory.selectFrom(qMember)
+    List<Member> result = queryFactory.selectFrom(qMember)
         .where(builder)
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize())
-        .fetchResults();
+        .fetch();
+
+    Long totalMember = queryFactory.select(qMember.count())
+        .from(qMember)
+        .where(builder)
+        .fetchOne();
 
     return new PageImpl<>(
-        result.getResults().stream().map(member -> new MemberDto(member))
+        result.stream().map(member -> new MemberDto(member))
             .collect(Collectors.toList()),
-        pageable, result.getTotal());
+        pageable, totalMember);
 
   }
 
