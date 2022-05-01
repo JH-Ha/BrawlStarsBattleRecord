@@ -45,6 +45,12 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### Update Log
 
+- v2.3.3 (2022.05.02)
+
+  - New brawlers images (Janet and Bonnie) are added
+  - Period selection function is added to map page
+  - Optimazatioin of getting event logic
+
 - v2.3.2 (2022.04.29)
 
   - Gather statistic data of Bot Drop mode
