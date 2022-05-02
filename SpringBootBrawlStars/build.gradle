@@ -12,7 +12,7 @@ plugins {
 }
 
 group = 'com'
-version = 'v2.3.3'
+version = 'v2.3.4'
 sourceCompatibility = '11'
 
 configurations {
