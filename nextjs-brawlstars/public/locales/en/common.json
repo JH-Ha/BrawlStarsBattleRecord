@@ -3,6 +3,7 @@
     "userListGuide": "Click user name to check battle log and statistics.",
     "mapsGuide": "Click a map image to check win rate and pick rate of brawlers.",
     "battleLogTitle": "Battle Log",
+    "bossFight": "BOSS FIGHT",
     "gemGrab": "Gem Grab",
     "heist": "Heist",
     "brawlBall": "Brawl Ball",
@@ -45,5 +46,6 @@
     "expLevel": "Exp Level",
     "3vs3Victories": "3vs3 Victories",
     "soloVictories": "Solo Victories",
-    "duoVictories": "Duo Victories"
+    "duoVictories": "Duo Victories",
+    "recent3months": "Recent 3 months"
 }

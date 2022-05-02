@@ -1,74 +1,101 @@
-.mapClass{
+.mapClass {
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    .trophySelect{
+
+    .trophySelect {
         display: flex;
-        label{
-            margin-right : 10px;
+
+        label {
+            margin-right: 10px;
         }
+
         margin-bottom: 10px;
         align-items: center;
     }
-    img{
+
+    img {
         width: 30px;
         height: 30px;
     }
-    .mapNameContainer{
+
+    .mapNameContainer {
         margin-bottom: 10px;
         display: flex;
         align-items: center;
         cursor: pointer;
-        .mapName{
+
+        .mapName {
             margin-right: 10px;
         }
-        .chevronContainer{
+
+        .chevronContainer {
             width: 15px;
         }
     }
-    .mapImgContainer{
+
+    .mapImgContainer {
         height: 300px;
         transition: 500ms;
         overflow: hidden;
         margin-bottom: 10px;
-        &.none{
+
+        &.none {
             height: 0px;
             overflow: hidden;
             transition: 500ms;
         }
-        .mapImg{
+
+        .mapImg {
             max-width: 200px;
             width: auto;
             height: auto;
         }
-        &.showdown .mapImg{
+
+        &.showdown .mapImg {
             max-width: 300px;
             width: auto;
             height: auto;
         }
     }
-    .infoContainer{
-        max-width : 400px;
+
+    .yearMonthContainer {
+        display: flex;
+
+        .label {
+            width: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+        }
+    }
+
+    .infoContainer {
+        max-width: 400px;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        .info{
-            .brawler{
-                width : 100%;
+
+        .info {
+            .brawler {
+                width: 100%;
                 display: flex;
-                .brawlerName{
-                    margin-left : 10px;
+
+                .brawlerName {
+                    margin-left: 10px;
                 }
             }
         }
     }
+
     @media screen and (min-width : 768px) {
-        .infoContainer{
+        .infoContainer {
             max-width: none;
             width: 768px;
-            
+
         }
     }
 }
