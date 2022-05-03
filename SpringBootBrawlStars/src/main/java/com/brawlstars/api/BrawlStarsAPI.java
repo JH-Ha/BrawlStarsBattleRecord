@@ -26,6 +26,8 @@ public class BrawlStarsAPI {
 
   final static String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImQwMmM0ODM2LWY5NmItNGU5OC1hZThmLTY4MzI2YTExZGY1OSIsImlhdCI6MTY0OTE2NTMzMSwic3ViIjoiZGV2ZWxvcGVyLzRmODljMjEyLWE0OWYtZWRiZS0zZjgzLTRhODJiZGE2N2NiNSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMzkuMTE4LjE3MC4xNDkiLCIxMy4xMjUuMjA5LjE3OCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.8ztU4RdzQtt--IBlfoBCHKWFUHgm3GeGzZ_Wdd36pkVK-MJ-fQ2Ig9JKuiMM4J78mSCEihnNvrCrwbh8R4Y5sw";
 
+
+
   public List<Item> getItems(String tag) throws Exception {
 
     String tagReplaced = tag.replace("#", "%23");
@@ -52,6 +54,9 @@ public class BrawlStarsAPI {
     EventInfo[] eventInfos = null;
     try {
       eventInfos = getObjectFromJson(EVENTS_ROTATIONS_URL, EventInfo[].class);
+      for(EventInfo eventInfo: eventInfos){
+        eventInfo.getEvent().getMode();
+      }
 
     } catch (Exception e) {
       e.printStackTrace();
