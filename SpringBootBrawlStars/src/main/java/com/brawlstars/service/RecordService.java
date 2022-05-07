@@ -218,7 +218,7 @@ public class RecordService {
         groupRecords.add(recordDuo);
         // recordRepository.save(recordDuo);
 
-        // save Statistics
+        // save Statistic
 //				if(trophies!= null && trophies >= 500) {
 //					saveDuoSoloStat(mode, map, brawlerName, rank);
 //				}
@@ -309,8 +309,8 @@ public class RecordService {
       String battleTime = item.getBattleTime();
 
       // Do not execute save logic when records already exist
-      List<Record> records = recordRepository.findByTagAndBattleTime(tag, battleTime);
-      if (records.size() > 0) {
+      List<Long> ids = recordRepository.findIdsByTagAndBattleTime(tag, battleTime);
+      if (ids.size() > 0) {
         break;
       }
 
