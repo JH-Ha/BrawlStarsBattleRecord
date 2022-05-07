@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Index;
@@ -23,6 +24,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -83,7 +86,8 @@ public class Record {
 	private Integer resultRank;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "group_key")
+	@OnDelete(action= OnDeleteAction.CASCADE)
+	@JoinColumn(name = "group_key", foreignKey = @ForeignKey(name = "none"))
 	private Record parent;
 
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)

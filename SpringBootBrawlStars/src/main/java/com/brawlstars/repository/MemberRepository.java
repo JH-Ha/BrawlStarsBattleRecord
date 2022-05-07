@@ -24,6 +24,9 @@ public class MemberRepository {
   @Autowired
   JPAQueryFactory queryFactory;
 
+  QMember qMember = QMember.member;
+
+
   public void save(Member member) {
     if (member.getId() == null) {
       em.persist(member);
@@ -32,8 +35,15 @@ public class MemberRepository {
     }
   }
 
+  public List<String> findTags() {
+    List<String> tags = queryFactory
+        .select(qMember.tag)
+        .from(qMember)
+        .fetch();
+    return tags;
+  }
+
   public Page<MemberDto> findAll(String name, Pageable pageable) {
-    QMember qMember = QMember.member;
 
     BooleanBuilder builder = new BooleanBuilder();
 
@@ -62,8 +72,6 @@ public class MemberRepository {
   }
 
   public MemberDto findMemberByTag(String tag) {
-
-    QMember qMember = QMember.member;
 
     MemberDto memberDto = queryFactory
         .select(Projections.constructor(MemberDto.class,
