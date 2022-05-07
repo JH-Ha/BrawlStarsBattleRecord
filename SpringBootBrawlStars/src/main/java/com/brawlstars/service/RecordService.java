@@ -111,11 +111,11 @@ public class RecordService {
       }
     }
 
-    Record foundRecord = recordRepository.findOne(tag, item.getBattleTime(), brawlerName);
-    if (foundRecord != null) {
-      foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
-      return;
-    }
+//    Record foundRecord = recordRepository.findOne(tag, item.getBattleTime(), brawlerName);
+//    if (foundRecord != null) {
+//      foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+//      return;
+//    }
 
     Record myRecord = null;
     List<Record> groupRecords = new ArrayList<>();
@@ -154,12 +154,12 @@ public class RecordService {
       return;
     }
     // if there is a saved record already, then just update throphychange
-    Record foundRecord = recordRepository.findOne(tag, item.getBattleTime(), myBrawlerName);
-    if (foundRecord != null) {
-      foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
-      recordRepository.save(foundRecord);
-      return;
-    }
+//    Record foundRecord = recordRepository.findOne(tag, item.getBattleTime(), myBrawlerName);
+//    if (foundRecord != null) {
+//      foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+//      recordRepository.save(foundRecord);
+//      return;
+//    }
 
     Record myRecord = null;
     List<Record> groupRecords = new ArrayList<>();
@@ -191,12 +191,12 @@ public class RecordService {
     if (tag == null || item.getBattleTime() == null || myBrawlerName == null) {
       return;
     }
-    Record foundRecord = recordRepository.findOne(tag, item.getBattleTime(), myBrawlerName);
-    if (foundRecord != null) {
-      foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
-      recordRepository.save(foundRecord);
-      return;
-    }
+//    Record foundRecord = recordRepository.findOne(tag, item.getBattleTime(), myBrawlerName);
+//    if (foundRecord != null) {
+//      foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
+//      recordRepository.save(foundRecord);
+//      return;
+//    }
 
     Record myRecord = null;
     List<Record> groupRecords = new ArrayList<>();
