@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -87,9 +88,9 @@ public class RecordService {
   }
 
   public String makeGroupKey(List<Player> players, String battleTime) {
-    players.sort((Player a, Player b) -> a.getTag().compareTo(b.getTag()));
+    players.sort(Comparator.comparing(Player::getTag));
     // make team key to get team record
-    String groupKey = players.stream().map(s -> s.getTag()).reduce("", (a, b) -> a + b);
+    String groupKey = players.stream().map(Player::getTag).reduce("", (a, b) -> a + b);
     groupKey += battleTime;
     return groupKey;
   }
@@ -101,8 +102,7 @@ public class RecordService {
     int playerGroupIdx = 0;
     for (int i = 0; i < teams.size(); i++) {
       List<Player> team = teams.get(i);
-      for (int j = 0; j < team.size(); j++) {
-        Player player = team.get(j);
+      for (Player player : team) {
         if (player.getTag().equals(tag)) {
           playerGroupIdx = i;
           brawlerName = player.getBrawler().getName();
@@ -114,21 +114,15 @@ public class RecordService {
     Record foundRecord = recordRepository.findOne(tag, item.getBattleTime(), brawlerName);
     if (foundRecord != null) {
       foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
-      recordRepository.save(foundRecord);
       return;
     }
-
-    // List<Player> players =
-    // teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
-    // String groupKey = makeGroupKey(players, item.getBattleTime());
 
     Record myRecord = null;
     List<Record> groupRecords = new ArrayList<>();
 
     for (int i = 0; i < teams.size(); i++) {
       List<Player> team = teams.get(i);
-      for (int j = 0; j < team.size(); j++) {
-        Player player = team.get(j);
+      for (Player player : team) {
         RecordTrio recordTrio = RecordTrio.createRecord(item, tag, player, playerGroupIdx, i);
         // we don't know other players' trophy change
         if (player.getTag().equals(tag)) {
@@ -146,10 +140,8 @@ public class RecordService {
 
     List<List<Player>> teams = item.getBattle().getTeams();
     String myBrawlerName = null;
-    for (int i = 0; i < teams.size(); i++) {
-      List<Player> team = teams.get(i);
-      for (int j = 0; j < team.size(); j++) {
-        Player player = team.get(j);
+    for (List<Player> team : teams) {
+      for (Player player : team) {
         if (tag.equals(player.getTag())) {
           myBrawlerName = player.getBrawler().getName();
           break;
@@ -169,59 +161,17 @@ public class RecordService {
       return;
     }
 
-    // List<Player> players =
-    // teams.stream().flatMap(Collection::stream).collect(Collectors.toList());
-    // String groupKey = makeGroupKey(players, item.getBattleTime());
-
-    // Date battleTimeDate = makeBattleTimeDate(item.getBattleTime());
-
-    /*
-     * if(foundRecord != null) {
-     * foundRecord.setTrophyChange(item.getBattle().getTrophyChange());
-     * recordRepository.save(foundRecord); return; }
-     */
-
     Record myRecord = null;
     List<Record> groupRecords = new ArrayList<>();
 
     for (int i = 0; i < teams.size(); i++) {
       List<Player> team = teams.get(i);
-      for (int j = 0; j < team.size(); j++) {
-        Player player = team.get(j);
-        String mode = item.getBattle().getMode(); // event mode -> battle mode : event mode is null
-        String map = item.getEvent().getMap();
-        Long rank = i + 1L;
-        String brawlerName = player.getBrawler().getName();
-        Integer trophies = player.getBrawler().getTrophies();
-
-        RecordDuo recordDuo = new RecordDuo();
-        recordDuo.setTag(player.getTag());
-        recordDuo.setBattleTime(item.getBattleTime());
-        recordDuo.setBrawlerName(brawlerName);
-        recordDuo.setPower(player.getBrawler().getPower());
-        recordDuo.setTrophies(trophies);
-
-        recordDuo.setMap(map);
-        // recordDuo.setGroupKey(groupKey);
-        recordDuo.setMode(mode);
-        recordDuo.setType(item.getBattle().getType());
-        recordDuo.setResultRank(rank.intValue());
-        recordDuo.setPlayerName(player.getName());
-        recordDuo.setEventId(item.getEvent().getId());
-        recordDuo.setBrawlerId(player.getBrawler().getId());
+      for (Player player : team) {
+        RecordDuo recordDuo = RecordDuo.createDuo(tag, player, item, i + 1);
         if (tag.equals(player.getTag())) {
-          recordDuo.setTrophyChange(item.getBattle().getTrophyChange());
           myRecord = recordDuo;
         }
-        recordDuo.setStatUpdated(false);
-        recordDuo.setRecordDate(item.getBattleTime().substring(0, 8));
         groupRecords.add(recordDuo);
-        // recordRepository.save(recordDuo);
-
-        // save Statistic
-//				if(trophies!= null && trophies >= 500) {
-//					saveDuoSoloStat(mode, map, brawlerName, rank);
-//				}
       }
     }
     Record.setRelation(myRecord, groupRecords);
@@ -232,9 +182,7 @@ public class RecordService {
 
     List<Player> players = item.getBattle().getPlayers();
     String myBrawlerName = null;
-    for (int i = 0; i < players.size(); i++) {
-      Player player = players.get(i);
-      RecordSolo recordSolo = RecordSolo.createSoloRecord(tag, item, player, i + 1);
+    for (Player player : players) {
       if (tag.equals(player.getTag())) {
         myBrawlerName = player.getBrawler().getName();
         break;
@@ -258,7 +206,6 @@ public class RecordService {
       if (tag.equals(player.getTag())) {
         myRecord = recordSolo;
       }
-      recordSolo.setStatUpdated(false);
       groupRecords.add(recordSolo);
     }
     Record.setRelation(myRecord, groupRecords);
@@ -277,7 +224,7 @@ public class RecordService {
 
   public void savePlayersInItems(List<Item> items) {
 
-    items.stream().forEach(item -> {
+    items.forEach(item -> {
       List<List<Player>> teams = item.getBattle().getTeams();
       List<Player> players;
       if (teams != null) {
@@ -286,8 +233,7 @@ public class RecordService {
         players = item.getBattle().getPlayers();
       }
 
-      for (int i = 0; i < players.size(); i++) {
-        Player player = players.get(i);
+      for (Player player : players) {
         MemberDto foundMember = memberRepository.findMemberByTag(player.getTag());
         if (foundMember != null) {
           continue;
@@ -304,11 +250,10 @@ public class RecordService {
   }
 
   public void saveBattleLog(List<Item> items, String tag) {
-    for (int i = 0; i < items.size(); i++) {
-      Item item = items.get(i);
+    for (Item item : items) {
       String battleTime = item.getBattleTime();
 
-      // Do not execute save logic when records already exist
+      // When records already exist, we don't check left items to reduce execution time.
       List<Long> ids = recordRepository.findIdsByTagAndBattleTime(tag, battleTime);
       if (ids.size() > 0) {
         break;
@@ -371,7 +316,7 @@ public class RecordService {
             gameMapRepositry.findByNameAndMode(gameMap.getName(), mode)))
         .filter(findMapDtos -> findMapDtos.gameMapDtos.isEmpty()).collect(Collectors.toList());
 
-    notSavedMaps.stream().forEach(findMapDtos -> gameMapRepositry.saveGameMap(findMapDtos.gameMap));
+    notSavedMaps.forEach(findMapDtos -> gameMapRepositry.saveGameMap(findMapDtos.gameMap));
 
     return notSavedMaps.size();
   }
@@ -388,7 +333,7 @@ public class RecordService {
     return recordRepository.deleteAllRecord();
   }
 
-  class FindMapDto {
+  static class FindMapDto {
 
     GameMap gameMap;
     List<GameMapDto> gameMapDtos;
@@ -452,7 +397,7 @@ public class RecordService {
       saveDistinctGameMap(gameMode.getMode());
     }
     List<GameMapDto> maps = gameMapRepositry.getGameMaps(null);
-    maps.stream().forEach(map -> {
+    maps.forEach(map -> {
       String mode = map.getMode();
       RecordSearch recordSearch = new RecordSearch();
       recordSearch.setMode(mode);
@@ -490,7 +435,7 @@ public class RecordService {
     List<Player> players = item.getBattle().getPlayers();
 
     Record myRecord = null;
-    List<Record> groupRecords = new ArrayList<Record>();
+    List<Record> groupRecords = new ArrayList<>();
 
     for (int i = 0; i < players.size(); i++) {
       Player player = players.get(i);
@@ -498,9 +443,7 @@ public class RecordService {
       String map = item.getEvent().getMap();
 
       List<Brawler> brawlers = player.getBrawlers();
-      for (int j = 0; j < brawlers.size(); j++) {
-        Brawler brawler = brawlers.get(j);
-
+      for (Brawler brawler : brawlers) {
         RecordDuels recordDuels = new RecordDuels();
         recordDuels.setTag(player.getTag());
         recordDuels.setBattleTime(item.getBattleTime());
