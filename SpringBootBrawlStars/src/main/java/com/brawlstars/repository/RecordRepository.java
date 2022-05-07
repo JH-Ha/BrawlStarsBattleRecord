@@ -44,6 +44,15 @@ public class RecordRepository {
     return records;
   }
 
+  public List<Long> findIdsByTagAndBattleTime(String tag, String battleTime) {
+    List<Long> ids = queryFactory.select(qRecord.id)
+        .from(qRecord)
+        .where(qRecord.tag.eq(tag)
+            , qRecord.battleTime.eq(battleTime))
+        .fetch();
+    return ids;
+  }
+
   public Record findOne(String tag, String battleTime, String brawlerName) {
     Record record = queryFactory.selectFrom(qRecord)
         .where(qRecord.tag.eq(tag)
