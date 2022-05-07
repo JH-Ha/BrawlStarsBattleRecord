@@ -1,5 +1,7 @@
 package com.brawlstars.schedule;
 
+import com.brawlstars.service.MemberService;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -32,13 +34,16 @@ public class RecordSchedule {
   RecordService recordService;
 
   @Autowired
+  MemberService memberService;
+
+  @Autowired
   MemberRepository memberRepository;
 
   Logger logger = LoggerFactory.getLogger(RecordSchedule.class);
 
   // 30 minutes
   @Scheduled(fixedDelay = 3600_000
-      , initialDelay = 360_000 // 10 minutes
+      //, initialDelay = 360_000 // 10 minutes
   )
   public void saveRecordsSchedule() {
     saveRecords();
@@ -114,15 +119,24 @@ public class RecordSchedule {
   }
 
   public void saveRecord(String tag) {
-
-    List<Item> items;
     try {
-      items = brawlStarsAPI.getItems(tag);
+      List<Item> items = getItems(tag);
       recordService.saveBattleLog(items, tag);
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
 
+  public List<Item> getItems(String tag) {
+    try {
+      List<Item> items = brawlStarsAPI.getItems(tag);
+      return items;
+    } catch (Exception e) {
+      // delete tag
+      memberService.updateIsDeletedByTag(tag);
+      e.printStackTrace();
+      return new ArrayList<>();
+    }
   }
 
   // This lefts recent 50 records,and delete old records.
