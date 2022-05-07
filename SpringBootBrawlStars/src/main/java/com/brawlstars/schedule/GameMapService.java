@@ -23,9 +23,12 @@ public class GameMapService {
 			gameMap = new GameMap();
 			gameMap.setName(map);
 			gameMap.setMode(mode);
+			gameMap.setStartTime(startTime);
+			gameMap.setEndTime(endTime);
+			saveGameMap(gameMap);
+			return;
 		} 
 		gameMap.setStartTime(startTime);
 		gameMap.setEndTime(endTime);
-		saveGameMap(gameMap);
 	}
 }
