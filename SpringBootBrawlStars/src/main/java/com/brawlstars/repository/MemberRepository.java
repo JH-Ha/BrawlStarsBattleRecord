@@ -39,8 +39,16 @@ public class MemberRepository {
     List<String> tags = queryFactory
         .select(qMember.tag)
         .from(qMember)
+        .where(qMember.isDeleted.eq(false))
         .fetch();
     return tags;
+  }
+
+  public long updateIsDeletedByTag(String tag) {
+    return queryFactory.update(qMember)
+        .set(qMember.isDeleted, true)
+        .where(qMember.tag.eq(tag))
+        .execute();
   }
 
   public Page<MemberDto> findAll(String name, Pageable pageable) {

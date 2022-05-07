@@ -64,4 +64,8 @@ public class MemberService {
     resultDto.setResult(true);
     return resultDto;
   }
+
+  public long updateIsDeletedByTag(String tag){
+    return memberRepository.updateIsDeletedByTag(tag);
+  }
 }
