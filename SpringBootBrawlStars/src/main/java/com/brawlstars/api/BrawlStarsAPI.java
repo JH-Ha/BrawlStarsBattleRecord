@@ -1,22 +1,19 @@
 package com.brawlstars.api;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import org.springframework.stereotype.Component;
-
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.EventInfo;
 import com.brawlstars.json.Item;
 import com.brawlstars.json.playerInfo.PlayerInfo;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import javax.net.ssl.HttpsURLConnection;
+import org.springframework.stereotype.Component;
 
 @Component
 public class BrawlStarsAPI {

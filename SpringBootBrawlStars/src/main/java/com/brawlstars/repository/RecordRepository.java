@@ -271,22 +271,16 @@ public class RecordRepository {
   public void deleteOldRecords(String tag, Long offset) {
     QRecord qRecord = QRecord.record;
 
-    List<Record> records = queryFactory.select(qRecord)
+    List<Long> groupIds = queryFactory.select(qRecord.parent.id)
         .from(qRecord)
         .where(qRecord.tag.eq(tag))
         .orderBy(qRecord.battleTime.desc())
         .offset(offset)
         .fetch();
 
-//		queryFactory.delete(qRecord)
-//					.where(qRecord.parent.id.in(ids))
-//					.execute();
-//		Long cnt = queryFactory.delete(qRecord)
-//					.where(qRecord.id.in(ids))
-//					.execute();
-    for (Record record : records) {
-      em.remove(record);
-    }
+    queryFactory.delete(qRecord)
+        .where(qRecord.parent.id.in(groupIds))
+        .execute();
 
   }
 

@@ -45,10 +45,9 @@ public class RecordSchedule {
   }
 
   public void saveRecords() {
-    Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
-    members.getContent().stream().parallel().forEach(member -> {
-      String tag = member.getTag();
-      logger.info("save member : " + member.getName() + " tag : " + tag);
+    List<String> tags = memberRepository.findTags();
+    tags.stream().parallel().forEach(tag -> {
+      logger.info("save member tag : " + tag);
       saveRecord(tag);
     });
   }
@@ -131,9 +130,9 @@ public class RecordSchedule {
       // ,initialDelay = 60000 // 10 minutes
   )
   public void deleteRecords() {
-    Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(0, 10000));
-    members.getContent().forEach(member -> {
-      String tag = member.getTag();
+    logger.info("deleteRecords");
+    List<String> tags = memberRepository.findTags();
+    tags.forEach(tag -> {
       logger.debug("delete member : " + tag);
       recordService.deleteOldRecords(tag, 50L);
     });
