@@ -23,7 +23,6 @@ public class RecordSolo extends Record {
 		recordSolo.setPower(player.getBrawler().getPower());
 		recordSolo.setTrophies(player.getBrawler().getTrophies());
 		recordSolo.setMap(item.getEvent().getMap());
-		// recordSolo.setGroupKey(groupKey);
 		recordSolo.setMode(item.getBattle().getMode());
 		recordSolo.setType(item.getBattle().getType());
 		recordSolo.setPlayerName(player.getName());
@@ -33,6 +32,7 @@ public class RecordSolo extends Record {
 			recordSolo.setTrophyChange(item.getBattle().getTrophyChange());
 		recordSolo.setResultRank(resultRank);
 		recordSolo.setRecordDate(item.getBattleTime().substring(0, 8));
+		recordSolo.setStatUpdated(false);
 		return recordSolo;
 	}
 }
