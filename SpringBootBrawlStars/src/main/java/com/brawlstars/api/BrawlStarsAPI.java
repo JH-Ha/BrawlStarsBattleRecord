@@ -51,10 +51,6 @@ public class BrawlStarsAPI {
     EventInfo[] eventInfos = null;
     try {
       eventInfos = getObjectFromJson(EVENTS_ROTATIONS_URL, EventInfo[].class);
-      for(EventInfo eventInfo: eventInfos){
-        eventInfo.getEvent().getMode();
-      }
-
     } catch (Exception e) {
       e.printStackTrace();
     }
