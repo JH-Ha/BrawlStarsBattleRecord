@@ -14,7 +14,7 @@ function isTrio(mode) {
         mode === "trophyThieves" ||
         mode === "wipeout" ||
         mode === "payload" ||
-        mode === "botDrop"
+        mode === "invasion"
     ) {
         result = true;
     }
