@@ -63,6 +63,12 @@ public class EventController {
         String iMonthsAgo = today.minusMonths(i).format(format);
         yearMonth.add(iMonthsAgo);
       }
+      // Temp code unknown -> invasion
+      for (EventInfo eventInfo : eventInfos){
+        if("unknown".equals(eventInfo.getEvent().getMode())){
+          eventInfo.getEvent().setMode("invasion");
+        }
+      }
 
       for (EventInfo eventInfo : eventInfos) {
         String mode = eventInfo.getEvent().getMode();
