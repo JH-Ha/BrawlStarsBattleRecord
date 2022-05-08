@@ -55,6 +55,14 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### Update Log
 
+- v2.3.6 (2022.05.08)
+
+  - Bug fix : Bot Drop is shown at main page
+
+- v2.3.5 (2022.05.07)
+
+  - Record saving logic optimazation to reduce data transfer
+
 - v2.3.4 (2022.05.03)
 
   - Cache of map statistics enabled
