@@ -98,13 +98,18 @@ public class RecordRepository {
         .where(builder)
         .fetchOne();
 
+    QRecord qRecordParent = new QRecord("parent");
+
     List<Record> result = queryFactory
         .selectFrom(qRecord)
+        .leftJoin(qRecord.groupRecords, qRecordParent)
+        .fetchJoin()
         .where(qRecord.id.in(
             groupKeys.stream()
                 .map(tuple -> tuple.get(0, Long.class))
                 .collect(Collectors.toList())))
         .orderBy(qRecord.battleTime.desc())
+        .distinct()
         .fetch();
 
     return new PageImpl<>(result.stream()
