@@ -43,7 +43,7 @@ public class RecordSchedule {
 
   // 30 minutes
   @Scheduled(fixedDelay = 3600_000
-      //, initialDelay = 360_000 // 10 minutes
+      , initialDelay = 600_000 // 10 minutes
   )
   public void saveRecordsSchedule() {
     saveRecords();
@@ -141,7 +141,7 @@ public class RecordSchedule {
 
   // This lefts recent 50 records,and delete old records.
   @Scheduled(fixedDelay = 86400_000 // 1 day
-      // ,initialDelay = 60000 // 10 minutes
+       ,initialDelay = 600_000 // 10 minutes
   )
   public void deleteRecords() {
     logger.info("deleteRecords");
@@ -154,7 +154,8 @@ public class RecordSchedule {
 
   //every hour
   //@Scheduled(cron = "0 15 * * * *")
-  @Scheduled(fixedDelay = 1800_000) // 30minutes
+  @Scheduled(fixedDelay = 1800_000,  // 30minutes
+  initialDelay = 600_000)
   public void updateStatistics() {
     recordService.saveStats();
   }
