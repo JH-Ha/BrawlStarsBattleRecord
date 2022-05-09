@@ -55,6 +55,11 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### Update Log
 
+- v2.3.7 (2022.05.10)
+
+  - Reduce loading time of pages by changing logging interceptor
+  - Use fetch join to reduce latency of viewing battle log
+
 - v2.3.6 (2022.05.08)
 
   - Bug fix : Bot Drop is shown at main page
