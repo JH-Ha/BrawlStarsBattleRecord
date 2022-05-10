@@ -1,38 +1,54 @@
-.recordResult{
+.recordResult {
 
-    img{
+    img {
         width: 30px;
         height: 30px;
     }
-    .infoContainer{
-        max-width : 400px;
+
+    .infoContainer {
+        max-width: 400px;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        .info{
-            .brawler{
-                width : 100%;
+
+        .info {
+            .brawler {
+                width: 100%;
                 display: flex;
-                .brawlerName{
+
+                .brawlerName {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    margin-left : 10px;
+                    margin-left: 10px;
                 }
             }
         }
-    }
-    .rateHeader{
-        cursor: pointer;
-        .rateHeaderContent{
-            margin-right :10px;
+
+        table {
+            thead>tr>th {
+                height: 40px;
+                padding: 5px 10px;
+            }
         }
     }
+
+    .rateHeader {
+        cursor: pointer;
+
+        .rateHeaderContent {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0 10px;
+        }
+    }
+
     @media screen and (min-width : 768px) {
-        .infoContainer{
+        .infoContainer {
             max-width: none;
             width: 768px;
-            
+
         }
     }
 }
