@@ -217,12 +217,11 @@ export default function Map({
     });
   };
 
-  const ref = useRef<HTMLImageElement>();
+  const ref = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    if (ref.current !== undefined) {
-      const height = ref.current.offsetHeight;
-      console.log(ref.current.clientHeight);
+    if (ref !== null && ref.current !== undefined && ref.current !== null) {
+      const height = ref.current.clientHeight;
       setImgContainerHeight(`${height}px`);
       setImgHeight(height);
     }
