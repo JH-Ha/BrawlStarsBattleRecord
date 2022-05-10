@@ -4,6 +4,7 @@ import React, {
   ReactEventHandler,
   SelectHTMLAttributes,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -157,10 +158,10 @@ export default function Map({
 
   function showMapImg() {
     if (isMapShown) {
-      setImgContainerHeight(`${0}px`);
+      //setImgContainerHeight(`${0}px`);
       setIsMapShown(false);
     } else {
-      setImgContainerHeight(`${imgHeight}px`);
+      //setImgContainerHeight(`${imgHeight}px`);
       setIsMapShown(true);
     }
   }
@@ -219,14 +220,6 @@ export default function Map({
 
   const ref = useRef<HTMLImageElement>(null);
 
-  useEffect(() => {
-    if (ref !== null && ref.current !== undefined && ref.current !== null) {
-      const height = ref.current.clientHeight;
-      setImgContainerHeight(`${height}px`);
-      setImgHeight(height);
-    }
-  }, []);
-
   const modeWrap = mode.includes("Showdown") ? "showdown" : mode;
 
   return (
@@ -266,8 +259,7 @@ export default function Map({
         <div
           className={`${styles.mapImgContainer}
             ${mode.includes("Showdown") ? `${styles.showdown}` : ""}
-            `}
-          style={{ height: `${imgContainerHeight}` }}
+            ${isMapShown ? "" : styles.none}`}
         >
           <img
             ref={ref}
