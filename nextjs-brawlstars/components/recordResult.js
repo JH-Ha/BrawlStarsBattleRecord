@@ -80,15 +80,28 @@ const RecordResult = ({ _recordArr, sumTotalGameNum, mode, isPersonal }) => {
                         <th>No</th>
                         <th>Name</th>
                         {isTrio(mode) || isDuels(mode) ?
-                            <th onClick={toggleWinRate} className={styles.rateHeader}><span className={styles.rateHeaderContent}>{t("Win Rate")}</span>
-                                <SortIcon order={winRateOrder} key={`winRate-${winRateOrder}`} />
+                            <th onClick={toggleWinRate} className={styles.rateHeader}>
+                                <span className={styles.rateHeaderContent}>
+                                    <div>{t("Win Rate")}</div>
+                                    <SortIcon order={winRateOrder} key={`winRate-${winRateOrder}`} />
+                                </span>
                             </th>
                             :
                             isDuo(mode) || isSolo(mode) ?
-                                <th onClick={toggleAvgRank} className={styles.rateHeader}><span className={styles.rateHeaderContent}>{t("Avg Rank")}</span><SortIcon order={avgRankOrder} key={`avgRank-${avgRankOrder}`} /> </th>
+                                <th onClick={toggleAvgRank} className={styles.rateHeader}>
+                                    <span className={styles.rateHeaderContent}>
+                                        <div>{t("Avg Rank")}</div>
+                                        <SortIcon order={avgRankOrder} key={`avgRank-${avgRankOrder}`} />
+                                    </span>
+                                </th>
                                 : <th># of Games</th>
                         }
-                        <th onClick={togglePickRate} className={styles.rateHeader}><span className={styles.rateHeaderContent}>{t("Pick Rate")}</span><SortIcon order={pickRateOrder} key={`pickRate-${pickRateOrder}`} /></th>
+                        <th onClick={togglePickRate} className={styles.rateHeader}>
+                            <span className={styles.rateHeaderContent}>
+                                <div>{t("Pick Rate")}</div>
+                                <SortIcon order={pickRateOrder} key={`pickRate-${pickRateOrder}`} />
+                            </span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>

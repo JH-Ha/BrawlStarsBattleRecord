@@ -153,14 +153,14 @@ export default function Map({
   const { t } = useTranslation();
   const [isMapShown, setIsMapShown] = useState(true);
   const [imgHeight, setImgHeight] = useState(0);
-  const [imgContainerHeight, setImgContainerHeight] = useState(0);
+  const [imgContainerHeight, setImgContainerHeight] = useState("100%");
 
   function showMapImg() {
     if (isMapShown) {
-      setImgContainerHeight(0);
+      setImgContainerHeight(`${0}px`);
       setIsMapShown(false);
     } else {
-      setImgContainerHeight(imgHeight);
+      setImgContainerHeight(`${imgHeight}px`);
       setIsMapShown(true);
     }
   }
@@ -212,10 +212,10 @@ export default function Map({
 
   useEffect(() => {
     if (ref.current !== undefined) {
-      const height = ref.current.clientHeight;
+      const height = ref.current.offsetHeight;
       console.log(ref.current.clientHeight);
+      setImgContainerHeight(`${height}px`);
       setImgHeight(height);
-      setImgContainerHeight(height);
     }
   }, []);
 
@@ -257,7 +257,7 @@ export default function Map({
           className={`${styles.mapImgContainer}
             ${mode.includes("Showdown") ? `${styles.showdown}` : ""}
             `}
-          style={{ height: `${imgContainerHeight}px` }}
+          style={{ height: `${imgContainerHeight}` }}
         >
           <img
             ref={ref}
