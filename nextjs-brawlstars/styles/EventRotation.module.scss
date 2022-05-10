@@ -95,75 +95,80 @@
     background: rgba(0, 0, 0, 0.1);
   }
 
-  .gemGrab {
-    background-color: #9b3df3;
-  }
+}
 
-  .soloShowdown {
-    background-color: #81d621;
+.gemGrab {
+  background-color: #9b3df3;
+}
 
-    &.plus {
-      background-color: #f1c526;
-    }
-  }
+.heist {
+  background-color: #d55cd3;
+}
 
-  .heist {
-    background-color: #d55cd3;
-  }
+.bounty {
+  background-color: #01cfff;
+}
 
-  .bounty {
-    background-color: #01cfff;
-  }
+.brawlBall {
+  background-color: #8ca0df;
+}
 
-  .brawlBall {
-    background-color: #8ca0df;
-  }
+.siege {
+  background-color: #f04f32;
+}
 
-  .siege {
-    background-color: #f04f32;
-  }
+.hotZone {
+  background-color: #e33c50;
+}
 
-  .hotZone {
-    background-color: #e33c50;
-  }
+.knockout {
+  background-color: #f7831c;
+}
 
-  .knockout {
-    background-color: #f7831c;
-  }
+.wipeout {
+  background-color: #e93bb3;
+}
 
-  .wipeout {
-    background-color: #e93bb3;
-  }
+.payload {
+  background-color: #543ffe;
+}
 
-  .payload {
-    background-color: #543ffe;
-  }
+.duels {
+  background-color: #f1c526;
+}
 
-  .duels {
+.basketBrawl {
+  background-color: #fa6207;
+}
+
+.invasion {
+  background-color: #04d7c0;
+}
+
+.superCityRampage {
+  background-color: #db19a0;
+}
+
+.bigGame {
+  background-color: #ae0026;
+}
+
+.roboRumble {
+  background-color: #ae0026;
+}
+
+.bossFight {
+  background-color: #ae0026;
+}
+
+.soloShowdown {
+  background-color: #81d621;
+
+  &.plus {
     background-color: #f1c526;
   }
+}
 
-  .basketBrawl {
-    background-color: #fa6207;
-  }
-
-  .invasion {
-    background-color: #04d7c0;
-  }
-
-  .superCityRampage {
-    background-color: #db19a0;
-  }
-
-  .bigGame {
-    background-color: #ae0026;
-  }
-
-  .roboRumble {
-    background-color: #ae0026;
-  }
-
-  .bossFight {
-    background-color: #ae0026;
-  }
+.showdown {
+  background-color: #81d621;
 }

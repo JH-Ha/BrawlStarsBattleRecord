@@ -5,6 +5,40 @@
     align-items: center;
     flex-direction: column;
 
+    .titleContainer {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 5px;
+        padding: 10px 0px;
+        display: flex;
+        margin-bottom: 0px;
+
+        .imgContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 70px;
+
+            img {
+                width: 30px;
+            }
+        }
+
+        .info {
+            text-align: left;
+            color: white;
+            text-shadow: 1px 1px 5px #000;
+
+            .mode {
+                font-size: 1.2rem;
+            }
+
+            .mapName {
+                font-size: 1rem;
+            }
+        }
+    }
+
     .trophySelect {
         display: flex;
 
@@ -16,13 +50,9 @@
         align-items: center;
     }
 
-    img {
-        width: 30px;
-        height: 30px;
-    }
+
 
     .mapNameContainer {
-        margin-bottom: 10px;
         display: flex;
         align-items: center;
         cursor: pointer;
@@ -32,23 +62,24 @@
         }
 
         .chevronContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 15px;
         }
     }
 
     .mapImgContainer {
-        height: 300px;
+
         transition: 500ms;
         overflow: hidden;
-        margin-bottom: 10px;
 
         &.none {
             height: 0px;
-            overflow: hidden;
-            transition: 500ms;
         }
 
         .mapImg {
+            padding: 10px 0px;
             max-width: 200px;
             width: auto;
             height: auto;
@@ -67,7 +98,7 @@
         .label {
             width: 100px;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             margin-right: 20px;
         }
