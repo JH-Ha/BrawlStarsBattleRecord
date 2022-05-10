@@ -208,6 +208,15 @@ export default function Map({
     });
   };
 
+  const goToMapList = (e: React.MouseEvent<HTMLDivElement>) => {
+    router.push({
+      pathname: "/mapList/[mode]",
+      query: {
+        mode: mode,
+      },
+    });
+  };
+
   const ref = useRef<HTMLImageElement>();
 
   useEffect(() => {
@@ -236,7 +245,9 @@ export default function Map({
             <img src={`/images/mode/${mode}.png`} alt={mapName} />
           </div>
           <div className={styles.info}>
-            <div className={styles.mode}>{t(mode)}</div>
+            <div className={styles.mode} onClick={goToMapList}>
+              {t(mode)}
+            </div>
             <div
               className={styles.mapNameContainer}
               onClick={() => showMapImg()}
