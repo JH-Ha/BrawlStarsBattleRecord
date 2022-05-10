@@ -3,9 +3,12 @@
 import React, {
   ReactEventHandler,
   SelectHTMLAttributes,
+  useEffect,
+  useRef,
   useState,
 } from "react";
 import styles from "../../styles/Map.module.scss";
+import eventStyles from "../../styles/EventRotation.module.scss";
 import { getData } from "../../components/ApiHandler";
 import RecordResult from "../../components/recordResult";
 import { isDuels, isTrio } from "../../components/BaseFunctions";
@@ -148,12 +151,18 @@ export default function Map({
   yearMonth,
 }: Prop) {
   const { t } = useTranslation();
-  const [isMapShown, setIsMapShown] = useState(false);
+  const [isMapShown, setIsMapShown] = useState(true);
+  const [imgHeight, setImgHeight] = useState(0);
+  const [imgContainerHeight, setImgContainerHeight] = useState(0);
 
   function showMapImg() {
-    setIsMapShown((value) => {
-      return !value;
-    });
+    if (isMapShown) {
+      setImgContainerHeight(0);
+      setIsMapShown(false);
+    } else {
+      setImgContainerHeight(imgHeight);
+      setIsMapShown(true);
+    }
   }
 
   const zeroPad = (num: number, places: number) =>
@@ -199,35 +208,59 @@ export default function Map({
     });
   };
 
+  const ref = useRef<HTMLImageElement>();
+
+  useEffect(() => {
+    if (ref.current !== undefined) {
+      const height = ref.current.clientHeight;
+      console.log(ref.current.clientHeight);
+      setImgHeight(height);
+      setImgContainerHeight(height);
+    }
+  }, []);
+
+  const modeWrap = mode.includes("Showdown") ? "showdown" : mode;
+
   return (
     <>
       <div className={styles.mapClass}>
         <Head>
           <title>
-            {`${t(mapName)} ${t("Win Rate")} ${t("Statistics")} - ${t(
-              "brawlStars"
-            )} - Brawl Meta`}
+            {`${t(mapName)} - ${t(mode)} - ${t("Win Rate")} - ${t(
+              "Statistics"
+            )} - ${t("brawlStars")} - Brawl Meta`}
           </title>
         </Head>
-        <h3>
-          {t("Win Rate")} {t("Statistics")}
-        </h3>
-        <div className={styles.mapNameContainer} onClick={() => showMapImg()}>
-          <span className={styles.mapName}>{t(mapName)}</span>
-          <div className={styles.chevronContainer}>
-            {isMapShown ? (
-              <FontAwesomeIcon icon={faChevronUp} />
-            ) : (
-              <FontAwesomeIcon icon={faChevronDown} />
-            )}
+        <h3 className={`${eventStyles[modeWrap]} ${styles.titleContainer}`}>
+          <div className={styles.imgContainer}>
+            <img src={`/images/mode/${mode}.png`} alt={mapName} />
           </div>
-        </div>
+          <div className={styles.info}>
+            <div className={styles.mode}>{t(mode)}</div>
+            <div
+              className={styles.mapNameContainer}
+              onClick={() => showMapImg()}
+            >
+              <span className={styles.mapName}>{t(mapName)}</span>
+              <div className={styles.chevronContainer}>
+                {isMapShown ? (
+                  <FontAwesomeIcon icon={faChevronUp} />
+                ) : (
+                  <FontAwesomeIcon icon={faChevronDown} />
+                )}
+              </div>
+            </div>
+          </div>
+        </h3>
+
         <div
           className={`${styles.mapImgContainer}
             ${mode.includes("Showdown") ? `${styles.showdown}` : ""}
-            ${isMapShown ? "" : styles.none}`}
+            `}
+          style={{ height: `${imgContainerHeight}px` }}
         >
           <img
+            ref={ref}
             className={styles.mapImg}
             src={`/images/maps/${
               mode.includes("Showdown") ? "showdown" : mode
