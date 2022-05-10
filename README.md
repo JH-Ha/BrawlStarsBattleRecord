@@ -59,6 +59,7 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
   - Reduce loading time of pages by changing logging interceptor
   - Use fetch join to reduce latency of viewing battle log
+  - Add mode name to statistics page
 
 - v2.3.6 (2022.05.08)
 
