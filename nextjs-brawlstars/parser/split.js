@@ -1,183 +1,211 @@
 import clipboardy from 'clipboardy';
 
-let data = `bounty	Cube Force
+let data = `basketBrawl	Alley Oop
+basketBrawl	Ball Hog
+basketBrawl	Pocket Pass
+basketBrawl	Reversal
+basketBrawl	Slam Dunk
+basketBrawl	Triple-Double
+basketBrawl	Turnover
+bigGame	Lit Match
+bigGame	Open Season
+bossFight	Danger Zone
+bossFight	Metal Scrap
+bounty	Bull Pen
+bounty	Canal Grande
+bounty	Cube Force
+bounty	Deeper Danger
 bounty	Dry Season
+bounty	Electric Zone
+bounty	Excel
+bounty	Heat Wave
 bounty	Hideout
+bounty	Land Ahoy
+bounty	Layer Cake
+bounty	Overgrown Canyon
 bounty	Purple Paradise
 bounty	Shooting Star
-bounty	Electric Zone
-bounty	Layer Cake
-duoShowdown	Dark Passage
-duoShowdown	Scorched Stone
-duoShowdown	Cavern Churn
-duoShowdown	Safety Center
-duoShowdown	Dried Up River
-duoShowdown	Skull Creek
-duoShowdown	Ruins
-duoShowdown	Mystic Touch
-duoShowdown	Double Trouble
-duoShowdown	Rockwall Brawl
-heist	Pit Stop
-heist	Safe Zone
-heist	Kaboom Canyon
-heist	Diagonal Alley
-heist	Hot Potato
-heist	Bridge Too Far
-brawlBall	Field Goal
-brawlBall	Triple Dribble
-brawlBall	Center Stage
-brawlBall	Binary Coding
-brawlBall	Firm Grip
-brawlBall	Sunny Soccer
+bounty	Snake Prairie
 brawlBall	Backyard Bowl
-brawlBall	Sticky Notes
-brawlBall	Super Stadium
-hotZone	Dueling Beetles
-hotZone	Ring of Fire
-hotZone	Danger Zone
-soloShowdown	Scorched Stone
-soloShowdown	Dark Passage
-soloShowdown	Skull Creek
-soloShowdown	Cavern Churn
-soloShowdown	Ruins
-knockout	Flaring Phoenix
-knockout	Belle's Rock
-knockout	Middle Ground
-knockout	Ends Meet
-knockout	Luis' Revenge
-gemGrab	Minecart Madness
-gemGrab	Crystal Arcade
-gemGrab	Double Swoosh
-gemGrab	Hard Rock Mine
-gemGrab	Gem Fort
-gemGrab	Flooded Mine
-gemGrab	Four Squared
-siege	Bric-a-Brac
-siege	Bot Drop
-siege	Factory Rush
-siege	Nuts & Bolts
-brawlBall	Pinhole Punt
-hotZone	Split
-soloShowdown	Rockwall Brawl
-soloShowdown	Double Trouble
-brawlBall	Sneaky Fields
-gemGrab	Acute Angle
-gemGrab	Pierced
-bounty	Excel
-duoShowdown	Stocky Stockades
-brawlBall	Center Field
-hotZone	Controller Chaos
-knockout	Deep End
-soloShowdown	Safety Center
-siege	Junk Park
-heist	Rattlesnake Ravine
-brawlBall	Pinball Dreams
-hotZone	Night at the Museum
-knockout	Goldarm Gulch
-duoShowdown	Feast or Famine
-duoShowdown	Dark Fantasies
-brawlBall	Slalom Slam
-brawlBall	Power Shot
-soloShowdown	Dried Up River
-soloShowdown	Dark Fantasies
-soloShowdown	Mystic Touch
-soloShowdown	Stocky Stockades
-soloShowdown	Feast or Famine
-soloShowdown	Acid Lakes
-hotZone	Parallel Plays
-gemGrab	Cotton Candy Dreams
-gemGrab	Deep Diner
-gemGrab	Undermine
-siege	Robo Ring
-duoShowdown	Acid Lakes
-gemGrab	Gem Source
-brawlBall	Super Beach
-heist	Tornado Ring
-gemGrab	Gem Exchange
-knockout	Crimewater
-bounty	Heat Wave
-soloShowdown	Erratic Blocks
-soloShowdown	Hot Maze
-soloShowdown	Island Invasion
-brawlBall	Coarse Course
-brawlBall	Hairdryer Treatment
-brawlBall	Penalty Kick
-duoShowdown	Eye of the Storm
-hotZone	Temple of Boom
-knockout	Riverside
 brawlBall	Beach Ball
-brawlBall	Well Cut
-heist	Twisted Gems
-bounty	Deeper Danger
-bounty	Overgrown Canyon
-heist	Forks Out
-hotZone	Double Sided
-knockout	Flowing Springs
-soloShowdown	Eye of the Storm
-soloShowdown	The Mortuary
-brawlBall	Post Haste
-brawlBall	Warped Beach
-knockout	Splash Out
-soloShowdown	Eggshell
-duoShowdown	Eggshell
-duoShowdown	Hot Maze
-duoShowdown	Island Invasion
-duoShowdown	The Mortuary
-gemGrab	Bouncing Diner
-gemGrab	Cross Cut
-gemGrab	Sapphire Plains
-hotZone	Open Business
-gemGrab	Flooded Dam
-hotZone	Mosh Pit
-soloShowdown	Outrageous Outback
-duoShowdown	Erratic Blocks
-duoShowdown	Outrageous Outback
-gemGrab	Chill Space
-siege	Robo Highway
-heist	G.G. Mortuary
-duoShowdown	Canyon Rivers
-bounty	Bull Pen
-bigGame	Lit Match
-siege	Some Assembly Required
-wipeout	Camping Grounds
+brawlBall	Binary Coding
+brawlBall	Center Field
+brawlBall	Center Stage
+brawlBall	Coarse Course
+brawlBall	Extra Bouncy
+brawlBall	Field Goal
+brawlBall	Firm Grip
+brawlBall	Hairdryer Treatment
+brawlBall	High Score
 brawlBall	Off the Line
-gemGrab	Deathcap Trap
-soloShowdown	Canyon Rivers
-gemGrab	Opposing Forts
-wipeout	Infinite Doom
-gemGrab	Open Space
-duels	MONKEY MAZE
-wipeout	Friendly Fire: Off
-wipeout	Translocator Exchange
-siege	Assembly Attack
-duels	NO SURRENDER
-wipeout	Slayer's Paradise
+brawlBall	Penalty Kick
+brawlBall	Pinball Dreams
+brawlBall	Ping Pong
+brawlBall	Pinhole Punt
+brawlBall	Post Haste
+brawlBall	Power Shot
+brawlBall	Slalom Slam
+brawlBall	Sneaky Fields
+brawlBall	Sticky Notes
+brawlBall	Sunny Soccer
+brawlBall	Super Beach
+brawlBall	Super Stadium
+brawlBall	Triple Dribble
+brawlBall	Warped Beach
+brawlBall	Well Cut
 duels	DANGER CHAMBER
 duels	DUELIST'S DESTINY
+duels	MONKEY MAZE
+duels	NO SURRENDER
 duels	SHROUDING SERPENT
 duels	TIGER TRAP
 duels	WARRIOR'S WAY
-wipeout	Wicked Twig
-roboRumble	Last Stand
-wipeout	Quad Damage
-payload	Backhaul
-payload	Force Majeure
+duoShowdown	Acid Lakes
+duoShowdown	Canyon Rivers
+duoShowdown	Cavern Churn
+duoShowdown	Dark Fantasies
+duoShowdown	Dark Passage
+duoShowdown	Double Trouble
+duoShowdown	Dried Up River
+duoShowdown	Eggshell
+duoShowdown	Erratic Blocks
+duoShowdown	Eye of the Storm
+duoShowdown	Feast or Famine
+duoShowdown	Flying Fantasies
+duoShowdown	Grassy Gorge
+duoShowdown	Hot Maze
+duoShowdown	Island Invasion
+duoShowdown	Mystic Touch
+duoShowdown	Outrageous Outback
+duoShowdown	Rockwall Brawl
+duoShowdown	Ruins
+duoShowdown	Safety Center
+duoShowdown	Scorched Stone
+duoShowdown	Skull Creek
+duoShowdown	Stocky Stockades
+duoShowdown	The Mortuary
+gemGrab	Acute Angle
+gemGrab	Bouncing Diner
+gemGrab	Chill Space
+gemGrab	Cotton Candy Dreams
+gemGrab	Cross Cut
+gemGrab	Crystal Arcade
+gemGrab	Deathcap Trap
+gemGrab	Deep Diner
+gemGrab	Double Swoosh
+gemGrab	Flooded Dam
+gemGrab	Flooded Mine
+gemGrab	Four Squared
+gemGrab	Gem Exchange
+gemGrab	Gem Fort
+gemGrab	Gem Source
+gemGrab	Hard Rock Mine
+gemGrab	Minecart Madness
+gemGrab	Open Space
+gemGrab	Opposing Forts
+gemGrab	Pierced
+gemGrab	Sapphire Plains
+gemGrab	Spring Trap
+gemGrab	Undermine
+heist	Bridge Too Far
+heist	Can't touch this
+heist	Diagonal Alley
+heist	Forks Out
+heist	G.G. Mortuary
+heist	Hot Potato
+heist	Kaboom Canyon
+heist	Pit Stop
+heist	Rattlesnake Ravine
+heist	Rolling Rumble
+heist	Safe Zone
+heist	Tornado Ring
+heist	Twisted Gems
+hotZone	Controller Chaos
+hotZone	Danger Zone
+hotZone	Double Sided
+hotZone	Dueling Beetles
+hotZone	Mosh Pit
+hotZone	Night at the Museum
+hotZone	Open Business
+hotZone	Open Zone
+hotZone	Parallel Plays
+hotZone	Ring of Fire
+hotZone	Split
+hotZone	Temple of Boom
+invasion	A Loud Place
+invasion	Bots Attack!
+invasion	Brawl of the Worlds
+invasion	Devolution
+invasion	The Bot
+invasion	Val Verde
+knockout	Belle's Rock
+knockout	Crimewater
+knockout	Deep End
+knockout	Ends Meet
+knockout	Flaring Phoenix
+knockout	Flowing Springs
+knockout	Goldarm Gulch
+knockout	Luis' Revenge
+knockout	Middle Ground
+knockout	New Perspective
+knockout	Riverside
+knockout	Splash Out
+knockout	X Marks the Spot
 payload	Air Waybill
-payload	Cubic Capacity
-basketBrawl	Ball Hog
-basketBrawl	Turnover
+payload	Backhaul
 payload	Concealed Damage
-basketBrawl	Slam Dunk
-payload	Special Delivery
-bossFight	Danger Zone
-basketBrawl	Pocket Pass
+payload	Cubic Capacity
 payload	Drawback
-unknown	Infinite Doom
-basketBrawl	Alley Oop
-basketBrawl	Reversal
-basketBrawl	Triple-Double
-bigGame	Open Season
-roboRumble	Full On`;
+payload	Force Majeure
+payload	Special Delivery
+roboRumble	Full On
+roboRumble	Last Stand
+siege	Assembly Attack
+siege	Bot Drop
+siege	Bric-a-Brac
+siege	Factory Rush
+siege	Junk Park
+siege	Nuts & Bolts
+siege	Robo Highway
+siege	Robo Ring
+siege	Some Assembly Required
+soloShowdown	Acid Lakes
+soloShowdown	Canyon Rivers
+soloShowdown	Cavern Churn
+soloShowdown	Dark Fantasies
+soloShowdown	Dark Passage
+soloShowdown	Double Trouble
+soloShowdown	Dried Up River
+soloShowdown	Eggshell
+soloShowdown	Erratic Blocks
+soloShowdown	Eye of the Storm
+soloShowdown	Feast or Famine
+soloShowdown	Flying Fantasies
+soloShowdown	Grassy Gorge
+soloShowdown	Hot Maze
+soloShowdown	Island Invasion
+soloShowdown	Mystic Touch
+soloShowdown	Outrageous Outback
+soloShowdown	Rockwall Brawl
+soloShowdown	Ruins
+soloShowdown	Safety Center
+soloShowdown	Scorched Stone
+soloShowdown	Skull Creek
+soloShowdown	Stocky Stockades
+soloShowdown	The Mortuary
+wipeout	Camping Grounds
+wipeout	Friendly Fire: Off
+wipeout	Infinite Doom
+wipeout	Quad Damage
+wipeout	Slayer's Paradise
+wipeout	Translocator Exchange
+wipeout	Wicked Twig`;
+
+const query = `
+select distinct mode, name from game_map 
+where mode != 'unknown'
+order by mode;
+`
 
 let result = '';
 data.split('\n').map(a => {
@@ -189,11 +217,11 @@ data.split('\n').map(a => {
 }).map(b => {
     return `/map/${encodeURIComponent(b.map)}/mode/${b.mode}`;
 }).forEach(c => {
-    result += `<url><loc>https://brawlmeta.com/ko${c}</loc><lastmod>2021-02-29T18:58:59+09:00</lastmod></url>
+    result += `<url><loc>https://brawlmeta.com/ko${c}</loc><lastmod>2022-05-19T09:30:00+09:00</lastmod></url>
     `
-    result += `<url><loc>https://brawlmeta.com/ja${c}</loc><lastmod>2021-03-29T18:58:59+09:00</lastmod></url>
+    result += `<url><loc>https://brawlmeta.com/ja${c}</loc><lastmod>2022-05-19T09:30:00+09:00</lastmod></url>
     `
-    result += `<url><loc>https://brawlmeta.com/en${c}</loc><lastmod>2021-02-29T18:58:59+09:00</lastmod></url>
+    result += `<url><loc>https://brawlmeta.com/en${c}</loc><lastmod>2022-05-19T09:30:00+09:00</lastmod></url>
     `
 })
 
