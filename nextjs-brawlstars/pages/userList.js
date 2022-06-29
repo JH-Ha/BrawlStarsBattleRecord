@@ -27,7 +27,7 @@ export default function UserList({ userList, curPage, numUser, propNickname }) {
   const router = useRouter();
   const { t } = useTranslation('common');
 
-  const [nickname, setNickname] = useState(propNickname);
+  const [nickname, setNickname] = useState(decodeURIComponent(propNickname));
 
 
   const changePageHandler = (page) => {
