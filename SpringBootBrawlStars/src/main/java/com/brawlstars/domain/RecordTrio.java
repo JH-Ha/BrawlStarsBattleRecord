@@ -20,7 +20,7 @@ public class RecordTrio extends Record {
 		RecordTrio recordTrio = new RecordTrio();
 		String map = item.getEvent().getMap();
 		String mode = item.getBattle().getMode();
-		String brawlerName = player.getBrawler().getName();
+		String brawlerName = player.getBrawler().getName().replace("\n","");
 		Integer trophies = player.getBrawler().getTrophies();
 		
 		recordTrio.setBattleTime(item.getBattleTime());
