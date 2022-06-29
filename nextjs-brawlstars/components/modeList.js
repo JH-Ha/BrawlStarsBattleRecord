@@ -28,6 +28,7 @@ const ModeList = ({ mode, changeMode }) => {
         {/* <option value="volleyBrawl">{t("volleyBrawl")}</option> */}
         <option value="basketBrawl">{t("basketBrawl")}</option>
         <option value="invasion">{t("invasion")}</option>
+        <option value="hunters">{t("hunters")}</option>
         {/* <option value="holdTheTrophy">{t("holdTheTrophy")}</option> */}
         <option value="soloShowdown">{t("soloShowdown")}</option>
         <option value="duoShowdown">{t("duoShowdown")}</option>
