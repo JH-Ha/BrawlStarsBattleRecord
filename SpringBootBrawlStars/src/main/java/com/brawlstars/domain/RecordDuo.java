@@ -17,7 +17,7 @@ public class RecordDuo extends Record {
   public static RecordDuo createDuo(String tag, Player player, Item item, Integer rank) {
     String mode = item.getBattle().getMode(); // event mode -> battle mode : event mode is null
     String map = item.getEvent().getMap();
-    String brawlerName = player.getBrawler().getName().replace("\n","");
+    String brawlerName = player.getBrawler().getName().replace("\n"," ");
     Integer trophies = player.getBrawler().getTrophies();
 
     RecordDuo recordDuo = new RecordDuo();
