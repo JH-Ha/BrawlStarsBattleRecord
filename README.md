@@ -55,6 +55,11 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### Update Log
 
+- v2.3.8 (2022.06.30)
+  - Add hunters mode and new brawler otis
+  - Add translations of new maps
+  - Bug fix : nickname search value was displayed as encoded character at user list
+
 - v2.3.7 (2022.05.10)
 
   - Reduce loading time of pages by changing logging interceptor
