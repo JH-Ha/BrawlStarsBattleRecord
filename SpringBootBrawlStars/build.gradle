@@ -5,14 +5,14 @@ buildscript {
 }
 
 plugins {
-	id 'org.springframework.boot' version '2.6.7'
+	id 'org.springframework.boot' version '2.7.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com'
-version = 'v2.3.7'
+version = 'v2.3.8.1'
 sourceCompatibility = '11'
 
 configurations {
