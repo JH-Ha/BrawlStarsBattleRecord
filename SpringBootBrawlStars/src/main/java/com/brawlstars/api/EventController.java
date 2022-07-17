@@ -3,8 +3,10 @@ package com.brawlstars.api;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.slf4j.Logger;
@@ -39,9 +41,38 @@ public class EventController {
 
   Logger logger = LoggerFactory.getLogger(EventController.class);
 
+  Map<String, String> mapNameToMode = new HashMap<>();
+
   @PostConstruct
   public void postContruct() {
     updateEvents();
+    String[] huntersMapNames = {
+        "Trials and Tribulations",
+        "Hunting Season",
+        "The Prey",
+        "Quick and Restless",
+        "Deliverance",
+        "True Trail",
+        "Omega"
+    };
+
+    for (String mapName : huntersMapNames) {
+      mapNameToMode.put(mapName, "hunters");
+    }
+    String[] invasionMapNames = {
+        "A Loud Place",
+        "Devolution",
+        "Val Verde",
+        "Bots Attack!",
+        "Brawl of the Worlds",
+        "The Bot",
+        "Departure",
+        "Trials and Tribulations"
+    };
+    for (String mapName : invasionMapNames) {
+      mapNameToMode.put(mapName, "invasion");
+    }
+
   }
 
   @GetMapping("/api/events/rotation")
@@ -63,10 +94,12 @@ public class EventController {
         String iMonthsAgo = today.minusMonths(i).format(format);
         yearMonth.add(iMonthsAgo);
       }
-      // Temp code unknown -> invasion
-      for (EventInfo eventInfo : eventInfos){
-        if("unknown".equals(eventInfo.getEvent().getMode())){
-          eventInfo.getEvent().setMode("invasion");
+      // Temp code unknown -> invasion or hunters
+      for (EventInfo eventInfo : eventInfos) {
+        String mode = eventInfo.getEvent().getMode();
+        String map = eventInfo.getEvent().getMap();
+        if ("unknown".equals(mode)) {
+          eventInfo.getEvent().setMode(mapNameToMode.getOrDefault(map, "unknown"));
         }
       }
 
