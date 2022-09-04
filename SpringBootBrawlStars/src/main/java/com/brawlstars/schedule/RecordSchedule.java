@@ -61,7 +61,7 @@ public class RecordSchedule {
     Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(page, pageSize));
     members.getContent().stream().parallel().forEach(member -> {
       String tag = member.getTag();
-      List<Item> items = null;
+      List<Item> items;
       try {
         items = brawlStarsAPI.getItems(member.getTag());
         recordService.saveBattleLog(items, tag);
@@ -87,7 +87,7 @@ public class RecordSchedule {
             CompletableFuture.supplyAsync(() -> {
               String tag = member.getTag();
               //logger.info("save member : " + member.getName() + " tag : " + tag);
-              List<Item> items = null;
+              List<Item> items;
               ItemContainer itemContainer = new ItemContainer();
               try {
                 items = brawlStarsAPI.getItems(member.getTag());
@@ -132,8 +132,6 @@ public class RecordSchedule {
       List<Item> items = brawlStarsAPI.getItems(tag);
       return items;
     } catch (Exception e) {
-      // delete tag
-      memberService.updateIsDeletedByTag(tag);
       e.printStackTrace();
       return new ArrayList<>();
     }
