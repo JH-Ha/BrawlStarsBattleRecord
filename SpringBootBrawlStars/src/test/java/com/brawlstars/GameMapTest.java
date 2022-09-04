@@ -9,6 +9,7 @@ import com.brawlstars.service.RecordService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,9 @@ public class GameMapTest {
 
   @BeforeEach
   public void init() throws JsonProcessingException {
-    Scanner scanner = new Scanner(getClass().getResourceAsStream("sampleResponse.txt"));
+    ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+    InputStream inputStream = classloader.getResourceAsStream("sampleResponse.txt");
+    Scanner scanner = new Scanner(inputStream);
     StringBuilder sb = new StringBuilder();
     while (scanner.hasNext()) {
       sb.append(scanner.nextLine());
