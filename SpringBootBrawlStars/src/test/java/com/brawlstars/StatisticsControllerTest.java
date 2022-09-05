@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,7 +42,9 @@ public class StatisticsControllerTest {
   @BeforeEach
   public void init() throws JsonProcessingException {
     String tag = "#9QU209UYC";
-    Scanner scanner = new Scanner(getClass().getResourceAsStream("./sampleResponse.txt"));
+    ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+    InputStream inputStream = classloader.getResourceAsStream("sampleResponse.txt");
+    Scanner scanner = new Scanner(inputStream);
     StringBuilder sb = new StringBuilder();
     while (scanner.hasNext()) {
       sb.append(scanner.nextLine());

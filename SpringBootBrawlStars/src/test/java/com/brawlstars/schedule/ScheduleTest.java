@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,7 +44,7 @@ public class ScheduleTest {
 	
 	
 	@BeforeEach
-	public void init() throws JsonMappingException, JsonProcessingException {
+	public void init() throws JsonProcessingException {
 		String tag = "#9QU209UYC";
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 		Scanner scanner = new Scanner(classloader.getResourceAsStream("sampleResponse.txt"));
@@ -79,14 +80,13 @@ public class ScheduleTest {
 		yearMonthList.add(yearMonth);
 		
 		List<RecordResultDto> recordResultDtos = statisticsService.getStats("siege", "Bot Drop", yearMonthList);
-		recordResultDtos.forEach(a -> {
-			System.out.println(a.getBrawlerName() + " " + a.getResult() + " " + a.getCnt());
-		});
+		recordResultDtos.forEach(a -> System.out.println(a.getBrawlerName() + " " + a.getResult() + " " + a.getCnt()));
 		RecordResultDto recordResultDto = recordResultDtos.stream().filter(a -> a.getBrawlerName().equals("BARLEY")).findFirst().get();
 		assertThat(recordResultDto.getResult()).isEqualTo("victory");
 	}
 
 	@Test
+	@Disabled
 	public void comparePerformanceOfSaveRecordMethods(){
 		// Given
 		int pageSize = 100;

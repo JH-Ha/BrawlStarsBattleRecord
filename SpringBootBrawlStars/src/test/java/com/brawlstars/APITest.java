@@ -35,8 +35,7 @@ public class APITest {
 	@Test
 	public void getBattleLog() throws Exception {
 		String tag = "#9QU209UYC";
-		List<Item> items = null;
-		items = brawlStarsAPI.getItems(tag);
+		List<Item> items = brawlStarsAPI.getItems(tag);
 		//get 25 rocords from brawl Starts API Server
 		Assertions.assertThat(items.size()).isEqualTo(25);
 	}
@@ -44,17 +43,23 @@ public class APITest {
 	@Test
 	public void getPlayerInfo() throws Exception {
 		String tag = "#9QU209UYC";
-		PlayerInfo playerInfo = null;
-		
-		playerInfo = brawlStarsAPI.getPlayerInfo(tag);
+		PlayerInfo playerInfo = brawlStarsAPI.getPlayerInfo(tag);
 		
 		String name = playerInfo.getName();
 		assertThat(name).isEqualTo("폼폼");
 	}
 	
 	@Test
-	public void getEventsRotation() throws Exception{
+	public void getEventsRotation() {
 		EventInfo[] eventInfos = brawlStarsAPI.getEventsRotation();
-		System.out.println(eventInfos);
+		Boolean hasGemGrab = false;
+		for(var eventInfo : eventInfos){
+			if(eventInfo.getEvent().getMode().equals("gemGrab")){
+				hasGemGrab = true;
+				break;
+			}
+		}
+		// eventRotations must contain gem grab mode because it is the basic mode of brawl stars.
+		assertThat(hasGemGrab).isEqualTo(true);
 	}			
 }
