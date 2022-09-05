@@ -105,7 +105,7 @@ public class RecordTest {
 
   @Test
   public void getRecordsByTag() {
-    String tag = "#88RRY9PLL";
+    String tag = "#9QU209UYC";
     Pageable pageable = PageRequest.of(0, 10);
     RecordSearch recordSearch = new RecordSearch();
     Page<RecordDto> records = recordService.findByTag(tag, pageable, recordSearch);
