@@ -54,6 +54,9 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 </div>
 
 ### Update Log
+- v2.3.9 (2022.11.08)
+  - Add new brawler buster
+  - Add map images and translation
 
 - v2.3.8 (2022.06.30)
   - Add hunters mode and new brawler otis
