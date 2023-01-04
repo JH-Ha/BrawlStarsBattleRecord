@@ -77,8 +77,8 @@ const RecordResult = ({ _recordArr, sumTotalGameNum, mode, isPersonal }) => {
             <table className={`table ${styles.info}`}>
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Name</th>
+                        <th>{t("No")}</th>
+                        <th>{t("Brawler Name")}</th>
                         {isTrio(mode) || isDuels(mode) ?
                             <th onClick={toggleWinRate} className={styles.rateHeader}>
                                 <span className={styles.rateHeaderContent}>
