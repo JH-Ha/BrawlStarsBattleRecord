@@ -59,5 +59,6 @@
     "mapModeMetaDesc1": "By analyzing 10,000 players' battle data, we provide every brawlers' pick rate and win rate in ",
     "mapModeMetaDesc2": "",
     "lastUpdatedOn": "Last Updated on",
-    "period": "Analysis Period"
+    "period": "Analysis Period",
+    "noStatistics": "No Statistics"
 }
