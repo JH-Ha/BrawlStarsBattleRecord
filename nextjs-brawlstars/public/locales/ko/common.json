@@ -403,5 +403,13 @@
     "Today's Events": "오늘의 이벤트",
     "Next Events": "다음 이벤트",
     "recent3months": "최근 3개월",
-    "period": "기간"
+    "period": "집계기간",
+    "navbarHome": "이벤트",
+    "navbarBrawlerRanking": "브롤러 랭킹",
+    "navbarPlayers": "플레이어",
+    "navbarInfo": "소개",
+    "navbarMaps": "맵",
+    "mapModeMetaDesc1": "플레이어 10,000 명의 데이터를 집계해서, ",
+    "mapModeMetaDesc2": "의 브롤러 픽률과 승률 정보를 제공합니다.",
+    "lastUpdatedOn": "마지막 업데이트 일시"
 }

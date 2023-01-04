@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "../styles/NaviBar.module.scss";
-import i18n from "./i18n";
+import { useTranslation } from 'next-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
@@ -13,9 +13,14 @@ const Navbar = () => {
 
     const router = useRouter();
     const { pathname, asPath, query } = router;
+    const { t } = useTranslation();
     useEffect(() => {
         const curLang = router.locale;
-        setLanguage(curLang);
+        if (curLang == undefined) {
+            setLanguage('en');
+        } else {
+            setLanguage(curLang);
+        }
     }, []);
 
     const changelanguageToKo = () => {
@@ -39,20 +44,22 @@ const Navbar = () => {
     return (
         <nav className={styles.naviBar}>
             <div className={styles.logo}>
-                <Link href="/" className={styles.container}>
-                    <div className={styles.imgAndName}>
-                        <img src="/brawlMeta.png" alt="brawlMeta.png" />
-                        <div>Brawl Meta
+                <Link href="/" >
+                    <a className={styles.container}>
+                        <div className={styles.imgAndName}>
+                            <img src="/brawlMeta.png" alt="brawlMeta.png" />
+                            <div>Brawl Meta
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </Link>
             </div>
             <ul className={`${styles.menuContainer} ${toggleActive && styles.active}`}>
-                <li className={styles.item}><Link href={`/`} >Home</Link></li>
-                <li className={styles.item}><Link href={`/info`}>Info</Link></li>
-                <li className={styles.item}><Link href={`/userList`}>Players</Link></li>
-                <li className={styles.item}><Link href={`/mapList/gemGrab`} >Maps</Link></li>
-                <li className={styles.item}><Link href={`/blog`} >Blog</Link></li>
+                <li className={styles.item}><Link href={`/`} >{t('navbarHome')}</Link></li>
+                <li className={styles.item}><Link href={`/info`}>{t('navbarInfo')}</Link></li>
+                <li className={styles.item}><Link href={`/userList`}>{t('navbarPlayers')}</Link></li>
+                <li className={styles.item}><Link href={`/mapList/gemGrab`} >{t('navbarMaps')}</Link></li>
+                {/* <li className={styles.item}><Link href={`/blog`} >Blog</Link></li> */}
                 <div className={styles.languageContainer}>
                     <div className={`${styles.language} ${language === 'ja' ? styles.selected : ''}`} onClick={changelanguageToJa}>ja</div>
                     <div className={`${styles.language} ${language === 'en' ? styles.selected : ''}`} onClick={changelanguageToEn}>en</div>
