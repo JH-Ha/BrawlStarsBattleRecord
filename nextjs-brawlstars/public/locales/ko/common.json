@@ -412,5 +412,6 @@
     "mapModeMetaDesc1": "플레이어 10,000 명의 데이터를 집계해서, ",
     "mapModeMetaDesc2": "의 브롤러 픽률과 승률 정보를 제공합니다.",
     "lastUpdatedOn": "마지막 업데이트 일시",
-    "noStatistics": "통계 정보가 없습니다"
+    "noStatistics": "통계 정보가 없습니다",
+    "Brawler Name": "브롤러 이름"
 }

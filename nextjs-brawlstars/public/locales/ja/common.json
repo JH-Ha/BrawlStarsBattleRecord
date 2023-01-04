@@ -410,5 +410,6 @@
     "mapModeMetaDesc1": "プレイヤー10,000人のデータを集計して、",
     "mapModeMetaDesc2": "のキャラの選択率と勝率を提供します。",
     "lastUpdatedOn": "最終更新日時",
-    "noStatistics": "統計情報がありません"
+    "noStatistics": "統計情報がありません",
+    "Brawler Name": "キャラ名"
 }
