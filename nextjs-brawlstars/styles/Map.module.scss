@@ -5,131 +5,163 @@
     align-items: center;
     flex-direction: column;
 
-    .titleContainer {
-        width: 100%;
+    .inner {
         max-width: 500px;
-        border-radius: 5px;
-        padding: 10px 0px;
-        display: flex;
-        margin-bottom: 0px;
 
-        .imgContainer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 70px;
-
-            img {
-                width: 30px;
-            }
+        .bar {
+            margin: 5px 0px;
+            width: 100%;
+            height: 3px;
+            border-radius: 5px;
+            background-color: #ebecf0;
         }
 
-        .info {
+        .lastUpdatedOn {
+            margin: 20px 10px;
             text-align: left;
-            color: white;
-            text-shadow: 1px 1px 5px #000;
-
-            .mode {
-                cursor: pointer;
-                font-size: 1.2rem;
-                margin-bottom: 3px;
-            }
-
-            .mapName {
-                font-size: 1rem;
-            }
-        }
-    }
-
-    .trophySelect {
-        display: flex;
-
-        label {
-            margin-right: 10px;
+            padding-left: 5px;
+            border-left: 2px solid gray;
         }
 
-        margin-bottom: 10px;
-        align-items: center;
-    }
-
-
-
-    .mapNameContainer {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-
-        .mapName {
-            margin-right: 10px;
+        .pageDesc {
+            padding: 30px 10px;
+            border-radius: 5px;
+            background-color: #ebecf0;
         }
 
-        .chevronContainer {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 15px;
-        }
-    }
-
-    .mapImgContainer {
-
-        transition: 500ms;
-        overflow: hidden;
-
-        &.none {
-            height: 0px;
-        }
-
-        .mapImg {
-            display: block;
+        .titleContainer {
+            width: 100%;
+            // max-width: 500px;
+            border-radius: 5px;
             padding: 10px 0px;
-            max-width: 200px;
-            width: auto;
-            height: auto;
-        }
-
-        &.showdown .mapImg {
-            max-width: 300px;
-            width: auto;
-            height: auto;
-        }
-    }
-
-    .yearMonthContainer {
-        display: flex;
-
-        .label {
-            width: 100px;
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-right: 20px;
-        }
-    }
+            margin-bottom: 0px;
 
-    .infoContainer {
-        max-width: 400px;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        .info {
-            .brawler {
-                width: 100%;
+            .imgContainer {
                 display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 70px;
 
-                .brawlerName {
-                    margin-left: 10px;
+                img {
+                    width: 30px;
+                }
+            }
+
+            .info {
+                text-align: left;
+                color: white;
+                text-shadow: 1px 1px 5px #000;
+
+                .mode {
+                    cursor: pointer;
+                    font-size: 1.2rem;
+                    margin-bottom: 3px;
+                }
+
+                .mapName {
+                    font-size: 1rem;
                 }
             }
         }
-    }
 
-    @media screen and (min-width : 768px) {
+        .trophySelect {
+            display: flex;
+
+            label {
+                margin-right: 10px;
+            }
+
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+
+
+        .mapNameContainer {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            .mapName {
+                margin-right: 10px;
+            }
+
+            .chevronContainer {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 15px;
+            }
+        }
+
+        .mapImgContainer {
+
+            transition: 500ms;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+
+            &.none {
+                height: 0px;
+            }
+
+            .mapImg {
+                display: block;
+                padding: 10px 0px;
+                max-width: 200px;
+                width: auto;
+                height: auto;
+            }
+
+            &.showdown .mapImg {
+                max-width: 300px;
+                width: auto;
+                height: auto;
+            }
+        }
+
+        .yearMonthContainer {
+            display: flex;
+            justify-content: flex-end;
+
+            .label {
+                margin-left: 10px;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                margin-right: 20px;
+            }
+
+            .periodSelect {
+                max-width: 150px;
+            }
+        }
+
         .infoContainer {
-            max-width: none;
-            width: 768px;
+            max-width: 400px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
 
+            .info {
+                .brawler {
+                    width: 100%;
+                    display: flex;
+
+                    .brawlerName {
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+
+        @media screen and (min-width : 768px) {
+            .infoContainer {
+                max-width: none;
+                width: 768px;
+
+            }
         }
     }
 }

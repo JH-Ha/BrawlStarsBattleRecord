@@ -401,5 +401,13 @@
     "Today's Events": "今日のイベント",
     "Next Events": "ネクストイベント",
     "recent3months": "最近3か月",
-    "period": "期間"
+    "period": "集計期間",
+    "navbarHome": "イベント",
+    "navbarBrawlerRanking": "最強キャラランキング",
+    "navbarPlayers": "プレイヤー",
+    "navbarInfo": "インフォ",
+    "navbarMaps": "マップ",
+    "mapModeMetaDesc1": "プレイヤー10,000人のデータを集計して、",
+    "mapModeMetaDesc2": "のキャラの選択率と勝率を提供します。",
+    "lastUpdatedOn": "最終更新日時"
 }

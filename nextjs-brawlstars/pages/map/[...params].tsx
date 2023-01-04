@@ -54,7 +54,7 @@ interface Record {
 async function getRecordResult(
   mapName: string,
   mode: string,
-  yearMonth: string
+  yearMonth: string,
 ) {
   let records = {} as RawRecords;
   let recordArr = [] as Record[];
@@ -63,7 +63,9 @@ async function getRecordResult(
     url += `?yearMonth=${yearMonth}`;
   }
   const res = await getData(url);
-  const data = res.data as RecordResultDto[];
+  const data = res.data.recordResultDtos as RecordResultDto[];
+  const statUpdated = res.data.updated;
+  const statsYearMonths = res.data.yearMonths;
 
   if (!(data instanceof Array)) {
     return {
@@ -131,6 +133,8 @@ async function getRecordResult(
   return {
     recordArr: recordArr,
     sumTotalGameNum: sumTotalGameNum,
+    statUpdated,
+    statsYearMonths
   };
 }
 
@@ -140,7 +144,9 @@ interface Prop {
   recordArr: Record[];
   sumTotalGameNum: number;
   displayMapName: string;
-  yearMonth: string;
+  searchYearMonth: string;
+  statUpdated: number;
+  statsYearMonths: string[];
 }
 
 export default function Map({
@@ -149,7 +155,9 @@ export default function Map({
   recordArr,
   sumTotalGameNum,
   displayMapName,
-  yearMonth,
+  searchYearMonth,
+  statUpdated,
+  statsYearMonths
 }: Prop) {
   const { t } = useTranslation();
   const [isMapShown, setIsMapShown] = useState(true);
@@ -187,6 +195,8 @@ export default function Map({
   const today = new Date();
   for (let i = 0; i < 3; i++) {
     const iMonthAgo = new Date();
+    // bug fix. minus one month is not accurate
+    iMonthAgo.setDate(15);
     iMonthAgo.setMonth(today.getMonth() - i);
     options.push({
       label: toYearMonthLabelFormat(iMonthAgo),
@@ -197,14 +207,14 @@ export default function Map({
   const router = useRouter();
 
   const changeYearMonth = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const yearMonth = e.currentTarget.value;
+    const searchYearMonth = e.currentTarget.value;
     let paramMapName = encodeURIComponent(mapName);
     router.push({
       pathname: "/map/[map]/mode/[mode]",
       query: {
         map: paramMapName,
         mode: mode,
-        yearMonth: yearMonth,
+        searchYearMonth: searchYearMonth,
       },
     });
   };
@@ -222,6 +232,15 @@ export default function Map({
 
   const modeWrap = mode.includes("Showdown") ? "showdown" : mode;
 
+  const toDateStr = (timeMillis: number) => {
+    const timeDate = new Date(timeMillis);
+    const year = timeDate.getFullYear();
+    const month = timeDate.getMonth() + 1;
+    const date = timeDate.getDate() + 1;
+    const hours = timeDate.getHours();
+    const minutes = timeDate.getMinutes();
+    return `${year}/${zeroPad(month, 2)}/${zeroPad(date, 2)} ${zeroPad(hours, 2)}:${zeroPad(minutes, 2)}`;
+  }
   return (
     <>
       <div className={styles.mapClass}>
@@ -231,75 +250,86 @@ export default function Map({
               "Statistics"
             )} - ${t("brawlStars")} - Brawl Meta`}
           </title>
+          <meta name="description" content={`${t("mapModeMetaDesc1")}${t(mapName)}(${t(mode)})${t("mapModeMetaDesc2")}`}
+          />
         </Head>
-        <h3 className={`${eventStyles[modeWrap]} ${styles.titleContainer}`}>
-          <div className={styles.imgContainer}>
-            <img src={`/images/mode/${mode}.png`} alt={mapName} />
+        <div className={styles.inner}>
+          <div className={styles.lastUpdatedOn}>
+            {t("lastUpdatedOn")} : {toDateStr(statUpdated)}
           </div>
-          <div className={styles.info}>
-            <div className={styles.mode} onClick={goToMapList}>
-              {t(mode)}
+          <div className={styles.pageDesc}> {t("mapModeMetaDesc1")}{t(mapName)}({t(mode)}){t("mapModeMetaDesc2")}    </div>
+          <h3 className={`${eventStyles[modeWrap]} ${styles.titleContainer}`}>
+            <div className={styles.imgContainer}>
+              <img src={`/images/mode/${mode}.png`} alt={mapName} />
             </div>
-            <div
-              className={styles.mapNameContainer}
-              onClick={() => showMapImg()}
-            >
-              <span className={styles.mapName}>{t(mapName)}</span>
-              <div className={styles.chevronContainer}>
-                {isMapShown ? (
-                  <FontAwesomeIcon icon={faChevronUp} />
-                ) : (
-                  <FontAwesomeIcon icon={faChevronDown} />
-                )}
+            <div className={styles.info}>
+              <div className={styles.mode} onClick={goToMapList}>
+                {t(mode)}
+              </div>
+              <div
+                className={styles.mapNameContainer}
+                onClick={() => showMapImg()}
+              >
+                <span className={styles.mapName}>{t(mapName)}</span>
+                <div className={styles.chevronContainer}>
+                  {isMapShown ? (
+                    <FontAwesomeIcon icon={faChevronUp} />
+                  ) : (
+                    <FontAwesomeIcon icon={faChevronDown} />
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        </h3>
+          </h3>
 
-        <div
-          className={`${styles.mapImgContainer}
+          <div
+            className={`${styles.mapImgContainer}
             ${mode.includes("Showdown") ? `${styles.showdown}` : ""}
             ${isMapShown ? "" : styles.none}`}
-        >
-          <img
-            ref={ref}
-            className={styles.mapImg}
-            src={`/images/maps/${
-              mode.includes("Showdown") ? "showdown" : mode
-            }/${displayMapName}.png`}
-            alt={mapName}
-          />
+          >
+            <img
+              ref={ref}
+              className={styles.mapImg}
+              src={`/images/maps/${mode.includes("Showdown") ? "showdown" : mode
+                }/${displayMapName}.png`}
+              alt={mapName}
+            />
+          </div>
+          <div className={styles.bar} />
+          {statsYearMonths.length > 0 ?
+            <div className={styles.yearMonthContainer}>
+              <div className={styles.label}>{t("period")}</div>
+              <select className={styles.periodSelect} onChange={changeYearMonth} value={searchYearMonth}>
+                {options.map((option) => {
+                  return (
+                    <option key={option.value} value={option.value}>
+                      {t(option.label)}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            : (<div></div>)}
+
+          {mapName === "" ? (
+            <div>invalid map name</div>
+          ) : (
+            <RecordResult
+              // key={recordArr}
+              _recordArr={recordArr}
+              sumTotalGameNum={sumTotalGameNum}
+              mode={mode}
+              isPersonal={false}
+            />
+          )}
         </div>
-        <div className={styles.yearMonthContainer}>
-          <div className={styles.label}>{t("period")}</div>
-          <select onChange={changeYearMonth} value={yearMonth}>
-            {options.map((option) => {
-              return (
-                <option key={option.value} value={option.value}>
-                  {t(option.label)}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        {mapName === "" ? (
-          <div>invalid map name</div>
-        ) : (
-          <RecordResult
-            // key={recordArr}
-            _recordArr={recordArr}
-            sumTotalGameNum={sumTotalGameNum}
-            mode={mode}
-            isPersonal={false}
-          />
-        )}
       </div>
     </>
   );
 }
 
 export async function getServerSideProps(context: any) {
-  let { params, yearMonth } = context.query;
+  let { params, searchYearMonth } = context.query;
   let mapName = "";
   let mode = "";
   const { locale } = context;
@@ -307,15 +337,15 @@ export async function getServerSideProps(context: any) {
     mapName = decodeURIComponent(params[0]);
     mode = params[2];
   }
-  if (yearMonth === undefined) {
-    yearMonth = "";
+  if (searchYearMonth === undefined) {
+    searchYearMonth = "";
   }
   let displayMapName = mapName.replace(":", "");
 
-  let { recordArr, sumTotalGameNum } = await getRecordResult(
+  let { recordArr, sumTotalGameNum, statUpdated, statsYearMonths } = await getRecordResult(
     mapName,
     mode,
-    yearMonth
+    searchYearMonth
   );
 
   return {
@@ -326,7 +356,9 @@ export async function getServerSideProps(context: any) {
       displayMapName,
       recordArr,
       sumTotalGameNum,
-      yearMonth: yearMonth,
+      searchYearMonth,
+      statUpdated,
+      statsYearMonths
     },
   };
 }

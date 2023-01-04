@@ -1,4 +1,7 @@
 .recordResult {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 
     img {
         width: 30px;
@@ -6,7 +9,7 @@
     }
 
     .infoContainer {
-        max-width: 400px;
+        width: 100%;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
@@ -26,6 +29,8 @@
         }
 
         table {
+            width: 100%;
+
             thead>tr>th {
                 height: 40px;
                 padding: 5px 10px;
