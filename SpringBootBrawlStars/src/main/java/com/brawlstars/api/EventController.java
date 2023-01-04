@@ -107,7 +107,7 @@ public class EventController {
         String mode = eventInfo.getEvent().getMode();
 
         List<RecordResultDto> statistics = statisticsService.getStatsFromCache(mode,
-            eventInfo.getEvent().getMap(), yearMonth);
+            eventInfo.getEvent().getMap(), yearMonth).getRecordResultDtos();
         gameMapService.updateTime(mode, eventInfo.getEvent().getMap(), eventInfo.getStartTime(),
             eventInfo.getEndTime());
         eventInfo.setStatistics(statistics);

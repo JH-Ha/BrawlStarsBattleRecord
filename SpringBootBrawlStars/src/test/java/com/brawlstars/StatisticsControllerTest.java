@@ -4,10 +4,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.brawlstars.api.StatisticsController;
+import com.brawlstars.json.BattleLog;
+import com.brawlstars.json.Item;
+import com.brawlstars.service.RecordService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Scanner;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +21,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
-
-import com.brawlstars.api.StatisticsController;
-import com.brawlstars.json.BattleLog;
-import com.brawlstars.json.Item;
-import com.brawlstars.service.RecordService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -73,6 +70,19 @@ public class StatisticsControllerTest {
   }
 
   @Test
+  public void testGetStatisticsWhenMapIsNull() throws Exception {
+    // Given
+    String mode = "siege";
+    String map = null;
+
+    // When
+    mockMvc.perform(get("/api/statistics/mode/" + mode + "/map/" + map))
+        // Then
+        .andDo(print())
+        .andExpect(status().isOk());
+  }
+
+  @Test
   public void testGetStatisticsWhenModeIsDuoshodown() throws Exception {
     // Given
     String mode = "duoShowdown";
@@ -83,6 +93,5 @@ public class StatisticsControllerTest {
         // Then
         .andDo(print())
         .andExpect(status().isOk());
-
   }
 }

@@ -1,7 +1,8 @@
 package com.brawlstars.api;
 
-import com.brawlstars.repository.RecordResultDto;
+import com.brawlstars.protocol.StatisticsResponse;
 import com.brawlstars.service.StatisticsService;
+import com.brawlstars.service.StatisticsService.StatCache;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,9 +20,9 @@ public class StatisticsController {
   private StatisticsService statisticsService;
 
   @GetMapping("/api/statistics/mode/{mode}/map/{map}")
-  public List<RecordResultDto> getStatistics(
+  public StatisticsResponse getStatistics(
       @PathVariable(name = "mode") String mode,
-      @PathVariable(name = "map") String map,
+      @PathVariable(name = "map", required = false) String map,
       @RequestParam(name = "yearMonth", required = false) List<String> yearMonth) {
 
     // default value is recent three months
@@ -35,6 +36,16 @@ public class StatisticsController {
         yearMonth.add(iMonthsAgo);
       }
     }
-    return statisticsService.getStatsFromCache(mode, map, yearMonth);
+    StatCache statCache = statisticsService.getStatsFromCache(mode, map, yearMonth);
+    if (statCache.getRecordResultDtos().isEmpty()) {
+      yearMonth = new ArrayList<>();
+      statCache = statisticsService.getStatsFromCache(mode, map, yearMonth);
+    }
+
+    StatisticsResponse res = new StatisticsResponse();
+    res.setUpdated(statCache.getUpdated());
+    res.setRecordResultDtos(statCache.getRecordResultDtos());
+    res.setYearMonths(yearMonth);
+    return res;
   }
 }
