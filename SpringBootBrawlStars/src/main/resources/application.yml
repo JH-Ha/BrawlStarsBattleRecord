@@ -25,7 +25,9 @@ server:
     enabled: true
     mime-types: text/html,text/plain,text/css,application/javascript,application/json
     min-response-size: 500
-  
+
+brawl-api:
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImVmMDBkYjkwLTVhMjktNDBiNS04NjMzLTEyMDVlNmU3ZjRhNCIsImlhdCI6MTY3NTM2MTI4NCwic3ViIjoiZGV2ZWxvcGVyLzRmODljMjEyLWE0OWYtZWRiZS0zZjgzLTRhODJiZGE2N2NiNSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMzkuMTE4LjE3MC4xNDkiLCI1NC4xNTAuMTM4LjU1Il0sInR5cGUiOiJjbGllbnQifV19.eLljqljJDVIUDG7qb0eab5-wLuyi4r-IWBPxnL6YC803-DjQq9sUgfeRhfwZkxcgfJP_tXaqDmLTle5SbSivkQ
 #logging:
   #level:
     #org.hibernate.SQL: debug
