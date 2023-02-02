@@ -4,26 +4,30 @@ import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.EventInfo;
 import com.brawlstars.json.Item;
 import com.brawlstars.json.playerInfo.PlayerInfo;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
-import javax.net.ssl.HttpsURLConnection;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
+@Slf4j
 @Component
 public class BrawlStarsAPI {
 
   final static String BASE_PLAYERS_URL = "https://api.brawlstars.com/v1/players/";
   final static String EVENTS_ROTATIONS_URL = "https://api.brawlstars.com/v1/events/rotation";
 
-  @Value("${brawl-api.token}")
-  private String TOKEN;
+  @Autowired
+  private RestTemplate brawlApiServerRestTemplate;
 
   public List<Item> getItems(String tag) throws Exception {
 
@@ -58,31 +62,25 @@ public class BrawlStarsAPI {
     return eventInfos;
   }
 
-  public <T> T getObjectFromJson(String stringUrl, Class<T> valueType) throws IOException {
-    URL url = new URL(stringUrl);
-    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-    conn.setRequestProperty("User-Agent",
-        "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-    conn.setRequestProperty("Accept", "application/json");
-    conn.setRequestProperty("Authorization", "Bearer " + TOKEN);
-    conn.setRequestMethod("GET");
+  public <T> T getObjectFromJson(String stringUrl, Class<T> valueType) throws URISyntaxException {
 
-    BufferedReader in = new BufferedReader(
-        new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
-    String output;
+    HttpHeaders headers = new HttpHeaders();
+    List<MediaType> acceptableMediaTypes = new ArrayList<>();
+    acceptableMediaTypes.add(MediaType.APPLICATION_JSON);
+    headers.setAccept(acceptableMediaTypes);
 
-    StringBuilder response = new StringBuilder();
+    HttpEntity<Void> req = new HttpEntity<>(headers);
 
-    while ((output = in.readLine()) != null) {
-      response.append(output);
+    URI uri = new URI(stringUrl);
+    try {
+
+      HttpEntity<T> response = brawlApiServerRestTemplate.exchange(uri, HttpMethod.GET, req,
+          valueType);
+      return response.getBody();
+    } catch (RestClientException e) {
+      log.warn("failed to request url : {}", stringUrl);
+      throw e;
     }
-    in.close();
-
-    ObjectMapper mapper = new ObjectMapper().configure(
-        DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
-        false);
-    return mapper.readValue(response.toString(), valueType);
-
   }
 
 }
