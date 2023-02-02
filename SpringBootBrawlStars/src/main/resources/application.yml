@@ -1,9 +1,9 @@
 spring:
   datasource:
     #url : jdbc:h2:mem:test
-    url: jdbc:mysql://brawlstat.c3snsgqvsofs.ap-northeast-2.rds.amazonaws.com:3306/sys
+    url: jdbc:mysql://brawlmeta.c7uk4iygcrzb.ap-northeast-1.rds.amazonaws.com:3306/brawlmeta
     username: admin
-    password: 6s8GJggs8q9Ol3biXsha
+    password: RX5WDwHZX8IgwsjWG7zn
     driver-class-name: com.mysql.cj.jdbc.Driver
     #url: jdbc:h2:tcp://localhost/~/jpashop
     #username: sa
@@ -18,7 +18,7 @@ spring:
         jdbc.batch_size: 50
         #show_sql: true
         #format_sql: true
-        
+
 server:
   port: 8080
   compression:
