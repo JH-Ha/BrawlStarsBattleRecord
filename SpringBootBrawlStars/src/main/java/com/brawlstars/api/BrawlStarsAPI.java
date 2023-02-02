@@ -13,6 +13,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,9 +22,8 @@ public class BrawlStarsAPI {
   final static String BASE_PLAYERS_URL = "https://api.brawlstars.com/v1/players/";
   final static String EVENTS_ROTATIONS_URL = "https://api.brawlstars.com/v1/events/rotation";
 
-  final static String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImQwMmM0ODM2LWY5NmItNGU5OC1hZThmLTY4MzI2YTExZGY1OSIsImlhdCI6MTY0OTE2NTMzMSwic3ViIjoiZGV2ZWxvcGVyLzRmODljMjEyLWE0OWYtZWRiZS0zZjgzLTRhODJiZGE2N2NiNSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMzkuMTE4LjE3MC4xNDkiLCIxMy4xMjUuMjA5LjE3OCJdLCJ0eXBlIjoiY2xpZW50In1dfQ.8ztU4RdzQtt--IBlfoBCHKWFUHgm3GeGzZ_Wdd36pkVK-MJ-fQ2Ig9JKuiMM4J78mSCEihnNvrCrwbh8R4Y5sw";
-
-
+  @Value("${brawl-api.token}")
+  private String TOKEN;
 
   public List<Item> getItems(String tag) throws Exception {
 
