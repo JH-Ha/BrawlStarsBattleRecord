@@ -1,9 +1,9 @@
 spring:
   datasource:
     #url : jdbc:h2:mem:test
-    url: jdbc:mysql://brawlstat.c3snsgqvsofs.ap-northeast-2.rds.amazonaws.com:3306/sys
+    url: jdbc:mysql://brawlmeta.c7uk4iygcrzb.ap-northeast-1.rds.amazonaws.com:3306/brawlmeta
     username: admin
-    password: 6s8GJggs8q9Ol3biXsha
+    password: RX5WDwHZX8IgwsjWG7zn
     driver-class-name: com.mysql.cj.jdbc.Driver
     #url: jdbc:h2:tcp://localhost/~/jpashop
     #username: sa
@@ -18,14 +18,16 @@ spring:
         jdbc.batch_size: 50
         #show_sql: true
         #format_sql: true
-        
+
 server:
   port: 8080
   compression:
     enabled: true
     mime-types: text/html,text/plain,text/css,application/javascript,application/json
     min-response-size: 500
-  
+
+brawl-api:
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImVmMDBkYjkwLTVhMjktNDBiNS04NjMzLTEyMDVlNmU3ZjRhNCIsImlhdCI6MTY3NTM2MTI4NCwic3ViIjoiZGV2ZWxvcGVyLzRmODljMjEyLWE0OWYtZWRiZS0zZjgzLTRhODJiZGE2N2NiNSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMzkuMTE4LjE3MC4xNDkiLCI1NC4xNTAuMTM4LjU1Il0sInR5cGUiOiJjbGllbnQifV19.eLljqljJDVIUDG7qb0eab5-wLuyi4r-IWBPxnL6YC803-DjQq9sUgfeRhfwZkxcgfJP_tXaqDmLTle5SbSivkQ
 #logging:
   #level:
     #org.hibernate.SQL: debug
