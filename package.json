@@ -9,7 +9,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.1.0",
     "request": "^2.88.2",
-    "sequelize": "^6.3.3"
+    "sequelize": "^6.29.0"
   },
   "devDependencies": {},
   "scripts": {
