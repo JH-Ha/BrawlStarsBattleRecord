@@ -2,9 +2,8 @@ package com.brawlstars.domain;
 
 import com.brawlstars.json.Item;
 import com.brawlstars.json.Player;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 

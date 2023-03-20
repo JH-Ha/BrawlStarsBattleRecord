@@ -1,26 +1,23 @@
 package com.brawlstars.api;
 
+import com.brawlstars.json.EventInfo;
+import com.brawlstars.repository.RecordResultDto;
+import com.brawlstars.schedule.GameMapService;
+import com.brawlstars.service.RecordService;
+import com.brawlstars.service.StatisticsService;
+import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.brawlstars.json.EventInfo;
-import com.brawlstars.repository.RecordResultDto;
-import com.brawlstars.schedule.GameMapService;
-import com.brawlstars.service.RecordService;
-import com.brawlstars.service.StatisticsService;
 
 @RestController
 public class EventController {
