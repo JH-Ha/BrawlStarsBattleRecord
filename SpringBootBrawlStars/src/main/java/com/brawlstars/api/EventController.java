@@ -42,7 +42,6 @@ public class EventController {
 
   @PostConstruct
   public void postContruct() {
-    updateEvents();
     String[] huntersMapNames = {
         "Trials and Tribulations",
         "Hunting Season",
