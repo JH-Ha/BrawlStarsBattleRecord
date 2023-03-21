@@ -311,10 +311,12 @@ public class RecordService {
       return gameMap;
     }).collect(Collectors.toList());
 
-    List<FindMapDto> notSavedMaps = gameMaps.stream().filter(gameMap -> gameMap.getName() != null)
+    List<FindMapDto> notSavedMaps = gameMaps.stream()
+        .filter(gameMap -> gameMap.getName() != null)
         .map(gameMap -> new FindMapDto(gameMap,
             gameMapRepositry.findByNameAndMode(gameMap.getName(), mode)))
-        .filter(findMapDtos -> findMapDtos.gameMapDtos.isEmpty()).collect(Collectors.toList());
+        .filter(findMapDtos -> findMapDtos.gameMapDtos.isEmpty())
+        .collect(Collectors.toList());
 
     notSavedMaps.forEach(findMapDtos -> gameMapRepositry.saveGameMap(findMapDtos.gameMap));
 

@@ -25,7 +25,7 @@ public class APITest {
   public void getBattleLog() throws Exception {
     String tag = "#9QU209UYC";
     List<Item> items = brawlStarsAPI.getItems(tag);
-    //get 25 rocords from brawl Starts API Server
+    //get 25 records from brawl Starts API Server
     Assertions.assertThat(items.size()).isEqualTo(25);
   }
 
