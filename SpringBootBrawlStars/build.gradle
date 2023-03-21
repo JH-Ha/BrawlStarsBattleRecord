@@ -1,8 +1,8 @@
 plugins {
 	id 'org.springframework.boot' version '3.0.4'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'io.spring.dependency-management' version '1.1.0'
 	id 'java'
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+	//id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com'
@@ -45,23 +45,16 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
-// Intellij
 def querydslDir = "$buildDir/generated/querydsl"
-// eclipse
-//def querydslDir = "src/main/generated"
 
-/* Querydsl Q-class code */
-querydsl {
-	jpa = true
-	querydslSourcesDir = querydslDir
-}
 sourceSets {
-	main.java.srcDir querydslDir
-}
-configurations {
-	querydsl.extendsFrom compileClasspath
-}
-compileQuerydsl {
-	options.annotationProcessorPath = configurations.querydsl
+	main.java.srcDirs += [ querydslDir ]
 }
 
+tasks.withType(JavaCompile) {
+	options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+}
+
+clean.doLast {
+	file(querydslDir).deleteDir()
+}
