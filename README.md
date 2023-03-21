@@ -1,8 +1,15 @@
 <!-- @format -->
 
-### 프로젝트 개요
+### Project Introduction
 
-ブロスタのマップごとに勝率統計情報を提供しているウェブサイトです。
+I created a site that provides brawler win rate statistics for each Brawl Stars map.
+
+In order to win the game, you have to select a strong brawler, but there is no official win rate statistics.
+I used to find a strong brawler while playing games myself.
+However, it is not easy to keep up with updates because the game maps change every day and new maps are added every season.
+
+On this Brawl Meta site, you can find which brawler is the best for each map and the win rate.
+win rates based on play data from around 10,000 random players.
 
 ゲームから勝つためには強いキャラクターを選択してゲームをしなきゃいけません。しかし、どんなキャラクターが強いのか、公式の勝率データは提供されていません。
 直接プレイしながら体感的にどんなキャラクターが強いのか分かりますが、
@@ -11,16 +18,24 @@
 ブロメーター（Brawl Meta）ウェブサイトではマップごとどんなキャラクターが良いのか、勝率を提供します。
 約10,000人のプレイヤーのバトル履歴を集計して勝率を提供しています。
 
-브롤 스타즈 맵 별 브롤러 승률 통계를 제공하는 사이트입니다.
+브롤 스타즈 맵 별 브롤러 승률 통계를 제공하는 사이트를 제작하였습니다.
 
 게임에서 승리를 하기 위해서 강한 브롤러를 선택하여 게임을 해야하는데, 어떤 브롤러가 강한지, 공식 승률 데이터가 제공되고 있지 않습니다.
 직접 플레이하면서 강한 브롤러를 찾고, 체감적으로 어떤 브롤러가 강한지 알고는 있습니다.
 그런데 매일 맵이 바뀌고, 시즌별로 맵이 계속 추가 되기 때문에 지속적으로 업데이트 사항을 따라가는 것은 쉽지 않습니다.
 
-이 블롤 메타(Brawl Meta) 사이트에서 맵 마다 어떤 브롤러가 좋은지, 승률로 알려드립니다.
+이 브롤 메타(Brawl Meta) 사이트에서 맵 마다 어떤 브롤러가 좋은지, 승률로 알려드립니다.
 약 10,000명의 무작위 플레이어의 플레이 데이터를 기반으로 승률을 집계합니다.
 
-#### 상세 구현 내역
+#### Detailed Information
+
+ブロスタAPIを使用して、ユーザープレイデータを取得して統計を作っています。APIでは最近の25ゲームのみが閲覧可能なため、毎時間戦闘履歴を保存して、できるだけ多くのゲームを保存しています。
+
+フロントエンドはReactで実装され、バックエンドはSpringフレームワークを使用して実装されました。
+
+プレイヤーのメニューでユーザー名をクリックすると、そのユーザーの戦闘履歴を見ることができます。
+
+マップでは、各モードのマップを確認することができ、マップイメージをクリックするとキャラクターの勝率を確認できます。
 
 브롤스타즈 API를 이용하여서 사용자 플레이데이터를 가져와서 통계를 냈습니다. API를 통해서는 최근 25게임만 조회가 가능하기에, 매시간 전적을 저장해서 최대한 많은 게임을 저장하고 있습니다.
 
@@ -29,17 +44,6 @@ Front-End는 React로 제작되었고, Back-End는 Spring framework를 이용하
 Players 메뉴에서 유저이름을 클릭하면, 해당 유저의 전적정보를 볼 수 있습니다.
 
 Maps에서는 각 모드별 맵들을 확인할 수 있으며, 맵 이미지를 클릭하면 브롤러 승률을 알 수 있습니다.
-
-## version 1.0
-
-React + firebase + nodejs를 이용해서 구현한 버전입니다.
-
-nodejs 로 서버를 실행시켜 주기적으로 firestore에 전투 기록을 insert합니다.
-
-### 구현된 기능
-
-- User List에서 user 이름을 클릭하면 모드 별로 전투 기록을 볼 수 있습니다.
-- 유저 이름으로 검색하여 전투 기록을 찾아볼 수 있습니다.
 
 ## version 2.0
 
@@ -64,6 +68,8 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 </div>
 
 ### Update Log
+- v2.4.1 (2023.03.21)
+  - Update spring boot to 3.0.4
 - v2.4.0 (2023.01.05)
   - Add description to map page
   - Change getStatstistics API to get all data
@@ -90,7 +96,7 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 - v2.3.5 (2022.05.07)
 
-  - Record saving logic optimazation to reduce data transfer
+  - Record saving logic optimization to reduce data transfer
 
 - v2.3.4 (2022.05.03)
 
@@ -122,9 +128,10 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
   - navigation bar 디자인이 변경되었습니다.
   - blog 메뉴가 추가되었습니다.
 - v2.1.0 (2022.02.05)
-  - brawlstat.xyz에서 brawlmeta.com으로 도메인을 변경하였습니다.
-  - https가 적용되었습니다.
-  - 구글 애널리틱스를 적용시켰습니다.
+  - Change domain name from brawlstat.xyz to brawlmeta.com
+  - Apply https
+  - Add Google Analytics
+  - Add new features
   - 신규 유저 태그 조회 및 등록 기능이 추가되었습니다.
 - v2.0.2 (2021.10.04)
 
@@ -144,3 +151,18 @@ hosting page
 
 - version 2 : https://www.brawlmeta.com
 - version 1 : http://brawlstars-260814.web.app
+
+## version 1.0
+
+React + firebase + nodejsを利用して実装したバージョンです。
+
+ノードjsでサーバーを実行させ、定期的にfirestoreに戦闘記録をinsertします。
+
+React + firebase + nodejs를 이용해서 구현한 버전입니다.
+
+nodejs 로 서버를 실행시켜 주기적으로 firestore에 전투 기록을 insert합니다.
+
+### 구현된 기능
+
+- User List에서 user 이름을 클릭하면 모드 별로 전투 기록을 볼 수 있습니다.
+- 유저 이름으로 검색하여 전투 기록을 찾아볼 수 있습니다.
