@@ -3,8 +3,7 @@ package com.brawlstars.service;
 import com.brawlstars.domain.EventDomain;
 import com.brawlstars.json.EventInfo;
 import com.brawlstars.repository.EventDomainRepository;
-import java.util.Arrays;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
