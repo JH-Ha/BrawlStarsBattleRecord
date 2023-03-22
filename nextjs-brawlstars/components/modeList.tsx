@@ -22,7 +22,7 @@ const ModeList: React.FC<ModeListProps> = ({ mode, changeMode }) => {
       <select id="modeList" onChange={change} value={value}>
         <option value="ALL">{t("All")}</option>
         {modeInfo.map((mode => {
-          return <option value={mode.name}>{t(mode.name)}</option>
+          return <option key={mode.name} value={mode.name}>{t(mode.name)}</option>
         }))}
       </select>
     </div>
