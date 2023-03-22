@@ -1,16 +1,13 @@
 package com.brawlstars.interceptor;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.HandlerInterceptor;
-
 import com.brawlstars.domain.AccessHistory;
 import com.brawlstars.service.AccessHistoryService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 public class LoggerInterceptor implements HandlerInterceptor {
 	@Autowired

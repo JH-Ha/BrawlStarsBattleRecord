@@ -1,5 +1,6 @@
 package com.brawlstars;
 
+import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.brawlstars.json.BattleLog;
@@ -16,7 +17,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
+@TestPropertySource(properties = "app.scheduling.enable=false")
 @SpringBootTest
 public class GameMapTest {
 
@@ -36,8 +39,7 @@ public class GameMapTest {
     while (scanner.hasNext()) {
       sb.append(scanner.nextLine());
     }
-    ObjectMapper mapper = new ObjectMapper().configure(
-        DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    ObjectMapper mapper = new ObjectMapper().configure(FAIL_ON_UNKNOWN_PROPERTIES, false);
     BattleLog battleLog = mapper.readValue(sb.toString(), BattleLog.class);
     List<Item> items = battleLog.getItems();
     recordService.saveBattleLog(items, tag);
