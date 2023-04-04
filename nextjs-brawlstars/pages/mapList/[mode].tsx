@@ -104,13 +104,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             a.endTime = oneYearAgo;
         }
         return a;
-    }).sort((a, b) => {
-        let cmpResult = a.mode.localeCompare(b.mode);
-        if (cmpResult == 0) {
-            return b.startTime.localeCompare(a.startTime);
-        } else {
-            return cmpResult;
-        }
     });
 
     if (mode === undefined) {
@@ -121,6 +114,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     const filteredMaps = getFilteredMap(gameMaps, mode);
+    filteredMaps.sort((a, b) => {
+        let cmpResult = a.mode.localeCompare(b.mode);
+        if (cmpResult == 0) {
+            return b.startTime.localeCompare(a.startTime);
+        } else {
+            return cmpResult;
+        }
+    });
     return {
         props: {
             ...(await serverSideTranslations(locale as string, ['common'])),
