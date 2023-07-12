@@ -69,6 +69,8 @@ public class EventController {
       mapNameToMode.put(mapName, "invasion");
     }
 
+    eventInfos = brawlStarsAPI.getEventsRotation();
+
   }
 
   @GetMapping("/api/events/rotation")
