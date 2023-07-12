@@ -2,11 +2,10 @@ plugins {
 	id 'org.springframework.boot' version '3.0.4'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'java'
-	//id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com'
-version = 'v2.4.1'
+version = 'v2.4.2'
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
