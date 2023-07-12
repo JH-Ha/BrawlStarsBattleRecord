@@ -6,8 +6,22 @@ import styles from '../../styles/MapList.module.scss';
 import Head from 'next/head';
 import { calDisplayMapTime } from '../../components/BaseFunctions';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { GetServerSideProps } from 'next';
 
-const getFilteredMap = (maps, mode) => {
+type GameMap = {
+    name: string,
+    mode: string,
+    startTime: string,
+    endTime: string,
+    displayName?: string
+}
+
+type ModeListProps = {
+    mode: string,
+    filteredMaps: GameMap[],
+}
+
+const getFilteredMap = (maps: GameMap[], mode: string) => {
     let filteredMaps = maps;
     if (mode !== 'ALL' && mode !== undefined) {
         filteredMaps = maps.filter(x => {
@@ -17,12 +31,12 @@ const getFilteredMap = (maps, mode) => {
     return filteredMaps;
 }
 
-export default function MapList({ mode, filteredMaps }) {
+const MapList: React.FC<ModeListProps> = ({ mode, filteredMaps }) => {
 
     const { t } = useTranslation();
     const router = useRouter();
 
-    const clickMap = (mapName, mapMode) => {
+    const clickMap = (mapName: string, mapMode: string) => {
         let paramMapName = encodeURIComponent(mapName);
         // let { history, i18n } = this.props;
         router.push({
@@ -35,7 +49,7 @@ export default function MapList({ mode, filteredMaps }) {
         //`/${i18n.language}/map/${paramMapName}/mode/${mapMode}`);
     }
 
-    const changeMode = (value) => {
+    const changeMode = (value: string) => {
         router.push({
             pathname: '/mapList/[mode]',
             query: { mode: value },
@@ -71,13 +85,16 @@ export default function MapList({ mode, filteredMaps }) {
     </>);
 }
 
-export async function getServerSideProps(context) {
+
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
     let { mode } = context.query;
     let locale = context.locale;
     //i18n.changeLanguage(context.locale);
     const res = await getData(`/gameMap`);
+    const gameMaps: GameMap[] = res.data;
 
-    const data = res.data.map(a => {
+    gameMaps.map(a => {
         let oneYearAgo = '20210301T000000.000Z';
         a.displayName = a.name.replace(":", "");
         if (a.startTime === null) {
@@ -87,7 +104,17 @@ export async function getServerSideProps(context) {
             a.endTime = oneYearAgo;
         }
         return a;
-    }).sort((a, b) => {
+    });
+
+    if (mode === undefined) {
+        mode = 'gemGrab';
+    }
+    if (Array.isArray(mode)) {
+        mode = mode[0];
+    }
+
+    const filteredMaps = getFilteredMap(gameMaps, mode);
+    filteredMaps.sort((a, b) => {
         let cmpResult = a.mode.localeCompare(b.mode);
         if (cmpResult == 0) {
             return b.startTime.localeCompare(a.startTime);
@@ -95,18 +122,13 @@ export async function getServerSideProps(context) {
             return cmpResult;
         }
     });
-
-    if (mode === undefined) {
-        mode = 'gemGrab';
-    }
-
-    let maps = data;
-    let filteredMaps = getFilteredMap(maps, mode);
     return {
         props: {
-            ...(await serverSideTranslations(locale, ['common'])),
+            ...(await serverSideTranslations(locale as string, ['common'])),
             mode,
             filteredMaps
         }
     }
 }
+
+export default MapList;
