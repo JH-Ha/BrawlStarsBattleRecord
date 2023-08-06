@@ -30,7 +30,7 @@ function isDuels(mode) {
 }
 
 function isSolo(mode) {
-    if (mode === "soloShowdown" || mode === "hunters") {
+    if (mode === "soloShowdown" || mode === "hunters" || mode === "takedown") {
         return true;
     }
     return false;
