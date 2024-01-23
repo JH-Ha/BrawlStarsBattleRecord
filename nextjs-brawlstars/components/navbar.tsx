@@ -44,14 +44,12 @@ const Navbar = () => {
     return (
         <nav className={styles.naviBar}>
             <div className={styles.logo}>
-                <Link href="/" >
-                    <a className={styles.container}>
-                        <div className={styles.imgAndName}>
-                            <img src="/brawlMeta.png" alt="brawlMeta.png" />
-                            <div>Brawl Meta
-                            </div>
+                <Link href="/" className={styles.container} >
+                    <div className={styles.imgAndName}>
+                        <img src="/brawlMeta.png" alt="brawlMeta.png" />
+                        <div>Brawl Meta
                         </div>
-                    </a>
+                    </div>
                 </Link>
             </div>
             <ul className={`${styles.menuContainer} ${toggleActive && styles.active}`}>
