@@ -13,7 +13,7 @@ type GameMap = {
     mode: string,
     startTime: string,
     endTime: string,
-    displayName?: string
+    displayName: string
 }
 
 type ModeListProps = {
@@ -74,7 +74,7 @@ const MapList: React.FC<ModeListProps> = ({ mode, filteredMaps }) => {
                             {calDisplayMapTime(map.startTime, map.endTime)}
                         </div>
                     </div>
-                    <div className={styles.mapName}>{t(map.name)}</div>
+                    <div className={styles.mapName}>{t(map.displayName)}</div>
                     <div className={styles.imgContainer}>
                         <img onClick={() => { clickMap(map.name, map.mode) }} src={`/images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.displayName}.png`} alt={map.name}></img>
                     </div>
