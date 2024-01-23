@@ -47,7 +47,7 @@ const SoloDuoMode = ({ trophyChange, rank, groupRecords, tag, map, mode, type })
           <div className={styles.type}>
             {t(type)}
           </div>
-          <div className={styles.battleTime}>{calDisplayTime(battleTime)}</div>
+          <div className={styles.battleTime}>{calDisplayTime(battleTime, t)}</div>
         </div>
         <div className={`${styles.topContainer} ${styles['rank' + rankCss]}`}>
           <div className={styles.modeInfo}>

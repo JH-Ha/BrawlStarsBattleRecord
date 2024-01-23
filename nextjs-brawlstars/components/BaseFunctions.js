@@ -57,7 +57,9 @@ function getLocalTime(time) {
 
     return new Date(`${year}-${month}-${date}${hours}:${minutes}:${seconds}`);
 }
-function calDisplayTime(battleTime) {
+function calDisplayTime(battleTime, t) {
+    console.log(battleTime);
+    console.log(t);
     let localeBattleTime = getLocalTime(battleTime);
     let now = new Date();
     let diffTime = (now - localeBattleTime) / 1000;
@@ -68,12 +70,12 @@ function calDisplayTime(battleTime) {
         let diffMinutes = Math.floor((diffTime / 60 - diffHours * 60));
 
         if (diffHours >= 1) {
-            displayTime += `${diffHours} h `;
+            displayTime += `${diffHours}${t('hours')} `;
         }
         if (diffMinutes >= 1) {
-            displayTime += `${diffMinutes} m `;
+            displayTime += `${diffMinutes}${t('minutes')} `;
         }
-        displayTime += `ago`;
+        displayTime += `${t('ago')}`;
     } else {
         function addZero(num) {
             if (parseInt(num) < 10) {
@@ -85,14 +87,14 @@ function calDisplayTime(battleTime) {
     }
     return displayTime;
 }
-function calDisplayMapTime(startTime, endTime) {
+function calDisplayMapTime(startTime, endTime, t) {
     let startLocalTime = getLocalTime(startTime);
     let endLocalTime = getLocalTime(endTime);
     let now = new Date();
     let diffTime = (now - endLocalTime) / 1000;
     let displayTime = '';
     if (now <= endLocalTime && now >= startLocalTime) {
-        displayTime = 'now';
+        displayTime = `${t('ongoing')}`;
     }
     else if (diffTime < 0) {
         diffTime = -diffTime;
@@ -101,13 +103,13 @@ function calDisplayMapTime(startTime, endTime) {
         let diffMinutes = Math.floor((diffTime / 60 % 60));
 
         if (diffDays >= 1) {
-            displayTime += `${diffDays}d `;
+            displayTime += `${diffDays}${t('days')} `;
         }
         if (diffHours >= 1) {
-            displayTime += `${diffHours}h `;
+            displayTime += `${diffHours}${t('hours')} `;
         }
         if (diffMinutes >= 1) {
-            displayTime += `${diffMinutes}m `;
+            displayTime += `${diffMinutes}${t('minutes')} `;
         }
 
         displayTime = `in ${displayTime}`;
@@ -118,15 +120,15 @@ function calDisplayMapTime(startTime, endTime) {
         let diffMinutes = Math.floor((diffTime / 60 - diffHours * 60));
 
         if (diffHours >= 1) {
-            displayTime += `${diffHours}h `;
+            displayTime += `${diffHours}${t('hours')} `;
         }
         if (diffMinutes >= 1) {
-            displayTime += `${diffMinutes}m `;
+            displayTime += `${diffMinutes}${t('minutes')} `;
         }
-        displayTime += `ago`;
+        displayTime += `${t('ago')}`;
     } else {
         let diffDays = Math.floor(diffTime / 86400);
-        displayTime = `${diffDays}d ago`;
+        displayTime = `${diffDays}${t('days')} ${t('ago')}`;
     }
     return displayTime;
 }

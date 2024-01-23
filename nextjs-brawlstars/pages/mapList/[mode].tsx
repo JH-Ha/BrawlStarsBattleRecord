@@ -71,7 +71,7 @@ const MapList: React.FC<ModeListProps> = ({ mode, filteredMaps }) => {
                 return <div key={index} className={styles.gemGrabItem} >
                     <div className={styles.mapTimeContainer}>
                         <div className={styles.mapTime}>
-                            {calDisplayMapTime(map.startTime, map.endTime)}
+                            {calDisplayMapTime(map.startTime, map.endTime, t)}
                         </div>
                     </div>
                     <div className={styles.mapName}>{t(map.displayName)}</div>
