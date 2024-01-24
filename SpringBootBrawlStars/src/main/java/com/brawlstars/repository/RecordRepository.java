@@ -138,13 +138,15 @@ public class RecordRepository {
     }
 
     if (StringUtils.hasText(recordSearch.getTrophyRange())) {
+      // To avoid counting plays with AI
+      final int baseRank = 550;
       String trophyRange = recordSearch.getTrophyRange();
       switch (trophyRange) {
         case "lowRank":
-          builder.and(qRecord.trophies.lt(500));
+          builder.and(qRecord.trophies.lt(baseRank));
           break;
         case "highRank":
-          builder.and(qRecord.trophies.gt(500)
+          builder.and(qRecord.trophies.gt(baseRank)
               .or(qRecord.type.eq("challenge"))
               .or(qRecord.type.eq("soloRanked"))
               .or(qRecord.type.eq("teamRanked")));
