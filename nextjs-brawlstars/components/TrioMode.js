@@ -24,7 +24,7 @@ const TrioMode = ({ battleTime,
           <div className={styles.gameType}>
             {t(type) || "game"}
           </div>
-          <div className={styles.battleTime}>{calDisplayTime(battleTime)}</div>
+          <div className={styles.battleTime}>{calDisplayTime(battleTime, t)}</div>
         </div>
         <div className={`${styles.gameInfo} ${styles.top} ${styles[result]}`}>
           <div className={styles.modeInfo}>
