@@ -39,3 +39,7 @@ out/
 ### QueryDSL ###
 
 src/main/generated/
+
+### credentials ###
+
+config
