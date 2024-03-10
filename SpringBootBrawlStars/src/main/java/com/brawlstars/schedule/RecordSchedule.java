@@ -41,7 +41,7 @@ public class RecordSchedule {
 
   Logger logger = LoggerFactory.getLogger(RecordSchedule.class);
 
-  // 30 minutes
+  // 60 minutes
   @Scheduled(fixedDelay = 3600_000
       , initialDelay = 600_000 // 10 minutes
   )
@@ -51,7 +51,7 @@ public class RecordSchedule {
 
   public void saveRecords() {
     List<String> tags = memberRepository.findTags();
-    tags.stream().parallel().forEach(tag -> {
+    tags.stream().forEach(tag -> {
       logger.info("save member tag : " + tag);
       saveRecord(tag);
     });
