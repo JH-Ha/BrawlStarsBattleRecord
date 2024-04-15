@@ -1,14 +1,20 @@
 package com.brawlstars.util;
 
+import java.util.Set;
+
 public class CommonUtil {
 
+  private static final Set<String> TRIO_SET = Set.of("gemGrab", "brawlBall", "heist", "bounty",
+      "siege", "hotZone", "knockout", "basketBrawl", "volleyBrawl", "holdTheTrophy",
+      "trophyThieves", "wipeout", "payload", "invasion");
+  private static final Set<String> SOLO_SET = Set.of("soloShowdown", "hunters", "takedown",
+      "trophyEscape");
+
   public static boolean isTrioMode(String mode) {
-    return "gemGrab".equals(mode) || "brawlBall".equals(mode) || "heist".equals(mode)
-        || "bounty".equals(mode)
-        || "siege".equals(mode) || "hotZone".equals(mode) || "knockout".equals(mode)
-        || "basketBrawl".equals(mode) || "volleyBrawl".equals(mode) || "holdTheTrophy".equals(mode)
-        || "trophyThieves".equals(mode) || "wipeout".equals(mode) || "payload".equals(mode)
-        || "invasion".equals(mode);
+    if (mode == null) {
+      return false;
+    }
+    return TRIO_SET.contains(mode);
   }
 
   public static boolean isDuoShowdown(String mode) {
@@ -28,7 +34,10 @@ public class CommonUtil {
   }
 
   public static boolean isSolo(String mode) {
-    return "soloShowdown".equals(mode) || "hunters".equals(mode) || "takedown".equals(mode);
+    if (mode == null) {
+      return false;
+    }
+    return SOLO_SET.contains(mode);
   }
 
 }
