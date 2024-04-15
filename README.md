@@ -68,6 +68,9 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 </div>
 
 ### Update Log
+- v2.4.5 (2024.04.16)
+  - Add a new trophy escape mode 
+
 - v2.4.1 (2023.03.21)
   - Update spring boot to 3.0.4
 - v2.4.0 (2023.01.05)
