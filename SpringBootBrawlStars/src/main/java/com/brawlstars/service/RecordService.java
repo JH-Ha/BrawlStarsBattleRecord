@@ -259,7 +259,9 @@ public class RecordService {
         break;
       }
 
-      String mode = item.getBattle().getMode();
+      // event.mode and battle.mode are different when event is trophyEscape
+      String mode = item.getEvent().getMode();
+      //String mode = item.getBattle().getMode();
       if (CommonUtil.isTrioMode(mode)) {
         saveTrio(tag, item);
       } else if (CommonUtil.isDuoShowdown(mode)) {
