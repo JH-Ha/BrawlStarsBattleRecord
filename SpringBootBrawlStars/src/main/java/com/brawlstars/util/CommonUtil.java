@@ -28,7 +28,8 @@ public class CommonUtil {
   }
 
   public static boolean isSolo(String mode) {
-    return "soloShowdown".equals(mode) || "hunters".equals(mode) || "takedown".equals(mode);
+    return "soloShowdown".equals(mode) || "hunters".equals(mode) || "takedown".equals(mode)
+        || "trophyEscape".equals(mode);
   }
 
 }
