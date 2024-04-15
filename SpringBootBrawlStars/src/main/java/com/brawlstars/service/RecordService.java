@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
@@ -260,8 +261,9 @@ public class RecordService {
       }
 
       // event.mode and battle.mode are different when event is trophyEscape
-      String mode = item.getEvent().getMode();
-      //String mode = item.getBattle().getMode();
+      // use event first and then battle.mode
+      String mode = Optional.ofNullable(item.getEvent().getMode())
+          .orElse(item.getBattle().getMode());
       if (CommonUtil.isTrioMode(mode)) {
         saveTrio(tag, item);
       } else if (CommonUtil.isDuoShowdown(mode)) {
