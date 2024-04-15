@@ -1,11 +1,11 @@
 plugins {
-	id 'org.springframework.boot' version '3.2.2'
+	id 'org.springframework.boot' version '3.2.4'
 	id 'io.spring.dependency-management' version '1.1.0'
 	id 'java'
 }
 
 group = 'com'
-version = 'v2.4.4'
+version = 'v2.4.5'
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
