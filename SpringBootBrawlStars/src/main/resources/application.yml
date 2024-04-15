@@ -1,9 +1,23 @@
 spring:
+  profiles:
+    active: prod
+---
+spring:
+  config:
+    activate:
+      on-profile: local
   datasource:
-    #url : jdbc:h2:mem:test
-    url: jdbc:mysql://ec2-35-76-70-153.ap-northeast-1.compute.amazonaws.com:3306/brawlmeta
-    username: brawlmeta
-    # password:
+    url : jdbc:h2:mem:test
+    driver-class-name: org.h2.Driver
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://brawlmeta.cf2miw664xb4.ap-northeast-1.rds.amazonaws.com:3306/brawlmeta
+    username: admin
+    password: EUhFcuiwHtDYJRLHF28b
     driver-class-name: com.mysql.cj.jdbc.Driver
     #url: jdbc:h2:tcp://localhost/~/jpashop
     #username: sa
@@ -18,22 +32,16 @@ spring:
         jdbc.batch_size: 50
         #show_sql: true
         #format_sql: true
-
+---
 server:
-  port: 8080
   compression:
     enabled: true
     mime-types: text/html,text/plain,text/css,application/javascript,application/json
     min-response-size: 500
 
 brawl-api:
-  # token:
-    #logging:
-    #level:
-    #org.hibernate.SQL: debug
-  #org.hibernate.type: trace
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImFjOTE3YTE1LWNjN2QtNDI5NS1iMWE0LThhMWJkMWYwMWQ0MCIsImlhdCI6MTcxMDA1NDU2Niwic3ViIjoiZGV2ZWxvcGVyLzRmODljMjEyLWE0OWYtZWRiZS0zZjgzLTRhODJiZGE2N2NiNSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMzUuNzYuNzAuMTUzIiwiMS4yMzcuMjguMTY3Il0sInR5cGUiOiJjbGllbnQifV19.jxgFo42pG_tX9tgbJ3bYo8QuXXn9-2E77-3Dixoh6e53n-Na7KFpUc5KjZO4zrYkfZhpYngvjxGEjkOa7l58bw
 
 app:
   scheduling:
     enabled: true
-   
