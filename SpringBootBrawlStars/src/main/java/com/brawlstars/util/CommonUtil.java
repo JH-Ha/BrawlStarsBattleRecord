@@ -11,6 +11,9 @@ public class CommonUtil {
       "trophyEscape");
 
   public static boolean isTrioMode(String mode) {
+    if (mode == null) {
+      return false;
+    }
     return TRIO_SET.contains(mode);
   }
 
@@ -31,6 +34,9 @@ public class CommonUtil {
   }
 
   public static boolean isSolo(String mode) {
+    if (mode == null) {
+      return false;
+    }
     return SOLO_SET.contains(mode);
   }
 
