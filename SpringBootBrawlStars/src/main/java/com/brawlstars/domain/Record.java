@@ -34,7 +34,7 @@ import org.hibernate.annotations.OnDeleteAction;
     indexes = {
         @Index(name = "gameStatIdx", columnList = "mode, map, statUpdated"),
         @Index(name = "gameTrendIdx", columnList = "recordDate, mode, map, brawlerName"),
-        @Index(name = "recordJoinIdx", columnList = "record_id, group_key")
+        @Index(name = "recordJoinIdx", columnList = "group_key, record_id")
     })
 public class Record {
 
