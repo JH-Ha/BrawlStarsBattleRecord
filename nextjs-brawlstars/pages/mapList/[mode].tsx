@@ -82,9 +82,9 @@ const MapList: React.FC<ModeListProps> = ({ mode, mapName, filteredMaps }) => {
         <Head>
             <title>Map List - Brawl Meta</title>
         </Head>
-        <h3>
+        <div className='page-title'>
             {t('mapsGuide')}
-        </h3>
+        </div>
         <div className={styles.searchContainer}>
             <ModeList key={mode} changeMode={changeMode} mode={mode}></ModeList>
             <div className='form-floating'>

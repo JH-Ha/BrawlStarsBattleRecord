@@ -88,7 +88,7 @@ function RegisterUser() {
   return (
     <div className={styles.registerUser}>
       {loading && <Loading></Loading>}
-      <h3>{t("searchYourTag")}</h3>
+      <div className="page-title">{t("searchYourTag")}</div>
       <div className={styles.inputContainer}>
         <span className={styles.sharpSign}>#</span>
         <input

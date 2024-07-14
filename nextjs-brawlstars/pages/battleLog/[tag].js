@@ -70,11 +70,12 @@ export default function BattleLog({ playRecord, curPage,
       <Head>
         <title>{`${t('battleLogTitle')} ${tag} ${name}`}</title>
       </Head>
-      <h2>{t('battleLogTitle')}</h2>
-      <button onClick={goStatistics} className="btn">{t("Statistics")}</button>
+      <div className="page-title">{t('battleLogTitle')}
+        <button onClick={goStatistics} className="btn btn-secondary">{t("Statistics")}</button>
+      </div>
       <ModeList key={`mode-${mode}`} changeMode={changeMode} mode={mode} />
       <BrawlerList key={brawlerName} brawlerName={brawlerName} changeBrawler={changeBrawler} />
-      <h2>{name}({tag})</h2>
+      <div className="page-title">{name}({tag})</div>
 
       <div className={playRecord.length === 0 ? styles.noRecord : styles.displayNone}>
         No record

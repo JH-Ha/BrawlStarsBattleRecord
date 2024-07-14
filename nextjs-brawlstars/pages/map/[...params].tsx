@@ -258,7 +258,7 @@ export default function Map({
             {t("lastUpdatedOn")} : {toDateStr(statUpdated)}
           </div>
           <div className={styles.pageDesc}> {t("mapModeMetaDesc1")}{t(mapName)}({t(mode)}){t("mapModeMetaDesc2")}    </div>
-          <h3 className={`${eventStyles[modeWrap]} ${styles.titleContainer}`}>
+          <div className={`${eventStyles[modeWrap]} ${styles.titleContainer} page-title`}>
             <div className={styles.imgContainer}>
               <img src={`/images/mode/${mode}.png`} alt={mapName} />
             </div>
@@ -280,7 +280,7 @@ export default function Map({
                 </div>
               </div>
             </div>
-          </h3>
+          </div>
 
           <div
             className={`${styles.mapImgContainer}
