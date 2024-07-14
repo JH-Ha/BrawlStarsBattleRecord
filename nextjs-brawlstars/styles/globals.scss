@@ -22,7 +22,7 @@ a {
 
 $table-radius: 5px;
 
-.table {
+.default-table {
   border: 1px solid #eeeeee;
   border-radius: $table-radius;
   border-spacing: 0px;
@@ -62,26 +62,4 @@ $table-radius: 5px;
 label {
   display: block;
   text-align: left;
-}
-
-.btn {
-  outline: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #003072;
-  color: white;
-  border: none;
-  padding: 10px;
-  font-size: 16px;
-}
-
-.btn-primary:hover {
-  background-color: #0046a8;
-}
-
-.btn-primary:active {
-  background-color: #002150;
 }
