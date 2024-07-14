@@ -1,10 +1,18 @@
 .column {
   flex-direction: column;
 }
+
 .noRecord {
   padding: 10px;
   background: #eeeeee;
 }
+
 .displayNone {
   display: none;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }

@@ -3,54 +3,90 @@ import { useTranslation } from 'next-i18next';
 
 
 let brawlerNameList = [
-  "SHELLY",
-  "NITA",
-  "COLT",
-  "BULL",
-  "JESSIE",
-  "BROCK",
-  "DYNAMIKE",
-  "EL PRIMO",
-  "BARLEY",
-  "POCO",
-  "RICO",
-  "DARRYL",
-  "PIPER",
-  "PENNY",
-  "BO",
-  "MORTIS",
-  "TARA",
-  "PAM",
-  "FRANK",
-  "CROW",
-  "SPIKE",
-  "LEON",
-  "GENE",
-  "TICK",
-  "ROSA",
-  "8-BIT",
-  "CARL",
-  "BIBI",
-  "EMZ",
-  "BEA",
-  "SPROUT",
-  "SANDY",
-  "JACKY",
-  "MAX",
-  "MR. P",
-  "GALE",
-  "COLETTE",
-  "AMBER",
-  "BYRON",
-  "STU",
-  "COLONEL RUFFS",
-  "LOU",
-  "EDGAR",
-  "SURGE",
-  "SQUEAK",
+  '8-BIT',
+  'AMBER',
+  'ANGELO',
+  'ASH',
+  'BARLEY',
+  'BEA',
+  'BELLE',
+  'BERRY',
+  'BIBI',
+  'BO',
+  'BONNIE',
+  'BROCK',
+  'BULL',
+  'BUSTER',
+  'BUZZ',
+  'BYRON',
+  'CARL',
+  'CHARLIE',
+  'CHESTER',
+  'CHUCK',
+  'CLANCY',
+  'COLETTE',
+  'COLONEL RUFFS',
+  'COLT',
+  'CORDELIUS',
+  'CROW',
+  'DARRYL',
+  'DOUG',
+  'DRACO',
+  'DYNAMIKE',
+  'EDGAR',
+  'EL PRIMO',
+  'EMZ',
+  'EVE',
+  'FANG',
+  'FRANK',
+  'GALE',
+  'GENE',
+  'GRAY',
+  'GRIFF',
+  'GROM',
+  'GUS',
+  'HANK',
+  'JACKY',
+  'JANET',
+  'JESSIE',
+  'KIT',
+  'LARRY & LAWRIE',
+  'LEON',
+  'LILY',
+  'LOLA',
+  'LOU',
+  'MAISIE',
+  'MANDY',
+  'MAX',
+  'MEG',
+  'MELODIE',
+  'MICO',
+  'MORTIS',
+  'MR. P',
+  'NANI',
+  'NITA',
+  'OTIS',
+  'PAM',
+  'PEARL',
+  'PENNY',
+  'PIPER',
+  'POCO',
+  'R-T',
+  'RICO',
+  'ROSA',
+  'RUFFS',
+  'SAM',
+  'SANDY',
+  'SHELLY',
+  'SPIKE',
+  'SPROUT',
+  'SQUEAK',
+  'STU',
+  'SURGE',
+  'TARA',
+  'TICK',
+  'WILLOW'
 ];
-//brawlerNameList = brawlerNameList.sort();
-//brawlerNameList.unshift("ALL");
 
 const BrawlerList = ({ brawlerName, changeBrawler }) => {
 
@@ -78,12 +114,12 @@ const BrawlerList = ({ brawlerName, changeBrawler }) => {
   });
 
   return (
-    <div className="selectBox">
-      <label htmlFor="brawlerName">{t("brawler")}</label>
+    <div className="form-floating">
       <select
         id="brawlerName"
         onChange={change}
         value={brawlerName}
+        className="form-select"
       >
         {bnList.map((bn, index) => {
           return (
@@ -93,6 +129,7 @@ const BrawlerList = ({ brawlerName, changeBrawler }) => {
           );
         })}
       </select>
+      <label htmlFor="brawlerName">{t("brawler")}</label>
     </div>
   );
 }

@@ -88,15 +88,18 @@ function RegisterUser() {
   return (
     <div className={styles.registerUser}>
       {loading && <Loading></Loading>}
-      <h3>{t("searchYourTag")}</h3>
+      <div className="page-title">{t("searchYourTag")}</div>
       <div className={styles.inputContainer}>
-        <span className={styles.sharpSign}>#</span>
-        <input
-          type="text"
-          placeholder={t("enterYourTag")}
-          value={tag}
-          onChange={changeInput}
-        ></input>
+        <div className={`${styles.inputGroup} input-group`}>
+          <span className={`input-group-text`}>#</span>
+          <input
+            className="form-control"
+            type="text"
+            placeholder={t("enterYourTag")}
+            value={tag}
+            onChange={changeInput}
+          ></input>
+        </div>
         <button className="btn btn-primary" onClick={searchTag}>
           {t("search")}
         </button>

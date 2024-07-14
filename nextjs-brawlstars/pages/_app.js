@@ -7,6 +7,7 @@ import { useTranslation } from 'next-i18next'
 import Script from 'next/script'
 import Head from 'next/head'
 import { appWithTranslation } from 'next-i18next';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()

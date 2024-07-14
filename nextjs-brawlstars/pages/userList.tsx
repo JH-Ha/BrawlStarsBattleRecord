@@ -2,75 +2,107 @@ import React, { Component, useState } from "react";
 import Pagination from "../components/Pagination";
 import styles from "../styles/UserList.module.scss";
 import { getData } from "../components/ApiHandler";
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const tableStyle = {
   margin: "auto",
 };
 
-async function getUserList(page, nickname) {
+async function getUserList(page: number, nickname: string) {
   const queryPage = page - 1;
   let res = await getData(`/member?name=${nickname}&page=${queryPage}&size=15`);
   const data = res.data;
-  return ({
+  return {
     userList: data.content,
     curPage: data.number + 1,
-    numUser: data.totalElements
-  });
-
+    numUser: data.totalElements,
+  };
 }
 
-export default function UserList({ userList, curPage, numUser, propNickname }) {
+interface User {
+  name: string;
+  tag: string;
+}
+interface UserProps {
+  userList: User[];
+  curPage: number;
+  numUser: number;
+  propNickname: string;
+}
+
+export default function UserList({
+  userList,
+  curPage,
+  numUser,
+  propNickname,
+}: UserProps) {
   const router = useRouter();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   const [nickname, setNickname] = useState(decodeURIComponent(propNickname));
 
-
-  const changePageHandler = (page) => {
+  const changePageHandler = (page: number) => {
     router.push({
       pathname: "/userList",
       query: {
         page: page,
         nickname: encodeURIComponent(nickname),
-      }
+      },
     });
-  }
-  const showPlayList = (tag) => {
+  };
+  const showPlayList = (tag: string) => {
     tag = tag.replace("#", "%23");
     router.push(`/battleLog/${tag}`);
-  }
+  };
 
-  const searchInputChange = (event) => {
+  const searchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
     setNickname(value);
-  }
+  };
   const goRegisterPage = () => {
     router.push(`/user`);
-  }
+  };
+  const handleSearchInputKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === 'Enter') {
+      changePageHandler(0);
+    }
+  };
 
   return (
     <div className={styles.userList}>
       <Head>
         <title>{`User List`}</title>
       </Head>
-      <h3>{t('userListGuide')}</h3>
+      <div className="page-title">{t("userListGuide")}</div>
       {/* TODO : migrate register user */}
-      <h3>{t('registerGuide')} <button onClick={goRegisterPage} className="btn btn-primary">{t('registration')}</button></h3>
-      <div className={styles.inputContainer}>
-        <input type="text"
-          placeholder="search user nickname"
-          onChange={searchInputChange}
-          value={nickname}
-        ></input>
-        <button onClick={() => changePageHandler(0)} className="btn btn-primary">
-          search
+      <div className="page-title">
+        {t("registerGuide")}{" "}
+        <button onClick={goRegisterPage} className="btn btn-primary">
+          {t("registration")}
         </button>
       </div>
-      <table style={tableStyle} className="table">
+      <div className={styles.inputContainer}>
+        <input
+          className="form-control"
+          type="text"
+          placeholder="search user nickname"
+          onChange={searchInputChange}
+          onKeyDown={handleSearchInputKeyDown}
+          value={nickname}
+        ></input>
+        <button
+          onClick={() => changePageHandler(0)}
+          className="btn btn-primary"
+        >
+          {t("search")}
+        </button>
+      </div>
+      <table style={tableStyle} className="default-table">
         <thead>
           <tr>
             <th>Index</th>
@@ -83,7 +115,6 @@ export default function UserList({ userList, curPage, numUser, propNickname }) {
               <tr
                 className={styles.cursor}
                 key={user.tag}
-                page={curPage}
                 onClick={() => showPlayList(user.tag)}
               >
                 <td>{(curPage - 1) * 15 + index + 1}</td>
@@ -107,22 +138,24 @@ export default function UserList({ userList, curPage, numUser, propNickname }) {
   );
 }
 
-
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: any) {
   let { nickname, page } = context.query;
   if (page === undefined) page = 1;
   //page = parseInt(page);
-  let propNickname = '';
+  let propNickname = "";
   if (nickname !== undefined) {
     propNickname = nickname;
   }
   let locale = context.locale;
 
   let { userList, curPage, numUser } = await getUserList(page, propNickname);
-  return ({
+  return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-      userList, curPage, numUser, propNickname
-    }
-  })
+      ...(await serverSideTranslations(locale, ["common"])),
+      userList,
+      curPage,
+      numUser,
+      propNickname,
+    },
+  };
 }
