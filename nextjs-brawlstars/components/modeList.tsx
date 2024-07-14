@@ -17,14 +17,14 @@ const ModeList: React.FC<ModeListProps> = ({ mode, changeMode }) => {
     changeMode(mode);
   }
   return (
-    <div className="selectBox">
-      <label htmlFor="modeList">{t("mode")} </label>
-      <select id="modeList" onChange={change} value={value}>
+    <div className="form-floating">
+      <select id="modeList" className="form-select" onChange={change} value={value}>
         <option value="ALL">{t("All")}</option>
         {modeInfo.map((mode => {
           return <option key={mode.name} value={mode.name}>{t(mode.name)}</option>
         }))}
       </select>
+      <label htmlFor="modeList">{t("mode")} </label>
     </div>
   );
 }
