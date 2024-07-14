@@ -67,7 +67,11 @@ export default function UserList({
   };
   const handleSearchInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>
-  ) => { };
+  ) => {
+    if (e.key === 'Enter') {
+      changePageHandler(0);
+    }
+  };
 
   return (
     <div className={styles.userList}>
