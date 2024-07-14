@@ -73,8 +73,10 @@ export default function BattleLog({ playRecord, curPage,
       <div className="page-title">{t('battleLogTitle')}
         <button onClick={goStatistics} className="btn btn-secondary">{t("Statistics")}</button>
       </div>
-      <ModeList key={`mode-${mode}`} changeMode={changeMode} mode={mode} />
-      <BrawlerList key={brawlerName} brawlerName={brawlerName} changeBrawler={changeBrawler} />
+      <div className={styles.searchContainer}>
+        <ModeList key={`mode-${mode}`} changeMode={changeMode} mode={mode} />
+        <BrawlerList key={brawlerName} brawlerName={brawlerName} changeBrawler={changeBrawler} />
+      </div>
       <div className="page-title">{name}({tag})</div>
 
       <div className={playRecord.length === 0 ? styles.noRecord : styles.displayNone}>
