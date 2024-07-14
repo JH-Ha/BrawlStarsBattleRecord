@@ -61,16 +61,16 @@ export default function UserList({ userList, curPage, numUser, propNickname }) {
       {/* TODO : migrate register user */}
       <h3>{t('registerGuide')} <button onClick={goRegisterPage} className="btn btn-primary">{t('registration')}</button></h3>
       <div className={styles.inputContainer}>
-        <input type="text"
+        <input className="form-control" type="text"
           placeholder="search user nickname"
           onChange={searchInputChange}
           value={nickname}
         ></input>
         <button onClick={() => changePageHandler(0)} className="btn btn-primary">
-          search
+          {t('search')}
         </button>
       </div>
-      <table style={tableStyle} className="table">
+      <table style={tableStyle} className="default-table">
         <thead>
           <tr>
             <th>Index</th>
