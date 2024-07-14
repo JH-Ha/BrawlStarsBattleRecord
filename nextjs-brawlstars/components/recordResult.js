@@ -74,7 +74,7 @@ const RecordResult = ({ _recordArr, sumTotalGameNum, mode, isPersonal }) => {
 
     return <div className={styles.recordResult}>
         <div className={styles.infoContainer}>
-            <table className={`table ${styles.info}`}>
+            <table className={`default-table ${styles.info}`}>
                 <thead>
                     <tr>
                         <th>{t("No")}</th>
