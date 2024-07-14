@@ -16,7 +16,7 @@ win rates based on play data from around 10,000 random players.
 毎日マップが変わり、シーズンが変わるたびにマップが追加されるので持続的に勝率情報を分かるのは難しいです。
 
 ブロメーター（Brawl Meta）ウェブサイトではマップごとどんなキャラクターが良いのか、勝率を提供します。
-約10,000人のプレイヤーのバトル履歴を集計して勝率を提供しています。
+約 10,000 人のプレイヤーのバトル履歴を集計して勝率を提供しています。
 
 브롤 스타즈 맵 별 브롤러 승률 통계를 제공하는 사이트를 제작하였습니다.
 
@@ -29,9 +29,9 @@ win rates based on play data from around 10,000 random players.
 
 #### Detailed Information
 
-ブロスタAPIを使用して、ユーザープレイデータを取得して統計を作っています。APIでは最近の25ゲームのみが閲覧可能なため、毎時間戦闘履歴を保存して、できるだけ多くのゲームを保存しています。
+ブロスタ API を使用して、ユーザープレイデータを取得して統計を作っています。API では最近の 25 ゲームのみが閲覧可能なため、毎時間戦闘履歴を保存して、できるだけ多くのゲームを保存しています。
 
-フロントエンドはReactで実装され、バックエンドはSpringフレームワークを使用して実装されました。
+フロントエンドは React で実装され、バックエンドは Spring フレームワークを使用して実装されました。
 
 プレイヤーのメニューでユーザー名をクリックすると、そのユーザーの戦闘履歴を見ることができます。
 
@@ -68,25 +68,24 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 </div>
 
 ### Update Log
-- v2.4.5 (2024.04.16)
-  - Add a new trophy escape mode 
 
+- v2.4.6 (2024.07.14)
+  - Add search input in map list page
+- v2.4.5 (2024.04.16)
+  - Add a new trophy escape mode
 - v2.4.1 (2023.03.21)
   - Update spring boot to 3.0.4
 - v2.4.0 (2023.01.05)
   - Add description to map page
   - Change getStatstistics API to get all data
   - Add new brawler mandy
-
 - v2.3.9 (2022.11.08)
   - Add new brawler buster
   - Add map images and translation
-
 - v2.3.8 (2022.06.30)
   - Add hunters mode and new brawler otis
   - Add translations of new maps
   - Bug fix : nickname search value was displayed as encoded character at user list
-
 - v2.3.7 (2022.05.10)
 
   - Reduce loading time of pages by changing logging interceptor
@@ -157,9 +156,9 @@ hosting page
 
 ## version 1.0
 
-React + firebase + nodejsを利用して実装したバージョンです。
+React + firebase + nodejs を利用して実装したバージョンです。
 
-ノードjsでサーバーを実行させ、定期的にfirestoreに戦闘記録をinsertします。
+ノード js でサーバーを実行させ、定期的に firestore に戦闘記録を insert します。
 
 React + firebase + nodejs를 이용해서 구현한 버전입니다.
 
