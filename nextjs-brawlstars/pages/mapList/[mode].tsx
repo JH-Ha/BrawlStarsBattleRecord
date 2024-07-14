@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router'
 import { getData } from '../../components/ApiHandler';
@@ -18,6 +19,7 @@ type GameMap = {
 
 type ModeListProps = {
     mode: string,
+    mapName: string,
     filteredMaps: GameMap[],
 }
 
@@ -31,10 +33,12 @@ const getFilteredMap = (maps: GameMap[], mode: string) => {
     return filteredMaps;
 }
 
-const MapList: React.FC<ModeListProps> = ({ mode, filteredMaps }) => {
+const MapList: React.FC<ModeListProps> = ({ mode, mapName, filteredMaps }) => {
 
     const { t } = useTranslation();
     const router = useRouter();
+    const [mapNameForSearch, setMapNameForSearch] = useState<string>(mapName);
+
 
     const clickMap = (mapName: string, mapMode: string) => {
         let paramMapName = encodeURIComponent(mapName);
@@ -56,6 +60,24 @@ const MapList: React.FC<ModeListProps> = ({ mode, filteredMaps }) => {
         })
     }
 
+    const handleMapNameChange = (e: React.FormEvent<HTMLInputElement>) => {
+        setMapNameForSearch(e.currentTarget.value);
+    }
+    const clickSearchBtn = () => {
+        router.push({
+            pathname: '/mapList/[mode]',
+            query: {
+                mode: mode,
+                mapName: mapNameForSearch
+            }
+        })
+    }
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            clickSearchBtn();
+        }
+    }
+
     return (<><div className={styles.mapList}>
         <Head>
             <title>Map List - Brawl Meta</title>
@@ -63,23 +85,34 @@ const MapList: React.FC<ModeListProps> = ({ mode, filteredMaps }) => {
         <h3>
             {t('mapsGuide')}
         </h3>
-        <div>
+        <div className={styles.searchContainer}>
             <ModeList key={mode} changeMode={changeMode} mode={mode}></ModeList>
+            <div className='form-floating'>
+                <input type='text'
+                    className='form-control'
+                    onChange={handleMapNameChange}
+                    value={mapNameForSearch}
+                    onKeyDown={handleKeyDown}></input>
+                <label htmlFor=''>map name</label>
+            </div>
+            <button className='btn btn-primary' type='button' onClick={clickSearchBtn}>{t('search')}</button>
         </div>
         <div className={styles.gemGrabContainer}>{
-            filteredMaps.map((map, index) => {
-                return <div key={index} className={styles.gemGrabItem} >
-                    <div className={styles.mapTimeContainer}>
-                        <div className={styles.mapTime}>
-                            {calDisplayMapTime(map.startTime, map.endTime, t)}
+            filteredMaps
+                .filter(map => t(map.name).toLocaleLowerCase().indexOf(mapName.toLocaleLowerCase()) != -1)
+                .map((map, index) => {
+                    return <div key={index} className={styles.gemGrabItem} >
+                        <div className={styles.mapTimeContainer}>
+                            <div className={styles.mapTime}>
+                                {calDisplayMapTime(map.startTime, map.endTime, t)}
+                            </div>
+                        </div>
+                        <div className={styles.mapName}>{t(map.displayName)}</div>
+                        <div className={styles.imgContainer}>
+                            <img onClick={() => { clickMap(map.name, map.mode) }} src={`/images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.displayName}.png`} alt={map.name}></img>
                         </div>
                     </div>
-                    <div className={styles.mapName}>{t(map.displayName)}</div>
-                    <div className={styles.imgContainer}>
-                        <img onClick={() => { clickMap(map.name, map.mode) }} src={`/images/maps/${map.mode.indexOf("Showdown") !== -1 ? "showdown" : map.mode}/${map.displayName}.png`} alt={map.name}></img>
-                    </div>
-                </div>
-            })}
+                })}
         </div>
     </div>
     </>);
@@ -88,7 +121,7 @@ const MapList: React.FC<ModeListProps> = ({ mode, filteredMaps }) => {
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    let { mode } = context.query;
+    let { mode, mapName } = context.query;
     let locale = context.locale;
     //i18n.changeLanguage(context.locale);
     const res = await getData(`/gameMap`);
@@ -113,6 +146,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         mode = mode[0];
     }
 
+    if (mapName === undefined) {
+        mapName = '';
+    }
+
     const filteredMaps = getFilteredMap(gameMaps, mode);
     filteredMaps.sort((a, b) => {
         let cmpResult = a.mode.localeCompare(b.mode);
@@ -126,6 +163,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         props: {
             ...(await serverSideTranslations(locale as string, ['common'])),
             mode,
+            mapName,
             filteredMaps
         }
     }
