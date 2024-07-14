@@ -20,33 +20,50 @@ a {
   box-sizing: border-box;
 }
 
+.page-title {
+  display: block;
+  font-size: 1.17em;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  unicode-bidi: isolate;
+}
+
 $table-radius: 5px;
 
-.table {
+.default-table {
   border: 1px solid #eeeeee;
   border-radius: $table-radius;
   border-spacing: 0px;
+
   th,
   td {
     padding: 5px;
     border: 0px;
   }
+
   thead {
     tr th {
       background: #353049;
       color: white;
     }
+
     tr th:first-child {
       border-top-left-radius: $table-radius;
     }
+
     tr th:last-child {
       border-top-right-radius: $table-radius;
     }
   }
+
   tbody {
     tr:nth-child(2n) {
       background: #f5f5f5;
     }
+
     tr:hover {
       background: #eeeeee;
     }
@@ -56,39 +73,4 @@ $table-radius: 5px;
 label {
   display: block;
   text-align: left;
-}
-.selectBox {
-  display: inline-block;
-  margin: 0px 10px;
-}
-
-.btn {
-  outline: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  background-color: #003072;
-  color: white;
-  border: none;
-  padding: 10px;
-  font-size: 16px;
-}
-.btn-primary:hover {
-  background-color: #0046a8;
-}
-.btn-primary:active {
-  background-color: #002150;
-}
-
-input[type="text"],
-select {
-  width: 100%;
-  padding: 12px 10px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
 }
