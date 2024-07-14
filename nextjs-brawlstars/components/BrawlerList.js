@@ -78,12 +78,12 @@ const BrawlerList = ({ brawlerName, changeBrawler }) => {
   });
 
   return (
-    <div className="selectBox">
-      <label htmlFor="brawlerName">{t("brawler")}</label>
+    <div className="form-floating">
       <select
         id="brawlerName"
         onChange={change}
         value={brawlerName}
+        className="form-select"
       >
         {bnList.map((bn, index) => {
           return (
@@ -93,6 +93,7 @@ const BrawlerList = ({ brawlerName, changeBrawler }) => {
           );
         })}
       </select>
+      <label htmlFor="brawlerName">{t("brawler")}</label>
     </div>
   );
 }
