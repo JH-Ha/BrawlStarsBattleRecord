@@ -1,6 +1,137 @@
 {
   "items": [
     {
+      "battleTime": "20240719T112849.000Z",
+      "event": {
+        "id": 15000728,
+        "mode": "knockout5V5",
+        "map": "Crispy Crypt"
+      },
+      "battle": {
+        "mode": "knockout",
+        "type": "ranked",
+        "result": "victory",
+        "duration": 220,
+        "trophyChange": 9,
+        "starPlayer": {
+          "tag": "#C0YRRQVR",
+          "name": "두디킴",
+          "brawler": {
+            "id": 16000022,
+            "name": "TICK",
+            "power": 11,
+            "trophies": 535
+          }
+        },
+        "teams": [
+          [
+            {
+              "tag": "#2Q2UGU88P",
+              "name": "EP | Retired 🦋",
+              "brawler": {
+                "id": 16000065,
+                "name": "MANDY",
+                "power": 10,
+                "trophies": 252
+              }
+            },
+            {
+              "tag": "#2PURV0V02R",
+              "name": "선빈이",
+              "brawler": {
+                "id": 16000082,
+                "name": "BERRY",
+                "power": 9,
+                "trophies": 402
+              }
+            },
+            {
+              "tag": "#8YRCUU0Y2",
+              "name": "브롤러",
+              "brawler": {
+                "id": 16000075,
+                "name": "MICO",
+                "power": 9,
+                "trophies": 546
+              }
+            },
+            {
+              "tag": "#PCRJVGYV",
+              "name": "슈퍼 수민이♡",
+              "brawler": {
+                "id": 16000013,
+                "name": "POCO",
+                "power": 11,
+                "trophies": 514
+              }
+            },
+            {
+              "tag": "#YGJ2GU9YP",
+              "name": "死神",
+              "brawler": {
+                "id": 16000082,
+                "name": "BERRY",
+                "power": 9,
+                "trophies": 538
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#9QU209UYC",
+              "name": "폼폼",
+              "brawler": {
+                "id": 16000081,
+                "name": "LILY",
+                "power": 10,
+                "trophies": 302
+              }
+            },
+            {
+              "tag": "#J9GPCCUP",
+              "name": "Gizmo",
+              "brawler": {
+                "id": 16000079,
+                "name": "ANGELO",
+                "power": 11,
+                "trophies": 371
+              }
+            },
+            {
+              "tag": "#90V9CV8JC",
+              "name": "(빠이)_HYUN",
+              "brawler": {
+                "id": 16000082,
+                "name": "BERRY",
+                "power": 9,
+                "trophies": 314
+              }
+            },
+            {
+              "tag": "#2CLQQ2UCR",
+              "name": "無語了😓",
+              "brawler": {
+                "id": 16000004,
+                "name": "RICO",
+                "power": 9,
+                "trophies": 511
+              }
+            },
+            {
+              "tag": "#C0YRRQVR",
+              "name": "두디킴",
+              "brawler": {
+                "id": 16000022,
+                "name": "TICK",
+                "power": 11,
+                "trophies": 535
+              }
+            }
+          ]
+        ]
+      }
+    },
+    {
       "battleTime": "20220305T131059.000Z",
       "event": {
         "id": 15000460,
