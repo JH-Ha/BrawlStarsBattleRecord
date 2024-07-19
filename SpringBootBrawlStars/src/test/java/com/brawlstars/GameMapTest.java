@@ -33,7 +33,7 @@ public class GameMapTest {
   @BeforeEach
   public void init() throws JsonProcessingException {
     ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-    InputStream inputStream = classloader.getResourceAsStream("sampleResponse.txt");
+    InputStream inputStream = classloader.getResourceAsStream("sampleResponse.json");
     Scanner scanner = new Scanner(inputStream);
     StringBuilder sb = new StringBuilder();
     while (scanner.hasNext()) {

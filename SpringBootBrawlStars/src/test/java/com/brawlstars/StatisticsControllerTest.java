@@ -40,7 +40,7 @@ public class StatisticsControllerTest {
   public void init() throws JsonProcessingException {
     String tag = "#9QU209UYC";
     ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-    InputStream inputStream = classloader.getResourceAsStream("sampleResponse.txt");
+    InputStream inputStream = classloader.getResourceAsStream("sampleResponse.json");
     Scanner scanner = new Scanner(inputStream);
     StringBuilder sb = new StringBuilder();
     while (scanner.hasNext()) {
