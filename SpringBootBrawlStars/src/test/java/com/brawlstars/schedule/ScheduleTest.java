@@ -9,7 +9,6 @@ import com.brawlstars.service.RecordService;
 import com.brawlstars.service.StatisticsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -47,7 +46,7 @@ public class ScheduleTest {
 	public void init() throws JsonProcessingException {
 		String tag = "#9QU209UYC";
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-		Scanner scanner = new Scanner(classloader.getResourceAsStream("sampleResponse.txt"));
+		Scanner scanner = new Scanner(classloader.getResourceAsStream("sampleResponse.json"));
 		StringBuilder sb = new StringBuilder();
 		while(scanner.hasNext()) {
 			sb.append(scanner.nextLine());

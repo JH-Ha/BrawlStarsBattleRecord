@@ -1,19 +1,5 @@
 package com.brawlstars;
 
-import java.io.InputStream;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
-
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
 import com.brawlstars.api.RecordController;
 import com.brawlstars.domain.Record;
 import com.brawlstars.domain.RecordSearch;
@@ -24,8 +10,19 @@ import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.RecordService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 @SpringBootTest
 public class RecordTest {
@@ -40,7 +37,7 @@ public class RecordTest {
   public void init() throws JsonProcessingException {
     String tag = "#9QU209UYC";
     ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-    InputStream inputStream = classloader.getResourceAsStream("sampleResponse.txt");
+    InputStream inputStream = classloader.getResourceAsStream("sampleResponse.json");
     Scanner scanner = new Scanner(inputStream);
     StringBuilder sb = new StringBuilder();
     while (scanner.hasNext()) {
