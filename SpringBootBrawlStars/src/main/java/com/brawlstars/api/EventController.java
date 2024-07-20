@@ -42,7 +42,7 @@ public class EventController {
   Map<String, String> mapNameToMode = new HashMap<>();
 
   @PostConstruct
-  public void postContruct() {
+  public void postConstruct() {
     String[] huntersMapNames = {
         "Trials and Tribulations",
         "Hunting Season",
