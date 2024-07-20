@@ -1,5 +1,6 @@
 package com.brawlstars.api;
 
+import com.brawlstars.remote.BrawlStarsApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,7 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	@Autowired
-	BrawlStarsAPI brawlStarsAPI;
+	BrawlStarsApiService brawlStarsApiService;
 	
 	@GetMapping("/member")	
 	public Page<MemberDto> getMembers(@RequestParam(defaultValue = "") String name, Pageable pageable){
@@ -44,7 +45,7 @@ public class MemberController {
 		PlayerInfo playerInfo = null;
 		PlayerInfoDto playerInfoDto = new PlayerInfoDto();
 		try {
-			playerInfo = brawlStarsAPI.getPlayerInfo(tag);
+			playerInfo = brawlStarsApiService.getPlayerInfo(tag);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

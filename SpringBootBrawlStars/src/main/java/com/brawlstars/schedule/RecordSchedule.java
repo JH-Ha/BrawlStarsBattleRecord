@@ -18,7 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.brawlstars.api.BrawlStarsAPI;
+import com.brawlstars.remote.BrawlStarsApiService;
 import com.brawlstars.json.Item;
 import com.brawlstars.repository.MemberDto;
 import com.brawlstars.repository.MemberRepository;
@@ -28,7 +28,7 @@ import com.brawlstars.service.RecordService;
 public class RecordSchedule {
 
   @Autowired
-  BrawlStarsAPI brawlStarsAPI;
+  BrawlStarsApiService brawlStarsApiService;
 
   @Autowired
   RecordService recordService;
@@ -63,7 +63,7 @@ public class RecordSchedule {
       String tag = member.getTag();
       List<Item> items;
       try {
-        items = brawlStarsAPI.getItems(member.getTag());
+        items = brawlStarsApiService.getItems(member.getTag());
         recordService.saveBattleLog(items, tag);
       } catch (Exception e) {
         e.printStackTrace();
@@ -90,7 +90,7 @@ public class RecordSchedule {
               List<Item> items;
               ItemContainer itemContainer = new ItemContainer();
               try {
-                items = brawlStarsAPI.getItems(member.getTag());
+                items = brawlStarsApiService.getItems(member.getTag());
                 itemContainer.setItems(items);
                 itemContainer.setTag(tag);
               } catch (Exception e) {
@@ -129,7 +129,7 @@ public class RecordSchedule {
 
   public List<Item> getItems(String tag) {
     try {
-      List<Item> items = brawlStarsAPI.getItems(tag);
+      List<Item> items = brawlStarsApiService.getItems(tag);
       return items;
     } catch (Exception e) {
       e.printStackTrace();

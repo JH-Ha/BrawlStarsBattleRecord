@@ -1,4 +1,4 @@
-package com.brawlstars.api;
+package com.brawlstars.remote;
 
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.EventInfo;
@@ -20,7 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @Component
-public class BrawlStarsAPI {
+public class BrawlStarsApiService {
 
   final static String BASE_PLAYERS_URL = "https://api.brawlstars.com/v1/players";
   final static String EVENTS_ROTATIONS_URL = "https://api.brawlstars.com/v1/events/rotation";

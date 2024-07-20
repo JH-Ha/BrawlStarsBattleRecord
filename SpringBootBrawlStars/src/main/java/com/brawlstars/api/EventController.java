@@ -1,6 +1,7 @@
 package com.brawlstars.api;
 
 import com.brawlstars.json.EventInfo;
+import com.brawlstars.remote.BrawlStarsApiService;
 import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.schedule.GameMapService;
 import com.brawlstars.service.RecordService;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EventController {
 
   @Autowired
-  BrawlStarsAPI brawlStarsAPI;
+  BrawlStarsApiService brawlStarsApiService;
 
   @Autowired
   RecordService recordService;
@@ -69,7 +70,7 @@ public class EventController {
       mapNameToMode.put(mapName, "invasion");
     }
 
-    eventInfos = brawlStarsAPI.getEventsRotation();
+    eventInfos = brawlStarsApiService.getEventsRotation();
 
   }
 
@@ -83,7 +84,7 @@ public class EventController {
   public void updateEvents() {
     EventInfo[] eventInfos = null;
     try {
-      eventInfos = brawlStarsAPI.getEventsRotation();
+      eventInfos = brawlStarsApiService.getEventsRotation();
       List<String> yearMonth = new ArrayList<>();
       LocalDate today = LocalDate.now();
       DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMM");

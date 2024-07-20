@@ -1,6 +1,6 @@
 package com.brawlstars.service;
 
-import com.brawlstars.api.BrawlStarsAPI;
+import com.brawlstars.remote.BrawlStarsApiService;
 import com.brawlstars.domain.GameMap;
 import com.brawlstars.domain.Member;
 import com.brawlstars.domain.Record;
@@ -56,7 +56,7 @@ public class RecordService {
   @Autowired
   private GameMapRepository gameMapRepositry;
   @Autowired
-  private BrawlStarsAPI brawlStarsAPI;
+  private BrawlStarsApiService brawlStarsApiService;
 
   @Autowired
   StatisticsRepositoryInterface statisticsRepository;
@@ -214,7 +214,7 @@ public class RecordService {
   public void savePlayers(String tag) {
     List<Item> items;
     try {
-      items = brawlStarsAPI.getItems(tag);
+      items = brawlStarsApiService.getItems(tag);
       savePlayersInItems(items);
     } catch (Exception e) {
       log.warn("failed to savePlayers", e);

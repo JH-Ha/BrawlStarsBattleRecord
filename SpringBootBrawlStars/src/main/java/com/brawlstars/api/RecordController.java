@@ -2,6 +2,7 @@ package com.brawlstars.api;
 
 import java.util.List;
 
+import com.brawlstars.remote.BrawlStarsApiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class RecordController {
 	RecordService recordService;
 	
 	@Autowired
-	BrawlStarsAPI brawlStarsAPI;
+	BrawlStarsApiService brawlStarsApiService;
 
 	@GetMapping("/record/{tag}")
 	public Page<RecordDto> getRecords(@PathVariable(name = "tag") String tag,
@@ -40,7 +41,7 @@ public class RecordController {
 	public Page<RecordDto> getRecordsFromApiServer(@PathVariable(name = "tag") String tag,
 			Pageable pageable,
 			RecordSearch recordSearch) throws Exception {
-		List<Item> item = brawlStarsAPI.getItems(tag);
+		List<Item> item = brawlStarsApiService.getItems(tag);
 		Page<RecordDto> recordDtos = recordService.findByTag(tag, pageable, recordSearch);
 //		new PageImpl<>(item.stream()
 //				.map(record -> new RecordDto(record))

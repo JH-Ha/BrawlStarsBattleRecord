@@ -1,6 +1,6 @@
 package com.brawlstars.test;
 
-import com.brawlstars.api.BrawlStarsAPI;
+import com.brawlstars.remote.BrawlStarsApiService;
 import com.brawlstars.schedule.RecordSchedule;
 import com.brawlstars.service.MemberService;
 import jakarta.annotation.PostConstruct;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 @Profile("local")
 public class TestDataService {
 
-  @Autowired
-  private BrawlStarsAPI brawlStarsAPI;
   @Autowired
   private MemberService memberService;
   @Autowired

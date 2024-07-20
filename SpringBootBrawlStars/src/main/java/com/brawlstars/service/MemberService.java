@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.brawlstars.api.BrawlStarsAPI;
+import com.brawlstars.remote.BrawlStarsApiService;
 import com.brawlstars.domain.Member;
 import com.brawlstars.json.playerInfo.PlayerInfo;
 import com.brawlstars.repository.MemberDto;
@@ -22,7 +22,7 @@ public class MemberService {
   MemberRepository memberRepository;
 
   @Autowired
-  BrawlStarsAPI brawlStarsAPI;
+  BrawlStarsApiService brawlStarsApiService;
 
   public void save(Member member) {
     memberRepository.save(member);
@@ -48,7 +48,7 @@ public class MemberService {
     // check if the tag is valid
     PlayerInfo playerInfo = null;
     try {
-      playerInfo = brawlStarsAPI.getPlayerInfo(tag);
+      playerInfo = brawlStarsApiService.getPlayerInfo(tag);
     } catch (Exception e) {
       e.printStackTrace();
     }
