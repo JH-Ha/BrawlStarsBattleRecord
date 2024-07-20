@@ -130,7 +130,7 @@ export default function UserList({
         key={`pagination-${curPage}`}
         curPage={curPage}
         numTotal={numUser}
-        numShowItems="15"
+        numShowItems={15}
         pageUrl="/userList"
         onClick={changePageHandler}
       />

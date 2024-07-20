@@ -132,7 +132,7 @@ export default function BattleLog({ playRecord, curPage,
         key={curPage}
         curPage={curPage}
         numTotal={totalElements}
-        numShowItems="5"
+        numShowItems={5}
         pageUrl="/playerList"
         onClick={changePageHandler}
       ></Pagination>
