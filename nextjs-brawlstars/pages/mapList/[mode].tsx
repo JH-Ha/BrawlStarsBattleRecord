@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { calDisplayMapTime } from '../../components/BaseFunctions';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetServerSideProps } from 'next';
+import Pagination from '../../components/Pagination';
 
 type GameMap = {
     name: string,
@@ -20,20 +21,10 @@ type GameMap = {
 type ModeListProps = {
     mode: string,
     mapName: string,
-    filteredMaps: GameMap[],
+    gameMaps: GameMap[],
 }
 
-const getFilteredMap = (maps: GameMap[], mode: string) => {
-    let filteredMaps = maps;
-    if (mode !== 'ALL' && mode !== undefined) {
-        filteredMaps = maps.filter(x => {
-            return x.mode === mode;
-        });
-    }
-    return filteredMaps;
-}
-
-const MapList: React.FC<ModeListProps> = ({ mode, mapName, filteredMaps }) => {
+const MapList: React.FC<ModeListProps> = ({ mode, mapName, gameMaps }) => {
 
     const { t } = useTranslation();
     const router = useRouter();
@@ -98,7 +89,7 @@ const MapList: React.FC<ModeListProps> = ({ mode, mapName, filteredMaps }) => {
             <button className='btn btn-primary' type='button' onClick={clickSearchBtn}>{t('search')}</button>
         </div>
         <div className={styles.gemGrabContainer}>{
-            filteredMaps
+            gameMaps
                 .filter(map => t(map.name).toLocaleLowerCase().indexOf(mapName.toLocaleLowerCase()) != -1)
                 .map((map, index) => {
                     return <div key={index} className={styles.gemGrabItem} >
@@ -114,6 +105,7 @@ const MapList: React.FC<ModeListProps> = ({ mode, mapName, filteredMaps }) => {
                     </div>
                 })}
         </div>
+        <Pagination curPage={1}  numTotal={2} pageUrl={"/"} numShowItems={8} onClick={(num:number) => console.log(num)}></Pagination>
     </div>
     </>);
 }
@@ -154,8 +146,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         mapName = '';
     }
 
-    const filteredMaps = getFilteredMap(gameMaps, mode);
-    filteredMaps.sort((a, b) => {
+    gameMaps.sort((a, b) => {
         let cmpResult = a.mode.localeCompare(b.mode);
         if (cmpResult == 0) {
             return b.startTime.localeCompare(a.startTime);
@@ -168,7 +159,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             ...(await serverSideTranslations(locale as string, ['common'])),
             mode,
             mapName,
-            filteredMaps
+            gameMaps
         }
     }
 }
