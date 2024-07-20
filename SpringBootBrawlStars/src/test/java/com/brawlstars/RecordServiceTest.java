@@ -2,7 +2,6 @@ package com.brawlstars;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.brawlstars.api.RecordController;
 import com.brawlstars.domain.Record;
 import com.brawlstars.domain.RecordSearch;
 import com.brawlstars.json.BattleLog;
@@ -11,7 +10,7 @@ import com.brawlstars.repository.RecordDto;
 import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.service.RecordService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -25,16 +24,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 @SpringBootTest
-public class RecordTest {
+public class RecordServiceTest {
 
   @Autowired
   RecordService recordService;
 
-  @Autowired
-  RecordController recordController;
-
   @BeforeEach
-  public void init() throws Exception {
+  void init() throws Exception {
     String tag = "#9QU209UYC";
     ClassLoader classloader = Thread.currentThread().getContextClassLoader();
     String jsonPath = classloader.getResource("sampleResponse.json").getPath();
@@ -49,13 +45,17 @@ public class RecordTest {
   }
 
   @Test
-  public void getSoloResults() {
+  void testFindByMapWhenModeIsSolo() {
+    // Given
     String map = "Cavern Churn";
     RecordSearch recordSearch = new RecordSearch();
     recordSearch.setMode("soloShowdown");
     recordSearch.setMap(map);
-    List<RecordResultDto> records = recordController.getRecordResults(recordSearch);
 
+    // When
+    List<RecordResultDto> records = recordService.findByMap(recordSearch);
+
+    // Then
     Optional<RecordResultDto> dto = records.stream().filter(r -> r.getBrawlerName().equals("SANDY"))
         .findFirst();
 
@@ -64,13 +64,17 @@ public class RecordTest {
   }
 
   @Test
-  public void getTrioResults() {
+  void testFindByMapWhenModeIsTrio() {
+    // Given
     String map = "Bot Drop";
     RecordSearch recordSearch = new RecordSearch();
     recordSearch.setMode("siege");
     recordSearch.setMap(map);
-    List<RecordResultDto> records = recordController.getRecordResults(recordSearch);
 
+    // When
+    List<RecordResultDto> records = recordService.findByMap(recordSearch);
+
+    // Then
     Optional<RecordResultDto> dto = records.stream()
         .filter(r -> r.getBrawlerName().equals("POCO") && r.getResult().equals("victory"))
         .findFirst();
@@ -79,7 +83,7 @@ public class RecordTest {
   }
 
   @Test
-  public void getDuelResult() {
+  void testFindByMapWhenModeIsDuels() {
     // given
     String map = "NO SURRENDER";
     RecordSearch recordSearch = new RecordSearch();
@@ -87,7 +91,7 @@ public class RecordTest {
     recordSearch.setMap(map);
 
     // When
-    List<RecordResultDto> records = recordController.getRecordResults(recordSearch);
+    List<RecordResultDto> records = recordService.findByMap(recordSearch);
 
     // Then
     Optional<RecordResultDto> dto = records.stream()
@@ -97,7 +101,7 @@ public class RecordTest {
   }
 
   @Test
-  void getPentaRecord() {
+  void testFindByMapWhenModeIsPenta() {
     // Given
     String map = "Crispy Crypt";
     String mode = "knockout5V5";
@@ -116,52 +120,52 @@ public class RecordTest {
   }
 
   @Test
-  public void getRecordsByTag() {
+  void testFindByTag() {
+    // Given
     String tag = "#9QU209UYC";
     Pageable pageable = PageRequest.of(0, 10);
     RecordSearch recordSearch = new RecordSearch();
     recordSearch.setMode("gemGrab");
+
+    // When
     Page<RecordDto> records = recordService.findByTag(tag, pageable, recordSearch);
+
+    // Then
     assertThat(records.getContent().get(0).getGroupRecords().size()).isEqualTo(6);
   }
 
 
   @Test
-  public void testSave() {
-    recordService.removeByTag("#test1");
-    recordService.removeByTag("#test");
-    Record record = new Record();
-    record.setBattleTime("1234");
-    record.setTag("#test");
-    Record test1 = new Record();
-    test1.setBattleTime("123456");
-    test1.setTag("#test1");
-    record.getGroupRecords().add(test1);
-    test1.setParent(record);
-    record.getGroupRecords().add(record);
-    record.setParent(record);
-    recordService.save(record);
+  void testSave() {
+    // Given
+    Record record1 = new Record();
+    record1.setBattleTime("1234");
+    record1.setTag("#test_tag1");
 
-    RecordSearch recordSearch = new RecordSearch();
+    Record record2 = new Record();
+    record2.setBattleTime("123456");
+    record2.setTag("#test_tag2");
 
-    Page<RecordDto> records = recordService.findByTag("#test", PageRequest.of(0, 10),
-        recordSearch);
+    record1.getGroupRecords().add(record2);
+    record2.setParent(record1);
+    record1.getGroupRecords().add(record1);
+    record1.setParent(record1);
 
-    // List<Record> records = recordService.getFindByTag("#test");
+    // When
+    recordService.save(record1);
 
-    records.stream().forEach(r -> {
-      List<RecordDto> groupRecords = r.getGroupRecords();
-      groupRecords.forEach(rr -> System.out.println(rr.getTag() + rr.getBattleTime())
-      );
-    });
     // Then
+    Page<RecordDto> records = recordService.findByTag("#test_tag1", PageRequest.of(0, 10),
+            new RecordSearch());
     assertThat(records.getContent().get(0).getGroupRecords().size()).isEqualTo(2);
-
   }
 
   @Test
-  public void savePlayers() {
+  void testSavePlayers() {
+    // Given
     String tag = "#9QU209UYC";
+
+    // When
     recordService.savePlayers(tag);
   }
 }
