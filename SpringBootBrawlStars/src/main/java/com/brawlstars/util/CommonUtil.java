@@ -9,6 +9,7 @@ public class CommonUtil {
       "trophyThieves", "wipeout", "payload", "invasion");
   private static final Set<String> SOLO_SET = Set.of("soloShowdown", "hunters", "takedown",
       "trophyEscape");
+  private static final Set<String> PENTA_SET = Set.of("knockout5V5");
 
   public static boolean isTrioMode(String mode) {
     if (mode == null) {
@@ -38,6 +39,13 @@ public class CommonUtil {
       return false;
     }
     return SOLO_SET.contains(mode);
+  }
+
+  public static boolean isPentaMode(String mode) {
+    if (mode == null) {
+      return false;
+    }
+    return PENTA_SET.contains(mode);
   }
 
 }
