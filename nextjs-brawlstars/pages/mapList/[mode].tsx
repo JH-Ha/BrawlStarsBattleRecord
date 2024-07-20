@@ -121,10 +121,14 @@ const MapList: React.FC<ModeListProps> = ({ mode, mapName, filteredMaps }) => {
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    let { mode, mapName } = context.query;
+    let { mode, mapName } = context.query as {mode: string, mapName: string};
     let locale = context.locale;
     //i18n.changeLanguage(context.locale);
-    const res = await getData(`/gameMap`);
+    let searchParams = new URLSearchParams({
+        mode: mode
+    });
+
+    const res = await getData(`/gameMap?${searchParams}`);
     const gameMaps: GameMap[] = res.data;
 
     gameMaps.map(a => {
