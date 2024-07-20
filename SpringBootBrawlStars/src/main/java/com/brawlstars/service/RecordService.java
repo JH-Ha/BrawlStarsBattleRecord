@@ -217,7 +217,7 @@ public class RecordService {
       items = brawlStarsAPI.getItems(tag);
       savePlayersInItems(items);
     } catch (Exception e) {
-      e.printStackTrace();
+      log.warn("failed to savePlayers", e);
     }
   }
 
