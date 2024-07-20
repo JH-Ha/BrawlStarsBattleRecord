@@ -1,32 +1,12 @@
 package com.brawlstars.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.TimeZone;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.brawlstars.api.BrawlStarsAPI;
 import com.brawlstars.domain.GameMap;
 import com.brawlstars.domain.Member;
 import com.brawlstars.domain.Record;
 import com.brawlstars.domain.RecordDuels;
 import com.brawlstars.domain.RecordDuo;
+import com.brawlstars.domain.RecordPentaFactory;
 import com.brawlstars.domain.RecordSearch;
 import com.brawlstars.domain.RecordSolo;
 import com.brawlstars.domain.RecordTrio;
@@ -43,9 +23,27 @@ import com.brawlstars.repository.RecordRepository;
 import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.repository.StatisticsRepositoryInterface;
 import com.brawlstars.util.CommonUtil;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.TimeZone;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -63,7 +61,7 @@ public class RecordService {
   @Autowired
   StatisticsRepositoryInterface statisticsRepository;
 
-  Logger logger = LoggerFactory.getLogger(RecordService.class);
+  private static RecordPentaFactory recordPentaFactory = new RecordPentaFactory();
 
   public static String getOppositeResult(String result) {
     if ("defeat".equals(result)) {
@@ -150,7 +148,7 @@ public class RecordService {
       }
     }
     if (tag == null || item.getBattleTime() == null || myBrawlerName == null) {
-      logger.info("One of is null -> tag : " + tag + " battleTime : " + item.getBattleTime()
+      log.info("One of is null -> tag : " + tag + " battleTime : " + item.getBattleTime()
           + " myBrawlerName : " + myBrawlerName);
       return;
     }
@@ -272,6 +270,10 @@ public class RecordService {
         saveSolo(tag, item);
       } else if (CommonUtil.isDuels(mode)) {
         saveDuels(tag, item);
+      } else if (CommonUtil.isPentaMode(mode)) {
+        savePenta(tag, item);
+      } else {
+        log.warn("unknown mode : {}", mode);
       }
     }
   }
@@ -291,15 +293,15 @@ public class RecordService {
 
   public List<RecordResultDto> findByMap(RecordSearch recordSearch) {
     String mode = recordSearch.getMode();
-    if (CommonUtil.isTrioMode(mode) || CommonUtil.isDuels(mode)) {
+    if (CommonUtil.isTrioMode(mode) || CommonUtil.isDuels(mode) || CommonUtil.isPentaMode(mode)) {
       return recordRepository.findByMap(recordSearch);
     } else if (CommonUtil.isDuoShowdown(mode) || CommonUtil.isSolo(mode)) {
       return recordRepository.findSoloDuoByMap(recordSearch);
     } else if (CommonUtil.isAll(mode)) {
       return recordRepository.findAllResult(recordSearch);
     }
-
-    return null;
+    log.warn("unknown mode : {}", mode);
+    throw new IllegalArgumentException("unknown mode : " + mode);
   }
 
   public List<GameMapDto> getDistinctGameMaps(String mode) {
@@ -411,7 +413,7 @@ public class RecordService {
       recordSearch.setTrophyRange("highRank");
       recordSearch.setStatUpdated(false);
       List<RecordResultDto> stats;
-      if (CommonUtil.isTrioMode(map.getMode()) || CommonUtil.isDuels(map.getMode())) {
+      if (CommonUtil.isTrioMode(mode) || CommonUtil.isDuels(mode) || CommonUtil.isPentaMode(mode)) {
         stats = recordRepository.findByMap(recordSearch);
         recordRepository.updateStatUpdated(recordSearch);
         for (RecordResultDto stat : stats) {
@@ -478,6 +480,40 @@ public class RecordService {
         groupRecords.add(recordDuels);
       }
 
+    }
+    Record.setRelation(myRecord, groupRecords);
+    recordRepository.save(myRecord);
+  }
+
+  public void savePenta(String tag, Item item) {
+    List<List<Player>> teams = item.getBattle().getTeams();
+
+    int playerGroupIdx = 0;
+    for (int i = 0; i < teams.size(); i++) {
+      List<Player> team = teams.get(i);
+      for (Player player : team) {
+        if (player.getTag().equals(tag)) {
+          playerGroupIdx = i;
+          break;
+        }
+      }
+    }
+
+    Record myRecord = null;
+    List<Record> groupRecords = new ArrayList<>();
+
+    for (int i = 0; i < teams.size(); i++) {
+      List<Player> team = teams.get(i);
+      for (Player player : team) {
+        Record recordTrio = Record.createTeamRecord(recordPentaFactory, item, tag, player,
+            playerGroupIdx, i);
+        // we don't know other players' trophy change
+        if (player.getTag().equals(tag)) {
+          recordTrio.setTrophyChange(item.getBattle().getTrophyChange());
+          myRecord = recordTrio;
+        }
+        groupRecords.add(recordTrio);
+      }
     }
     Record.setRelation(myRecord, groupRecords);
     recordRepository.save(myRecord);

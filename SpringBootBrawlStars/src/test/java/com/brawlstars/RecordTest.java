@@ -1,5 +1,7 @@
 package com.brawlstars;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.brawlstars.api.RecordController;
 import com.brawlstars.domain.Record;
 import com.brawlstars.domain.RecordSearch;
@@ -15,7 +17,6 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class RecordTest {
     Optional<RecordResultDto> dto = records.stream().filter(r -> r.getBrawlerName().equals("SANDY"))
         .findFirst();
 
-    Assertions.assertThat(dto.get().getRankSum()).isEqualTo(1);
+    assertThat(dto.get().getRankSum()).isEqualTo(1);
 
   }
 
@@ -78,7 +79,7 @@ public class RecordTest {
         .filter(r -> r.getBrawlerName().equals("POCO") && r.getResult().equals("victory"))
         .findFirst();
 
-    Assertions.assertThat(dto.get().getCnt()).isEqualTo(1);
+    assertThat(dto.get().getCnt()).isEqualTo(1);
   }
 
   @Test
@@ -96,8 +97,26 @@ public class RecordTest {
     Optional<RecordResultDto> dto = records.stream()
         .filter(r -> r.getBrawlerName().equals("SPIKE") && r.getResult().equals("defeat"))
         .findFirst();
-    Assertions.assertThat(dto.orElse(new RecordResultDto()).getCnt()).isEqualTo(1);
+    assertThat(dto.orElse(new RecordResultDto()).getCnt()).isEqualTo(1);
+  }
 
+  @Test
+  void getPentaRecord() {
+    // Given
+    String map = "Crispy Crypt";
+    String mode = "knockout5V5";
+    String tag = "#9QU209UYC";
+
+    RecordSearch recordSearch = new RecordSearch();
+    recordSearch.setMode(mode);
+    recordSearch.setMap(map);
+    recordSearch.setTag(tag);
+
+    // When
+    List<RecordResultDto> records = recordService.findByMap(recordSearch);
+
+    // Then
+    assertThat(records.size()).isEqualTo(1);
   }
 
   @Test
@@ -105,8 +124,9 @@ public class RecordTest {
     String tag = "#9QU209UYC";
     Pageable pageable = PageRequest.of(0, 10);
     RecordSearch recordSearch = new RecordSearch();
+    recordSearch.setMode("gemGrab");
     Page<RecordDto> records = recordService.findByTag(tag, pageable, recordSearch);
-    Assertions.assertThat(records.getContent().get(0).getGroupRecords().size()).isEqualTo(6);
+    assertThat(records.getContent().get(0).getGroupRecords().size()).isEqualTo(6);
   }
 
 
@@ -139,7 +159,7 @@ public class RecordTest {
       );
     });
     // Then
-    Assertions.assertThat(records.getContent().get(0).getGroupRecords().size()).isEqualTo(2);
+    assertThat(records.getContent().get(0).getGroupRecords().size()).isEqualTo(2);
 
   }
 
