@@ -91,9 +91,8 @@ public class RecordRepository {
         .limit(pageable.getPageSize())
         .fetch();
 
-    Long totalCnt = queryFactory
-        .select(qRecord.count())
-        .distinct() // to distinguish duels
+     Long totalCnt = queryFactory
+        .select(qRecord.parent.id.countDistinct()) // to distinguish duels
         .from(qRecord)
         .where(builder)
         .fetchOne();
