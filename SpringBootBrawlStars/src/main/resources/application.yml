@@ -7,7 +7,7 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url : jdbc:h2:mem:test
+    url: jdbc:h2:mem:test
     driver-class-name: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
@@ -18,6 +18,9 @@ spring:
         jdbc.batch_size: 50
         show_sql: true
         format_sql: true
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: trace
 ---
 spring:
   config:
@@ -35,7 +38,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update 
+      ddl-auto: update
     properties:
       hibernate:
         jdbc.batch_size: 50
