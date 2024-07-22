@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class Brawler {
-	String id;
-	String name;
-	Integer power;
-	Integer trophies;
-	
-	//Duels
-	Integer trophyChange;
+    String id;
+    String name;
+    Integer power;
+    Integer trophies;
+
+    //Duels
+    Integer trophyChange;
 }

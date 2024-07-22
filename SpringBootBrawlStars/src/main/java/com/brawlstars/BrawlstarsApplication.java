@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @ServletComponentScan
 public class BrawlstarsApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BrawlstarsApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BrawlstarsApplication.class, args);
+    }
 }

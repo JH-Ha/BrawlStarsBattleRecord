@@ -11,11 +11,11 @@ import lombok.Setter;
 @Setter
 @Entity
 public class DailyTrend {
-	@Id
-	@GeneratedValue
-	@Column(name = "daily_trend_id")
-	private Long id;
-	private String mode;
-	private String brawlerName;
-	private Long cnt;
+    @Id
+    @GeneratedValue
+    @Column(name = "daily_trend_id")
+    private Long id;
+    private String mode;
+    private String brawlerName;
+    private Long cnt;
 }
