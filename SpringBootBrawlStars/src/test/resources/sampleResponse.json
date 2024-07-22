@@ -1,6 +1,137 @@
 {
   "items": [
     {
+      "battleTime": "20240722T120559.000Z",
+      "event": {
+        "id": 15000642,
+        "mode": "gemGrab5V5",
+        "map": "Snowman forest"
+      },
+      "battle": {
+        "mode": "gemGrab",
+        "type": "ranked",
+        "result": "victory",
+        "duration": 129,
+        "trophyChange": 8,
+        "starPlayer": {
+          "tag": "#2PUPP9JR",
+          "name": "⚽️〰️",
+          "brawler": {
+            "id": 16000021,
+            "name": "GENE",
+            "power": 11,
+            "trophies": 570
+          }
+        },
+        "teams": [
+          [
+            {
+              "tag": "#9Y82YY0PL",
+              "name": "호빵맨",
+              "brawler": {
+                "id": 16000004,
+                "name": "RICO",
+                "power": 11,
+                "trophies": 515
+              }
+            },
+            {
+              "tag": "#2PUPP9JR",
+              "name": "⚽️〰️",
+              "brawler": {
+                "id": 16000021,
+                "name": "GENE",
+                "power": 11,
+                "trophies": 570
+              }
+            },
+            {
+              "tag": "#YUYCCQ9Q",
+              "name": "出來面對",
+              "brawler": {
+                "id": 16000009,
+                "name": "DYNAMIKE",
+                "power": 11,
+                "trophies": 596
+              }
+            },
+            {
+              "tag": "#9QU209UYC",
+              "name": "폼폼",
+              "brawler": {
+                "id": 16000043,
+                "name": "EDGAR",
+                "power": 11,
+                "trophies": 513
+              }
+            },
+            {
+              "tag": "#92QLJRUU",
+              "name": "舐めプ大好き",
+              "brawler": {
+                "id": 16000022,
+                "name": "TICK",
+                "power": 9,
+                "trophies": 524
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#828CRVGLP",
+              "name": "rex",
+              "brawler": {
+                "id": 16000035,
+                "name": "GALE",
+                "power": 11,
+                "trophies": 533
+              }
+            },
+            {
+              "tag": "#GU929009C",
+              "name": "아주못하는초보",
+              "brawler": {
+                "id": 16000078,
+                "name": "MELODIE",
+                "power": 10,
+                "trophies": 593
+              }
+            },
+            {
+              "tag": "#8020L29LU",
+              "name": "안녕",
+              "brawler": {
+                "id": 16000080,
+                "name": "DRACO",
+                "power": 10,
+                "trophies": 105
+              }
+            },
+            {
+              "tag": "#88L8G98JG",
+              "name": "Buzz=Your Dad",
+              "brawler": {
+                "id": 16000022,
+                "name": "TICK",
+                "power": 9,
+                "trophies": 538
+              }
+            },
+            {
+              "tag": "#LQLC0L8C8",
+              "name": "진격의달인",
+              "brawler": {
+                "id": 16000012,
+                "name": "CROW",
+                "power": 11,
+                "trophies": 591
+              }
+            }
+          ]
+        ]
+      }
+    },
+    {
       "battleTime": "20240719T112849.000Z",
       "event": {
         "id": 15000728,

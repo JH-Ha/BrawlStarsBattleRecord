@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class StarPower {
-	Integer id;
-	String name;
+    Integer id;
+    String name;
 }

@@ -9,6 +9,6 @@ import lombok.Setter;
 @DiscriminatorValue("PENTA")
 @Getter
 @Setter
-public class RecordPenta extends Record{
+public class RecordPenta extends Record {
 
 }
