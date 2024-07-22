@@ -384,7 +384,7 @@ public class RecordService {
         for (GameMapDto gameMode : modes) {
             saveDistinctGameMap(gameMode.getMode());
         }
-        List<GameMapDto> maps = gameMapRepositry.getGameMaps(null);
+        List<GameMapDto> maps = gameMapRepositry.getGameMaps("ALL");
         maps.forEach(map -> {
             String mode = map.getMode();
             RecordSearch recordSearch = new RecordSearch();
