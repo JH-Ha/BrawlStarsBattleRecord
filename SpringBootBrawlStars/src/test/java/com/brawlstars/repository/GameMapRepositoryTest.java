@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -28,9 +30,9 @@ class GameMapRepositoryTest {
     String tag = "#9QU209UYC";
 
     @BeforeEach
-    public void init() throws IOException {
+    public void init() throws IOException, URISyntaxException {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        String jsonPath = classloader.getResource("sampleResponse.json").getPath();
+        URI jsonPath = classloader.getResource("sampleResponse.json").toURI();
         String jsonStr = new String(Files.readAllBytes(Paths.get(jsonPath)));
 
         ObjectMapper mapper = new ObjectMapper().configure(

@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -40,7 +41,7 @@ public class StatisticsControllerTest {
     public void init() throws Exception {
         String tag = "#9QU209UYC";
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        String jsonPath = classloader.getResource("sampleResponse.json").getPath();
+        URI jsonPath = classloader.getResource("sampleResponse.json").toURI();
         String jsonStr = new String(Files.readAllBytes(Paths.get(jsonPath)));
 
         ObjectMapper mapper = new ObjectMapper().configure(

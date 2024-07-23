@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -29,11 +31,11 @@ public class MemberServiceTest {
     RecordService recordService;
 
     @BeforeEach
-    public void init() throws IOException {
+    public void init() throws IOException, URISyntaxException {
         String tag = "#9QU209UYC";
 
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        String jsonPath = classloader.getResource("sampleResponse.json").getPath();
+        URI jsonPath = classloader.getResource("sampleResponse.json").toURI();
         String jsonStr = new String(Files.readAllBytes(Paths.get(jsonPath)));
 
         ObjectMapper mapper = new ObjectMapper().configure(
