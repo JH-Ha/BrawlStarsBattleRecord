@@ -47,6 +47,22 @@ function isAll(mode) {
     }
     return false;
 }
+function isPenta(mode) {
+    if (mode === "gemGrab5V5" ||
+        mode === "heist5V5" ||
+        mode === "siege5V5" ||
+        mode === "bounty5V5" ||
+        mode === "brawlBall5V5" ||
+        mode === "hotZone5V5" ||
+        mode === "knockout5V5" ||
+        mode === "wipeout5V5") {
+        return true;
+    }
+    return false;
+}
+function isTeamMode(mode) {
+    return isTrio(mode) || isDuels(mode) || isPenta(mode);
+}
 function getLocalTime(time) {
     let year = time.substr(0, 4);
     let month = time.substr(4, 2);
@@ -140,11 +156,9 @@ function calWinRate(data, mode) {
     //console.log(`data : ${data}`);
 
     data.forEach(e => {
-
-        if (isTrio(mode) || isDuels(mode)) {
+        if (isTeamMode(mode)) {
             if (records[e.brawlerName] === undefined) {
-                records[e.brawlerName] = {
-                };
+                records[e.brawlerName] = {};
             }
             records[e.brawlerName] = {
                 ...records[e.brawlerName],
@@ -158,7 +172,7 @@ function calWinRate(data, mode) {
             }
         }
     });
-    if (isTrio(mode) || isDuels(mode)) {
+    if (isTeamMode(mode)) {
         for (let key in records) {
             let { victory, defeat, draw } = records[key];
             const victoryNum = victory || 0;
@@ -196,4 +210,4 @@ function calWinRate(data, mode) {
     return recordArr;
 }
 
-export { isTrio, isDuels, isSolo, isDuo, isAll, getLocalTime, calDisplayTime, calWinRate, calDisplayMapTime };
+export { isTrio, isDuels, isPenta, isSolo, isDuo, isAll, isTeamMode, getLocalTime, calDisplayTime, calWinRate, calDisplayMapTime };

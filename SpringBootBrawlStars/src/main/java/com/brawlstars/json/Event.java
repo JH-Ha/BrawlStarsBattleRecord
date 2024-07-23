@@ -1,13 +1,13 @@
 package com.brawlstars.json;
 
-import java.util.List;
-
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class Event {
-	String id;
-	String mode;
-	String map;
-	List<String> modifiers;
+    String id;
+    String mode;
+    String map;
+    List<String> modifiers;
 }

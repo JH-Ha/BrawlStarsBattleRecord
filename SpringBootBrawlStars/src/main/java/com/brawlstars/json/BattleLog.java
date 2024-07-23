@@ -1,11 +1,11 @@
 package com.brawlstars.json;
 
-import java.util.List;
-
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class BattleLog {
-	List<Item> items;
-	Paging paging;
+    List<Item> items;
+    Paging paging;
 }

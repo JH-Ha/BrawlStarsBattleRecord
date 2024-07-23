@@ -3,11 +3,42 @@ import styles from '../styles/Home.module.css'
 import EventRotation from '../components/eventRotation'
 import { getData } from '../components/ApiHandler'
 import { calWinRate, getLocalTime, isTrio } from '../components/BaseFunctions';
-import Script from 'next/script'
-import i18n from '../components/i18n';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-export default function Home({ todayEvents, nextEvents }) {
+interface BrawlerStatsRecord {
+  brawlerName: string;
+  result: string;
+  cnt: number;
+  rankSum: number;
+}
+interface BrawlEvent {
+  id: string;
+  mode: string;
+  map: string;
+  isPlus: boolean | undefined; // used in front
+}
+interface BrawlerWinRate {
+  brawlerName: string;
+  victory: number | undefined;
+  defeat: number | undefined;
+  draw: number | undefined;
+  winRate: number | undefined;
+  totalGameNum: number;
+  averageRank: number | undefined;
+}
+interface BrawlEventInfo {
+  startTime: string;
+  endTime: string;
+  event: BrawlEvent;
+  statistics: BrawlerStatsRecord[];
+  winRate: BrawlerWinRate[]; // user in front
+}
+
+interface HomeProps {
+  todayEvents: BrawlEventInfo[];
+  nextEvents: BrawlEventInfo[];
+}
+export default function Home({ todayEvents, nextEvents }: HomeProps) {
   return (
     <div className={styles.container}>
       <EventRotation todayEvents={todayEvents} nextEvents={nextEvents} />
@@ -17,7 +48,7 @@ export default function Home({ todayEvents, nextEvents }) {
 
 
 
-export async function getServerSideProps({ locale }) {
+export async function getServerSideProps({ locale }: any) {
   // Fetch data from external API
   // Pass data to the page via props
 
@@ -25,10 +56,10 @@ export async function getServerSideProps({ locale }) {
   //const data = await res.json();
   //i18n.changeLanguage(locale);
 
-  const events = res.data;
+  const events = res.data as BrawlEventInfo[];
   let now = new Date();
-  let todayEvents = [];
-  let nextEvents = [];
+  let todayEvents = [] as BrawlEventInfo[];
+  let nextEvents = [] as BrawlEventInfo[];
 
   //console.log(showdownEvents);
 
@@ -48,7 +79,7 @@ export async function getServerSideProps({ locale }) {
         e.event.isPlus = true;
       }
       if (e.statistics !== null) {
-        e.winRate = calWinRate(e.statistics, e.event.mode).slice(0, 5);
+        e.winRate = calWinRate(e.statistics, e.event.mode).slice(0, 5) as BrawlerWinRate[];
       }
     });
 

@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EventDomainRepository extends JpaRepository<EventDomain, Long> {
 
-  EventDomain findByEventId(String eventId);
+    EventDomain findByEventId(String eventId);
 
 }
