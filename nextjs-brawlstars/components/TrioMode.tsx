@@ -3,6 +3,19 @@ import styles from "../styles/TrioMode.module.scss";
 import PlayerTile from "./PlayerTile";
 import { calDisplayTime } from './BaseFunctions';
 import { useTranslation } from 'next-i18next';
+import { PlayRecord } from "../pages/battleLog/[tag]";
+
+interface TrioModeProps {
+  battleTime: string;
+  duration: number;
+  map: string;
+  trophyChange: number;
+  result: string;
+  type: string;
+  mode: string;
+  groupRecords: PlayRecord[];
+}
+
 const TrioMode = ({ battleTime,
   duration,
   map,
@@ -10,7 +23,7 @@ const TrioMode = ({ battleTime,
   result,
   type,
   mode,
-  groupRecords }) => {
+  groupRecords }: TrioModeProps) => {
 
   const { t } = useTranslation();
 
@@ -48,35 +61,29 @@ const TrioMode = ({ battleTime,
         </div>
         <div className={`${styles.playerInfo} ${styles.info} ${styles[result]}`}>
           <div className={`${styles.trioPlayerContainer}`}>
-            {groupRecords.map((record, index) => {
-              if (record.teamId === 0)
+            {groupRecords.filter(record => record.teamId === 0)
+              .map((record, index) => {
                 return <PlayerTile key={index}
                   brawlerName={record.brawlerName}
                   playerName={record.playerName}
                   trophies={record.trophies}
                   power={record.power}
                 ></PlayerTile>
-              else {
-                return <div></div>;
-              };
-            })}
+              })}
           </div>
           <div className={styles.durationContainer}>
             <div>vs</div>
           </div>
           <div className={styles.trioPlayerContainer}>
-            {groupRecords.map((record, index) => {
-              if (record.teamId === 1)
+            {groupRecords.filter(record => record.teamId === 1)
+              .map((record, index) => {
                 return <PlayerTile key={index}
                   brawlerName={record.brawlerName}
                   playerName={record.playerName}
                   trophies={record.trophies}
                   power={record.power}
                 ></PlayerTile>
-              else {
-                return <div></div>
-              }
-            })}
+              })}
           </div>
         </div>
       </div>
