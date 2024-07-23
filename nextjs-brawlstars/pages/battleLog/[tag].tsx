@@ -12,12 +12,13 @@ import { isDuels, isPenta, isTrio } from "../../components/BaseFunctions";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import PentaMode from "../../components/PentaMode";
 
 export interface PlayRecord {
   battleTime: string;
-  result?: string;
+  result: string;
   resultRank?: number;
-  duration?: number;
+  duration: number;
   map: string;
   trophyChange: number;
   type: string;
@@ -109,8 +110,7 @@ export default function BattleLog({ playRecord, curPage,
             return (
               <TrioMode
                 key={data.battleTime}
-                battleTime={data.battleTime
-                }
+                battleTime={data.battleTime}
                 result={data.result}
                 duration={data.duration}
                 map={data.map}
@@ -122,7 +122,17 @@ export default function BattleLog({ playRecord, curPage,
             );
           } else if (isPenta(data.mode)) {
             return (
-              <PentaMode />
+              <PentaMode
+                key={data.battleTime}
+                battleTime={data.battleTime}
+                result={data.result}
+                duration={data.duration}
+                map={data.map}
+                trophyChange={data.trophyChange}
+                type={data.type}
+                mode={data.mode}
+                groupRecords={data.groupRecords}
+              />
             )
           } else {
             return (
