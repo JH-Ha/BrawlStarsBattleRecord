@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react'
-import { isTrio, isDuo, isSolo, isAll, isDuels } from './BaseFunctions';
+import { isTrio, isDuo, isSolo, isAll, isDuels, isPenta, isTeamMode } from './BaseFunctions';
 import SortIcon from './sortIcon';
 import styles from "../styles/RecordResult.module.scss";
 import { useTranslation } from 'next-i18next';
@@ -79,7 +79,7 @@ const RecordResult = ({ _recordArr, sumTotalGameNum, mode, isPersonal }) => {
                     <tr>
                         <th>{t("No")}</th>
                         <th>{t("Brawler Name")}</th>
-                        {isTrio(mode) || isDuels(mode) ?
+                        {isTeamMode(mode) ?
                             <th onClick={toggleWinRate} className={styles.rateHeader}>
                                 <span className={styles.rateHeaderContent}>
                                     <div>{t("Win Rate")}</div>
@@ -123,7 +123,7 @@ const RecordResult = ({ _recordArr, sumTotalGameNum, mode, isPersonal }) => {
                                         <div className={styles.averageRank}>
                                             {Math.round(ele.averageRank * 100) / 100}
                                         </div>
-                                        : isTrio(mode) || isDuels(mode) ?
+                                        : isTeamMode(mode) ?
                                             <div className={styles.winRate}>
                                                 {Math.round(ele.winRate * 1000) / 10}%
 
@@ -152,7 +152,7 @@ const RecordResult = ({ _recordArr, sumTotalGameNum, mode, isPersonal }) => {
                                 <td colSpan="2">Total # of Games</td>
                                 <td colSpan="2">{sumTotalGameNum} games</td>
                             </tr>
-                            : isTrio(mode) || isDuels(mode) ?
+                            : isTeamMode(mode) ?
                                 <tr>
                                     <td colSpan="2">Avg Win Rate</td>
                                     <td>{Math.round(recordArr.map(e => e.victory).reduce((a, b) => a + b, 0) / sumTotalGameNum * 1000) / 10}%</td>

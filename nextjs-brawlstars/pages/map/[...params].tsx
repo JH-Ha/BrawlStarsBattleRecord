@@ -12,7 +12,7 @@ import styles from "../../styles/Map.module.scss";
 import eventStyles from "../../styles/EventRotation.module.scss";
 import { getData } from "../../components/ApiHandler";
 import RecordResult from "../../components/recordResult";
-import { isDuels, isTrio } from "../../components/BaseFunctions";
+import { isDuels, isPenta, isTeamMode, isTrio } from "../../components/BaseFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "next-i18next";
@@ -41,7 +41,7 @@ interface RawRecords {
 
 interface Record {
   brawlerName: string;
-  // for 3vs3 : victory, defeat, draw, winrate
+  // for 3vs3 and 5vs5: victory, defeat, draw, winrate
   victory?: number;
   defeat?: number;
   draw?: number;
@@ -74,7 +74,7 @@ async function getRecordResult(
     };
   }
   data.forEach((e) => {
-    if (isTrio(mode) || isDuels(mode)) {
+    if (isTeamMode(mode)) {
       if (records[e.brawlerName] === undefined) {
         records[e.brawlerName] = { brawlerName: e.brawlerName, cnt: 0 };
       }
@@ -92,7 +92,7 @@ async function getRecordResult(
   });
 
   let sumTotalGameNum = 0;
-  if (isTrio(mode) || isDuels(mode)) {
+  if (isTeamMode(mode)) {
     for (let key in records) {
       let { victory, defeat, draw } = records[key];
       const victoryNum = victory || 0;
@@ -161,8 +161,6 @@ export default function Map({
 }: Prop) {
   const { t } = useTranslation();
   const [isMapShown, setIsMapShown] = useState(true);
-  const [imgHeight, setImgHeight] = useState(0);
-  const [imgContainerHeight, setImgContainerHeight] = useState("100%");
 
   function showMapImg() {
     if (isMapShown) {
@@ -299,7 +297,7 @@ export default function Map({
           {statsYearMonths.length > 0 ?
             <div className={styles.yearMonthContainer}>
               <div className={styles.label}>{t("period")}</div>
-              <select className={styles.periodSelect} onChange={changeYearMonth} value={searchYearMonth}>
+              <select className={`${styles.periodSelect} form-control`} onChange={changeYearMonth} value={searchYearMonth}>
                 {options.map((option) => {
                   return (
                     <option key={option.value} value={option.value}>

@@ -1,23 +1,20 @@
 package com.brawlstars.filter;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 @WebFilter(urlPatterns = "/*")
 public class UrlRewriteFilter implements Filter {
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
 //		String requestURL = req.getServerName();
 //		// for local test
 //		if(requestURL.contains("localhost")) {
@@ -29,7 +26,7 @@ public class UrlRewriteFilter implements Filter {
 //		}else {
 //			chain.doFilter(req, res);
 //		}
-		chain.doFilter(req, res);
-	}
+        chain.doFilter(req, res);
+    }
 
 }

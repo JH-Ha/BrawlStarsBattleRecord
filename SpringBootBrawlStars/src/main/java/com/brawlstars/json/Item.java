@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Item {
-	String battleTime;
-	Event event;
-	Battle battle;
+    String battleTime;
+    Event event;
+    Battle battle;
 }

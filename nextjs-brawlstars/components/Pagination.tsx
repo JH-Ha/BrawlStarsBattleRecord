@@ -2,48 +2,40 @@ import React, { Component } from "react";
 import styles from "../styles/Pagination.module.scss";
 
 class Page {
-  constructor(link, pageNum, content, className) {
+  link: string;
+  pageNum: number;
+  content: string;
+  className: string;
+
+  constructor(link: string, pageNum: number, content: string, className: string) {
     this.link = link;
     this.pageNum = pageNum;
     this.content = content;
     this.className = className;
   }
 }
-class Pagination extends Component {
-  state = {
-    curPage: 1,
-  };
-  componentDidUpdate(prevProps) {
-    // if (this.props.curPage !== prevProps.curPage) {
-    //   //console.log("update!!!!");
-    //   this.setState({
-    //     curPage: this.props.curPage,
-    //   });
-    // }
-  }
-  componentDidMount() {
-    this.setState({
-      curPage: this.props.curPage,
-    });
-  }
+
+interface PaginationProps {
+  curPage: number;
+  numTotal: number;
+  numShowItems: number;
+  pageUrl: string;
+  onClick: (pageNum: number) => void;
+}
+
+interface PaginationState {
+  curPage: number;
+}
+
+
+class Pagination extends Component<PaginationProps, PaginationState> {
   render() {
-    //   let { curPage } = this.props;
-    //   return (
-    //     <div>
-    //       {this.state.curPage}
-    //       {curPage}
-    //       <button onClick={() => this.props.onClick(this.state.curPage + 1)}>
-    //         next
-    //       </button>
-    //     </div>
-    //   );
-    // }
     let { numTotal, numShowItems, pageUrl, onClick } = this.props;
     //console.log(`pagination props ${this.state.curPage}`);
-    let curPage = this.state.curPage;
+    let curPage = this.props.curPage;
     const numShowPages = 5;
     let maxPage = Math.floor((numTotal - 1) / numShowItems) + 1;
-    //console.log(`maxPage ${maxPage}`);
+    // console.log(`numTotal: ${numTotal},maxPage ${maxPage}`);
 
     if (curPage === undefined) curPage = 1;
     if (numShowItems === undefined) numShowItems = 15;
@@ -63,12 +55,12 @@ class Pagination extends Component {
     if (nextPage > maxPage) nextPage = curPage;
     //console.log(`curPage ${curPage} startPage ${startPage} endPage ${endPage} `)
     let pageList = [];
-    pageList.push(new Page("", 0, "<<"));
-    pageList.push(new Page("", prevPage, "<"));
+    pageList.push(new Page("", 1, "<<", ""));
+    pageList.push(new Page("", prevPage, "<", ""));
     for (let i = startPage; i <= endPage; i++) {
-      pageList.push(new Page(`${pageUrl}?curPage=${i}`, i, i, "number"));
+      pageList.push(new Page(`${pageUrl}?curPage=${i}`, i, i.toString(), "number"));
     }
-    pageList.push(new Page("", nextPage, ">"));
+    pageList.push(new Page("", nextPage, ">", ""));
     pageList.push(new Page("", maxPage, ">>", ""));
 
     //console.log("chagnePageHandler", this.props.onClick);
@@ -82,7 +74,7 @@ class Pagination extends Component {
                 className={
                   `${styles.btnPage} ${curPage === page.pageNum && page.className === "number" ? styles.activate : ""}`
                 }
-                onClick={() => onClick(page.pageNum)}
+                onClick={() => { onClick(page.pageNum) }}
               >
                 {page.content}
               </button>

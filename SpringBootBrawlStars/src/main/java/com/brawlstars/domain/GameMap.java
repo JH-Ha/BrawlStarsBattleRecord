@@ -12,14 +12,14 @@ import org.hibernate.annotations.ColumnDefault;
 @Getter
 @Setter
 public class GameMap {
-	@Id
-	@GeneratedValue
-	@Column(name = "game_map_id")
-	private Long id;
-	String mode;
-	String name;
-	@ColumnDefault("false")
-	private boolean isDeleted;
-	private String startTime;
-	private String endTime;
+    @Id
+    @GeneratedValue
+    @Column(name = "game_map_id")
+    private Long id;
+    String mode;
+    String name;
+    @ColumnDefault("false")
+    private boolean isDeleted;
+    private String startTime;
+    private String endTime;
 }
