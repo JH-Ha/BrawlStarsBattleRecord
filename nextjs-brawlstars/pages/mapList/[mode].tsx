@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router'
 import { getData } from '../../components/ApiHandler';
@@ -29,6 +29,19 @@ const MapList: React.FC<ModeListProps> = ({ mode, mapName, gameMaps }) => {
     const { t } = useTranslation();
     const router = useRouter();
     const [mapNameForSearch, setMapNameForSearch] = useState<string>(mapName);
+    const [searchedMaps, setSearchedMaps] = useState<GameMap[]>([]);
+    const [curPage, setCurPage] = useState<number>(1);
+    const [totalGameMapNum, setTotalGameMapNum] = useState<number>(0);
+    const numShowTimes = 8;
+
+    useEffect(() => {
+        const filteredMaps = gameMaps.filter(map => t(map.name).toLocaleLowerCase().indexOf(mapName.toLocaleLowerCase()) != -1);
+
+        const startIndex = (curPage - 1) * numShowTimes;
+        const currentMaps = filteredMaps.slice(startIndex, startIndex + numShowTimes);
+        setSearchedMaps(currentMaps);
+        setTotalGameMapNum(filteredMaps.length);
+    }, [gameMaps, curPage])
 
 
     const clickMap = (mapName: string, mapMode: string) => {
@@ -55,6 +68,7 @@ const MapList: React.FC<ModeListProps> = ({ mode, mapName, gameMaps }) => {
         setMapNameForSearch(e.currentTarget.value);
     }
     const clickSearchBtn = () => {
+        setCurPage(1);
         router.push({
             pathname: '/mapList/[mode]',
             query: {
@@ -89,8 +103,7 @@ const MapList: React.FC<ModeListProps> = ({ mode, mapName, gameMaps }) => {
             <button className='btn btn-primary' type='button' onClick={clickSearchBtn}>{t('search')}</button>
         </div>
         <div className={styles.gemGrabContainer}>{
-            gameMaps
-                .filter(map => t(map.name).toLocaleLowerCase().indexOf(mapName.toLocaleLowerCase()) != -1)
+            searchedMaps
                 .map((map, index) => {
                     return <div key={index} className={styles.gemGrabItem} >
                         <div className={styles.mapTimeContainer}>
@@ -105,7 +118,7 @@ const MapList: React.FC<ModeListProps> = ({ mode, mapName, gameMaps }) => {
                     </div>
                 })}
         </div>
-        <Pagination curPage={1}  numTotal={2} pageUrl={"/"} numShowItems={8} onClick={(num:number) => console.log(num)}></Pagination>
+        <Pagination curPage={curPage} numTotal={totalGameMapNum} pageUrl={"/"} numShowItems={numShowTimes} onClick={(num: number) => setCurPage(num)}></Pagination>
     </div>
     </>);
 }
@@ -113,7 +126,7 @@ const MapList: React.FC<ModeListProps> = ({ mode, mapName, gameMaps }) => {
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    let { mode, mapName } = context.query as {mode: string, mapName: string};
+    let { mode, mapName } = context.query as { mode: string, mapName: string };
     let locale = context.locale;
     //i18n.changeLanguage(context.locale);
     let searchParams = new URLSearchParams({
