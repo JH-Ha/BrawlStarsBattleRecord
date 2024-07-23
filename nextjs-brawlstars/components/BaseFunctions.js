@@ -54,7 +54,8 @@ function isPenta(mode) {
         mode === "bounty5V5" ||
         mode === "brawlBall5V5" ||
         mode === "hotZone5V5" ||
-        mode === "knockout5V5") {
+        mode === "knockout5V5" ||
+        mode === "wipeout5V5") {
         return true;
     }
     return false;
@@ -152,11 +153,9 @@ function calWinRate(data, mode) {
     //console.log(`data : ${data}`);
 
     data.forEach(e => {
-
-        if (isTrio(mode) || isDuels(mode)) {
+        if (isTrio(mode) || isDuels(mode) || isPenta(mode)) {
             if (records[e.brawlerName] === undefined) {
-                records[e.brawlerName] = {
-                };
+                records[e.brawlerName] = {};
             }
             records[e.brawlerName] = {
                 ...records[e.brawlerName],
@@ -170,7 +169,7 @@ function calWinRate(data, mode) {
             }
         }
     });
-    if (isTrio(mode) || isDuels(mode)) {
+    if (isTrio(mode) || isDuels(mode) || isPenta(mode)) {
         for (let key in records) {
             let { victory, defeat, draw } = records[key];
             const victoryNum = victory || 0;
