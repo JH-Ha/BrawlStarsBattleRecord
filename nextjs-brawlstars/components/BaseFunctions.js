@@ -47,6 +47,18 @@ function isAll(mode) {
     }
     return false;
 }
+function isPenta(mode) {
+    if (mode === "gemGrab5V5" ||
+        mode === "heist5V5" ||
+        mode === "siege5V5" ||
+        mode === "bounty5V5" ||
+        mode === "brawlBall5V5" ||
+        mode === "hotZone5V5" ||
+        mode === "knockout5V5") {
+        return true;
+    }
+    return false;
+}
 function getLocalTime(time) {
     let year = time.substr(0, 4);
     let month = time.substr(4, 2);
@@ -196,4 +208,4 @@ function calWinRate(data, mode) {
     return recordArr;
 }
 
-export { isTrio, isDuels, isSolo, isDuo, isAll, getLocalTime, calDisplayTime, calWinRate, calDisplayMapTime };
+export { isTrio, isDuels, isPenta, isSolo, isDuo, isAll, getLocalTime, calDisplayTime, calWinRate, calDisplayMapTime };

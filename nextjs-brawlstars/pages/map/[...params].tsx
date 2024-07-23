@@ -12,7 +12,7 @@ import styles from "../../styles/Map.module.scss";
 import eventStyles from "../../styles/EventRotation.module.scss";
 import { getData } from "../../components/ApiHandler";
 import RecordResult from "../../components/recordResult";
-import { isDuels, isTrio } from "../../components/BaseFunctions";
+import { isDuels, isPenta, isTrio } from "../../components/BaseFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "next-i18next";
@@ -41,7 +41,7 @@ interface RawRecords {
 
 interface Record {
   brawlerName: string;
-  // for 3vs3 : victory, defeat, draw, winrate
+  // for 3vs3 and 5vs5: victory, defeat, draw, winrate
   victory?: number;
   defeat?: number;
   draw?: number;
@@ -74,7 +74,7 @@ async function getRecordResult(
     };
   }
   data.forEach((e) => {
-    if (isTrio(mode) || isDuels(mode)) {
+    if (isTrio(mode) || isDuels(mode) || isPenta(mode)) {
       if (records[e.brawlerName] === undefined) {
         records[e.brawlerName] = { brawlerName: e.brawlerName, cnt: 0 };
       }
