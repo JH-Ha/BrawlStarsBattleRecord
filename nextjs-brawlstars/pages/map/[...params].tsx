@@ -12,7 +12,7 @@ import styles from "../../styles/Map.module.scss";
 import eventStyles from "../../styles/EventRotation.module.scss";
 import { getData } from "../../components/ApiHandler";
 import RecordResult from "../../components/recordResult";
-import { isDuels, isPenta, isTrio } from "../../components/BaseFunctions";
+import { isDuels, isPenta, isTeamMode, isTrio } from "../../components/BaseFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "next-i18next";
@@ -74,7 +74,7 @@ async function getRecordResult(
     };
   }
   data.forEach((e) => {
-    if (isTrio(mode) || isDuels(mode) || isPenta(mode)) {
+    if (isTeamMode(mode)) {
       if (records[e.brawlerName] === undefined) {
         records[e.brawlerName] = { brawlerName: e.brawlerName, cnt: 0 };
       }
@@ -92,7 +92,7 @@ async function getRecordResult(
   });
 
   let sumTotalGameNum = 0;
-  if (isTrio(mode) || isDuels(mode) || isPenta(mode)) {
+  if (isTeamMode(mode)) {
     for (let key in records) {
       let { victory, defeat, draw } = records[key];
       const victoryNum = victory || 0;

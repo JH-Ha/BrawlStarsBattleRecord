@@ -44,7 +44,7 @@ function EventRotation({ todayEvents, nextEvents }) {
                                 {ele.winRate?.map(e => {
                                     return <div key={`${ele.event.mode}-${e.brawlerName}`}>
                                         <img className={styles.brawlerImg} src={`/images/${e.brawlerName}.png`} alt={e.brawlerName} />
-                                        {isTrio(ele.event.mode) || isDuels(ele.event.mode) | isPenta(ele.event.mode) ?
+                                        {isTeamMode(ele.event.mode) ?
                                             <div>{Math.floor(e.winRate * 100)}%</div>
                                             : <div>{Math.floor(e.averageRank * 100) / 100}</div>
                                         }
