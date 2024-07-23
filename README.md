@@ -69,6 +69,8 @@ nodejs 서버가 아닌 Spring Boot의 Scheduler 를 이용해서 주기적으�
 
 ### Update Log
 
+- v2.4.7 (2024.07.24)
+  - Support 5v5 mode
 - v2.4.6 (2024.07.14)
   - Add search input in map list page
 - v2.4.5 (2024.04.16)
