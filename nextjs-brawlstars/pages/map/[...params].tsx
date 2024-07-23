@@ -92,7 +92,7 @@ async function getRecordResult(
   });
 
   let sumTotalGameNum = 0;
-  if (isTrio(mode) || isDuels(mode)) {
+  if (isTrio(mode) || isDuels(mode) || isPenta(mode)) {
     for (let key in records) {
       let { victory, defeat, draw } = records[key];
       const victoryNum = victory || 0;
@@ -161,8 +161,6 @@ export default function Map({
 }: Prop) {
   const { t } = useTranslation();
   const [isMapShown, setIsMapShown] = useState(true);
-  const [imgHeight, setImgHeight] = useState(0);
-  const [imgContainerHeight, setImgContainerHeight] = useState("100%");
 
   function showMapImg() {
     if (isMapShown) {
@@ -299,7 +297,7 @@ export default function Map({
           {statsYearMonths.length > 0 ?
             <div className={styles.yearMonthContainer}>
               <div className={styles.label}>{t("period")}</div>
-              <select className={styles.periodSelect} onChange={changeYearMonth} value={searchYearMonth}>
+              <select className={`${styles.periodSelect} form-control`} onChange={changeYearMonth} value={searchYearMonth}>
                 {options.map((option) => {
                   return (
                     <option key={option.value} value={option.value}>
