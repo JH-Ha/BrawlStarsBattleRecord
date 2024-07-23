@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getData } from "./ApiHandler";
-import { calWinRate, getLocalTime, isDuels, isPenta, isTrio } from './BaseFunctions';
+import { calWinRate, getLocalTime, isDuels, isPenta, isTrio, isTeamMode } from './BaseFunctions';
 import { useTranslation } from 'next-i18next';
 import styles from "../styles/EventRotation.module.scss";
 import DisplayTime from './DisplayTime';
