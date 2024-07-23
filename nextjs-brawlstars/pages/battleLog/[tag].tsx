@@ -8,23 +8,44 @@ import SoloDuoMode from "../../components/SoloDuoMode";
 import Pagination from "../../components/Pagination";
 import { getData } from "../../components/ApiHandler";
 import { useTranslation } from 'next-i18next';
-import { isDuels, isTrio } from "../../components/BaseFunctions";
+import { isDuels, isPenta, isTrio } from "../../components/BaseFunctions";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
+export interface PlayRecord {
+  battleTime: string;
+  result?: string;
+  resultRank?: number;
+  duration?: number;
+  map: string;
+  trophyChange: number;
+  type: string;
+  mode: string;
+  teamId?: number;
+  playerName: string;
+  trophies: number;
+  brawlerName: string;
+  power: number;
+  groupRecords: PlayRecord[];
+}
+
+interface BattleLogProps {
+  playRecord: PlayRecord[];
+  curPage: number;
+  tag: string;
+  mode: string;
+  brawlerName: string;
+  totalElements: number;
+  name: number;
+}
+
 export default function BattleLog({ playRecord, curPage,
-  tag, mode, brawlerName, totalElements, name }) {
+  tag, mode, brawlerName, totalElements, name }: BattleLogProps) {
   const router = useRouter();
   const { t } = useTranslation();
 
-  function addZero(number) {
-    let str = number.toString();
-    if (str.length === 1) str = "0" + str;
-    return str;
-  }
-
-  const changePageHandler = (page) => {
+  const changePageHandler = (page: number) => {
     router.push({
       pathname: "/battleLog/[tag]",
       query: {
@@ -37,7 +58,7 @@ export default function BattleLog({ playRecord, curPage,
     });
   }
 
-  function changeMode(mode) {
+  function changeMode(mode: string) {
     router.push({
       pathname: "/battleLog/[tag]",
       query: {
@@ -49,7 +70,7 @@ export default function BattleLog({ playRecord, curPage,
       }
     });
   }
-  function changeBrawler(brawlerName) {
+  function changeBrawler(brawlerName: string) {
     router.push({
       pathname: "/battleLog/[tag]",
       query: {
@@ -90,35 +111,25 @@ export default function BattleLog({ playRecord, curPage,
                 key={data.battleTime}
                 battleTime={data.battleTime
                 }
-                rank={data.resultRank}
                 result={data.result}
-                brawler_name={data.brawlerName}
                 duration={data.duration}
-                isStarPalyer={data.isStarPlayer}
                 map={data.map}
-                power={data.power}
-                trophies={data.trophies}
                 trophyChange={data.trophyChange}
                 type={data.type}
                 mode={data.mode}
                 groupRecords={data.groupRecords}
               />
             );
+          } else if (isPenta(data.mode)) {
+            return (
+              <PentaMode />
+            )
           } else {
             return (
               <SoloDuoMode
                 key={data.battleTime}
-                battleTime={
-                  data.battleTime
-                }
                 rank={data.resultRank}
-                result={data.result}
-                brawler_name={data.brawlerName}
-                duration={data.duration}
-                isStarPalyer={data.isStarPlayer}
                 map={data.map}
-                power={data.power}
-                trophies={data.trophies}
                 trophyChange={data.trophyChange}
                 mode={data.mode}
                 groupRecords={data.groupRecords}
@@ -142,7 +153,7 @@ export default function BattleLog({ playRecord, curPage,
   );
 }
 
-async function getBattleLog(tag, mode, brawlerName, page) {
+async function getBattleLog(tag: string, mode: string, brawlerName: string, page: number) {
   //console.log(`getBattleLog tag ${tag} mode ${mode} bralerName ${brawlerName}`);
 
   tag = encodeURIComponent(tag);
@@ -158,8 +169,8 @@ async function getBattleLog(tag, mode, brawlerName, page) {
   let searchParams = new URLSearchParams();
   searchParams.set("mode", paramMode);
   searchParams.set("brawlerName", paramBrawlerName);
-  searchParams.set("page", queryPage);
-  searchParams.set("size", 5);
+  searchParams.set("page", queryPage.toString());
+  searchParams.set("size", "5");
   console.log(`${new Date()} tag: ${tag} searchParams ${searchParams.toString()}`);
 
   let res = await getData(`/record/${tag}?${searchParams.toString()}`);
@@ -172,7 +183,7 @@ async function getBattleLog(tag, mode, brawlerName, page) {
 }
 
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: any) {
   let { tag, mode, page, brawlerName } = context.query;
   if (mode === undefined) {
     mode = 'ALL';
