@@ -27,7 +27,7 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    url: jdbc:mysql://brawlmeta.cf2miw664xb4.ap-northeast-1.rds.amazonaws.com:3306/brawlmeta
+    url: jdbc:mysql://brawlmeta2.cf2miw664xb4.ap-northeast-1.rds.amazonaws.com:3306/brawlmeta
     username: admin
     password: EUhFcuiwHtDYJRLHF28b
     driver-class-name: com.mysql.cj.jdbc.Driver
