@@ -136,7 +136,7 @@ public class RecordSchedule {
         }
     }
 
-    // This lefts recent 50 records,and delete old records.
+    // This lefts recent 25 records,and delete old records.
     @Scheduled(fixedDelay = 86400_000 // 1 day
             , initialDelay = 600_000 // 10 minutes
     )
@@ -145,7 +145,7 @@ public class RecordSchedule {
         List<String> tags = memberRepository.findTags();
         tags.forEach(tag -> {
             logger.debug("delete member : " + tag);
-            recordService.deleteOldRecords(tag, 50L);
+            recordService.deleteOldRecords(tag, 25L);
         });
     }
 
