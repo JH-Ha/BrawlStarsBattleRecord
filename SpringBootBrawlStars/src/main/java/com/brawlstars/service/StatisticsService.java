@@ -57,7 +57,7 @@ public class StatisticsService {
     }
 
     public List<RecordResultDto> getStats(String mode, @Nullable String map, List<String> yearMonth) {
-        if (CommonUtil.isTrioMode(mode) || CommonUtil.isDuels(mode)) {
+        if (CommonUtil.isTrioMode(mode) || CommonUtil.isDuels(mode) || CommonUtil.isPentaMode(mode)) {
             return getTrioStats(mode, map, yearMonth);
         } else if (CommonUtil.isDuoShowdown(mode) || CommonUtil.isSolo(mode)) {
             return getDuoSoloStats(mode, map, yearMonth);
