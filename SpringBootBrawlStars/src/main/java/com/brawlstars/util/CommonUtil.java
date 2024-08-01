@@ -6,7 +6,7 @@ public class CommonUtil {
 
     private static final Set<String> TRIO_SET = Set.of("gemGrab", "brawlBall", "heist", "bounty", "siege", "hotZone",
             "knockout", "basketBrawl", "volleyBrawl", "holdTheTrophy", "trophyThieves", "wipeout", "payload",
-            "invasion");
+            "invasion", "paintBrawl");
     private static final Set<String> SOLO_SET = Set.of("soloShowdown", "hunters", "takedown", "trophyEscape");
     private static final Set<String> PENTA_SET = Set.of("gemGrab5V5", "brawlBall5V5", "heist5V5", "bounty5V5",
             "hotZone5V5", "knockout5V5", "wipeout5V5");
