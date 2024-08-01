@@ -44,15 +44,16 @@ Spring Boot의 Scheduler 를 이용해서 주기적으로 유저 데이터를 �
 </div>
 
 ### Update Log
-
+- v2.4.8 (2024.08.02)
+  - 페인트 브롤 모드 지원
 - v2.4.7 (2024.07.24)
-  - Support 5v5 mode
+  - 5v5 모드 지원
 - v2.4.6 (2024.07.14)
-  - Add search input in map list page
+  - map list page에 map 검색 기능 추가
 - v2.4.5 (2024.04.16)
-  - Add a new trophy escape mode
+  - 트로피 탈출 모드 지원
 - v2.4.1 (2023.03.21)
-  - Update spring boot to 3.0.4
+  - spring boot 3.0.4 으로 업그레이드 
 - v2.4.0 (2023.01.05)
   - Add description to map page
   - Change getStatstistics API to get all data
@@ -87,12 +88,12 @@ Spring Boot의 Scheduler 를 이용해서 주기적으로 유저 데이터를 �
 
   - New brawlers images (Janet and Bonnie) are added
   - Period selection function is added to map page
-  - Optimazatioin of getting event logic
+  - Optimization of getting event logic
 
 - v2.3.2 (2022.04.29)
 
   - Gather statistic data of Bot Drop mode
-  - Optimazation of saving battle record logic
+  - Optimization of saving battle record logic
 
 - v2.3.1 (2022.04.14)
 
