@@ -44,7 +44,8 @@ The Spring Boot's Scheduler periodically updates user data.
 </div>
 
 ### Update Log
-
+- v2.4.8 (2024.08.02)
+  - Support paint brawl mode 
 - v2.4.7 (2024.07.24)
   - Support 5v5 mode
 - v2.4.6 (2024.07.14)
