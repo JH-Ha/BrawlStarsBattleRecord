@@ -15,7 +15,8 @@ function isTrio(mode) {
         mode === "wipeout" ||
         mode === "payload" ||
         mode === "invasion" ||
-        mode === "snowtelThieves"
+        mode === "snowtelThieves" ||
+        mode === "paintBrawl"
     ) {
         result = true;
     }
