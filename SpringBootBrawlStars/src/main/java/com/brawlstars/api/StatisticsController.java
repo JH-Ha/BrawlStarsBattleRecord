@@ -1,8 +1,8 @@
 package com.brawlstars.api;
 
+import com.brawlstars.cache.StatsCache;
 import com.brawlstars.protocol.StatisticsResponse;
 import com.brawlstars.service.StatisticsService;
-import com.brawlstars.service.StatisticsService.StatCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,30 +23,30 @@ public class StatisticsController {
     @GetMapping("/api/statistics/mode/{mode}/map/{map}")
     public StatisticsResponse getStatistics(
             @PathVariable(name = "mode") String mode,
-            @PathVariable(name = "map", required = false) String map,
-            @RequestParam(name = "yearMonth", required = false) List<String> yearMonth) {
+            @PathVariable(name = "map") String map,
+            @RequestParam(name = "yearMonth", required = false) List<String> yearMonths) {
 
         // default value is recent three months
-        if (yearMonth == null) {
-            yearMonth = new ArrayList<>();
+        if (yearMonths == null) {
+            yearMonths = new ArrayList<>();
             LocalDate today = LocalDate.now();
             DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMM");
 
             for (int i = 0; i < 3; i++) {
                 String iMonthsAgo = today.minusMonths(i).format(format);
-                yearMonth.add(iMonthsAgo);
+                yearMonths.add(iMonthsAgo);
             }
         }
-        StatCache statCache = statisticsService.getStatsFromCache(mode, map, yearMonth);
-        if (statCache.getRecordResultDtos().isEmpty()) {
-            yearMonth = new ArrayList<>();
-            statCache = statisticsService.getStatsFromCache(mode, map, yearMonth);
+        StatsCache statsCache = statisticsService.getStatsFromCache(mode, map, yearMonths);
+        if (statsCache.getRecordResultDtos().isEmpty()) {
+            yearMonths = new ArrayList<>();
+            statsCache = statisticsService.getStatsFromCache(mode, map, yearMonths);
         }
 
         StatisticsResponse res = new StatisticsResponse();
-        res.setUpdated(statCache.getUpdated());
-        res.setRecordResultDtos(statCache.getRecordResultDtos());
-        res.setYearMonths(yearMonth);
+        res.setUpdated(statsCache.getUpdated());
+        res.setRecordResultDtos(statsCache.getRecordResultDtos());
+        res.setYearMonths(yearMonths);
         return res;
     }
 }

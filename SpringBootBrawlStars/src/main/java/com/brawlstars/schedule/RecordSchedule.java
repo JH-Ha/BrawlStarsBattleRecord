@@ -70,14 +70,6 @@ public class RecordSchedule {
         });
     }
 
-    @Getter
-    @Setter
-    class ItemContainer {
-
-        List<Item> items;
-        String tag;
-    }
-
     public void saveRecordsV2(int page, int pageSize, Executor executor) {
         Page<MemberDto> members = memberRepository.findAll("", PageRequest.of(page, pageSize));
         List<CompletableFuture<Object>> itemFutures = members.getContent()
@@ -136,7 +128,7 @@ public class RecordSchedule {
         }
     }
 
-    // This lefts recent 25 records,and delete old records.
+    // This scheduler lefts recent 25 records,and delete old records.
     @Scheduled(fixedDelay = 86400_000 // 1 day
             , initialDelay = 600_000 // 10 minutes
     )
@@ -155,5 +147,13 @@ public class RecordSchedule {
             initialDelay = 600_000)
     public void updateStatistics() {
         recordService.saveStats();
+    }
+
+    @Getter
+    @Setter
+    class ItemContainer {
+
+        List<Item> items;
+        String tag;
     }
 }
