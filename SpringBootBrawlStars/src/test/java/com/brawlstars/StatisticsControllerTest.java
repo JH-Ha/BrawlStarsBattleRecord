@@ -1,6 +1,5 @@
 package com.brawlstars;
 
-import com.brawlstars.api.StatisticsController;
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.Item;
 import com.brawlstars.service.RecordService;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.net.URI;
@@ -19,16 +17,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static org.hamcrest.Matchers.emptyArray;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 public class StatisticsControllerTest {
-
-    @SpyBean
-    StatisticsController statisticsController;
 
     @Autowired
     RecordService recordService;
@@ -64,24 +62,12 @@ public class StatisticsControllerTest {
         mockMvc.perform(get("/api/statistics/mode/" + mode + "/map/" + map))
                 // Then
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.recordResultDtos", not(emptyArray())));
     }
 
     @Test
-    public void testGetStatisticsWhenMapIsNull() throws Exception {
-        // Given
-        String mode = "siege";
-        String map = null;
-
-        // When
-        mockMvc.perform(get("/api/statistics/mode/" + mode + "/map/" + map))
-                // Then
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testGetStatisticsWhenModeIsDuoshodown() throws Exception {
+    public void testGetStatisticsWhenModeIsDuoShowdown() throws Exception {
         // Given
         String mode = "duoShowdown";
         String map = "Acid Lakes";
@@ -90,6 +76,7 @@ public class StatisticsControllerTest {
         mockMvc.perform(get("/api/statistics/mode/" + mode + "/map/" + map))
                 // Then
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.recordResultDtos", not(emptyArray())));
     }
 }

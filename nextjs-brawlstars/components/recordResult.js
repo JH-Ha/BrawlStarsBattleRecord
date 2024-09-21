@@ -112,7 +112,7 @@ const RecordResult = ({ _recordArr, sumTotalGameNum, mode, isPersonal }) => {
                                 <td>
                                     {/* <div className="info" key={index}> */}
                                     <div className={styles.brawler}>
-                                        <img src={`/images/${ele.brawlerName}.png`} alt={ele.brawlerName}></img>
+                                        <img src={`/images/${ele.brawlerName}.webp`} alt={ele.brawlerName}></img>
                                         <div className={styles.brawlerName}>
                                             {t(ele.brawlerName)}
                                         </div>

@@ -52,7 +52,7 @@ const SoloDuoMode = ({ trophyChange, rank, groupRecords, tag, map, mode, type })
         <div className={`${styles.topContainer} ${styles['rank' + rankCss]}`}>
           <div className={styles.modeInfo}>
             <div className={styles.showdonwImgContainer}>
-              <img src={`/images/mode/${mode}.png`} alt={mode}></img>
+              <img src={`/images/mode/${mode}.webp`} alt={mode}></img>
             </div>
             <div className={styles.modeMapContainer}>
               <div className={styles.mode}>{t(mode)}

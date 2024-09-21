@@ -29,6 +29,9 @@ import java.util.stream.Collectors;
 @Transactional
 public class RecordService {
 
+    private static RecordPentaFactory recordPentaFactory = new RecordPentaFactory();
+    @Autowired
+    StatisticsRepositoryInterface statisticsRepository;
     @Autowired
     private RecordRepository recordRepository;
     @Autowired
@@ -37,11 +40,6 @@ public class RecordService {
     private GameMapRepository gameMapRepositry;
     @Autowired
     private BrawlStarsApiService brawlStarsApiService;
-
-    @Autowired
-    StatisticsRepositoryInterface statisticsRepository;
-
-    private static RecordPentaFactory recordPentaFactory = new RecordPentaFactory();
 
     public static String getOppositeResult(String result) {
         if ("defeat".equals(result)) {
@@ -321,17 +319,6 @@ public class RecordService {
         return recordRepository.deleteAllRecord();
     }
 
-    static class FindMapDto {
-
-        GameMap gameMap;
-        List<GameMapDto> gameMapDtos;
-
-        public FindMapDto(GameMap gameMap, List<GameMapDto> gameMapDtos) {
-            this.gameMap = gameMap;
-            this.gameMapDtos = gameMapDtos;
-        }
-    }
-
     public void saveTrioStat(String mode, String map, String brawlerName, String result, Integer cnt,
                              String yearMonth) {
         Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerNameAndResultAndStatsYearMonth(
@@ -376,7 +363,6 @@ public class RecordService {
     }
 
     public void saveStats() {
-
         LocalDate localDate = LocalDate.now();
         String yearMonth = localDate.format(DateTimeFormatter.ofPattern("yyyyMM"));
 
@@ -398,8 +384,7 @@ public class RecordService {
                 recordRepository.updateStatUpdated(recordSearch);
                 for (RecordResultDto stat : stats) {
                     saveTrioStat(mode, map.getName(), stat.getBrawlerName(), stat.getResult(),
-                            stat.getCnt().intValue(),
-                            yearMonth);
+                            stat.getCnt().intValue(), yearMonth);
                 }
             } else {
                 stats = recordRepository.findSoloDuoByMap(recordSearch);
@@ -497,6 +482,17 @@ public class RecordService {
         }
         Record.setRelation(myRecord, groupRecords);
         recordRepository.save(myRecord);
+    }
+
+    static class FindMapDto {
+
+        GameMap gameMap;
+        List<GameMapDto> gameMapDtos;
+
+        public FindMapDto(GameMap gameMap, List<GameMapDto> gameMapDtos) {
+            this.gameMap = gameMap;
+            this.gameMapDtos = gameMapDtos;
+        }
     }
 
 }
