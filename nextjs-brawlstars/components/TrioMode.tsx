@@ -42,7 +42,7 @@ const TrioMode = ({ battleTime,
         <div className={`${styles.gameInfo} ${styles.top} ${styles[result]}`}>
           <div className={styles.modeInfo}>
             <div className={styles.modeImg}>
-              <img src={`/images/mode/${mode}.png`} alt={mode}></img>
+              <img src={`/images/mode/${mode}.webp`} alt={mode}></img>
             </div>
             <div className={styles.modeMap}>
               <div className={styles.mode}>{t(mode)}
