@@ -81,7 +81,8 @@ public class EventController {
         return eventInfos;
     }
 
-    @Scheduled(fixedDelay = 60_000)
+    // every minute
+    @Scheduled(cron = "0 * * * * *")
     public void updateEvents() {
         EventInfo[] eventInfos = null;
         try {

@@ -139,7 +139,7 @@ function RegisterUser() {
                 <div className={styles.icon}>
                   <img
                     className={styles.iconImg}
-                    src="/images/mode/3vs3.png"
+                    src="/images/mode/3vs3.webp"
                     alt="3vs3"
                   ></img>
                 </div>
@@ -152,7 +152,7 @@ function RegisterUser() {
                 <div className={styles.icon}>
                   <img
                     className={styles.iconImg}
-                    src="/images/mode/soloShowdown.png"
+                    src="/images/mode/soloShowdown.webp"
                     alt="soloShowdown"
                   ></img>
                 </div>
@@ -166,7 +166,7 @@ function RegisterUser() {
                 <div className={styles.icon}>
                   <img
                     className={styles.iconImg}
-                    src="/images/mode/duoShowdown.png"
+                    src="/images/mode/duoShowdown.webp"
                     alt="duoShowdown"
                   ></img>
                 </div>

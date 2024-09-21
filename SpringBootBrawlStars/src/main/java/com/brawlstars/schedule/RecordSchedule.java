@@ -40,10 +40,8 @@ public class RecordSchedule {
 
     Logger logger = LoggerFactory.getLogger(RecordSchedule.class);
 
-    // 60 minutes
-    @Scheduled(fixedDelay = 3600_000
-            , initialDelay = 600_000 // 10 minutes
-    )
+    // every hour
+    @Scheduled(cron = "0 0 * * * *")
     public void saveRecordsSchedule() {
         saveRecords();
     }
@@ -68,14 +66,6 @@ public class RecordSchedule {
                 e.printStackTrace();
             }
         });
-    }
-
-    @Getter
-    @Setter
-    class ItemContainer {
-
-        List<Item> items;
-        String tag;
     }
 
     public void saveRecordsV2(int page, int pageSize, Executor executor) {
@@ -136,10 +126,8 @@ public class RecordSchedule {
         }
     }
 
-    // This lefts recent 25 records,and delete old records.
-    @Scheduled(fixedDelay = 86400_000 // 1 day
-            , initialDelay = 600_000 // 10 minutes
-    )
+    // This scheduler lefts recent 25 records,and delete old records.
+    @Scheduled(cron = "0 0 9 * * *")
     public void deleteRecords() {
         logger.info("deleteRecords");
         List<String> tags = memberRepository.findTags();
@@ -149,11 +137,17 @@ public class RecordSchedule {
         });
     }
 
-    //every hour
-    //@Scheduled(cron = "0 15 * * * *")
-    @Scheduled(fixedDelay = 1800_000,  // 30minutes
-            initialDelay = 600_000)
+    //every 15,45 minutes
+    @Scheduled(cron = "0 15,45 * * * *")
     public void updateStatistics() {
         recordService.saveStats();
+    }
+
+    @Getter
+    @Setter
+    class ItemContainer {
+
+        List<Item> items;
+        String tag;
     }
 }
