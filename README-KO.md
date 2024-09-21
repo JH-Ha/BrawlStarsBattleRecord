@@ -44,6 +44,9 @@ Spring Boot의 Scheduler 를 이용해서 주기적으로 유저 데이터를 �
 </div>
 
 ### Update Log
+
+- v2.4.9 (2024.09.21)
+  - 이미지 사이즈를 줄이키 위해서, 이미지 포맷을 PNG에서 WebP로 변경
 - v2.4.8 (2024.08.02)
   - 페인트 브롤 모드 지원
 - v2.4.7 (2024.07.24)
@@ -53,7 +56,7 @@ Spring Boot의 Scheduler 를 이용해서 주기적으로 유저 데이터를 �
 - v2.4.5 (2024.04.16)
   - 트로피 탈출 모드 지원
 - v2.4.1 (2023.03.21)
-  - spring boot 3.0.4 으로 업그레이드 
+  - spring boot 3.0.4 으로 업그레이드
 - v2.4.0 (2023.01.05)
   - Add description to map page
   - Change getStatstistics API to get all data
