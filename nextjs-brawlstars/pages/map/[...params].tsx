@@ -258,7 +258,7 @@ export default function Map({
           <div className={styles.pageDesc}> {t("mapModeMetaDesc1")}{t(mapName)}({t(mode)}){t("mapModeMetaDesc2")}    </div>
           <div className={`${eventStyles[modeWrap]} ${styles.titleContainer} page-title`}>
             <div className={styles.imgContainer}>
-              <img src={`/images/mode/${mode}.png`} alt={mapName} />
+              <img src={`/images/mode/${mode}.webp`} alt={mapName} />
             </div>
             <div className={styles.info}>
               <div className={styles.mode} onClick={goToMapList}>
@@ -289,7 +289,7 @@ export default function Map({
               ref={ref}
               className={styles.mapImg}
               src={`/images/maps/${mode.includes("Showdown") ? "showdown" : mode
-                }/${displayMapName}.png`}
+                }/${displayMapName}.webp`}
               alt={mapName}
             />
           </div>

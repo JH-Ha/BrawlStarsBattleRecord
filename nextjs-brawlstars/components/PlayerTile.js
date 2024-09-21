@@ -13,7 +13,7 @@ class PlayerTile extends Component {
             <div>
                 <div className={styles.imgContainer}>
                     <div className={styles.trophies}>{trophies}</div>
-                    <img src={`/images/${brawlerName}.png`} alt={brawlerName} width="50px" />
+                    <img src={`/images/${brawlerName}.webp`} alt={brawlerName} width="50px" />
                     <div className={styles.powerContainer}>
                         <div className={styles.levelText}>Lv
                         </div>

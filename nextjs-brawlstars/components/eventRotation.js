@@ -33,7 +33,7 @@ function EventRotation({ todayEvents, nextEvents }) {
                             onClick={() => onClickEvent(ele.event.map, ele.event.mode)}>
                             <div className={styles.eventInfoContainer}>
                                 <div className={styles.modeImg}>
-                                    <img src={`/images/mode/${ele.event.mode}.png`} alt={ele.event.mode}></img>
+                                    <img src={`/images/mode/${ele.event.mode}.webp`} alt={ele.event.mode}></img>
                                 </div>
                                 <div className={styles.eventInfo}>
                                     <div>{t(ele.event.mode)}</div>
@@ -43,7 +43,7 @@ function EventRotation({ todayEvents, nextEvents }) {
                             <div className={styles.winRateInfo}>
                                 {ele.winRate?.map(e => {
                                     return <div key={`${ele.event.mode}-${e.brawlerName}`}>
-                                        <img className={styles.brawlerImg} src={`/images/${e.brawlerName}.png`} alt={e.brawlerName} />
+                                        <img className={styles.brawlerImg} src={`/images/${e.brawlerName}.webp`} alt={e.brawlerName} />
                                         {isTeamMode(ele.event.mode) ?
                                             <div>{Math.floor(e.winRate * 100)}%</div>
                                             : <div>{Math.floor(e.averageRank * 100) / 100}</div>
@@ -72,7 +72,7 @@ function EventRotation({ todayEvents, nextEvents }) {
                             onClick={() => onClickEvent(ele.event.map, ele.event.mode)}>
                             <div className={styles.eventInfoContainer}>
                                 <div className={styles.modeImg}>
-                                    <img src={`/images/mode/${ele.event.mode}.png`} alt={ele.event.mode}></img>
+                                    <img src={`/images/mode/${ele.event.mode}.webp`} alt={ele.event.mode}></img>
                                 </div>
                                 <div className={styles.eventInfo}>
                                     <div>{t(ele.event.mode)}</div>
@@ -82,7 +82,7 @@ function EventRotation({ todayEvents, nextEvents }) {
                             <div className={styles.winRateInfo}>
                                 {ele.winRate?.map(e => {
                                     return <div key={`${ele.event.map}-${ele.event.mode}-${e.brawlerName}`}>
-                                        <img className={styles.brawlerImg} src={`/images/${e.brawlerName}.png`} alt={e.brawlerName} />
+                                        <img className={styles.brawlerImg} src={`/images/${e.brawlerName}.webp`} alt={e.brawlerName} />
                                         {isTrio(ele.event.mode) || isDuels(ele.event.mode) ?
                                             <div>{Math.floor(e.winRate * 100)}%</div>
                                             : <div>{Math.floor(e.averageRank * 100) / 100}</div>
