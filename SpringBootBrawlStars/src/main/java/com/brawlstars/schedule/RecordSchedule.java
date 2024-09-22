@@ -137,8 +137,8 @@ public class RecordSchedule {
         });
     }
 
-    //every 15,45 minutes
-    @Scheduled(cron = "0 15,45 * * * *")
+    //every 30 minutes
+    @Scheduled(cron = "0 30 * * * *")
     public void updateStatistics() {
         recordService.saveStats();
     }
