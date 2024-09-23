@@ -309,4 +309,16 @@ public class RecordRepository {
     public long deleteAllRecord() {
         return queryFactory.delete(qRecord).execute();
     }
+
+    public List<GameMapDto> getNotStatUpdatedModeMap() {
+        return queryFactory.select(Projections.constructor(GameMapDto.class,
+                        qRecord.map,
+                        qRecord.mode)
+                )
+                .distinct()
+                .from(qRecord)
+                .where(qRecord.statUpdated.isFalse()
+                        .and(qRecord.map.isNotNull()))
+                .fetch();
+    }
 }
