@@ -22,12 +22,10 @@ import java.util.stream.Collectors;
 public class RecordRepository {
 
     @Autowired
-    private EntityManager em;
-
-    @Autowired
     JPAQueryFactory queryFactory;
-
     QRecord qRecord = QRecord.record;
+    @Autowired
+    private EntityManager em;
 
     public void save(Record record) {
         if (record.getId() == null) {
@@ -197,8 +195,6 @@ public class RecordRepository {
     }
 
     public List<GameMapDto> getDistinctModes() {
-        QRecord qRecord = QRecord.record;
-
         List<GameMapDto> gameMapDtos =
                 queryFactory.select(Projections.constructor(GameMapDto.class
                                 , qRecord.mode))
@@ -218,8 +214,6 @@ public class RecordRepository {
         if (StringUtils.hasText(mode)) {
             builder.and(qRecord.mode.eq(mode));
         }
-//				.and(qRecord.type.eq("ranked"))
-        builder.and(qRecord.mode.eq(mode));
 
         if (StringUtils.hasText(recordSearch.getTrophyRange())) {
             String trophyRange = recordSearch.getTrophyRange();
@@ -262,9 +256,6 @@ public class RecordRepository {
     }
 
     public List<RecordResultDto> findAllResult(RecordSearch recordSearch) {
-
-        QRecord qRecord = QRecord.record;
-
         BooleanBuilder builder = new BooleanBuilder();
 
         if (StringUtils.hasText(recordSearch.getTag())) {
@@ -285,8 +276,6 @@ public class RecordRepository {
     }
 
     public void deleteOldRecords(String tag, Long offset) {
-        QRecord qRecord = QRecord.record;
-
         List<Long> groupIds = queryFactory.select(qRecord.parent.id)
                 .from(qRecord)
                 .where(qRecord.tag.eq(tag))
@@ -311,7 +300,6 @@ public class RecordRepository {
     }
 
     public long getRecordCount() {
-        QRecord qRecord = QRecord.record;
         return queryFactory.select(qRecord)
                 .from(qRecord)
                 .fetch()
