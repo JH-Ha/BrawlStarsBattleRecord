@@ -13,11 +13,11 @@ public class GameMapService {
     GameMapRepository gameMapRepository;
 
     public void saveGameMap(GameMap gameMap) {
-        gameMapRepository.saveGameMap(gameMap);
+        gameMapRepository.save(gameMap);
     }
 
     public void updateTime(String mode, String map, String startTime, String endTime) {
-        GameMap gameMap = gameMapRepository.findOneByNameAndMode(map, mode);
+        GameMap gameMap = gameMapRepository.findByNameAndModeAndIsDeletedFalse(map, mode);
         if (gameMap == null) {
             gameMap = new GameMap();
             gameMap.setName(map);

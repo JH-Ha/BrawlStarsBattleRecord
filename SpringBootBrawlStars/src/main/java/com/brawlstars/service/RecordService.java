@@ -37,7 +37,7 @@ public class RecordService {
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
-    private GameMapRepository gameMapRepositry;
+    private GameMapRepository gameMapRepository;
     @Autowired
     private BrawlStarsApiService brawlStarsApiService;
 
@@ -297,10 +297,10 @@ public class RecordService {
 
         List<GameMap> notSavedMaps = gameMaps.stream()
                 .filter(gameMap -> gameMap.getName() != null)
-                .filter(gameMap -> gameMapRepositry.findByNameAndMode(gameMap.getName(), mode).isEmpty())
+                .filter(gameMap -> gameMapRepository.findByNameAndMode(gameMap.getName(), mode).isEmpty())
                 .toList();
 
-        notSavedMaps.forEach(gameMap -> gameMapRepositry.saveGameMap(gameMap));
+        notSavedMaps.forEach(gameMap -> gameMapRepository.save(gameMap));
 
         return notSavedMaps.size();
     }
