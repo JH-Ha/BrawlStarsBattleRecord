@@ -31,7 +31,7 @@ public class RecordService {
 
     private static RecordPentaFactory recordPentaFactory = new RecordPentaFactory();
     @Autowired
-    StatisticsRepositoryInterface statisticsRepository;
+    private StatisticsRepository statisticsRepository;
     @Autowired
     private RecordRepository recordRepository;
     @Autowired
@@ -320,8 +320,7 @@ public class RecordService {
     public void saveTrioStat(String mode, String map, String brawlerName, String result, Integer cnt,
                              String yearMonth) {
         Statistics statistics = statisticsRepository.findByModeAndMapAndBrawlerNameAndResultAndStatsYearMonth(
-                mode, map,
-                brawlerName, result, yearMonth);
+                mode, map, brawlerName, result, yearMonth);
         if (statistics == null) {
             statistics = new Statistics();
             statistics.setMode(mode);
