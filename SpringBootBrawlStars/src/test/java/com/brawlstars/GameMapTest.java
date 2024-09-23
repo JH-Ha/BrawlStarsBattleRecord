@@ -2,11 +2,13 @@ package com.brawlstars;
 
 import com.brawlstars.json.BattleLog;
 import com.brawlstars.json.Item;
-import com.brawlstars.schedule.GameMapService;
+import com.brawlstars.repository.GameMapRepository;
 import com.brawlstars.service.RecordService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +30,7 @@ public class GameMapTest {
     @Autowired
     RecordService recordService;
     @Autowired
-    GameMapService gameMapService;
+    GameMapRepository gameMapRepository;
 
     String tag = "#9QU209UYC";
 
@@ -45,12 +47,35 @@ public class GameMapTest {
         recordService.saveBattleLog(items, tag);
     }
 
-    @Test
-    public void saveDistinctGameMap() {
-        String mode = "duoShowdown";
+    @AfterEach
+    void tearDown() {
+        gameMapRepository.deleteAll();
+    }
 
-        int savedMapCnt = recordService.saveDistinctGameMap(mode);
+    @Nested
+    class SaveDistinctGameMapTest {
+        @Test
+        void saveDistinctGameMap() {
+            // Given
+            String mode = "duoShowdown";
 
-        assertThat(2).isEqualTo(savedMapCnt);
+            // When
+            int savedMapCnt = recordService.saveDistinctGameMap(mode);
+
+            // Then
+            assertThat(savedMapCnt).isEqualTo(2);
+        }
+
+        @Test
+        void whenModeIsNull() {
+            // Given
+            String mode = null;
+
+            // When
+            int saveMapCnt = recordService.saveDistinctGameMap(mode);
+
+            // Then
+            assertThat(saveMapCnt).isEqualTo(8);
+        }
     }
 }

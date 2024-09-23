@@ -297,7 +297,7 @@ public class RecordService {
 
         List<GameMap> notSavedMaps = gameMaps.stream()
                 .filter(gameMap -> gameMap.getName() != null)
-                .filter(gameMap -> gameMapRepository.findByNameAndMode(gameMap.getName(), mode).isEmpty())
+                .filter(gameMap -> gameMapRepository.findByNameAndMode(gameMap.getName(), gameMap.getMode()).isEmpty())
                 .toList();
 
         notSavedMaps.forEach(gameMap -> gameMapRepository.save(gameMap));
@@ -363,12 +363,10 @@ public class RecordService {
         LocalDate localDate = LocalDate.now();
         String yearMonth = localDate.format(DateTimeFormatter.ofPattern("yyyyMM"));
 
-        List<GameMapDto> modes = recordRepository.getDistinctModes();
-        for (GameMapDto gameMode : modes) {
-            saveDistinctGameMap(gameMode.getMode());
-        }
-        List<GameMapDto> maps = recordRepository.getNotStatUpdatedModeMap();
+        int savedMapCnt = saveDistinctGameMap(null);
+        log.info("saved map count : {}", savedMapCnt);
 
+        List<GameMapDto> maps = recordRepository.getNotStatUpdatedModeMap();
         maps.forEach(map -> {
             String mode = map.getMode();
             RecordSearch recordSearch = new RecordSearch();

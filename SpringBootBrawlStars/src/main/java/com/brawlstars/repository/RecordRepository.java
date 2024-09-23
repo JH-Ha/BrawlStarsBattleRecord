@@ -194,16 +194,6 @@ public class RecordRepository {
         return gameMapDtos;
     }
 
-    public List<GameMapDto> getDistinctModes() {
-        List<GameMapDto> gameMapDtos =
-                queryFactory.select(Projections.constructor(GameMapDto.class
-                                , qRecord.mode))
-                        .from(qRecord)
-                        .distinct()
-                        .fetch();
-        return gameMapDtos;
-    }
-
     public List<RecordResultDto> findSoloDuoByMap(RecordSearch recordSearch) {
         BooleanBuilder builder = new BooleanBuilder();
         String mode = recordSearch.getMode();
