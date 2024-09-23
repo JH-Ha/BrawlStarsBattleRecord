@@ -293,16 +293,14 @@ public class RecordService {
             gameMap.setMode(dto.getMode());
             gameMap.setName(dto.getName());
             return gameMap;
-        }).collect(Collectors.toList());
+        }).toList();
 
-        List<FindMapDto> notSavedMaps = gameMaps.stream()
+        List<GameMap> notSavedMaps = gameMaps.stream()
                 .filter(gameMap -> gameMap.getName() != null)
-                .map(gameMap -> new FindMapDto(gameMap,
-                        gameMapRepositry.findByNameAndMode(gameMap.getName(), mode)))
-                .filter(findMapDtos -> findMapDtos.gameMapDtos.isEmpty())
-                .collect(Collectors.toList());
+                .filter(gameMap -> gameMapRepositry.findByNameAndMode(gameMap.getName(), mode).isEmpty())
+                .toList();
 
-        notSavedMaps.forEach(findMapDtos -> gameMapRepositry.saveGameMap(findMapDtos.gameMap));
+        notSavedMaps.forEach(gameMap -> gameMapRepositry.saveGameMap(gameMap));
 
         return notSavedMaps.size();
     }
