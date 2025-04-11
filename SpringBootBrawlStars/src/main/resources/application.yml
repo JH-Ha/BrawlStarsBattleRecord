@@ -27,14 +27,10 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    url: jdbc:mysql://brawlmeta2.cf2miw664xb4.ap-northeast-1.rds.amazonaws.com:3306/brawlmeta
+    url: jdbc:mysql://brawlmeta.cjmiiusm0pkn.ap-northeast-1.rds.amazonaws.com:3306/brawlmeta
     username: admin
-    password: EUhFcuiwHtDYJRLHF28b
+    password: #add_password
     driver-class-name: com.mysql.cj.jdbc.Driver
-    #url: jdbc:h2:tcp://localhost/~/jpashop
-    #username: sa
-    #password:
-    #driver-class-name: org.h2.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
@@ -52,7 +48,7 @@ server:
     min-response-size: 500
 
 brawl-api:
-  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImFjOTE3YTE1LWNjN2QtNDI5NS1iMWE0LThhMWJkMWYwMWQ0MCIsImlhdCI6MTcxMDA1NDU2Niwic3ViIjoiZGV2ZWxvcGVyLzRmODljMjEyLWE0OWYtZWRiZS0zZjgzLTRhODJiZGE2N2NiNSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiMzUuNzYuNzAuMTUzIiwiMS4yMzcuMjguMTY3Il0sInR5cGUiOiJjbGllbnQifV19.jxgFo42pG_tX9tgbJ3bYo8QuXXn9-2E77-3Dixoh6e53n-Na7KFpUc5KjZO4zrYkfZhpYngvjxGEjkOa7l58bw
+  token: #add_your_token
 
 app:
   scheduling:

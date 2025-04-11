@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com'
-version = 'v2.4.9.2'
+version = 'v2.5.1'
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
