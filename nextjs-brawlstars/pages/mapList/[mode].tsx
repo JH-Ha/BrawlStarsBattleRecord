@@ -138,7 +138,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     gameMaps.map(a => {
         let oneYearAgo = '20210301T000000.000Z';
-        a.displayName = a.name.replace(":", "");
+        if (a.name) {
+            a.displayName = a.name.replace(":", "");
+        } else {
+            a.displayName = 'unknown'
+        }
+        if (a.mode == null || a.mode == undefined) {
+            a.mode = 'unknown'
+        }
         if (a.startTime === null) {
             a.startTime = oneYearAgo;
         }
