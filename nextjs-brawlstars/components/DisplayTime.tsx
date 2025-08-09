@@ -1,12 +1,16 @@
 import React from 'react';
 import { getLocalTime } from "./BaseFunctions";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "react-i18next";
 
-const DisplayTime = (props) => {
+interface DisplayTimeProps {
+    endTime: string;
+}
+
+const DisplayTime: React.FC<DisplayTimeProps> = (props) => {
     const { t } = useTranslation();
     let endTime = getLocalTime(props.endTime);
     let now = new Date();
-    let diffTime = (endTime - now) / 1000;
+    let diffTime = (endTime.getTime() - now.getTime()) / 1000;
     let displayTime = '';
     // in one day
     let diffDays = Math.floor(diffTime / 86400);

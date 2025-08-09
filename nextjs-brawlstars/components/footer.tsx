@@ -2,7 +2,7 @@ import React from 'react';
 import { Twitter, Youtube } from 'react-bootstrap-icons';
 import styles from "../styles/Footer.module.scss";
 
-const Footer = () => {
+const Footer: React.FC = () => {
 
     return (
         <footer className={styles.footer}>

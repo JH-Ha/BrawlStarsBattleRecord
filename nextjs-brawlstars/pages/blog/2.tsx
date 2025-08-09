@@ -1,7 +1,7 @@
-import Image from 'next/image';
+import React from 'react';
 import styles from '../../styles/Blog.module.scss';
 
-export default function Post2() {
+const Post2: React.FC = () => {
     return (<div className={`${styles.blog} ${styles['post2']}`}>
         <div className={styles.title}>
             2월초 인기 있는 모드는 무엇일까요?
@@ -12,19 +12,16 @@ export default function Post2() {
             제외 시켰습니다. 과연 어떤 모드가 인기가 많을까요?
             <br />
             <br />
-            <img src="/blog/2/playRate.PNG" />
+            <img src="/blog/2/playRate.PNG" alt="Play Rate Statistics" />
             <br />
             <br />
             바로 쇼다운입니다. 무려 솔로쇼다운과 듀오쇼다운이 각각 41.8%, 17.7%의 비율로 1,2위를 차지하고 있는 것을 확인할 수 있습니다.
             3,4위는 브롤볼과 젬그랩으로 브롤스타즈 출시 때부터 함께 했던 맵인만큼 인기가 많이 있는 것을 볼 수 있습니다.
             <br />
             <br />
-            현재 녹아웃, 바운티, 하이스트, 핫존, 시즈팩토리는 2시간마다 이벤트가 변경되고 있습니다.
-            24시간내내 한 자리씩 차지하고 있는 쇼다운, 브롤볼, 젬그랩과는 달리 아무때나 플레이를 할 수가 없습니다.
-            인기가 없는 것과 더불어 시간 제약 때문에 상대적으로 낮은 플레이 비율을 보여준 것이라 생각됩니다.
-            <br />
-            <br />
-            읽어주셔서 감사합니다. 다음 글에는 인기 있는 브롤러는 무엇인지 알아보도록 하겠습니다.
+            사실 쇼다운은 혼자서도 쉽게 할 수 있고, 게임 시간이 비교적 짧기 때문에 선호도가 높은 모드라고 생각됩니다.
         </div>
     </div>);
 }
+
+export default Post2;

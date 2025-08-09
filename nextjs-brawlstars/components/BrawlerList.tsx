@@ -1,8 +1,20 @@
-import React, { useState } from "react";
-import { useTranslation } from 'next-i18next';
+import React from "react";
+import { useTranslation } from 'react-i18next';
 
+export type BrawlerName = 
+  | '8-BIT' | 'AMBER' | 'ANGELO' | 'ASH' | 'BARLEY' | 'BEA' | 'BELLE' | 'BERRY'
+  | 'BIBI' | 'BO' | 'BONNIE' | 'BROCK' | 'BULL' | 'BUSTER' | 'BUZZ' | 'BYRON'
+  | 'CARL' | 'CHARLIE' | 'CHESTER' | 'CHUCK' | 'CLANCY' | 'COLETTE' | 'COLONEL RUFFS'
+  | 'COLT' | 'CORDELIUS' | 'CROW' | 'DARRYL' | 'DOUG' | 'DRACO' | 'DYNAMIKE'
+  | 'EDGAR' | 'EL PRIMO' | 'EMZ' | 'EVE' | 'FANG' | 'FRANK' | 'GALE' | 'GENE'
+  | 'GRAY' | 'GRIFF' | 'GROM' | 'GUS' | 'HANK' | 'JACKY' | 'JANET' | 'JESSIE'
+  | 'KIT' | 'LARRY & LAWRIE' | 'LEON' | 'LILY' | 'LOLA' | 'LOU' | 'MAISIE' | 'MANDY'
+  | 'MAX' | 'MEG' | 'MELODIE' | 'MICO' | 'MORTIS' | 'MR. P' | 'NANI' | 'NITA'
+  | 'OTIS' | 'PAM' | 'PEARL' | 'PENNY' | 'PIPER' | 'POCO' | 'R-T' | 'RICO'
+  | 'ROSA' | 'RUFFS' | 'SAM' | 'SANDY' | 'SHELLY' | 'SPIKE' | 'SPROUT' | 'SQUEAK'
+  | 'STU' | 'SURGE' | 'TARA' | 'TICK' | 'WILLOW' | 'All';
 
-let brawlerNameList = [
+const brawlerNameList: BrawlerName[] = [
   '8-BIT',
   'AMBER',
   'ANGELO',
@@ -88,15 +100,25 @@ let brawlerNameList = [
   'WILLOW'
 ];
 
-const BrawlerList = ({ brawlerName, changeBrawler }) => {
+interface BrawlerOption {
+  value: BrawlerName;
+  label: string;
+}
 
-  const change = (event) => {
-    let value = event.target.value;
+interface BrawlerListProps {
+  brawlerName: BrawlerName;
+  changeBrawler: (brawlerName: BrawlerName) => void;
+}
+
+const BrawlerList: React.FC<BrawlerListProps> = ({ brawlerName, changeBrawler }) => {
+
+  const change = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value as BrawlerName;
     changeBrawler(value);
   }
   const { t } = useTranslation();
 
-  let bnList = brawlerNameList.map(name => {
+  let bnList: BrawlerOption[] = brawlerNameList.map(name => {
     return {
       "value": name,
       "label": t(name)
@@ -121,7 +143,7 @@ const BrawlerList = ({ brawlerName, changeBrawler }) => {
         value={brawlerName}
         className="form-select"
       >
-        {bnList.map((bn, index) => {
+        {bnList.map((bn) => {
           return (
             <option key={bn.value} label={bn.label} value={bn.value}>
               {bn.label}
@@ -129,10 +151,9 @@ const BrawlerList = ({ brawlerName, changeBrawler }) => {
           );
         })}
       </select>
-      <label htmlFor="brawlerName">{t("brawler")}</label>
+      <label htmlFor="brawlerName">{String(t("brawler"))}</label>
     </div>
   );
 }
-
 
 export default BrawlerList;

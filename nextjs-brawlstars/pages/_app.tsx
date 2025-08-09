@@ -1,23 +1,23 @@
+import React, { useEffect, useState } from 'react';
+import type { AppProps } from 'next/app';
 import Layout from '../components/layout'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 import '../styles/globals.scss'
 import Loading from '../components/Loading'
-import { useTranslation } from 'next-i18next'
 import Script from 'next/script'
 import Head from 'next/head'
 import { appWithTranslation } from 'next-i18next';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const handleRouteChange = (url, { shallow }) => {
+    const handleRouteChange = (url: string, { shallow }: { shallow: boolean }) => {
       setIsLoading(true);
     }
-    const handleRouteComplete = (url, { shallow }) => {
+    const handleRouteComplete = (url: string, { shallow }: { shallow: boolean }) => {
       setIsLoading(false);
     }
     router.events.on('routeChangeStart', handleRouteChange)
@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }) {
       router.events.off('routeChangeStart', handleRouteChange)
       router.events.off('routeChangeComplete', handleRouteComplete)
     }
-  }, []);
+  }, [router.events]);
 
   return (
     <Layout>

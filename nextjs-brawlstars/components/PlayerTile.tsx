@@ -1,8 +1,15 @@
 import React, { Component } from "react";
 import styles from "../styles/PlayerTile.module.scss";
 
-class PlayerTile extends Component {
-    render() {
+interface PlayerTileProps {
+    brawlerName: string;
+    playerName: string;
+    trophies: number;
+    power: number;
+}
+
+class PlayerTile extends Component<PlayerTileProps> {
+    render(): JSX.Element {
         const {
             brawlerName,
             playerName,

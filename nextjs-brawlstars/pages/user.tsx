@@ -1,6 +1,6 @@
 /** @format */
 
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "react-i18next";
 import React, { useState } from "react";
 import { getData, postData } from "../components/ApiHandler";
 import Loading from "../components/Loading";

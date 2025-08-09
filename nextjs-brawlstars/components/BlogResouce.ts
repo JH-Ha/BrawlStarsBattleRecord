@@ -1,4 +1,10 @@
-const resources = [
+interface BlogResource {
+    id: string;
+    title: string;
+    date: string;
+}
+
+const resources: BlogResource[] = [
     {
         "id": "1",
         "title": "신규 브롤러 팽, 그 성능은?",
@@ -17,3 +23,4 @@ const resources = [
 ];
 
 export default resources;
+export type { BlogResource };

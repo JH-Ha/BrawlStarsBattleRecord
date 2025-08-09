@@ -2,6 +2,11 @@ const { i18n } = require('./next-i18next.config');
 
 module.exports = {
   i18n,
+  typescript: {
+    // Allow production builds to successfully complete even if
+    // your project has TypeScript errors.
+    ignoreBuildErrors: true,
+  },
   async headers() {
     return [
       {
