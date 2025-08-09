@@ -15,7 +15,7 @@ import RecordResult from "../../components/recordResult";
 import { isDuels, isPenta, isTeamMode, isTrio } from "../../components/BaseFunctions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "react-i18next";
 import Head from "next/head";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useRouter } from "next/router";

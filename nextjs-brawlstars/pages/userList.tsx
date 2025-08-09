@@ -2,7 +2,7 @@ import React, { Component, useState } from "react";
 import Pagination from "../components/Pagination";
 import styles from "../styles/UserList.module.scss";
 import { getData } from "../components/ApiHandler";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";

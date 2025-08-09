@@ -3,8 +3,17 @@ import React from "react";
 import styles from "../styles/Info.module.scss";
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { GetServerSideProps } from 'next';
 
-const Guide = {
+interface GuideContent {
+    homeGuide: string;
+}
+
+interface Guide {
+    [locale: string]: GuideContent;
+}
+
+const Guide: Guide = {
     en: {
         "homeGuide": `You can check your battle log and brawlers' statistic at maps on this web site.
             
@@ -49,9 +58,10 @@ contact : brawlmeta22@gmail.com`,
     }
 }
 
-export default function Info() {
-
+const Info: React.FC = () => {
     const { locale } = useRouter();
+    const currentLocale = locale || 'en';
+    
     return (
         <div
             style={{
@@ -64,21 +74,19 @@ export default function Info() {
             </Head>
             <div className={styles.contentContainer}>
                 <div className={styles.content}>
-                    {Guide[locale]["homeGuide"]}
+                    {Guide[currentLocale]?.homeGuide || Guide.en.homeGuide}
                 </div>
             </div>
         </div>
     );
 }
 
-
-
-export async function getServerSideProps({ locale }) {
-
-
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale, ['common'])),
+            ...(await serverSideTranslations(locale || 'en', ['common'])),
         }
     }
 }
+
+export default Info;

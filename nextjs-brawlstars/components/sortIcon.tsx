@@ -5,9 +5,16 @@ import styles from '../styles/SortIcon.module.scss';
 
 const DEFAULT = "DEFAULT";
 const DESC = "DESC";
+const ASC = "ASC";
 
-class SortIcon extends Component {
-    render() {
+export type SortOrder = typeof DEFAULT | typeof DESC | typeof ASC;
+
+interface SortIconProps {
+    order: SortOrder;
+}
+
+class SortIcon extends Component<SortIconProps> {
+    render(): JSX.Element {
         const { order } = this.props;
         return <div className={styles.sortIcon}>
 

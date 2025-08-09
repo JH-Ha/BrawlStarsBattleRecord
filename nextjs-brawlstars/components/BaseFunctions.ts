@@ -1,4 +1,36 @@
-function isTrio(mode) {
+export type GameMode = 
+    | "gemGrab" | "heist" | "siege" | "bounty" | "brawlBall" | "hotZone" 
+    | "knockout" | "volleyBrawl" | "basketBrawl" | "holdTheTrophy" 
+    | "trophyThieves" | "wipeout" | "payload" | "invasion" 
+    | "snowtelThieves" | "paintBrawl" | "duels" | "soloShowdown" 
+    | "hunters" | "takedown" | "trophyEscape" | "duoShowdown" 
+    | "gemGrab5V5" | "heist5V5" | "siege5V5" | "bounty5V5" 
+    | "brawlBall5V5" | "hotZone5V5" | "knockout5V5" | "wipeout5V5" 
+    | "ALL";
+
+export interface BrawlerRecord {
+    brawlerName: string;
+    result?: string;
+    cnt: number;
+    rankSum?: number;
+}
+
+export interface TeamModeResult {
+    brawlerName: string;
+    victory: number;
+    defeat: number;
+    draw: number;
+    winRate: number;
+    totalGameNum: number;
+}
+
+export interface SoloModeResult {
+    brawlerName: string;
+    averageRank: number;
+    totalGameNum: number;
+}
+
+function isTrio(mode: string): boolean {
     let result = false;
     if (
         mode === "gemGrab" ||
@@ -22,7 +54,8 @@ function isTrio(mode) {
     }
     return result;
 }
-function isDuels(mode) {
+
+function isDuels(mode: string): boolean {
     let result = false;
     if (mode === "duels") {
         result = true;
@@ -30,25 +63,28 @@ function isDuels(mode) {
     return result;
 }
 
-function isSolo(mode) {
+function isSolo(mode: string): boolean {
     if (mode === "soloShowdown" || mode === "hunters" || mode === "takedown" || mode === "trophyEscape") {
         return true;
     }
     return false;
 }
-function isDuo(mode) {
+
+function isDuo(mode: string): boolean {
     if (mode === "duoShowdown") {
         return true;
     }
     return false;
 }
-function isAll(mode) {
+
+function isAll(mode: string): boolean {
     if (mode === "ALL") {
         return true;
     }
     return false;
 }
-function isPenta(mode) {
+
+function isPenta(mode: string): boolean {
     if (mode === "gemGrab5V5" ||
         mode === "heist5V5" ||
         mode === "siege5V5" ||
@@ -61,10 +97,12 @@ function isPenta(mode) {
     }
     return false;
 }
-function isTeamMode(mode) {
+
+function isTeamMode(mode: string): boolean {
     return isTrio(mode) || isDuels(mode) || isPenta(mode);
 }
-function getLocalTime(time) {
+
+function getLocalTime(time: string): Date {
     let year = time.substr(0, 4);
     let month = time.substr(4, 2);
     let date = time.substr(6, 2);
@@ -74,12 +112,13 @@ function getLocalTime(time) {
 
     return new Date(`${year}-${month}-${date}${hours}:${minutes}:${seconds}`);
 }
-function calDisplayTime(battleTime, t) {
+
+function calDisplayTime(battleTime: string, t: (key: string) => string): string {
     console.log(battleTime);
     console.log(t);
     let localeBattleTime = getLocalTime(battleTime);
     let now = new Date();
-    let diffTime = (now - localeBattleTime) / 1000;
+    let diffTime = (now.getTime() - localeBattleTime.getTime()) / 1000;
     let displayTime = '';
     // in one day
     if (diffTime < 86400) {
@@ -94,21 +133,22 @@ function calDisplayTime(battleTime, t) {
         }
         displayTime += `${t('ago')}`;
     } else {
-        function addZero(num) {
-            if (parseInt(num) < 10) {
+        const addZero = (num: number | string): string => {
+            if (parseInt(num.toString()) < 10) {
                 return `0` + num;
             }
-            return num;
+            return num.toString();
         }
         displayTime = `${localeBattleTime.getFullYear()}-${addZero(localeBattleTime.getMonth() + 1)}-${addZero(localeBattleTime.getDate())} ${addZero(localeBattleTime.getHours())}:${addZero(localeBattleTime.getMinutes())}:${addZero(localeBattleTime.getSeconds())}`;
     }
     return displayTime;
 }
-function calDisplayMapTime(startTime, endTime, t) {
+
+function calDisplayMapTime(startTime: string, endTime: string, t: (key: string) => string): string {
     let startLocalTime = getLocalTime(startTime);
     let endLocalTime = getLocalTime(endTime);
     let now = new Date();
-    let diffTime = (now - endLocalTime) / 1000;
+    let diffTime = (now.getTime() - endLocalTime.getTime()) / 1000;
     let displayTime = '';
     if (now <= endLocalTime && now >= startLocalTime) {
         displayTime = `${t('ongoing')}`;
@@ -150,11 +190,10 @@ function calDisplayMapTime(startTime, endTime, t) {
     return displayTime;
 }
 
-function calWinRate(data, mode) {
-    let records = {};
-    let recordArr = [];
+function calWinRate(data: BrawlerRecord[], mode: string): (TeamModeResult | SoloModeResult)[] {
+    let records: { [key: string]: any } = {};
+    let recordArr: (TeamModeResult | SoloModeResult)[] = [];
     let sumTotalGameNum = 0;
-    //console.log(`data : ${data}`);
 
     data.forEach(e => {
         if (isTeamMode(mode)) {
@@ -163,16 +202,17 @@ function calWinRate(data, mode) {
             }
             records[e.brawlerName] = {
                 ...records[e.brawlerName],
-                [e.result]: e.cnt,
+                [e.result!]: e.cnt,
             }
         } else {
             records[e.brawlerName] = {
                 brawlerName: e.brawlerName,
-                averageRank: e.rankSum / e.cnt,
+                averageRank: e.rankSum! / e.cnt,
                 cnt: e.cnt,
             }
         }
     });
+    
     if (isTeamMode(mode)) {
         for (let key in records) {
             let { victory, defeat, draw } = records[key];
@@ -192,7 +232,7 @@ function calWinRate(data, mode) {
         }
 
         recordArr.sort((a, b) => {
-            return b.winRate - a.winRate;
+            return (b as TeamModeResult).winRate - (a as TeamModeResult).winRate;
         })
     } else {
         for (let key in records) {
@@ -205,7 +245,7 @@ function calWinRate(data, mode) {
             sumTotalGameNum += cnt;
         }
         recordArr.sort((a, b) => {
-            return a.averageRank - b.averageRank;
+            return (a as SoloModeResult).averageRank - (b as SoloModeResult).averageRank;
         })
     }
     return recordArr;

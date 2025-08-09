@@ -1,6 +1,7 @@
+import React from 'react';
 import styles from '../../styles/Blog.module.scss';
 
-export default function Post1() {
+const Post1: React.FC = () => {
     return (<div className={styles.blog}>
         <div className={styles.title}>
             신규 브롤러 팽, 그 성능은?
@@ -66,3 +67,5 @@ export default function Post1() {
         </div>
     </div>);
 }
+
+export default Post1;

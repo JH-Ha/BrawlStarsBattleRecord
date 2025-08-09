@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import styles from '../styles/Loading.module.scss';
 
-class Loading extends Component {
-    state = {
+interface LoadingState {
+    opacityList: number[];
+    startIdx: number;
+    intervalId: NodeJS.Timer | null;
+}
+
+class Loading extends Component<{}, LoadingState> {
+    state: LoadingState = {
         opacityList: [],
         startIdx: 0,
-        intervalId: 0,
+        intervalId: null,
     }
-    componentDidMount() {
-        let opacityList = [];
+
+    componentDidMount(): void {
+        let opacityList: number[] = [];
         for (let i = 0; i < 12; i++) {
             opacityList.push((i + 1) / 12);
         }
@@ -26,13 +33,13 @@ class Loading extends Component {
             intervalId: intervalId
         });
     }
-    render() {
-        let bars = [];
+
+    render(): JSX.Element {
+        let bars: number[] = [];
         let angle = 360 / 12;
 
         for (let i = 0; i < 12; i++) {
             bars.push(angle * i);
-
         }
 
         return <div className={styles.Loading}>

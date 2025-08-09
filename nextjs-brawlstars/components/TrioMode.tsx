@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styles from "../styles/TrioMode.module.scss";
 import PlayerTile from "./PlayerTile";
 import { calDisplayTime } from './BaseFunctions';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'react-i18next';
 import { PlayRecord } from "../pages/battleLog/[tag]";
 
 interface TrioModeProps {
