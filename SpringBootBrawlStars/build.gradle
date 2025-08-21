@@ -48,6 +48,11 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    if (project.hasProperty('excludeIntegrationTests')) {
+        useJUnitPlatform {
+            excludeTags 'integration'
+        }
+    }
 }
 def querydslDir = "$buildDir/generated/querydsl"
 
