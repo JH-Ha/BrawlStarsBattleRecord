@@ -46,3 +46,9 @@ jobs:
       with:
         name: test-reports
         path: SpringBootBrawlStars/build/reports/tests/test/
+
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      if: always()
+      with:
+        files: SpringBootBrawlStars/build/test-results/test/*.xml
