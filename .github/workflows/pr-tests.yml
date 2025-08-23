@@ -32,20 +32,6 @@ jobs:
     
     - name: Run Spring Boot tests
       run: cd SpringBootBrawlStars && ./gradlew test -PexcludeIntegrationTests
-    
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: test-results
-        path: SpringBootBrawlStars/build/test-results/test/
-    
-    - name: Upload test reports
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: test-reports
-        path: SpringBootBrawlStars/build/reports/tests/test/
 
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
