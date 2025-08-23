@@ -53,4 +53,9 @@ class GameMapRepositoryTest {
         // Then
         assertThat(gameMaps.stream().allMatch(gameMapDto -> gameMapDto.getMode().equals(mode))).isTrue();
     }
+
+    @Test
+    void test() {
+        assertThat(2).isEqualTo(1);
+    }
 }
