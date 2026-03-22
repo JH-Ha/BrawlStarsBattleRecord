@@ -35,7 +35,7 @@ public class StatisticsRepositoryCustomImpl implements StatisticsRepositoryCusto
                         Projections.constructor(RecordResultDto.class,
                                 statistics.brawlerName,
                                 statistics.result,
-                                statistics.cnt.sum()))
+                                statistics.cnt.sumAggregate()))
                 .from(statistics)
                 .where(builder)
                 .groupBy(statistics.brawlerName, statistics.result).fetch();
@@ -58,8 +58,8 @@ public class StatisticsRepositoryCustomImpl implements StatisticsRepositoryCusto
 
         return queryFactory.select(
                         Projections.constructor(RecordResultDto.class, statistics.brawlerName,
-                                statistics.rankSum.sum(),
-                                statistics.cnt.sum()))
+                                statistics.rankSum.sumAggregate(),
+                                statistics.cnt.sumAggregate()))
                 .from(statistics)
                 .where(builder)
                 .groupBy(statistics.brawlerName)
