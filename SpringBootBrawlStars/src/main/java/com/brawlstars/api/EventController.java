@@ -2,6 +2,7 @@ package com.brawlstars.api;
 
 import com.brawlstars.json.EventInfo;
 import com.brawlstars.remote.BrawlStarsApiService;
+import com.brawlstars.util.BrawlMode;
 import com.brawlstars.repository.RecordResultDto;
 import com.brawlstars.schedule.GameMapService;
 import com.brawlstars.service.RecordService;
@@ -55,7 +56,7 @@ public class EventController {
         };
 
         for (String mapName : huntersMapNames) {
-            mapNameToMode.put(mapName, "hunters");
+            mapNameToMode.put(mapName, BrawlMode.HUNTERS.value);
         }
         String[] invasionMapNames = {
                 "A Loud Place",
@@ -68,7 +69,7 @@ public class EventController {
                 "Trials and Tribulations"
         };
         for (String mapName : invasionMapNames) {
-            mapNameToMode.put(mapName, "invasion");
+            mapNameToMode.put(mapName, BrawlMode.INVASION.value);
         }
 
         eventInfos = brawlStarsApiService.getEventsRotation();
@@ -99,8 +100,8 @@ public class EventController {
             for (EventInfo eventInfo : eventInfos) {
                 String mode = eventInfo.getEvent().getMode();
                 String map = eventInfo.getEvent().getMap();
-                if ("unknown".equals(mode)) {
-                    eventInfo.getEvent().setMode(mapNameToMode.getOrDefault(map, "unknown"));
+                if (BrawlMode.UNKNOWN.value.equals(mode)) {
+                    eventInfo.getEvent().setMode(mapNameToMode.getOrDefault(map, BrawlMode.UNKNOWN.value));
                 }
             }
 

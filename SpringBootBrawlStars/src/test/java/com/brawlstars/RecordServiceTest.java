@@ -21,6 +21,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import com.brawlstars.util.BrawlMode;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,7 +52,7 @@ public class RecordServiceTest {
         // Given
         String map = "Cavern Churn";
         RecordSearch recordSearch = new RecordSearch();
-        recordSearch.setMode("soloShowdown");
+        recordSearch.setMode(BrawlMode.SOLO_SHOWDOWN.value);
         recordSearch.setMap(map);
 
         // When
@@ -70,7 +71,7 @@ public class RecordServiceTest {
         // Given
         String map = "Bot Drop";
         RecordSearch recordSearch = new RecordSearch();
-        recordSearch.setMode("siege");
+        recordSearch.setMode(BrawlMode.SIEGE.value);
         recordSearch.setMap(map);
 
         // When
@@ -89,7 +90,7 @@ public class RecordServiceTest {
         // given
         String map = "NO SURRENDER";
         RecordSearch recordSearch = new RecordSearch();
-        recordSearch.setMode("duels");
+        recordSearch.setMode(BrawlMode.DUELS.value);
         recordSearch.setMap(map);
 
         // When
@@ -106,7 +107,7 @@ public class RecordServiceTest {
     void testFindByMapWhenModeIsPenta() {
         // Given
         String map = "Crispy Crypt";
-        String mode = "knockout5V5";
+        String mode = BrawlMode.KNOCKOUT_5V5.value;
         String tag = "#9QU209UYC";
 
         RecordSearch recordSearch = new RecordSearch();
@@ -127,7 +128,7 @@ public class RecordServiceTest {
         String tag = "#9QU209UYC";
         Pageable pageable = PageRequest.of(0, 10);
         RecordSearch recordSearch = new RecordSearch();
-        recordSearch.setMode("gemGrab");
+        recordSearch.setMode(BrawlMode.GEM_GRAB.value);
 
         // When
         Page<RecordDto> records = recordService.findByTag(tag, pageable, recordSearch);

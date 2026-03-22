@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import com.brawlstars.util.BrawlMode;
 import java.util.List;
 
 import static org.hamcrest.Matchers.emptyArray;
@@ -55,7 +56,7 @@ public class StatisticsControllerTest {
     @Test
     public void testGetStatisticsWhenYearMonthIsNotSent() throws Exception {
         // Given
-        String mode = "siege";
+        String mode = BrawlMode.SIEGE.value;
         String map = "Bot Drop";
 
         // When
@@ -69,7 +70,7 @@ public class StatisticsControllerTest {
     @Test
     public void testGetStatisticsWhenModeIsDuoShowdown() throws Exception {
         // Given
-        String mode = "duoShowdown";
+        String mode = BrawlMode.DUO_SHOWDOWN.value;
         String map = "Acid Lakes";
 
         // When
