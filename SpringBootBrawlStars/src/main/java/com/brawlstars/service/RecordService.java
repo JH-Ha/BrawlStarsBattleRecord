@@ -7,6 +7,7 @@ import com.brawlstars.json.Item;
 import com.brawlstars.json.Player;
 import com.brawlstars.remote.BrawlStarsApiService;
 import com.brawlstars.repository.*;
+import com.brawlstars.util.BrawlMode;
 import com.brawlstars.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -238,7 +239,9 @@ public class RecordService {
 
             // event.mode and battle.mode are different when event is trophyEscape
             // use event first and then battle.mode
+            // treat "unknown" event.mode as absent (fall back to battle.mode, e.g. "siege")
             String mode = Optional.ofNullable(item.getEvent().getMode())
+                    .filter(m -> !m.equals(BrawlMode.UNKNOWN.value))
                     .orElse(item.getBattle().getMode());
             if (CommonUtil.isTrioMode(mode)) {
                 saveTrio(tag, item);
