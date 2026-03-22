@@ -1,0 +1,536 @@
+{
+  "items": [
+    {
+      "battleTime": "20260322T105158.000Z",
+      "event": {
+        "id": 15001214,
+        "mode": "duoShowdown",
+        "modeId": 9,
+        "map": "Molten to the Core"
+      },
+      "battle": {
+        "mode": "duoShowdown",
+        "type": "ranked",
+        "rank": 1,
+        "trophyChange": 13,
+        "teams": [
+          [
+            {
+              "tag": "#2J0Y2PRLC8",
+              "name": "ダグ・ヨッシー",
+              "brawler": {
+                "id": 16000102,
+                "name": "SIRIUS",
+                "power": 11,
+                "trophies": 2032
+              }
+            },
+            {
+              "tag": "#9QU209UYC",
+              "name": "폼폼",
+              "brawler": {
+                "id": 16000092,
+                "name": "FINX",
+                "power": 9,
+                "trophies": 281
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#2C2QRRPVJJ",
+              "name": "めん",
+              "brawler": {
+                "id": 16000043,
+                "name": "EDGAR",
+                "power": 11,
+                "trophies": 737
+              }
+            },
+            {
+              "tag": "#2CYVCYQRR9",
+              "name": "あちゅま",
+              "brawler": {
+                "id": 16000076,
+                "name": "KIT",
+                "power": 11,
+                "trophies": 789
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#LYVUQUUR8",
+              "name": "심심할숄드",
+              "brawler": {
+                "id": 16000098,
+                "name": "ZIGGY",
+                "power": 11,
+                "trophies": 126
+              }
+            },
+            {
+              "tag": "#YL2YC089Y",
+              "name": "Dark_Matter",
+              "brawler": {
+                "id": 16000093,
+                "name": "JAE-YONG",
+                "power": 9,
+                "trophies": 205
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#JJP9UVU8C",
+              "name": "김지원11",
+              "brawler": {
+                "id": 16000043,
+                "name": "EDGAR",
+                "power": 11,
+                "trophies": 719
+              }
+            },
+            {
+              "tag": "#2RVJLQR29L",
+              "name": "blank",
+              "brawler": {
+                "id": 16000004,
+                "name": "RICO",
+                "power": 11,
+                "trophies": 563
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#2CJ2GUVGJG",
+              "name": "샤갈",
+              "brawler": {
+                "id": 16000071,
+                "name": "DOUG",
+                "power": 11,
+                "trophies": 762
+              }
+            },
+            {
+              "tag": "#2CYYG0P990",
+              "name": "동맹할사람",
+              "brawler": {
+                "id": 16000001,
+                "name": "COLT",
+                "power": 11,
+                "trophies": 584
+              }
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "battleTime": "20260322T095515.000Z",
+      "event": {
+        "id": 15001214,
+        "mode": "duoShowdown",
+        "modeId": 9,
+        "map": "Molten to the Core"
+      },
+      "battle": {
+        "mode": "duoShowdown",
+        "type": "ranked",
+        "rank": 3,
+        "trophyChange": 2,
+        "teams": [
+          [
+            {
+              "tag": "#V8Q99PC92",
+              "name": "誰この人",
+              "brawler": {
+                "id": 16000007,
+                "name": "JESSIE",
+                "power": 11,
+                "trophies": 492
+              }
+            },
+            {
+              "tag": "#V9P02LCVY",
+              "name": "るびー",
+              "brawler": {
+                "id": 16000023,
+                "name": "LEON",
+                "power": 10,
+                "trophies": 456
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#UVC0LRY2V",
+              "name": "かいこ",
+              "brawler": {
+                "id": 16000072,
+                "name": "PEARL",
+                "power": 11,
+                "trophies": 521
+              }
+            },
+            {
+              "tag": "#V0VJU00Y2",
+              "name": "yaizza64",
+              "brawler": {
+                "id": 16000012,
+                "name": "CROW",
+                "power": 11,
+                "trophies": 449
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#2CCQQG8GJC",
+              "name": "白いブラックサンダー",
+              "brawler": {
+                "id": 16000011,
+                "name": "MORTIS",
+                "power": 11,
+                "trophies": 721
+              }
+            },
+            {
+              "tag": "#9QU209UYC",
+              "name": "폼폼",
+              "brawler": {
+                "id": 16000092,
+                "name": "FINX",
+                "power": 9,
+                "trophies": 279
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#V98JQ0LPQ",
+              "name": "パロパル",
+              "brawler": {
+                "id": 16000043,
+                "name": "EDGAR",
+                "power": 11,
+                "trophies": 543
+              }
+            },
+            {
+              "tag": "#UVPLC2GVR",
+              "name": "蒸れたギャランドゥ",
+              "brawler": {
+                "id": 16000062,
+                "name": "BUSTER",
+                "power": 11,
+                "trophies": 503
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#UVLLJ0V9R",
+              "name": "URUSAME.",
+              "brawler": {
+                "id": 16000000,
+                "name": "SHELLY",
+                "power": 11,
+                "trophies": 456
+              }
+            },
+            {
+              "tag": "#VP00JLCU9",
+              "name": "わちゃ",
+              "brawler": {
+                "id": 16000068,
+                "name": "MAISIE",
+                "power": 11,
+                "trophies": 577
+              }
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "battleTime": "20260322T095220.000Z",
+      "event": {
+        "id": 15000993,
+        "mode": "unknown",
+        "modeId": 48,
+        "map": "Kaiju Lake"
+      },
+      "battle": {
+        "mode": "siege",
+        "type": "ranked",
+        "result": "victory",
+        "duration": 291,
+        "trophyChange": 15,
+        "starPlayer": {
+          "tag": "#9QU209UYC",
+          "name": "폼폼",
+          "brawler": {
+            "id": 16000013,
+            "name": "POCO",
+            "power": 11,
+            "trophies": 1000
+          }
+        },
+        "teams": [
+          [
+            {
+              "tag": "#2CYYYQ9LVP",
+              "name": "01akuaeimu",
+              "brawler": {
+                "id": 16000026,
+                "name": "BIBI",
+                "power": 11,
+                "trophies": 1029
+              }
+            },
+            {
+              "tag": "#2L9JVV2JG8",
+              "name": "ヤッホー",
+              "brawler": {
+                "id": 16000030,
+                "name": "EMZ",
+                "power": 11,
+                "trophies": 1066
+              }
+            },
+            {
+              "tag": "#9QU209UYC",
+              "name": "폼폼",
+              "brawler": {
+                "id": 16000013,
+                "name": "POCO",
+                "power": 11,
+                "trophies": 1000
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#2G0QPVLL22",
+              "name": "日間賀島",
+              "brawler": {
+                "id": 16000002,
+                "name": "BULL",
+                "power": 11,
+                "trophies": 1042
+              }
+            },
+            {
+              "tag": "#2QCJQRCPQV",
+              "name": "eishin",
+              "brawler": {
+                "id": 16000020,
+                "name": "FRANK",
+                "power": 11,
+                "trophies": 1031
+              }
+            },
+            {
+              "tag": "#CLU8QRGC",
+              "name": "なにぬねの",
+              "brawler": {
+                "id": 16000043,
+                "name": "EDGAR",
+                "power": 11,
+                "trophies": 1014
+              }
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "battleTime": "20260320T071653.000Z",
+      "event": {
+        "id": 15000996,
+        "mode": "unknown",
+        "modeId": 48,
+        "map": "Arena of Glory"
+      },
+      "battle": {
+        "mode": "siege",
+        "type": "ranked",
+        "result": "defeat",
+        "duration": 250,
+        "starPlayer": {
+          "tag": "#28G2CYY0J",
+          "name": "ざわざわＴ",
+          "brawler": {
+            "id": 16000022,
+            "name": "TICK",
+            "power": 11,
+            "trophies": 2000
+          }
+        },
+        "teams": [
+          [
+            {
+              "tag": "#2P0UYL9JJ",
+              "name": "ハマローン",
+              "brawler": {
+                "id": 16000071,
+                "name": "DOUG",
+                "power": 11,
+                "trophies": 1694
+              }
+            },
+            {
+              "tag": "#8JJCUG2C9",
+              "name": "I want you",
+              "brawler": {
+                "id": 16000003,
+                "name": "BROCK",
+                "power": 11,
+                "trophies": 959
+              }
+            },
+            {
+              "tag": "#P8Q92CPUL",
+              "name": "ポテト",
+              "brawler": {
+                "id": 16000065,
+                "name": "MANDY",
+                "power": 11,
+                "trophies": 1018
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#80L00VYLG",
+              "name": "성성동꼬부기",
+              "brawler": {
+                "id": 16000078,
+                "name": "MELODIE",
+                "power": 11,
+                "trophies": 1044
+              }
+            },
+            {
+              "tag": "#28G2CYY0J",
+              "name": "ざわざわＴ",
+              "brawler": {
+                "id": 16000022,
+                "name": "TICK",
+                "power": 11,
+                "trophies": 2000
+              }
+            },
+            {
+              "tag": "#9QU209UYC",
+              "name": "폼폼",
+              "brawler": {
+                "id": 16000013,
+                "name": "POCO",
+                "power": 11,
+                "trophies": 1000
+              }
+            }
+          ]
+        ]
+      }
+    },
+    {
+      "battleTime": "20260317T101944.000Z",
+      "event": {
+        "id": 15000993,
+        "mode": "unknown",
+        "modeId": 48,
+        "map": "Kaiju Lake"
+      },
+      "battle": {
+        "mode": "siege",
+        "type": "ranked",
+        "result": "victory",
+        "duration": 131,
+        "trophyChange": 15,
+        "starPlayer": {
+          "tag": "#9QU209UYC",
+          "name": "폼폼",
+          "brawler": {
+            "id": 16000102,
+            "name": "SIRIUS",
+            "power": 11,
+            "trophies": 129
+          }
+        },
+        "teams": [
+          [
+            {
+              "tag": "#29JV28VPQG",
+              "name": "thinking",
+              "brawler": {
+                "id": 16000100,
+                "name": "GIGI",
+                "power": 10,
+                "trophies": 113
+              }
+            },
+            {
+              "tag": "#2JQ2J8GCP8",
+              "name": "角刈りブロック",
+              "brawler": {
+                "id": 16000099,
+                "name": "PIERCE",
+                "power": 2,
+                "trophies": 115
+              }
+            },
+            {
+              "tag": "#9QU209UYC",
+              "name": "폼폼",
+              "brawler": {
+                "id": 16000102,
+                "name": "SIRIUS",
+                "power": 11,
+                "trophies": 129
+              }
+            }
+          ],
+          [
+            {
+              "tag": "#2Y9GUQLG8",
+              "name": "Jastin08",
+              "brawler": {
+                "id": 16000006,
+                "name": "BARLEY",
+                "power": 7,
+                "trophies": 117
+              }
+            },
+            {
+              "tag": "#2YPRC8VCP",
+              "name": "練乳イソフラボン",
+              "brawler": {
+                "id": 16000038,
+                "name": "SURGE",
+                "power": 8,
+                "trophies": 109
+              }
+            },
+            {
+              "tag": "#2YYUYCPRU",
+              "name": "三軒茶屋の番人",
+              "brawler": {
+                "id": 16000062,
+                "name": "BUSTER",
+                "power": 6,
+                "trophies": 108
+              }
+            }
+          ]
+        ]
+      }
+    }
+  ],
+  "paging": {
+    "cursors": {}
+  }
+}
