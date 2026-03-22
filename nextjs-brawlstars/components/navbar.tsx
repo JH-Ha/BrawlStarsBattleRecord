@@ -13,7 +13,7 @@ const Navbar = () => {
 
     const router = useRouter();
     const { pathname, asPath, query } = router;
-    const { t } = useTranslation();
+    const { t, ready } = useTranslation();
     useEffect(() => {
         const curLang = router.locale;
         if (curLang == undefined) {
@@ -53,10 +53,10 @@ const Navbar = () => {
                 </Link>
             </div>
             <ul className={`${styles.menuContainer} ${toggleActive && styles.active}`}>
-                <li className={styles.item}><Link href={`/`} >{t('navbarHome')}</Link></li>
-                <li className={styles.item}><Link href={`/info`}>{t('navbarInfo')}</Link></li>
-                <li className={styles.item}><Link href={`/userList`}>{t('navbarPlayers')}</Link></li>
-                <li className={styles.item}><Link href={`/mapList/gemGrab`} >{t('navbarMaps')}</Link></li>
+                <li className={styles.item}><Link href={`/`} >{ready ? t('navbarHome') : 'Events'}</Link></li>
+                <li className={styles.item}><Link href={`/info`}>{ready ? t('navbarInfo') : 'Info'}</Link></li>
+                <li className={styles.item}><Link href={`/userList`}>{ready ? t('navbarPlayers') : 'Players'}</Link></li>
+                <li className={styles.item}><Link href={`/mapList/gemGrab`} >{ready ? t('navbarMaps') : 'Maps'}</Link></li>
                 {/* <li className={styles.item}><Link href={`/blog`} >Blog</Link></li> */}
                 <div className={styles.languageContainer}>
                     <div className={`${styles.language} ${language === 'ja' ? styles.selected : ''}`} onClick={changelanguageToJa}>ja</div>
