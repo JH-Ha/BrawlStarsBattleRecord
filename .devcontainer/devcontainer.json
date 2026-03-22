@@ -1,0 +1,50 @@
+{
+  "name": "BrawlStars Battle Record",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17",
+      "jdkDistro": "ms"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "24",
+      "nodeGypDependencies": true
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-spring-boot",
+        "vscjava.vscode-spring-initializr",
+        "vscjava.vscode-spring-boot-dashboard",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ],
+      "settings": {
+        "java.configuration.runtimes": [
+          {
+            "name": "JavaSE-17",
+            "default": true
+          }
+        ],
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[java]": {
+          "editor.defaultFormatter": "redhat.java"
+        }
+      }
+    }
+  },
+
+  "postCreateCommand": "cd nextjs-brawlstars && npm install",
+
+  "forwardPorts": [8080, 8081],
+  "portsAttributes": {
+    "8080": { "label": "Spring Boot" },
+    "8081": { "label": "Next.js" }
+  }
+}
