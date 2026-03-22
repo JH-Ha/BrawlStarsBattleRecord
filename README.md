@@ -13,14 +13,13 @@ In order to win the game, you have to select a strong brawler, but there is no o
 I used to find a strong brawler while playing games myself.
 However, it is not easy to keep up with updates because the game maps change every day and new maps are added every season.
 
-On this Brawl Meta site, you can find which brawler is the best for each map and the win rate.
-win rates based on play data from around 10,000 random players.
+On this Brawl Meta site, you can find which brawler is the best for each map, with win rates based on play data from around 10,000 random players.
 
 #### Detailed Information
 
 Using the Brawl Stars API, I retrieved user play data to generate statistics. Since the API only allows querying the last 25 games, I store the match history every hour to save as many games as possible.
 
-The front-end is built with React, and the back-end is developed using the Spring framework.
+The front-end is built with Next.js, and the back-end is developed using the Spring framework.
 
 In the Players menu, you can click on a user's name to view their match history.
 
@@ -28,7 +27,7 @@ In Maps, you can check the maps for each mode, and by clicking on a map image, y
 
 ### Technology Stack
 
-React, Spring Boot, and JPA have been used for this project.
+Next.js, Spring Boot, and JPA have been used for this project. The backend runs on Java 25 LTS.
 The Spring Boot's Scheduler periodically updates user data.
 
 ### Implemented Features
@@ -45,6 +44,16 @@ The Spring Boot's Scheduler periodically updates user data.
 
 ### Update Log
 
+- v2.6.0 (2026.03.22)
+  - Upgrade Java 17 to 25 LTS
+  - Add devcontainer configuration for GitHub Codespace
+  - Convert JavaScript to TypeScript
+  - Remove legacy Express.js server files
+- v2.5.1 (2024.10)
+  - Add new brawler images
+  - Change brawler image format from png to webp
+- v2.5.0 (2024.10)
+  - Add new brawlers and name translations
 - v2.4.9 (2024.09.21)
   - Change image format from png to webp to reduce image size
 - v2.4.8 (2024.08.02)
