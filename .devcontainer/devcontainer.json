@@ -4,7 +4,7 @@
 
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
-      "version": "17",
+      "version": "25",
       "jdkDistro": "ms"
     },
     "ghcr.io/devcontainers/features/node:1": {
@@ -27,7 +27,7 @@
       "settings": {
         "java.configuration.runtimes": [
           {
-            "name": "JavaSE-17",
+            "name": "JavaSE-25",
             "default": true
           }
         ],
