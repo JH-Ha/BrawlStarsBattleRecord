@@ -55,7 +55,9 @@ public/
 
 ### 배포
 
-Firebase Hosting (`brawlstat-b1667`). `master` 브랜치 push 시 GitHub Actions가 자동으로 빌드 및 배포.
+AWS EC2 인스턴스에서 Spring Boot 백엔드와 함께 서빙 (`npm run start`, 8081 포트). ALB를 통해 트래픽을 받으며, 배포는 수동(SSH 접속 후 빌드/재시작) — 저장소에 프론트엔드 배포용 CI/CD 워크플로우는 없음.
+
+> `.github/workflows/firebase-hosting-*.yml`은 2022년 초 설정 이후 방치된 미사용 워크플로우이며 `firebase.json`/`.firebaserc`도 저장소에 없어 실제로 동작하지 않음.
 
 ---
 
@@ -104,7 +106,7 @@ util/         # 유틸리티
 
 ### CI
 
-`java-ci.yml` — PR 및 `master` push 시 JDK 25 환경에서 `./gradlew test` 실행 (`SPRING_PROFILES_ACTIVE=local`, H2 사용). `BRAWL_API_TOKEN` 없으면 API 호출 테스트 스킵.
+`java-ci.yml` — PR 및 `master` push 시 JDK 25 환경에서 `./gradlew test` 실행 (`SPRING_PROFILES_ACTIVE=local`, H2 사용). `BRAWL_API_TOKEN` 없으면 API 호출 테스트 스킵. **배포 스텝은 없음** — 프로덕션 배포는 EC2에 수동으로 진행.
 
 ---
 

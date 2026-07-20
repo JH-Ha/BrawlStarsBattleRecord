@@ -8,7 +8,16 @@
       "Bash(ls:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(xargs cat -n)"
+      "Bash(xargs cat -n)",
+      "Bash(xargs -I{} echo \"=== {} ===\")",
+      "Bash(git -C /workspaces/BrawlStarsBattleRecord log -1 --format=\"%H %ad\" -- .github/workflows/firebase-hosting-merge.yml)",
+      "Bash(git -C /workspaces/BrawlStarsBattleRecord log --oneline -5 -- .github/workflows/)",
+      "Bash(git -C /workspaces/BrawlStarsBattleRecord log --oneline --all -- .github/workflows/firebase-hosting-merge.yml)",
+      "Bash(xargs -I{} echo {})",
+      "Bash(SPRING_PROFILES_ACTIVE=local ./gradlew test --tests \"com.brawlstars.MixedModeBattleSaveTest\")",
+      "Bash(xargs cat)",
+      "Bash(SPRING_PROFILES_ACTIVE=local ./gradlew test --tests \"com.brawlstars.MixedModeBattleSaveTest\" --tests \"com.brawlstars.SiegeRecordSaveTest\")",
+      "Bash(SPRING_PROFILES_ACTIVE=local ./gradlew test)"
     ],
     "deny": []
   }
