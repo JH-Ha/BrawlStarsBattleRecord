@@ -2,6 +2,18 @@ package com.brawlstars.util;
 
 public class CommonUtil {
 
+    /**
+     * event.mode takes precedence over battle.mode (they differ for cases like paintBrawl/5v5/trophyEscape),
+     * but falls back to battle.mode when event.mode is missing, "unknown", or not a recognized BrawlMode
+     * (e.g. an event wrapper type that hasn't been added to the enum yet).
+     */
+    public static String resolveMode(String eventMode, String battleMode) {
+        return BrawlMode.fromValue(eventMode)
+                .filter(bm -> bm != BrawlMode.UNKNOWN)
+                .map(bm -> bm.value)
+                .orElse(battleMode);
+    }
+
     public static boolean isTrioMode(String mode) {
         return BrawlMode.fromValue(mode).map(BrawlMode::isTrio).orElse(false);
     }

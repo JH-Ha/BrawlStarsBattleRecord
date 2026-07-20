@@ -3,6 +3,7 @@ package com.brawlstars.domain;
 import com.brawlstars.json.Item;
 import com.brawlstars.json.Player;
 import com.brawlstars.service.RecordService;
+import com.brawlstars.util.CommonUtil;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -99,9 +99,7 @@ public class Record {
                                           int i) {
         Record record = recordFactory.create();
         String map = item.getEvent().getMap();
-        // event.mode and battle.mode are different when mode is 5 vs 5
-        String mode = Optional.ofNullable(item.getEvent().getMode())
-                .orElse(item.getBattle().getMode());
+        String mode = CommonUtil.resolveMode(item.getEvent().getMode(), item.getBattle().getMode());
         String brawlerName = player.getBrawler().getName().replace("\n", " ");
         Integer trophies = player.getBrawler().getTrophies();
 

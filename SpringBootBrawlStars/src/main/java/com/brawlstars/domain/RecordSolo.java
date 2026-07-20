@@ -2,12 +2,11 @@ package com.brawlstars.domain;
 
 import com.brawlstars.json.Item;
 import com.brawlstars.json.Player;
+import com.brawlstars.util.CommonUtil;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Optional;
 
 @Entity
 @DiscriminatorValue("SOLO")
@@ -24,8 +23,7 @@ public class RecordSolo extends Record {
         recordSolo.setTrophies(player.getBrawler().getTrophies());
         recordSolo.setMap(item.getEvent().getMap());
 
-        String mode = Optional.ofNullable(item.getEvent().getMode())
-                .orElse(item.getBattle().getMode());
+        String mode = CommonUtil.resolveMode(item.getEvent().getMode(), item.getBattle().getMode());
         recordSolo.setMode(mode);
         recordSolo.setType(item.getBattle().getType());
         recordSolo.setPlayerName(player.getName());

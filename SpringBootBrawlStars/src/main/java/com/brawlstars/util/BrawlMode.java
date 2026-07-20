@@ -11,6 +11,7 @@ public enum BrawlMode {
     HEIST("heist", Category.TRIO),
     BOUNTY("bounty", Category.TRIO),
     SIEGE("siege", Category.TRIO),
+    BRAWL_ARENA("brawlArena", Category.TRIO),
     HOT_ZONE("hotZone", Category.TRIO),
     KNOCKOUT("knockout", Category.TRIO),
     BASKET_BRAWL("basketBrawl", Category.TRIO),
