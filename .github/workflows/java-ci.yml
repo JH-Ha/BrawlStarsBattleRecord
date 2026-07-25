@@ -1,0 +1,30 @@
+name: Java CI
+
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run tests
+        working-directory: SpringBootBrawlStars
+        run: ./gradlew test
+        env:
+          SPRING_PROFILES_ACTIVE: local
+          BRAWL_API_TOKEN: ${{ secrets.BRAWL_API_TOKEN }}

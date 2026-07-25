@@ -235,7 +235,7 @@ public class RecordRepository {
                 queryFactory.select(
                                 Projections.constructor(RecordResultDto.class
                                         , qRecord.brawlerName
-                                        , qRecord.resultRank.sum()
+                                        , qRecord.resultRank.sumAggregate()
                                         , qRecord.count()
                                 ))
                         .from(qRecord)

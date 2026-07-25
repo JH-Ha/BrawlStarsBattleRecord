@@ -19,6 +19,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import com.brawlstars.util.BrawlMode;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -50,7 +52,7 @@ public class StatisticsServiceTest {
     @Test
     void testGetStatsFromCache() {
         // Given
-        String mode = "soloShowdown";
+        String mode = BrawlMode.SOLO_SHOWDOWN.value;
         String map = "Cavern Churn";
         List<String> yearMonths = List.of(yearMonth);
 

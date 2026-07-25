@@ -4,9 +4,11 @@ package com.brawlstars.remote;
 import com.brawlstars.json.EventInfo;
 import com.brawlstars.json.Item;
 import com.brawlstars.json.playerInfo.PlayerInfo;
+import com.brawlstars.util.BrawlMode;
 import jdk.jfr.Description;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -16,6 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@EnabledIfEnvironmentVariable(named = "BRAWL_API_TOKEN", matches = ".+")
 public class BrawlStartsApiServiceTest {
 
     @Autowired
@@ -54,7 +57,7 @@ public class BrawlStartsApiServiceTest {
 
         // Then : eventRotations must contain gem grab mode because it is the basic mode of brawl stars.
         boolean hasGemGrab = Arrays.stream(eventInfos)
-                .anyMatch(eventInfo -> eventInfo.getEvent().getMode().equals("gemGrab"));
+                .anyMatch(eventInfo -> eventInfo.getEvent().getMode().equals(BrawlMode.GEM_GRAB.value));
         assertThat(hasGemGrab).isEqualTo(true);
     }
 }

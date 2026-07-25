@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import com.brawlstars.util.BrawlMode;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,7 +46,7 @@ class GameMapRepositoryTest {
     @Test
     void testGetGameMaps() {
         // Given
-        String mode = "gemGrab";
+        String mode = BrawlMode.GEM_GRAB.value;
 
         // When
         List<GameMapDto> gameMaps = gameMapRepository.getGameMaps(mode);

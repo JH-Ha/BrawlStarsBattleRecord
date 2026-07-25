@@ -18,7 +18,7 @@
 
 브롤스타즈 API를 이용하여서 사용자 플레이데이터를 가져와서 통계를 냈습니다. API를 통해서는 최근 25게임만 조회가 가능하기에, 매시간 전적을 저장해서 최대한 많은 게임을 저장하고 있습니다.
 
-Front-End는 React로 제작되었고, Back-End는 Spring framework를 이용하여 제작되었습니다.
+Front-End는 Next.js로 제작되었고, Back-End는 Spring framework를 이용하여 제작되었습니다.
 
 Players 메뉴에서 유저이름을 클릭하면, 해당 유저의 전적정보를 볼 수 있습니다.
 
@@ -26,7 +26,7 @@ Maps에서는 각 모드별 맵들을 확인할 수 있으며, 맵 이미지를 
 
 ### 기술 스택
 
-React + Spring Boot + JPA 를 이용해서 구현하였습니다.
+Next.js + Spring Boot + JPA 를 이용해서 구현하였습니다. 백엔드는 Java 25 LTS 기반으로 동작합니다.
 Spring Boot의 Scheduler 를 이용해서 주기적으로 유저 데이터를 업데이트 합니다.
 
 ### 구현된 기능
@@ -45,8 +45,18 @@ Spring Boot의 Scheduler 를 이용해서 주기적으로 유저 데이터를 �
 
 ### Update Log
 
+- v2.6.0 (2026.03.22)
+  - Java 17에서 25 LTS로 업그레이드
+  - GitHub Codespace용 devcontainer 설정 추가
+  - JavaScript를 TypeScript로 변환
+  - 레거시 Express.js 서버 파일 제거
+- v2.5.1 (2024.10)
+  - 신규 브롤러 이미지 추가
+  - 브롤러 이미지 포맷을 PNG에서 WebP로 변경
+- v2.5.0 (2024.10)
+  - 신규 브롤러 추가 및 이름 번역 업데이트
 - v2.4.9 (2024.09.21)
-  - 이미지 사이즈를 줄이키 위해서, 이미지 포맷을 PNG에서 WebP로 변경
+  - 이미지 사이즈를 줄이기 위해 이미지 포맷을 PNG에서 WebP로 변경
 - v2.4.8 (2024.08.02)
   - 페인트 브롤 모드 지원
 - v2.4.7 (2024.07.24)

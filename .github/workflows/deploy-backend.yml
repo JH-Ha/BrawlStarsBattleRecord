@@ -1,0 +1,59 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'SpringBootBrawlStars/**'
+      - '.github/workflows/deploy-backend.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-backend
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'microsoft'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build executable jar
+        working-directory: SpringBootBrawlStars
+        run: |
+          ./gradlew bootJar
+          cp "$(ls build/libs/*.jar | grep -v plain)" app.jar
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ vars.EC2_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Upload jar
+        run: |
+          scp -i ~/.ssh/deploy_key \
+            SpringBootBrawlStars/app.jar \
+            ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}:apps/backend/app.jar.new
+
+      - name: Restart service
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }} '
+            set -e
+            cd apps/backend
+            mv app.jar.new app.jar
+            sudo systemctl restart brawlstars-api
+            sleep 10
+            sudo systemctl is-active brawlstars-api
+          '

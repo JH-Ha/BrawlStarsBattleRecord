@@ -1,0 +1,39 @@
+name: Deploy Nginx Config
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-nginx
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ vars.EC2_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Upload config
+        run: |
+          scp -i ~/.ssh/deploy_key \
+            deploy/nginx-brawlmeta.conf \
+            ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}:nginx-brawlmeta.conf
+
+      - name: Apply and reload
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }} '
+            set -e
+            sudo /usr/bin/cp /etc/nginx/sites-available/brawlmeta.conf /home/${{ vars.EC2_USER }}/nginx-brawlmeta.conf.bak
+            sudo /usr/bin/cp /home/${{ vars.EC2_USER }}/nginx-brawlmeta.conf /etc/nginx/sites-available/brawlmeta.conf
+            rm /home/${{ vars.EC2_USER }}/nginx-brawlmeta.conf
+            sudo /usr/sbin/nginx -t
+            sudo /usr/bin/systemctl reload nginx
+          '

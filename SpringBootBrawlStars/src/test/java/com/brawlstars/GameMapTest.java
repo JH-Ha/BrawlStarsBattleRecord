@@ -19,6 +19,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import com.brawlstars.util.BrawlMode;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,7 +58,7 @@ public class GameMapTest {
         @Test
         void saveDistinctGameMap() {
             // Given
-            String mode = "duoShowdown";
+            String mode = BrawlMode.DUO_SHOWDOWN.value;
 
             // When
             int savedMapCnt = recordService.saveDistinctGameMap(mode);
