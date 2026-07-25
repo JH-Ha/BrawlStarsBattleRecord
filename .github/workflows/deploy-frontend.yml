@@ -52,6 +52,7 @@ jobs:
 
       - name: Upload build
         run: |
+          ssh -i ~/.ssh/deploy_key ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }} 'mkdir -p apps'
           scp -i ~/.ssh/deploy_key \
             /tmp/frontend.tar.gz \
             ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}:apps/frontend.tar.gz
