@@ -43,6 +43,7 @@ jobs:
 
       - name: Upload jar
         run: |
+          ssh -i ~/.ssh/deploy_key ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }} 'mkdir -p apps/backend'
           scp -i ~/.ssh/deploy_key \
             SpringBootBrawlStars/app.jar \
             ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}:apps/backend/app.jar.new
