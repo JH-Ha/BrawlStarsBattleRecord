@@ -1,0 +1,38 @@
+name: Test SSH Connection
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ vars.EC2_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Validate key format
+        run: |
+          if ssh-keygen -y -f ~/.ssh/deploy_key > /tmp/derived_pub.txt; then
+            echo "개인키 형식 정상. 파생된 공개키:"
+            cat /tmp/derived_pub.txt
+            echo "위 한 줄이 EC2의 ~/.ssh/authorized_keys 에 있어야 접속 가능"
+          else
+            echo "::error::EC2_SSH_KEY secret이 올바른 개인키 형식이 아님 (복사 누락/줄바꿈 확인)"
+            exit 1
+          fi
+
+      - name: Test connection
+        run: |
+          ssh -i ~/.ssh/deploy_key -o ConnectTimeout=10 \
+            ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }} '
+            echo "=== SSH OK ==="
+            whoami
+            ls -la ~/apps 2>/dev/null || echo "~/apps 디렉토리 없음 (deploy/README.md 1번 참고)"
+            sudo -n systemctl is-active brawlstars-api 2>/dev/null || echo "brawlstars-api 서비스 미등록 또는 sudoers 미설정"
+            sudo -n systemctl is-active brawlstars-web 2>/dev/null || echo "brawlstars-web 서비스 미등록 또는 sudoers 미설정"
+          '

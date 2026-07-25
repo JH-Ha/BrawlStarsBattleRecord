@@ -17,7 +17,15 @@
       "Bash(SPRING_PROFILES_ACTIVE=local ./gradlew test --tests \"com.brawlstars.MixedModeBattleSaveTest\")",
       "Bash(xargs cat)",
       "Bash(SPRING_PROFILES_ACTIVE=local ./gradlew test --tests \"com.brawlstars.MixedModeBattleSaveTest\" --tests \"com.brawlstars.SiegeRecordSaveTest\")",
-      "Bash(SPRING_PROFILES_ACTIVE=local ./gradlew test)"
+      "Bash(SPRING_PROFILES_ACTIVE=local ./gradlew test)",
+      "WebSearch",
+      "Bash(git worktree *)",
+      "Bash(cp .github/workflows/test-ssh.yml /tmp/claude-1000/-workspaces-BrawlStarsBattleRecord/5c6f4395-1e16-4b99-8ae7-421bca18f1ce/scratchpad/master-wt/.github/workflows/)",
+      "Bash(git fetch *)",
+      "Bash(dig +short brawlmeta.com A)",
+      "Bash(dig +short www.brawlmeta.com A)",
+      "Bash(dig +short www.brawlmeta.com CNAME)",
+      "Bash(dig +short brawlmeta.com CNAME)"
     ],
     "deny": []
   }

@@ -1,0 +1,77 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'nextjs-brawlstars/**'
+      - '.github/workflows/deploy-frontend.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: nextjs-brawlstars/package-lock.json
+
+      - name: Build
+        working-directory: nextjs-brawlstars
+        run: |
+          npm ci
+          npm run build
+
+      - name: Package build output
+        working-directory: nextjs-brawlstars
+        run: |
+          tar czf /tmp/frontend.tar.gz \
+            .next \
+            public \
+            package.json \
+            package-lock.json \
+            next.config.js \
+            next-i18next.config.js
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ vars.EC2_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Upload build
+        run: |
+          scp -i ~/.ssh/deploy_key \
+            /tmp/frontend.tar.gz \
+            ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}:apps/frontend.tar.gz
+
+      - name: Extract and restart service
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }} '
+            set -e
+            cd apps
+            rm -rf frontend-new
+            mkdir frontend-new
+            tar xzf frontend.tar.gz -C frontend-new
+            rm frontend.tar.gz
+            cd frontend-new
+            npm ci --omit=dev
+            cd ..
+            rm -rf frontend-old
+            [ -d frontend ] && mv frontend frontend-old
+            mv frontend-new frontend
+            sudo systemctl restart brawlstars-web
+            sleep 5
+            sudo systemctl is-active brawlstars-web
+          '

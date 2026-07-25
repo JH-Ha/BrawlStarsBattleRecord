@@ -1,0 +1,16 @@
+# /etc/systemd/system/brawlstars-api.service
+# User, 경로, java 경로는 실제 EC2 환경에 맞게 수정할 것 (java 경로 확인: which java)
+[Unit]
+Description=BrawlMeta Spring Boot API
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/apps/backend
+ExecStart=/usr/bin/java -jar app.jar
+EnvironmentFile=/etc/brawlstars/api.env
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

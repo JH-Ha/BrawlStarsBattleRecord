@@ -1,0 +1,17 @@
+# /etc/systemd/system/brawlstars-web.service
+# User, 경로, npm 경로는 실제 EC2 환경에 맞게 수정할 것
+# nvm 사용 시 npm이 /usr/bin/npm에 없음 — which npm 으로 절대 경로 확인
+[Unit]
+Description=BrawlMeta Next.js Frontend
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/apps/frontend
+ExecStart=/usr/bin/npm run start
+Environment=NODE_ENV=production
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

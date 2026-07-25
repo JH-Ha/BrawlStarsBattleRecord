@@ -8,7 +8,8 @@ Brawl Stars 맵별 브롤러 승률 통계 서비스 ([brawlmeta.com](https://ww
 BrawlStarsBattleRecord/
 ├── nextjs-brawlstars/       # Next.js 프론트엔드
 ├── SpringBootBrawlStars/    # Spring Boot 백엔드
-└── .github/workflows/       # CI/CD (Firebase 배포, Java CI)
+├── deploy/                  # EC2 배포용 systemd 서비스 파일 및 셋업 가이드
+└── .github/workflows/       # CI/CD (Java CI, EC2 배포)
 ```
 
 ---
@@ -55,9 +56,7 @@ public/
 
 ### 배포
 
-AWS EC2 인스턴스에서 Spring Boot 백엔드와 함께 서빙 (`npm run start`, 8081 포트). ALB를 통해 트래픽을 받으며, 배포는 수동(SSH 접속 후 빌드/재시작) — 저장소에 프론트엔드 배포용 CI/CD 워크플로우는 없음.
-
-> `.github/workflows/firebase-hosting-*.yml`은 2022년 초 설정 이후 방치된 미사용 워크플로우이며 `firebase.json`/`.firebaserc`도 저장소에 없어 실제로 동작하지 않음.
+AWS EC2 인스턴스에서 Spring Boot 백엔드와 함께 서빙 (`npm run start`, 8081 포트). ALB를 통해 트래픽을 받는다. `master`에 `nextjs-brawlstars/**` 변경이 push되면 `deploy-frontend.yml`이 GitHub 러너에서 빌드 후 SSH로 EC2에 배포하고 `brawlstars-web` systemd 서비스를 재시작한다. EC2 최초 셋업 방법은 `deploy/README.md` 참고.
 
 ---
 
@@ -104,9 +103,10 @@ util/         # 유틸리티
 - `BRAWL_API_TOKEN` — Brawl Stars API 토큰 (CI: GitHub Secrets, prod: 서버 환경변수)
 - DB 비밀번호 — prod 전용, secrets 관리
 
-### CI
+### CI / CD
 
-`java-ci.yml` — PR 및 `master` push 시 JDK 25 환경에서 `./gradlew test` 실행 (`SPRING_PROFILES_ACTIVE=local`, H2 사용). `BRAWL_API_TOKEN` 없으면 API 호출 테스트 스킵. **배포 스텝은 없음** — 프로덕션 배포는 EC2에 수동으로 진행.
+- `java-ci.yml` — PR 및 `master` push 시 JDK 25 환경에서 `./gradlew test` 실행 (`SPRING_PROFILES_ACTIVE=local`, H2 사용). `BRAWL_API_TOKEN` 없으면 API 호출 테스트 스킵.
+- `deploy-backend.yml` — `master`에 `SpringBootBrawlStars/**` 변경이 push되면 `bootJar` 빌드 후 SSH로 EC2에 jar를 올리고 `brawlstars-api` systemd 서비스를 재시작. 수동 실행(`workflow_dispatch`)도 가능. 필요한 설정: Variables `EC2_HOST`·`EC2_USER`, Secret `EC2_SSH_KEY` (셋업은 `deploy/README.md` 참고).
 
 ---
 
